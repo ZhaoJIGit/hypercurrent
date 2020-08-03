@@ -1,0 +1,239 @@
+﻿@using JieNor.Megi.DataModel.PA;
+@using JieNor.Megi.EntityModel.Enum;
+@using JieNor.Megi.Common.Utility;
+    @{
+        //是否有编辑权限
+        bool isCanEditPermission = HtmlSECMenu.HavePermission(BizObject.PayRun, PermissionItem.Change);
+        List<PAPrintSettingModel> list = Model.List as List<PAPrintSettingModel>;
+    }
+<div id="divSalaryList">
+    @if (list != null)
+    {
+        var idx = 0;
+        foreach (var settingModel in list)
+        {
+            <div class="print-tmpl ps-list" id="@settingModel.MItemID">
+                <div class="name">
+                    <p><em class="drag">&nbsp;</em>@settingModel.MName</p>
+                    @if (isCanEditPermission)
+                    {
+                        <div id="@string.Format("divSalaryOptions{0}", idx)" class="options" style="padding-right: 10px;">
+                            <a href="javascript:void(0)" id="aOptions" class="easyui-menubutton" style="padding-left:9px; padding-right:6px;"
+                               data-options="menu:'#@string.Format("divSalaryFolderOptions{0}", idx)'">@HtmlLang.Write(LangModule.Docs, "Options", "Options")</a>
+                            <div id="@string.Format("divSalaryFolderOptions{0}", idx)" style="width: 160px;">
+                                <div class="edit"><a href="javascript:void(0)" id="aEdit">@HtmlLang.Write(LangModule.IV, "Edit", "Edit")</a></div>
+                                <div class="copy"><a href="javascript:void(0)" id="aCopy">@HtmlLang.Write(LangModule.Common, "Copy", "Copy")</a></div>
+                                @if (string.IsNullOrWhiteSpace(settingModel.MLogoID))
+                                {
+                                    <div class="upload-logo"><a href="javascript:void(0)" id="aUploadLogo">@HtmlLang.Write(LangModule.IV, "UploadLogo", "Upload Logo")</a></div>
+                                }
+                                else
+                                {
+                                    <div class="change-logo"><a href="javascript:void(0)" id="aChangeLogo">@HtmlLang.Write(LangModule.IV, "ChangeLogo", "Change Logo")</a></div>
+                                    <div class="remove-logo"><a href="javascript:void(0)" id="aRemoveLogo">@HtmlLang.Write(LangModule.IV, "RemoveLogo", "Remove Logo")</a></div>
+                                }
+                                @if (list.Count() > 1)
+                                {
+                                    <div class="delete"><a href="javascript:void(0)" id="aDelete" class="delete-folder">@HtmlLang.Write(LangKey.Delete)</a></div>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="details">
+                    <div class="settings" style="width: auto;">
+                        <div>
+                            <div style="float:left;">
+                                <strong>@HtmlLang.Write(LangModule.IV, "MarginsTop", "Margins Top"):</strong> @settingModel.MTopMarginWithUnit
+                                <strong>&nbsp;&nbsp;@HtmlLang.Write(LangModule.IV, "Bottom", "Bottom"):</strong> @settingModel.MBottomMarginWithUnit
+                            </div>
+                            <div style="padding-left:16px;float:left;">
+                                <ul class="ps-show">
+                                    @if (settingModel.MShowLogo)
+                                    {
+                                        <li>
+                                            <strong>@HtmlLang.Write(LangModule.IV, "Logo", "Logo")&nbsp;&nbsp;</strong>
+                                            (@HtmlLang.Write(LangModule.IV, "LogoAlign", "Logo align"): @HtmlLang.Write(LangModule.IV, settingModel.MLogoAlignment, settingModel.MLogoAlignment))
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div>
+                            <div class="group item-group" style="padding-top: 30px;">
+                                <ul class="ps-show">
+                                    <li class="title"><h3>@HtmlLang.Write(LangModule.PA, "SalarySlipTItle", "工资单标题")</h3></li>
+                                    @if (settingModel.MShowTitle)
+                                    {
+                                        <li>@HtmlLang.Write(LangModule.Common, "Title", "Title"): @settingModel.MTitle</li>
+                                    }
+                                    @if (settingModel.MShowSalaryMonth)
+                                    {
+                                        <li>@HtmlLang.Write(LangModule.PA, "SalaryMonth", "工资月份")</li>
+                                    }
+
+                                    <li class="title"><h3>@HtmlLang.Write(LangModule.Contact, "EmployeeInformation", "Employee Information")</h3></li>
+                                    @if (settingModel.MShowEmployeeName)
+                                    {
+                                        <li>
+                                            @HtmlLang.Write(LangKey.Name)
+                                            @if (settingModel.MShowCnEnName)
+                                            {
+                                                @Html.Raw(string.Format("({0})", HtmlLang.Write(LangModule.PA, "ShowCnEnName", "同时显示中英文名字").ToHtmlString()))
+                                            }
+                                        </li>
+                                    }
+                                    @if (settingModel.MShowJoinTime)
+                                    {
+                                        <li>@HtmlLang.Write(LangModule.Contact, "JoinTime", "Join Time")</li>
+                                    }
+                                    @if (settingModel.MShowIDNumber)
+                                    {
+                                        <li>@HtmlLang.Write(LangModule.Contact, "IDNumber", "ID Number")</li>
+                                    }
+                                </ul>
+                            </div>
+                            <div class="group item-group" style="padding-left: 50px; padding-top: 30px;">
+                                <ul class="ps-show">
+                                    <li class="title"><h3>@HtmlLang.Write(LangModule.PA, "EmpSalaryCompositionInfo", "员工工资组成信息")</h3></li>
+                                    <li style="list-style:none;">
+                                        <div class="group" style="margin-left:-16px;">
+                                            <ul class="ps-show">
+                                                @{
+                                                    foreach (var entry in settingModel.MEntryList)
+                                                    {
+                                                        if (entry.MIsShow)
+                                                        {
+                                                            <li>@(entry.MPayItemName)</li>
+                                                        }
+                                                    }
+                                                }
+                                            </ul>
+                                        </div>
+                                        <div class="group" style="margin-left:16px;">
+                                            <ul class="ps-show">
+                                                @if (settingModel.MShowEmployeeSocialSecurity)
+                                                {
+                                                    <li>@HtmlLang.Write(LangModule.PA, "EmpSocialSecurity", "Social Security(Employee)")</li>
+                                                }
+                                                @if (settingModel.MShowEmployeeHousingProvidentFund)
+                                                {
+                                                    <li>@HtmlLang.Write(LangModule.PA, "EmpHousingProvidentFund", "Housing Provident Fund(Employee)")</li>
+                                                }
+                                                @if (settingModel.MShowSalaryBeforeTax)
+                                                {
+                                                    <li>@HtmlLang.Write(LangModule.PA, "SalaryBeforeTax", "Total Salary before Tax")</li>
+                                                }
+                                                @if (settingModel.MShowPIT)
+                                                {
+                                                    <li>@HtmlLang.Write(LangModule.PA, "PIT", "P-I-T")</li>
+                                                }
+                                                @if (settingModel.MShowNetSalary)
+                                                {
+                                                    <li>@HtmlLang.Write(LangModule.PA, "NetSalary", "Net Salary")</li>
+                                                }
+                                            </ul>
+
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="group item-group" style="padding-left: 50px;padding-top: 30px;">
+                                <ul class="ps-show">
+                                    <li class="title"><h3>@HtmlLang.Write(LangModule.PA, "EmpSSAndHFInfo", "员工社保和公积金信息")</h3></li>
+                                    @if (settingModel.MShowAdditionalInfo)
+                                    {
+                                        <li>@HtmlLang.Write(LangModule.Common, "Title", "Title"): @settingModel.MAdditionalInfo</li>
+                                        <li style="list-style:none;">
+                                            <div class="group" style="margin-left:-16px;">
+                                                <ul class="ps-show">
+                                                    <li class="title"><h3>@HtmlLang.Write(LangModule.PA, "SocialSecurity", "Social Security")</h3></li>
+                                                    @if (settingModel.MShowPension)
+                                                    {
+                                                        <li>@HtmlLang.Write(LangModule.BD, "BaiscRetirementSecurity", "Pension")</li>
+                                                    }
+                                                    @if (settingModel.MShowMedicalInsurance)
+                                                    {
+                                                        <li>@HtmlLang.Write(LangModule.BD, "BasicMedicalInsurance", "Basic Medical Insurance")</li>
+                                                    }
+                                                    @if (settingModel.MShowUmemploymentInsurance)
+                                                    {
+                                                        <li>@HtmlLang.Write(LangModule.BD, "UmemploymentInsurance", "Umemployment Insurance")</li>
+                                                    }
+                                                    @if (settingModel.MShowMeternityInsurance)
+                                                    {
+                                                        <li>@HtmlLang.Write(LangModule.BD, "MeternityInsurance", "Meternity Insurance")</li>
+                                                    }
+                                                    @if (settingModel.MShowIndustrialInjury)
+                                                    {
+                                                        <li>@HtmlLang.Write(LangModule.BD, "IndustrialInjury", "Industrial Injury")</li>
+                                                    }
+                                                    @if (settingModel.MShowSeriousMedical)
+                                                    {
+                                                        <li>@HtmlLang.Write(LangModule.BD, "SeriousIlinessMedicalTreatment", "Serious Illiness Medical Treatment")</li>
+                                                    }
+                                                    @if (settingModel.MShowSocialSecurityOther)
+                                                    {
+                                                        <li>@HtmlLang.Write(LangModule.BD, "Other", "Other")</li>
+                                                    }
+                                                </ul>
+                                            </div>
+                                            <div class="group" style="margin-left:16px;">
+                                                <ul class="ps-show">
+                                                    <li style="list-style:none;">
+                                                        <ul class="ps-show">
+                                                            <li class="title"><h3>@HtmlLang.Write(LangModule.PA, "HousingProvidentFund", "Housing Provident Fund")</h3></li>
+                                                            @if (settingModel.MShowHousingProvidentFund)
+                                                            {
+                                                                <li>@HtmlLang.Write(LangModule.PA, "HousingProvidentFund", "Housing Provident Fund")</li>
+                                                            }
+                                                            @if (settingModel.MShowHousingProvidentFundAdition)
+                                                            {
+                                                                <li>@HtmlLang.Write(LangModule.PA, "HousingProvidentFundAddition", "Housing Provident Fund(Addition)")</li>
+                                                            }
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="clear"></div>
+                                        </li>
+                                        if (settingModel.MShowTotalSalary)
+                                        {
+                                            <li>@HtmlLang.Write(LangModule.PA, "TotalSalary", "Total Salary")</li>
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+
+                    <div class="logo-wrapper">
+                        <div class="logo upload-logo">
+                            @if (!string.IsNullOrWhiteSpace(settingModel.MLogoID))
+                            {
+                                <div class="ps-logo logo" id="@settingModel.MLogoID" style="float:right;"><div class="loading-logo"></div></div>
+                            }
+                            else if (isCanEditPermission)
+                            {
+                                <a style="width:198px;">@HtmlLang.Write(LangModule.IV, "UploadLogo", "Upload Logo")</a>
+                            }
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+                            idx++;
+        }
+    }
+    else
+    {
+        @HtmlLang.Write(LangModule.Common, "nodata", "No data")
+    }
+    </div>
+    <input type="hidden" id="hidHaveChangePermission" value="@Html.Raw(isCanEditPermission)" />
+    <script src="@ServerHelper.GoServer/scripts/PT/PTBase.js?@ServerHelper.JSVersion"></script>
+    <script src="@ServerHelper.GoServer/scripts/PT/PTSalaryList/PTSalaryList.js?@ServerHelper.JSVersion"></script>
+    @HtmlLang.WriteScript(LangModule.Common)
+    @HtmlLang.WriteScript(LangModule.IV)

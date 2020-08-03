@@ -1,0 +1,44 @@
+﻿@using System.Web.UI.WebControls
+@using DevExpress.Web.Mvc.UI
+@{
+    Layout = "~/Areas/Report/Views/Shared/_DialogReportLayout.cshtml";
+}
+@using JieNor.Megi.Common.Utility;
+<style type="text/css">
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    .fullscreen {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        height: 100%;
+    }
+</style>
+@Html.DevExpress().GetStyleSheets(DevExpress.Web.ASPxWebClientUIControl.ColorSchemeLight,
+        new StyleSheet { ExtensionType = ExtensionType.ReportDesigner }
+    )
+<script type="text/javascript" src="@ServerHelper.GoServer/Scripts/BD/ReportDesigner/jquery-ui.min.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.GoServer/Scripts/BD/ReportDesigner/globalize.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.GoServer/Scripts/BD/ReportDesigner/knockout-3.3.0.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.GoServer/Scripts/BD/ReportDesigner/ace.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.GoServer/Scripts/BD/ReportDesigner/ext-language_tools.js?@ServerHelper.JSVersion"></script>
+@Html.DevExpress().GetScripts(
+        new Script { ExtensionType = ExtensionType.ReportDesigner }
+    )
+@Html.DevExpress().ReportDesigner(settings =>
+{
+    settings.Name = "reportDesigner";
+    settings.SaveCallbackRouteValues = new { Controller = "ReportDesigner", Action = "Save", layoutId = Model.LayoutId, reportType = Model.ReportType, printSettingID = Model.PrintSettingID };
+    settings.ControlStyle.CssClass = "fullscreen";
+    settings.Height = Unit.Empty;
+    //Model.CopySubreportsTo(settings.Subreports);
+}).Bind(Model.Report).GetHtml()
+@Html.Partial("../Print/PostFormPartial")
+<script type="text/javascript" src="@ServerHelper.GoServer/scripts/BD/Print/PreviewBase.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.GoServer/Scripts/BD/ReportDesigner/Designer.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.StaticServer/fw/scripts/jquery.megi.ui.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.StaticServer/fw/scripts/jquery.megi.top.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.Common)

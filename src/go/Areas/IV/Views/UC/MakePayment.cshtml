@@ -1,0 +1,82 @@
+﻿@using JieNor.Megi.Core.Const;
+@using JieNor.Megi.DataModel.IV;
+@using JieNor.Megi.Common.Utility;
+@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    IVInvoiceModel ivModel = ViewData["InvoiceModel"] as IVInvoiceModel;
+    System.Web.Script.Serialization.JavaScriptSerializer jss = new System.Web.Script.Serialization.JavaScriptSerializer();
+    string jsonModel = JieNor.Megi.Common.Utility.MText.ToJson(ivModel);
+    List<IVVerificationInforModel> vfcList = ViewData["VerificationList"] as List<IVVerificationInforModel>;
+
+    bool isRed = ivModel.MType == BizType.Invoice_Purchase_Red || ivModel.MType == BizType.Invoice_Sale_Red;
+}
+<div class="m-imain m-payment">
+    <div class="m-imain-content">
+        <div class="m-form">
+            <div class="row">
+                @if (ivModel.MType == BizType.Invoice_Sale || ivModel.MType == BizType.Invoice_Sale_Red)
+                {
+                    var content = isRed ? HtmlLang.Write(LangModule.IV, "AmountRefund", "Amount refund") : HtmlLang.Write(LangModule.IV, "AmountRecevied", "Amount Recevied");
+                    <span class="lbl">@content</span>
+                }
+                else if (ivModel.MType == BizType.Invoice_Purchase || ivModel.MType == BizType.Invoice_Purchase_Red)
+                {
+                    //var content = isRed ? HtmlLang.Write(LangModule.IV, "AmountRefund", "Amount refund") : HtmlLang.Write(LangModule.IV, "AmountRecevied", "Amount Recevied");
+                    <span class="lbl">@HtmlLang.Write(LangModule.IV, "AmountPaid", "Amount Paid")</span>
+                }
+
+                <span class="content"><input type="text" id="txtAmountPaid" style="width:240px; height:28px;" class="easyui-numberbox mg-validate" data-options="precision:2,required:true" /> </span>
+            </div>
+            <div class="row">
+                @if (ivModel.MType == BizType.Invoice_Sale || ivModel.MType == BizType.Invoice_Sale_Red)
+                {
+                    var content = isRed ? HtmlLang.Write(LangModule.IV, "DateRefund", "Date refund") : HtmlLang.Write(LangModule.IV, "DateRecevied", "Date Recevied");
+                    <span class="lbl">@content</span>
+                }
+                else if (ivModel.MType == BizType.Invoice_Purchase || ivModel.MType == BizType.Invoice_Purchase_Red)
+                {
+                    <span class="lbl">@HtmlLang.Write(LangModule.IV, "DatePaid", "Date Paid")</span>
+                }
+                
+                <span class="content"><input id="txtPaidDate" value="@ViewData["DefaultBizDate"]" type="text" class="gl-easyui-datebox  user-active" data-options="required:true" style="width:240px; height:28px;" /></span>
+            </div>
+            <div class="row">
+                @if (ivModel.MType == BizType.Invoice_Sale || ivModel.MType == BizType.Invoice_Sale_Red)
+                {
+                    var content = isRed ? HtmlLang.Write(LangModule.IV, "RefundTo", "Refund To") : HtmlLang.Write(LangModule.IV, "PaidTo", "Paid To");
+                    <span class="lbl">@content</span>
+                }
+                else if (ivModel.MType == BizType.Invoice_Purchase || ivModel.MType == BizType.Invoice_Purchase_Red)
+                {
+                    var content = isRed ? HtmlLang.Write(LangModule.IV, "PaidTo", "Paid To") : HtmlLang.Write(LangModule.IV, "PaidFrom", "Paid From");
+                    <span class="lbl">@content</span>
+                }
+                <span class="content"><select class="easyui-combobox" id="selPaidTo" data-options="required:true,editable:false,onSelect:MakePayment.changBank, @HtmlBDAccount.BankDataOptions(Convert.ToString(ViewData["MCurrencyID"]))" style="width: 240px; height: 28px; "></select></span>
+            </div>
+            <div class="row" id="divBankExchangeRate" style="display:none;">
+                <span class="lbl">@HtmlLang.Write(LangModule.BD, "ExchangeRate", "Exchange Rate")</span>
+                <span class="content">1 <span id="spSrcCurrency"></span> = <input id="txtMPExchangeRate" data-options="min:0.000000001,precision:5" value="1" class="easyui-numberbox" style="width: 240px; height: 28px;" /> <span id="spTgtCurrency"></span></span>
+            </div>
+            <div class="row">
+                <span class="lbl">@HtmlLang.Write(LangKey.Reference)</span>
+                <span class="content"><input id="txtPaymentRef" class="easyui-validatebox textbox" data-options="required:true" style="width:238px;"></span>
+            </div>
+        </div>
+        <input type="hidden" id="hidInvoiceModel" value='@jsonModel' />
+        <input type="hidden" id="hidInvoiceType" value='@ViewData["InvoiceType"]' />
+        <input type="hidden" id="hidCurrencyID" value='@ViewData["MCurrencyID"]' />
+        <div class="clear"></div>
+    </div>
+</div>
+<script src="@ServerHelper.ScriptServer/Scripts/IV/IVBase.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.ScriptServer/Scripts/IV/UC/MakePayment.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.IV)
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)
+<div class="m-toolbar-footer">
+    <div class="left">
+        <a href="javascript:void(0);" onclick="Megi.closeDialog();" class="easyui-linkbutton easyui-linkbutton-gray">@HtmlLang.Write(LangKey.Cancel)</a>@*取消*@
+    </div>
+    <div class="right">
+        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aAddPayment">@HtmlLang.Write(LangKey.Save)</a>
+    </div>
+</div>

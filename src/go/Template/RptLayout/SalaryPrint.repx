@@ -1,0 +1,344 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XtraReportsLayoutSerializer SerializerVersion="15.1.5.0" Ref="1" Name="SalaryPrint" ControlType="DevExpress.XtraReports.UI.XtraReport, DevExpress.XtraReports.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" DataSource="#Ref-0" Font="微软雅黑, 9.75pt" Version="15.1" PageWidth="827" PageHeight="1169" PaperKind="A4" Margins="100, 99, 100, 100">
+  <Bands>
+    <Item1 Ref="2" ControlType="DetailBand" Name="Detail" TextAlignment="TopLeft" Font="微软雅黑, 9.75pt" Padding="0,0,0,0,100" HeightF="141">
+      <Controls>
+        <Item1 Ref="3" Name="xrTable4" ControlType="XRTable" SizeF="627.9999,13.00002" LocationFloat="0.000111262, 128" Borders="Left, Right">
+          <Rows>
+            <Item1 Ref="4" ControlType="XRTableRow" Name="xrTableRow5" Weight="1">
+              <Cells>
+                <Item1 Ref="5" Name="xrTableCell16" ControlType="XRTableCell" Borders="Left, Right" Text="&#xD;&#xA;" Multiline="true" Weight="1">
+                  <StylePriority Ref="6" UseBorders="false" />
+                </Item1>
+              </Cells>
+            </Item1>
+          </Rows>
+          <StylePriority Ref="7" UseBorders="false" />
+        </Item1>
+        <Item2 Ref="8" Name="xrTable8" ControlType="XRTable" SizeF="627.9999,68" LocationFloat="0, 0">
+          <Rows>
+            <Item1 Ref="9" ControlType="XRTableRow" Name="xrTableRow11" Weight="1">
+              <Cells>
+                <Item1 Ref="10" Name="xrTableCell29" ControlType="XRTableCell" Font="微软雅黑, 16pt" Borders="Left, Top, Right" TextAlignment="MiddleCenter" Weight="1">
+                  <DataBindings>
+                    <Item1 Ref="11" PropertyName="Text" DataMember="Title" />
+                  </DataBindings>
+                  <StylePriority Ref="12" UseFont="false" UseBorders="false" UseTextAlignment="false" />
+                </Item1>
+              </Cells>
+            </Item1>
+            <Item2 Ref="13" ControlType="XRTableRow" Name="xrTableRow12" Weight="1">
+              <Cells>
+                <Item1 Ref="14" Name="xrTableCell30" ControlType="XRTableCell" Font="微软雅黑, 13pt" Borders="Left, Right" TextAlignment="MiddleCenter" Weight="1">
+                  <DataBindings>
+                    <Item1 Ref="15" PropertyName="Text" DataMember="Period" />
+                  </DataBindings>
+                  <StylePriority Ref="16" UseFont="false" UseBorders="false" UseTextAlignment="false" />
+                </Item1>
+              </Cells>
+            </Item2>
+          </Rows>
+        </Item2>
+        <Item3 Ref="17" Name="xrTable1" ControlType="XRTable" SizeF="627.9999,60" LocationFloat="6.357829E-05, 68" Borders="All" TextAlignment="MiddleLeft">
+          <Rows>
+            <Item1 Ref="18" ControlType="XRTableRow" Name="xrTableRow1" Weight="1">
+              <Cells>
+                <Item1 Ref="19" Name="xrTableCell1" ControlType="XRTableCell" Padding="2,0,0,0,100" Weight="0.6881721075310171">
+                  <DataBindings>
+                    <Item1 Ref="20" PropertyName="Text" DataMember="EmployeeNameTitle1" />
+                  </DataBindings>
+                  <StylePriority Ref="21" UsePadding="false" />
+                </Item1>
+                <Item2 Ref="22" Name="xrTableCell2" ControlType="XRTableCell" Padding="2,0,0,0,100" Weight="1.3118278924689828">
+                  <DataBindings>
+                    <Item1 Ref="23" PropertyName="Text" DataMember="EmployeeName1" />
+                  </DataBindings>
+                  <StylePriority Ref="24" UsePadding="false" />
+                </Item2>
+                <Item3 Ref="25" Name="xrTableCell3" ControlType="XRTableCell" Padding="2,0,0,0,100" Weight="0.6881721075310171">
+                  <DataBindings>
+                    <Item1 Ref="26" PropertyName="Text" DataMember="EmployeeNameTitle2" />
+                  </DataBindings>
+                  <StylePriority Ref="27" UsePadding="false" />
+                </Item3>
+                <Item4 Ref="28" Name="xrTableCell4" ControlType="XRTableCell" Padding="2,0,0,0,100" Weight="1.3118278924689828">
+                  <DataBindings>
+                    <Item1 Ref="29" PropertyName="Text" DataMember="EmployeeName2" />
+                  </DataBindings>
+                  <StylePriority Ref="30" UsePadding="false" />
+                </Item4>
+              </Cells>
+            </Item1>
+            <Item2 Ref="31" ControlType="XRTableRow" Name="xrTableRow2" Weight="1">
+              <Cells>
+                <Item1 Ref="32" Name="xrTableCell5" ControlType="XRTableCell" Padding="2,0,0,0,100" Weight="0.688172107531017">
+                  <DataBindings>
+                    <Item1 Ref="33" PropertyName="Text" DataMember="JoinTimeTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="34" UsePadding="false" />
+                </Item1>
+                <Item2 Ref="35" Name="xrTableCell6" ControlType="XRTableCell" Padding="2,0,0,0,100" Weight="1.3118278924689828">
+                  <DataBindings>
+                    <Item1 Ref="36" PropertyName="Text" DataMember="JoinTime" />
+                  </DataBindings>
+                  <StylePriority Ref="37" UsePadding="false" />
+                </Item2>
+                <Item3 Ref="38" Name="xrTableCell7" ControlType="XRTableCell" Padding="2,0,0,0,100" Weight="0.6881721075310171">
+                  <DataBindings>
+                    <Item1 Ref="39" PropertyName="Text" DataMember="IDNumberTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="40" UsePadding="false" />
+                </Item3>
+                <Item4 Ref="41" Name="xrTableCell8" ControlType="XRTableCell" Padding="2,0,0,0,100" Weight="1.3118278924689828">
+                  <DataBindings>
+                    <Item1 Ref="42" PropertyName="Text" DataMember="IDNumber" />
+                  </DataBindings>
+                  <StylePriority Ref="43" UsePadding="false" />
+                </Item4>
+              </Cells>
+            </Item2>
+          </Rows>
+          <StylePriority Ref="44" UseBorders="false" UseTextAlignment="false" />
+        </Item3>
+      </Controls>
+      <StylePriority Ref="45" UseFont="false" />
+    </Item1>
+    <Item2 Ref="46" Name="TopMargin" ControlType="TopMarginBand" TextAlignment="TopLeft" Font="微软雅黑, 9.75pt" Padding="0,0,0,0,100" HeightF="100">
+      <StylePriority Ref="47" UseFont="false" />
+    </Item2>
+    <Item3 Ref="48" Name="BottomMargin" ControlType="BottomMarginBand" TextAlignment="TopLeft" Font="微软雅黑, 9.75pt" Padding="0,0,0,0,100" HeightF="100">
+      <StylePriority Ref="49" UseFont="false" />
+    </Item3>
+    <Item4 Ref="50" ControlType="DetailReportBand" Name="DetailReport" DataMember="SalaryItemModels" Level="0" DataSource="#Ref-0">
+      <Bands>
+        <Item1 Ref="51" ControlType="DetailBand" Name="Detail1" HeightF="30">
+          <Controls>
+            <Item1 Ref="52" Name="xrTable2" ControlType="XRTable" SizeF="627.9999,30" LocationFloat="0, 0" Font="微软雅黑, 9pt, charSet=134" Borders="Left, Right, Bottom" TextAlignment="MiddleLeft">
+              <Rows>
+                <Item1 Ref="53" ControlType="XRTableRow" Name="xrTableRow3" Weight="11.5">
+                  <Cells>
+                    <Item1 Ref="54" Name="xrTableCell9" ControlType="XRTableCell" Padding="2,0,0,0,100" Weight="0.5035926424553272">
+                      <FormattingRuleLinks>
+                        <Item1 Ref="56" Value="#Ref-55" />
+                      </FormattingRuleLinks>
+                      <DataBindings>
+                        <Item1 Ref="57" PropertyName="Text" DataMember="SalaryItemModels.Name" />
+                      </DataBindings>
+                      <StylePriority Ref="58" UsePadding="false" />
+                    </Item1>
+                    <Item2 Ref="59" Name="xrTableCell10" ControlType="XRTableCell" Padding="2,0,0,0,100" Weight="0.34485683109047505">
+                      <DataBindings>
+                        <Item1 Ref="60" PropertyName="Text" DataMember="SalaryItemModels.MDesc" />
+                      </DataBindings>
+                      <StylePriority Ref="61" UsePadding="false" />
+                    </Item2>
+                    <Item3 Ref="62" Name="xrTableCell11" ControlType="XRTableCell" Padding="0,2,0,0,100" TextAlignment="MiddleRight" Weight="0.34676964996017379">
+                      <FormattingRuleLinks>
+                        <Item1 Ref="64" Value="#Ref-63" />
+                      </FormattingRuleLinks>
+                      <DataBindings>
+                        <Item1 Ref="65" FormatString="{0:n2}" PropertyName="Text" DataMember="SalaryItemModels.MAmount" />
+                      </DataBindings>
+                      <StylePriority Ref="66" UsePadding="false" UseTextAlignment="false" />
+                    </Item3>
+                  </Cells>
+                </Item1>
+              </Rows>
+              <StylePriority Ref="67" UseFont="false" UseBorders="false" UseTextAlignment="false" />
+            </Item1>
+          </Controls>
+        </Item1>
+        <Item2 Ref="68" ControlType="GroupHeaderBand" Name="GroupHeader1" HeightF="30">
+          <Controls>
+            <Item1 Ref="69" Name="xrTable9" ControlType="XRTable" SizeF="627.9999,30" LocationFloat="6.357829E-05, 0" Borders="All" TextAlignment="MiddleLeft">
+              <Rows>
+                <Item1 Ref="70" ControlType="XRTableRow" Name="xrTableRow13" Weight="1">
+                  <Cells>
+                    <Item1 Ref="71" Name="xrTableCell31" ControlType="XRTableCell" Font="微软雅黑, 9.75pt, style=Bold" Padding="2,0,0,0,100" Weight="1.4197387000783144">
+                      <DataBindings>
+                        <Item1 Ref="72" PropertyName="Text" DataMember="BasicSalaryTitle" />
+                      </DataBindings>
+                      <StylePriority Ref="73" UseFont="false" UsePadding="false" />
+                    </Item1>
+                    <Item2 Ref="74" Name="xrTableCell32" ControlType="XRTableCell" Font="微软雅黑, 9.75pt, style=Bold" Padding="0,2,0,0,100" TextAlignment="MiddleRight" Weight="0.58026129992168551">
+                      <DataBindings>
+                        <Item1 Ref="75" FormatString="{0:n2}" PropertyName="Text" DataMember="BaseSalaryAmount" />
+                      </DataBindings>
+                      <StylePriority Ref="76" UseFont="false" UsePadding="false" UseTextAlignment="false" />
+                    </Item2>
+                  </Cells>
+                </Item1>
+              </Rows>
+              <StylePriority Ref="77" UseBorders="false" UseTextAlignment="false" />
+            </Item1>
+          </Controls>
+        </Item2>
+        <Item3 Ref="78" ControlType="GroupFooterBand" Name="GroupFooter1" HeightF="90">
+          <Controls>
+            <Item1 Ref="79" Name="xrTable6" ControlType="XRTable" SizeF="627.9999,90" LocationFloat="0, 0" Font="微软雅黑, 9pt, charSet=134" Borders="Left, Right, Bottom" TextAlignment="MiddleLeft">
+              <Rows>
+                <Item1 Ref="80" ControlType="XRTableRow" Name="xrTableRow7" Weight="11.5">
+                  <Cells>
+                    <Item1 Ref="81" Name="xrTableCell21" ControlType="XRTableCell" Font="微软雅黑, 9.75pt, style=Bold" Padding="2,0,0,0,100" Weight="0.848449585604788">
+                      <DataBindings>
+                        <Item1 Ref="82" PropertyName="Text" DataMember="SalaryBeforePITTitle" />
+                      </DataBindings>
+                      <StylePriority Ref="83" UseFont="false" UsePadding="false" />
+                    </Item1>
+                    <Item2 Ref="84" Name="xrTableCell22" ControlType="XRTableCell" Padding="0,2,0,0,100" TextAlignment="MiddleRight" Weight="0.34676953790118814">
+                      <DataBindings>
+                        <Item1 Ref="85" FormatString="{0:n2}" PropertyName="Text" DataMember="SalaryBeforePITAmount" />
+                      </DataBindings>
+                      <StylePriority Ref="86" UsePadding="false" UseTextAlignment="false" />
+                    </Item2>
+                  </Cells>
+                </Item1>
+                <Item2 Ref="87" ControlType="XRTableRow" Name="xrTableRow9" Weight="11.5">
+                  <Cells>
+                    <Item1 Ref="88" Name="xrTableCell26" ControlType="XRTableCell" Padding="2,0,0,0,100" Weight="0.84844952023704634">
+                      <DataBindings>
+                        <Item1 Ref="89" PropertyName="Text" DataMember="PITTitle" />
+                      </DataBindings>
+                      <StylePriority Ref="90" UsePadding="false" />
+                    </Item1>
+                    <Item2 Ref="91" Name="xrTableCell28" ControlType="XRTableCell" ForeColor="Red" Padding="0,2,0,0,100" TextAlignment="MiddleRight" Weight="0.34676960326892975">
+                      <DataBindings>
+                        <Item1 Ref="92" FormatString="{0:n2}" PropertyName="Text" DataMember="PITAmount" />
+                      </DataBindings>
+                      <StylePriority Ref="93" UseForeColor="false" UsePadding="false" UseTextAlignment="false" />
+                    </Item2>
+                  </Cells>
+                </Item2>
+                <Item3 Ref="94" ControlType="XRTableRow" Name="xrTableRow8" Weight="11.5">
+                  <Cells>
+                    <Item1 Ref="95" Name="xrTableCell24" ControlType="XRTableCell" Font="微软雅黑, 9.75pt, style=Bold" Padding="2,0,0,0,100" Weight="0.848449585604788">
+                      <DataBindings>
+                        <Item1 Ref="96" PropertyName="Text" DataMember="NetSalaryTitle" />
+                      </DataBindings>
+                      <StylePriority Ref="97" UseFont="false" UsePadding="false" />
+                    </Item1>
+                    <Item2 Ref="98" Name="xrTableCell25" ControlType="XRTableCell" Padding="0,2,0,0,100" TextAlignment="MiddleRight" Weight="0.34676953790118814">
+                      <DataBindings>
+                        <Item1 Ref="99" FormatString="{0:n2}" PropertyName="Text" DataMember="NetSalaryAmount" />
+                      </DataBindings>
+                      <StylePriority Ref="100" UsePadding="false" UseTextAlignment="false" />
+                    </Item2>
+                  </Cells>
+                </Item3>
+              </Rows>
+              <StylePriority Ref="101" UseFont="false" UseBorders="false" UseTextAlignment="false" />
+            </Item1>
+          </Controls>
+        </Item3>
+      </Bands>
+    </Item4>
+    <Item5 Ref="102" ControlType="DetailReportBand" Name="DetailReport1" DataMember="SSAndHFModels" Level="1" DataSource="#Ref-0">
+      <Bands>
+        <Item1 Ref="103" ControlType="DetailBand" Name="Detail2" HeightF="30">
+          <Controls>
+            <Item1 Ref="104" Name="xrTable3" ControlType="XRTable" SizeF="627.9999,30" LocationFloat="0, 0" Font="微软雅黑, 9pt, charSet=134" Borders="Left, Right, Bottom" TextAlignment="MiddleLeft">
+              <Rows>
+                <Item1 Ref="105" ControlType="XRTableRow" Name="xrTableRow4" Weight="11.5">
+                  <Cells>
+                    <Item1 Ref="106" Name="xrTableCell12" ControlType="XRTableCell" Padding="2,0,0,0,100" Weight="0.50359261444058079">
+                      <DataBindings>
+                        <Item1 Ref="107" PropertyName="Text" DataMember="SSAndHFModels.Name" />
+                      </DataBindings>
+                      <StylePriority Ref="108" UsePadding="false" />
+                    </Item1>
+                    <Item2 Ref="109" Name="xrTableCell13" ControlType="XRTableCell" Padding="0,2,0,0,100" TextAlignment="MiddleRight" Weight="0.34485688711996787">
+                      <DataBindings>
+                        <Item1 Ref="110" FormatString="{0:n2}" PropertyName="Text" DataMember="SSAndHFModels.EmployeeAmount" />
+                      </DataBindings>
+                      <StylePriority Ref="111" UsePadding="false" UseTextAlignment="false" />
+                    </Item2>
+                    <Item3 Ref="112" Name="xrTableCell14" ControlType="XRTableCell" Padding="0,2,0,0,100" TextAlignment="MiddleRight" Weight="0.34676962194542738">
+                      <DataBindings>
+                        <Item1 Ref="113" FormatString="{0:n2}" PropertyName="Text" DataMember="SSAndHFModels.EmployerAmount" />
+                      </DataBindings>
+                      <StylePriority Ref="114" UsePadding="false" UseTextAlignment="false" />
+                    </Item3>
+                  </Cells>
+                </Item1>
+              </Rows>
+              <StylePriority Ref="115" UseFont="false" UseBorders="false" UseTextAlignment="false" />
+            </Item1>
+          </Controls>
+        </Item1>
+        <Item2 Ref="116" ControlType="GroupHeaderBand" Name="GroupHeader2" HeightF="60.20833">
+          <Controls>
+            <Item1 Ref="117" Name="xrTable5" ControlType="XRTable" SizeF="627.9999,30" LocationFloat="0, 30.20833" Font="微软雅黑, 9pt, charSet=134" Borders="Left, Right, Bottom" TextAlignment="MiddleLeft">
+              <Rows>
+                <Item1 Ref="118" ControlType="XRTableRow" Name="xrTableRow6" Weight="11.5">
+                  <Cells>
+                    <Item1 Ref="119" Name="xrTableCell17" ControlType="XRTableCell" Font="微软雅黑, 9.75pt, style=Bold" Padding="2,0,0,0,100" Weight="0.50359261444058079">
+                      <DataBindings>
+                        <Item1 Ref="120" PropertyName="Text" DataMember="ItemTitle" />
+                      </DataBindings>
+                      <StylePriority Ref="121" UseFont="false" UsePadding="false" />
+                    </Item1>
+                    <Item2 Ref="122" Name="xrTableCell19" ControlType="XRTableCell" Font="微软雅黑, 9.75pt, style=Bold" TextAlignment="MiddleCenter" Weight="0.34485688711996787">
+                      <DataBindings>
+                        <Item1 Ref="123" PropertyName="Text" DataMember="PersonTitle" />
+                      </DataBindings>
+                      <StylePriority Ref="124" UseFont="false" UseTextAlignment="false" />
+                    </Item2>
+                    <Item3 Ref="125" Name="xrTableCell20" ControlType="XRTableCell" Font="微软雅黑, 9.75pt, style=Bold" TextAlignment="MiddleCenter" Weight="0.34676962194542738">
+                      <DataBindings>
+                        <Item1 Ref="126" PropertyName="Text" DataMember="EmployerTitle" />
+                      </DataBindings>
+                      <StylePriority Ref="127" UseFont="false" UseTextAlignment="false" />
+                    </Item3>
+                  </Cells>
+                </Item1>
+              </Rows>
+              <StylePriority Ref="128" UseFont="false" UseBorders="false" UseTextAlignment="false" />
+            </Item1>
+            <Item2 Ref="129" Name="xrLabel3" ControlType="XRLabel" SizeF="627.9999,30" LocationFloat="0.000111262, 0" Font="微软雅黑, 9pt, style=Bold, charSet=134" Padding="2,2,0,0,100" Borders="Left, Right, Bottom" TextAlignment="MiddleCenter" TextTrimming="EllipsisWord" Text="xrLabel3">
+              <DataBindings>
+                <Item1 Ref="130" PropertyName="Text" DataMember="AdditionalInfoTitle" />
+              </DataBindings>
+              <StylePriority Ref="131" UseFont="false" UseBorders="false" UseTextAlignment="false" />
+            </Item2>
+          </Controls>
+        </Item2>
+        <Item3 Ref="132" ControlType="GroupFooterBand" Name="GroupFooter2" HeightF="30" PageBreak="AfterBand">
+          <Controls>
+            <Item1 Ref="133" Name="xrTable7" ControlType="XRTable" SizeF="627.9999,30" LocationFloat="0, 0" Font="微软雅黑, 9pt, charSet=134" Borders="Left, Right, Bottom" TextAlignment="MiddleLeft">
+              <Rows>
+                <Item1 Ref="134" ControlType="XRTableRow" Name="xrTableRow10" Weight="11.5">
+                  <Cells>
+                    <Item1 Ref="135" Name="xrTableCell15" ControlType="XRTableCell" Font="微软雅黑, 9.75pt, style=Bold" Padding="2,0,0,0,100" Weight="0.84844953199592454">
+                      <DataBindings>
+                        <Item1 Ref="136" PropertyName="Text" DataMember="TotalSalaryTitle" />
+                      </DataBindings>
+                      <StylePriority Ref="137" UseFont="false" UsePadding="false" />
+                    </Item1>
+                    <Item2 Ref="138" Name="xrTableCell23" ControlType="XRTableCell" Font="微软雅黑, 9.75pt, style=Bold" Padding="0,2,0,0,100" TextAlignment="MiddleRight" Weight="0.34676964753954176">
+                      <DataBindings>
+                        <Item1 Ref="139" FormatString="{0:n2}" PropertyName="Text" DataMember="TotalSalaryAmount" />
+                      </DataBindings>
+                      <StylePriority Ref="140" UseFont="false" UsePadding="false" UseTextAlignment="false" />
+                    </Item2>
+                  </Cells>
+                </Item1>
+              </Rows>
+              <StylePriority Ref="141" UseFont="false" UseBorders="false" UseTextAlignment="false" />
+            </Item1>
+          </Controls>
+        </Item3>
+      </Bands>
+    </Item5>
+  </Bands>
+  <FormattingRuleSheet>
+    <Item1 Ref="63" Name="deductAmount" DataMember="SalaryItemModels" Condition="[Type] == 1030  Or [Type] == 1035  Or [Type] == 1055 Or [Type] == 1067 Or [Type] == 1070">
+      <Formatting Ref="142" StringFormat="Near;Near;0;None;Character;Default" BorderStyle="Inset" ForeColor="Red" />
+    </Item1>
+    <Item2 Ref="55" Name="deductName" DataMember="SalaryItemModels" Condition="[Type] == 1035  Or [Type] == 1055">
+      <Formatting Ref="143" StringFormat="Near;Near;0;None;Character;Default" Font="微软雅黑, 9.75pt, style=Bold, charSet=0" BorderStyle="Inset" />
+    </Item2>
+  </FormattingRuleSheet>
+  <ObjectStorage>
+    <Item1 ObjectType="DevExpress.XtraReports.Serialization.ObjectStorageInfo, DevExpress.XtraReports.v15.1" Ref="0" Content="~Xtra#NULL" Type="System.Windows.Forms.BindingSource" />
+  </ObjectStorage>
+</XtraReportsLayoutSerializer>

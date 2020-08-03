@@ -1,0 +1,74 @@
+﻿
+@{
+
+    ViewBag.Title = "GLVoucher";
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    bool isCanEditPermission = HtmlSECMenu.HavePermission(BizObject.Setting, PermissionItem.Change);
+}
+
+<div class="m-imain" style="overflow:hidden">
+    <div class="m-imain-content">
+        <table id="tbInspect" class="easyui-treegrid" style="height:520px"></table>
+
+    </div>
+
+    <div class="clear"></div>
+</div>
+<div class="m-toolbar-footer">
+    <div class="right">
+        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="btnSave">@HtmlLang.Write(LangKey.Save)</a>
+    </div>
+    <br class="clear" />
+</div>
+
+<!--参数设置弹框-->
+<!--设置期间-->
+<div class="paramset-period" style="position: fixed; z-index: 99999; padding: 0px; margin: 0px; top: 180px; left: 600px; height: 280px; width: 500px; background: #fff; border: solid 1px #99b1c4;display:none">
+    <div id='popup_title' style='height:10px'></div>
+    <div style='padding-left:10px;font-size:22px;font-weight:normal'>@HtmlLang.Write(LangModule.BD, "InspectItemParamSet", "巡检参数设置")</div>
+    <div style="padding-left:10px; margin-top:20px">
+        <div id="divStandardPeriod">
+            @*<input type="radio" id="rdStandardPeriod" name="rdPeriodType" checked/>*@
+            <label style="width:80px;display:inline-block">@HtmlLang.Write(LangModule.BD, "OverPeriod", "超过期间")</label>
+            @*<input class="easyui-combobox" id="ckbOverPeriod" style="width:100px" data-options="required:true" />*@
+            <input id="ckbOverPeriod" required="required" style="width:80px;" />
+            @*<select class="" id="ckbOverPeriod">
+                <option value="3">3</option>
+                <option value="6">6</option>
+                <option value="9">9</option>
+                <option value="12">12</option>
+            </select>*@
+        </div>
+        @*<div style="padding-top:20px">
+            <input type="radio" id="rdCustomPeriodType" name="rdPeriodType"/>
+            <label style=" width: 80px; display: inline-block;">@HtmlLang.Write(LangModule.BD, "CustomPeriod", "自定义")</label>
+            <input type="text" id="tbxCustomPeriod" style="height: 20px;line-height: 20px;width:100px" disabled class="easyui-validatebox mg-width200" data-options="required:true" />
+        </div>*@
+    </div>
+    <div id="popup_panel" style="position:relative;bottom:-130px">
+        <input class="easyui-linkbutton easyui-linkbutton-yellow  m-btn-s" style="float:right" type="button" value="@HtmlLang.Write(LangKey.Save)" id="btnOK">  
+        <input class="easyui-linkbutton m-btn-s" type="button" value="@HtmlLang.Write(LangKey.Cancel)" id="btnCancel">
+    </div>
+
+</div>
+
+@HtmlLang.WriteScript(LangModule.BD)
+@if (HtmlSECMenu.HavePermission(BizObject.Setting, PermissionItem.Change))
+{
+    <input type="hidden" id="hidChangeAuth" value="1" />
+}
+else
+{
+    <input type="hidden" id="hidChangeAuth" value="0" />
+}
+@HtmlLang.WriteScript(LangModule.BD)
+
+<script src="@ServerHelper.ScriptServer/scripts/BD/RoutineInspect/RoutineInspectSetting.js?@ServerHelper.JSVersion"></script>
+
+<script>
+
+    $(document).ready(function () {
+        InspectSetting.init();
+    });
+
+</script>

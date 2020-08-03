@@ -1,0 +1,24 @@
+﻿@{
+    
+}
+@using JieNor.Megi.Common.Utility
+<div class="mg-wrapper">
+    <div id="divMessage"></div>
+    <div id="divMessage"></div>
+
+    <div class="tool-bar">
+        <a href="#" class="easyui-linkbutton" id="aSendMessage" data-options="iconCls:'icon-add'">@HtmlLang.Write(LangModule.My, "Compose", "Compose")</a>
+    </div>
+    <div id="tabMsg" class="easyui-tabs" data-options="onSelect:MsgList.ViewMsgList">
+        <div title="@HtmlLang.Write(LangModule.My, "Received", "Received")">
+            <div id="tbReceiveMsg" fitcolumns="true"></div>
+        </div>
+        <div title="@HtmlLang.Write(LangModule.My, "Sent", "Sent")">
+            <div id="tbSentMsg" fitcolumns="true"></div>
+        </div>
+    </div>  
+
+
+    <br class="clear" />
+</div>
+<script src="@ServerHelper.ScriptServer/my/scripts/Message/MessageList.js?@ServerHelper.JSVersion"></script>

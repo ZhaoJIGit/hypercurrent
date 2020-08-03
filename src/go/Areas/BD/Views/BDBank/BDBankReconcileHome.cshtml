@@ -1,0 +1,277 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    JieNor.Megi.DataModel.IV.IVBankStatementsModel statement = ViewData["statement"] as JieNor.Megi.DataModel.IV.IVBankStatementsModel;
+    JieNor.Megi.DataModel.BD.BDBankAccountEditModel bankModel = ViewData["BankModel"] as JieNor.Megi.DataModel.BD.BDBankAccountEditModel;
+    List<JieNor.Megi.DataModel.IV.IVBankStatementViewModel> stateViewList = ViewData["statementViews"] as List<JieNor.Megi.DataModel.IV.IVBankStatementViewModel>;
+    //是否有编辑权限
+    bool isCanEditPermission = HtmlSECMenu.HavePermission(BizObject.BankAccount, PermissionItem.Change);
+
+    bool isRecPermission = HtmlSECMenu.HavePermission(BizObject.Bank_Reconciliation, PermissionItem.Change);
+    //是否有查看报表的权限
+    bool isCanViewReport = HtmlSECMenu.HavePermission(BizObject.General_Reports, PermissionItem.View);
+
+    JieNor.Megi.EntityModel.Context.MContext ctx = JieNor.Megi.Common.Context.ContextHelper.MContext;
+
+    bool isSmartVersion = ctx.MOrgVersionID == (int)JieNor.Megi.EntityModel.Enum.OrgVersionEnum.Smart;
+}
+@using JieNor.Megi.Identity.Go.HtmlHelper
+@using JieNor.Megi.Core.Const
+@using JieNor.Megi.Common.Utility;
+<!--事件返回选择框-->
+<link href="@ServerHelper.StaticServer/FW/include/daterangepicker/jquery.daterangepicker.css?@ServerHelper.JSVersion" rel="Stylesheet" type="text/css" />
+<link href="@ServerHelper.StaticServer/FW/include/daterangepicker/jquery.daterangepicker.custom.css?@ServerHelper.JSVersion" rel="stylesheet" type="text/css" />
+<script src="@ServerHelper.StaticServer/FW/include/daterangepicker/jquery.daterangepicker.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.StaticServer/FW/include/daterangepicker/jquery.daterangepicker.custom.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.StaticServer/FW/scripts/jquery.megi.daterangepicker.js?@ServerHelper.JSVersion"></script>
+
+<!--最外层-->
+<div class="bank-reconcile-main">
+<!--表头，显示账户名称，编辑功能-->
+<div class="main-title">
+    <!--账户名称-->
+    <div class="title-left">
+        <!--账户文本-->
+        <span class="bank-name-text mg-data" name="MBankName">
+
+            </span>
+        &nbsp;
+        <span class="bank-name-text" style="font-size: 20px">[</span>
+        <span class="bank-name-text mg-data" style="font-size: 20px" name="MCyID"></span>
+        <span class="bank-name-text" style="font-size: 20px">]</span>
+        @if (isCanEditPermission)
+        {
+            <!--账户管理-->
+            <a href="javascript:void(0)" class="account-cuid"></a>
+            <!--删除/编辑管理-->
+            <div class="account-cuid-sub-div" style="display: none">
+                <ul class="m-tip-ul-one">
+                    <li><span><a href="javascript:void(0);" class="edit-account">@HtmlLang.Write(LangModule.Bank, "EditAccount", "Edit Account")</a></span></li>
+                    @*<li><span><a href="javascript:void(0);" class="delete-account">@HtmlLang.Write(LangModule.Bank, "RemoveAccount", "Remove Account")</a></span></li>*@
+                </ul>
+            </div>
+        }
+        @if (isCanViewReport || isCanEditPermission)
+        {
+            <!--帐户管理，spend, recieve, transfer, import a statement,transaction list-->
+            <span class="account-manage-button">&nbsp;</span>
+            <div class="account-manage-sub-div">
+                <ul class="manage-table">
+                    @if (isCanEditPermission)
+                    {
+                        if (!isSmartVersion)
+                        {
+                            <li class="payment">
+                                <span><a href="javascript:void(0);">@HtmlLang.Write(LangModule.Bank, "SpendMoney", "Spend Money")</a></span>
+                            </li>
+                            <li class="receipt">
+                                <span><a href="javascript:void(0);">@HtmlLang.Write(LangModule.Bank, "ReceiveMoney", "Receive Money")</a></span>
+
+                            </li>
+                            <li class="transfer">
+                                <span><a href="javascript:void(0);">@HtmlLang.Write(LangModule.Bank, "Transfer", "Transfer")</a></span>
+                            </li>
+                        }
+
+                        if (bankModel.MIsNeedReconcile)
+                        {
+                            <li class="import">
+                                <span><a href="javascript:void(0);">@HtmlLang.Write(LangModule.Bank, "ImportStatement", "Import a Statement")</a></span>
+                            </li>
+                        }
+                    }
+                    @if (!isSmartVersion && isCanViewReport && bankModel.MIsNeedReconcile)
+                    {
+                        <li class="reconcile-report">
+                            <span><a href="javascript:void(0);">@HtmlLang.Write(LangModule.Bank, "ReconcileReport", "Reconcile Report")</a></span>
+                        </li>
+                    }
+                    @if (isCanEditPermission && bankModel.MIsNeedReconcile && bankModel.MBankAccountType == Convert.ToInt32(JieNor.Megi.EntityModel.Enum.BankAccountTypeEnum.Bank))
+                    {
+                        <li class="bank-feeds">
+                            <span><a href="javascript:void(0);">@HtmlLang.Write(LangModule.Bank, "GetBankFeeds", "Get Bank Feeds")</a></span>
+                        </li>
+                    }
+                </ul>
+            </div>
+        }
+        <!--收入/支出/转账-->
+        <a href="javascript:void(0)" class="account-info" style="display: none;"></a>
+        <!--银行账户信息-->
+        <div class="bank-info-div" style="display: none">
+
+        </div>
+    </div>
+    <!--账户余额-->
+    <div class="title-right">
+        <!--日期选择控件-->
+        <div class="daterangepicker-div">
+            <!--日期选择标签-->
+            <span class="m-icon-date"></span>
+            <!--input-->
+            <span class="daterangepicker-span" style="font-family: Arial;">&nbsp;</span>
+            <!--右边一个箭头-->
+            <span class="daterangepicker-arrow">&nbsp;</span>
+        </div>
+        <!--美记余额-->
+        <div class="bank" style="height: 25px; min-width: 210px;">
+
+            <!--文字-->
+            @if (bankModel.MBankAccountType == Convert.ToInt32(JieNor.Megi.EntityModel.Enum.BankAccountTypeEnum.Bank) || bankModel.MBankAccountType == Convert.ToInt32(JieNor.Megi.EntityModel.Enum.BankAccountTypeEnum.Credit))
+            {
+                <span class="bank-text">@HtmlLang.Write(LangModule.Bank, "BankBalance", "Bank Balance")</span>
+            }
+            else
+            {
+                <span class="bank-text">@HtmlLang.Write(LangModule.Bank, "StatementBalance", "Statement Balance")</span>
+            }
+
+
+            <!--文字-->
+            <span class="bank-text" style="float: right;">@HtmlLang.Write(LangModule.Bank, "balanceinmegi", "Balance in Megi")</span>
+        </div>
+        <!--银行余额-->
+        <div class="balance" style="height: 25px;">
+            <!--银行余额-->
+            <span class="balance-text mg-data money-type" name="MBankStatement"></span>
+            <!--美记余额-->
+            <span class="balance-text mg-data money-type" name="MMegiBalance" style="float: right;"></span>
+        </div>
+    </div>
+</div>
+<!--中间的，对账，查看银行记录，修改交易记录，Cash Coding-->
+<div class="main-header">
+    <!--对账-->
+    @if (!isSmartVersion && isRecPermission && bankModel.MIsNeedReconcile)
+    {
+        <div class="header-reconcile" style="padding-right: 10px;">
+            <!--显示对账单数量的span-->
+            <div class="header-reconcile-count">-</div>
+            <!--对账-->
+            <span class="header-reconcile-text main-header-selected" id="reconcile">@HtmlLang.Write(LangModule.Bank, "reconcile", "Reconcile")</span>
+        </div>
+    }
+    <!--查看银行记录-->
+    @if (isRecPermission && bankModel.MIsNeedReconcile)
+    {
+        <div class="header-statement">
+            @if (bankModel.MBankAccountType == Convert.ToInt32(JieNor.Megi.EntityModel.Enum.BankAccountTypeEnum.Bank) || bankModel.MBankAccountType == Convert.ToInt32(JieNor.Megi.EntityModel.Enum.BankAccountTypeEnum.Credit))
+            {
+                <span class="header-statement-text" id="statement">@HtmlLang.Write(LangModule.Bank, "bankstatement", "Bank Statement")</span>
+            }
+            else
+            {
+                <span class="header-statement-text" id="statement">@HtmlLang.Write(LangModule.Bank, "Statement", "Statement")</span>
+            }
+        </div>
+    }
+
+    @if (!isSmartVersion)
+    {
+        <!--修改交易记录-->
+        <div class="header-transaction">
+            <span class="header-transaction-text" id="transaction">@HtmlLang.Write(LangModule.Bank, "accounttransaction", "Account Transaction")</span>
+        </div>
+
+    }
+    @if (isSmartVersion)
+    {
+        <div class="header-statement-detail">
+            <span class="header-statement-detail-text" id="statementDetail">@HtmlLang.Write(LangModule.Bank, "TransactionDetail", "Transaction")</span>
+        </div>
+    }
+    <!--Cash Coding-->
+    @if (isRecPermission && isCanEditPermission && bankModel.MIsNeedReconcile)
+    {
+        <div class="header-cash-coding">
+            <span class="header-cash-coding-text" id="cashCodeing">@HtmlLang.Write(LangModule.Bank, "cashcoding", "Cash Coding")</span>
+        </div>
+    }
+
+</div>
+<!--底层的子功能，对账/查看银行记录/修改交易记录/Cash Coding分布视图-->
+<div class="main-buttom">
+    <!--对账视图-->
+    @if (!isSmartVersion)
+    {
+        <div class="reconcile-partial" inited="0">
+            @Html.Partial("BDBankPartial/BDBankReconcilePartial")
+        </div>
+    }
+
+    <!--对账视图-->
+    <div class="statement-partial" style="display: none;" inited="0">
+        @Html.Partial("BDBankPartial/BDBankStatementPartial")
+    </div>
+    @if (!isSmartVersion)
+    {
+        <!--账号交易明细-->
+        <div class="transaction-partial" style="display: none;" inited="0">
+            @Html.Partial("BDBankPartial/BDBankTransactionPartial")
+        </div>
+    }
+    @if (isSmartVersion)
+    {
+        <!--对账视图-->
+        <div class="statement-detail-partial" style="display: none;" inited="0">
+            @Html.Partial("BDBankPartial/BDBankStatementDetailPartial")
+        </div>
+    }
+
+    <!--对账视图-->
+    <div class="cash-coding-partial" style="display: none;" inited="0">
+        @Html.Partial("BDBankPartial/BDBankCashCodingPartial")
+    </div>
+
+
+</div>
+<!--悬浮的div，展示账户信息-->
+<div class="bank-info" style="display: none">
+    <!--账户名称-->
+    <div class="bank-info-accout mg-data">
+        <span class="mg-data account-name" name="MBankAcctName">
+
+            </span>
+    </div>
+    <!--所属银行-->
+    <div class="bank-info-banktype">
+        <span class="mg-data banktype-name" name="MBankTypeName">
+
+            </span>
+    </div>
+    <!--所用币种-->
+    @*<div class="bank-info-currency">
+                <span class="mg-data currency-name" name="MCurrencyName">
+                </span>
+            </div>*@
+    <!--编辑-->
+    <div class="bank-info-manage">
+        <!--编辑-->
+        <span class="bank-info-edit">
+                Edit
+            </span>
+        <span class="bank-info-delete">
+                Delete
+            </span>
+    </div>
+    <!--删除-->
+</div>
+</div>
+<!--显示键盘快捷键-->
+<div class="tip-hotkey-table-div tip-hide">
+    <!--显示一张键盘的图片-->
+    @Html.Partial("BDBankPartial/HotKeyTablePartial")
+</div>
+<input type="hidden" id="hidChangeAuth" value="@Html.Raw(isCanEditPermission)" />
+<input type="hidden" id="hideVerison" value="@Html.Raw(isSmartVersion)" />
+<input type="hidden" id="hideGLBeginDate" value="@ctx.MGLBeginDate" />
+<!--一些隐藏的数据-->
+<script src="~/Scripts/BD/BDBank/BDBankHome.js?@ServerHelper.JSVersion"></script>
+<script src="~/Scripts/BD/BDBank/BDBankReconcileHome.js?@ServerHelper.JSVersion"></script>
+
+<script type="text/javascript">
+    //初始化所有的参数，在这里写的好处，可以在这里加入Razor语法里面的内容比如ViewData ViewBag Model
+    $(document).ready(function () {
+        new BDBankReconcileHome('@bankModel.MBankAccountType', '@HtmlSECMenu.HavePermission(BizObject.Bank_Reconciliation, PermissionItem.Change)', '@ViewData["id"]', '@ViewData["index"]', '@bankModel.MBankTypeID', '@bankModel.MIsNeedReconcile').InitAll();
+    });
+</script>
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(JieNor.Megi.Identity.LangIndentity.CurrentLangID)

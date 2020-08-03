@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = "Finish";
+    Layout = "~/Areas/BD/Views/Shared/_SetupLayout.cshtml";
+}
+<div class="setup-form">
+    <div class="m-setup-content">
+        <div class="setup-form-wrapper">
+            @Html.Partial("UcFinish")
+        </div>
+        <input type="hidden" class="mg-data" name="MSystemLanguage" />
+        <input type="hidden" class="mg-data m-form-key" name="MItemID" id="hidItemId" />
+    </div>
+</div>
+<script type="text/javascript" src="@ServerHelper.GoServer/Scripts/BD/Setup/Coupon.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.BD)

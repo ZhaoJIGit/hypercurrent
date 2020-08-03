@@ -1,0 +1,120 @@
+﻿@{
+    ViewBag.Title = @HtmlLang.Write(LangModule.Login, "MegiConfirmInvitation", "Megi | Confirm Invitation");
+    Layout = "~/Views/Shared/_ForgetPasswordLayout.cshtml";
+    JieNor.Megi.DataModel.SEC.SECInviteUserInfoModel userInfo = ViewData["userInfo"] as JieNor.Megi.DataModel.SEC.SECInviteUserInfoModel;
+}
+@{
+    string title = HtmlLang.Write(LangModule.Login, "WouldAccessAccount1", "Would like you  to visit {0} account in Megi System").ToString();
+    title = string.Format(title, Convert.ToString(ViewData["orgName"]));
+}
+@using JieNor.Megi.Common.Utility
+<style>
+    .m-login-box .login p { height: 28px; line-height: 28px; }
+
+    .m-login-box .login input { font-size: 12px; width: 80%; width: -moz-calc(100% - 46px); width: -webkit-calc(100% - 46px); width: calc(100% - 46px); height: 26px; background-repeat: no-repeat; background-position: right; padding-left: 5px; color: #444 !important; }
+
+    .reg-title { text-align: left; padding-left: 20px; font-weight: bold; }
+
+    .reg-tips { color: #888; font-size: 11px; padding-left: 20px; text-align: left; height: auto; }
+
+    .m-login-box .main { padding: 0px 10%; }
+</style>
+<div class="m-reg-box">
+    <div id="loginBox" class="m-login-box">
+        <div class="container form-login-content">
+
+            <div class="m-login-box-title">@title</div>
+            <div class="m-login-box-title-tip">@HtmlLang.Write(LangModule.Login, "WeSendYouAnEmail", "We’ll send you an email shortly with a link to verify your account.")</div>
+
+            <!--用户选择登录 OR 创建账号-->
+            <div id="step1" style="padding:20px">
+                <!--按钮左-->
+                <div style="float:left;width:45%">
+
+                    <div>@HtmlLang.Write(LangModule.Login, "NewToMegi", "New to Megi?")</div>
+                    <div> @HtmlLang.Write(LangModule.Login, "CreateAMegiLogin", "Create a Megi login") </div>
+
+
+                </div>
+                <div class="x-middle" style="width: 1px; height: 88px; border-right: 1px solid #eee; float: left; padding-left: 16px;">
+                </div>
+                <div style="float: right; width: 45%;">
+                    <div>
+                        @HtmlLang.Write(LangModule.Login, "IfYouAlreadyHave", "Existing account?")
+                    </div>
+                    <div> @HtmlLang.Write(LangModule.Login, "MegiLogin", " Login into Megi") </div>
+
+                </div>
+                <div class="clear"></div>
+                <div style="padding: 5px 18px">
+                    <a href="javascript:" class="m-btn-yellow" style="padding: 6px 0; float: left; width: 40%;" id="aCreateLogin">@HtmlLang.Write(LangModule.Login, "CreateLogin", "Create acount")</a>
+                    <a href="javascript:" class="m-btn-white" style="padding: 6px 0; float: right;width: 40%;" id="aLoginNow">@HtmlLang.Write(LangModule.Login, "LoginNow", "Login now")</a>
+                </div>
+
+            </div>
+            <!--注册-->
+            <div id="step2A" style="display:none;">
+                <div id="divUserRegister" class="main login" style="">
+                    <p class="reg-title">@HtmlLang.Write(LangKey.FirstName)</p>
+                    <p class="m-form-input">
+                        <input type="text" name="MFirstName" class="easyui-validatebox mg-data" data-options="required:true" value="@userInfo.MFirstName">
+                    </p>
+                    <p class="reg-title">@HtmlLang.Write(LangKey.LastName)</p>
+                    <p class="m-form-input">
+                        <input type="text" name="MLastName" class="easyui-validatebox mg-data" data-options="required:true" value="@userInfo.MLastName">
+                    </p>
+                    <!--邮箱-->
+                    <p class="reg-title">@HtmlLang.Write(LangKey.Email)</p>
+                    <p class="m-form-input">
+                        <input id="newEmail" type="text" hint="@HtmlLang.Write(LangModule.Login, "EmailAddress", "Email Address")"
+                               class="easyui-validatebox mg-data textbox reg-info-b" data-label="Email address" disabled data-options="required:true, validType:['email','length[0,50]']"
+                               name="MEmail" value="@userInfo.MEmail" />
+                    </p>
+                    <p class="reg-tips">@HtmlLang.Write(LangModule.Login, "ThisEmailAddress", "This email address will become your login name.")</p>
+
+                    <!--密码-->
+
+                    <p class="reg-title">@HtmlLang.Write(LangKey.Password)</p>
+                    <p class="m-form-input">
+                        <input type="password" name="MPassword" class="easyui-validatebox mg-data  textbox reg-info-b" data-options="required:true,validType:'minLength[8]'" id="pwd">
+                    </p>
+
+                    <p class="reg-title">@HtmlLang.Write(LangModule.Login, "ConfirmPassword", "Confirm Password") </p>
+                    <p class="m-form-input">
+                        <input type="password" class="easyui-validatebox mg-data  textbox reg-info-b" data-options="required:true,validType:'minLength[8]'" id="rpwd">
+                    </p>
+
+
+                    <div class="text-agree-term" style="max-height: 27px ;text-align: left; padding-left: 20px; padding-top:10px">
+                        <input type="checkbox" id="ckAgreeTerm" />
+                        <span>
+                            @HtmlLang.Write(LangModule.Login, "IHavReadAndAgree", "I have read and I agree to the")
+                            <a href="javascript:void(0);">@HtmlLang.Write(LangModule.Login, "TermsOfUse", "Terms of Use")</a>
+
+                        </span>
+                        <span class="reg-error-image">&nbsp;</span>
+                    </div>
+                    <input type="hidden" class="mg-data" name="MItemID" value="@ViewData["userID"]" />
+                    <input type="hidden" class="mg-data" name="MOrgID" value="@ViewData["orgId"]" />
+                    <input type="hidden" class="mg-data" name="DefaultEmail" id="defaultEmail" value="@userInfo.MEmail" />
+                    <input type="hidden" class="mg-data" name="SendLinkID" value="@ViewData["SendLinkID"]" />
+                    <div class="error-msg">
+
+                    </div>
+
+                    <div class="m-action" style="  padding: 5px 15px;">
+                        <a href="javascript:void(0)" class="m-btn-white" id="aCancel">@HtmlLang.Write(LangKey.Cancel)</a>
+
+                        <a href="javascript:void(0)" class="m-btn-yellow" id="aCreate">@HtmlLang.Write(LangModule.Login, "Create", "Create")</a>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" value="@ServerHelper.LoginServer?wu=@ViewData["userID"]&wo=@ViewData["orgId"]&wsl=@ViewData["SendLinkID"]" id="NowLoginServer" />
+<input type="hidden" value="@ServerHelper.LoginServer" id="CreateLoginServer" />
+<script src="@ServerHelper.LoginServer/login/scripts/Invite/ConfirmInvite.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.Login)

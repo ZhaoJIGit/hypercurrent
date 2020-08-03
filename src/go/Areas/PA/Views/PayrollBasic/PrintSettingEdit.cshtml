@@ -1,0 +1,228 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    string lblDesc = HtmlLang.GetText(LangModule.PA, "ShowSalaryItemDesc", "如用户在用户的工资单里录入了描述需要带出").Trim(new char[] { '（', '）' });
+}
+@using JieNor.Megi.Common.Utility;
+<div class="m-imain">
+    <div class="m-imain-content ps-edit">
+        <div class="ps-top">
+            <div style="float:left;">
+                <div class="field">
+                    <label for="MName" style="margin-top:8px;">@HtmlLang.Write(LangKey.Name)</label>
+                    <input class="easyui-validatebox mg-data textbox m-lang mg-width261 required-field" data-options="required:true" name="MName" id="MName" />
+                </div>
+                <div>
+                    <div style="float:left;">
+                        <div class="field" style="margin-top:9px;">
+                            <label for="MTopMargin">@HtmlLang.Write(LangModule.IV, "TopMargin", "Top margin")</label>
+                            <input class="mg-data textbox easyui-numberbox" precision="2" name="MTopMargin" id="MTopMargin" />
+                        </div>
+                        <div class="field">
+                            <label for="MBottomMargin">@HtmlLang.Write(LangModule.IV, "BottomMargin", "Bottom margin")</label>
+                            <input class="mg-data textbox easyui-numberbox" precision="2" name="MBottomMargin" id="MBottomMargin" />
+                        </div>
+                    </div>
+                    <div style="float: left; padding-top: 6px; padding-left: 9px;">
+                        <fieldset class="popup">
+                            <h3>@HtmlLang.Write(LangModule.IV, "MeasureIn", "Measure in")</h3>
+                            <div class="radios inline">
+                                <div class="radio" style="float:left;">
+                                    <input type="radio" name="MMeasureIn" value="cm" id="centimeters" />
+                                    <label for="centimeters">@HtmlLang.Write(LangModule.IV, "cm", "cm")</label>
+                                </div>
+                                <div class="radio" style="float: left; margin-left: 10px;">
+                                    <input type="radio" name="MMeasureIn" value="inches" id="inches" />
+                                    <label for="inches">@HtmlLang.Write(LangModule.IV, "inches", "inches")</label>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            @*<div class="ps-edit-measurein" id="divMeasureIn">
+            </div>*@
+            <div class="ps-edit-logo" id="divLogo">
+                <input type="checkbox" class="radio" id="MShowLogo" name="MShowLogo" />
+                <label for="MShowLogo">@HtmlLang.Write(LangModule.IV, "ShowLogo", "Show logo") </label>
+                <div id="divLogoAlign" class="radios inline">
+                    <h3>@HtmlLang.Write(LangModule.IV, "LogoAlignment", "Logo alignment")</h3>
+                    <div class="radio" style="float:left;">
+                        <input id="LogoLeft" type="radio" name="MLogoAlignment" value="Left" />
+                        <label for="LogoLeft"> @HtmlLang.Write(LangModule.IV, "Left", "Left")</label>
+                    </div>
+                    <div class="radio" style="float:left; margin-left:10px;">
+                        <input id="LogoCenter" type="radio" name="MLogoAlignment" value="Center" />
+                        <label for="LogoCenter"> @HtmlLang.Write(LangModule.IV, "Center", "Center")</label>
+                    </div>
+                    <div class="radio" style="float: left; margin-left: 10px;">
+                        <input id="LogoRight" type="radio" name="MLogoAlignment" value="Right" />
+                        <label for="LogoRight"> @HtmlLang.Write(LangModule.IV, "Right", "Right")</label>
+                    </div>
+                </div>
+            </div>                        
+            <div class="clear"></div>
+        </div>
+        <div class="ps-bottom">
+            <div id="fsLeft" class="ps-left" style="float:left;">
+                @*<div>*@
+                <fieldset style="width:330px;">
+                    <legend><h3>@HtmlLang.Write(LangModule.PA, "SalarySlipTItle", "工资单标题")</h3></legend>
+                    <div class="field checkbox">
+                        <input type="checkbox" class="radio" id="MShowTitle" name="MShowTitle" />
+                        <label for="MShowTitle">@HtmlLang.Write(LangModule.Common, "Title", "Title")</label>
+                        <input class="easyui-validatebox mg-data textbox m-lang mg-width200" data-options="required:true" name="MTitle" id="MTitle" style="margin-left:7px;" />
+                    </div>
+                    <div class="field checkbox">
+                        <input type="checkbox" class="radio" id="MShowSalaryMonth" name="MShowSalaryMonth" />
+                        <label for="MShowSalaryMonth">@HtmlLang.Write(LangModule.PA, "SalaryMonth", "工资月份")</label>
+                    </div>
+                </fieldset>
+                @*</div>*@
+                <fieldset style="float:left; width:330px; margin-top:5px;">
+                    <legend><h3>@HtmlLang.Write(LangModule.PA, "EmpSalaryCompositionInfo", "员工工资组成信息")</h3></legend>
+                    <label class="show-desc">@lblDesc</label>
+                    <div>
+                        <div id="divGroupList" style="float: left; width: 35%;">
+                        </div>
+                        <div style="float:left;">
+                            <div class="field checkbox">
+                                <input type="checkbox" class="radio" id="MShowEmployeeSocialSecurity" name="MShowEmployeeSocialSecurity" />
+                                <label for="MShowEmployeeSocialSecurity">@HtmlLang.Write(LangModule.PA, "EmpSocialSecurity", "Social Security(Employee)")</label>
+                            </div>
+                            <div class="field checkbox">
+                                <input type="checkbox" class="radio" id="MShowEmployeeHousingProvidentFund" name="MShowEmployeeHousingProvidentFund" />
+                                <label for="MShowEmployeeHousingProvidentFund">@HtmlLang.Write(LangModule.PA, "EmpHousingProvidentFund", "Housing Provident Fund(Employee)")</label>
+                            </div>
+                            <div class="field checkbox">
+                                <input type="checkbox" class="radio" id="MShowSalaryBeforeTax" name="MShowSalaryBeforeTax" />
+                                <label for="MShowSalaryBeforeTax">@HtmlLang.Write(LangModule.PA, "SalaryBeforeTax", "Total Salary before Tax")</label>
+                            </div>
+                            <div class="field checkbox">
+                                <input type="checkbox" class="radio" id="MShowPIT" name="MShowPIT" />
+                                <label for="MShowPIT">@HtmlLang.Write(LangModule.PA, "PIT", "P-I-T")</label>
+                            </div>
+                            <div class="field checkbox">
+                                <input type="checkbox" class="radio" id="MShowNetSalary" name="MShowNetSalary" />
+                                <label for="MShowNetSalary">@HtmlLang.Write(LangModule.PA, "NetSalary", "Net Salary")</label>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="ps-right">
+                <fieldset style="width: 507px; float:left; height:82px;">
+                    <legend><h3>@HtmlLang.Write(LangModule.Contact, "EmployeeInformation", "Employee Information")</h3></legend>
+                    <div class="field checkbox" style="padding-top:7px;">
+                        <div class="field checkbox" style="float:left;">
+                            <input type="checkbox" class="radio" id="MShowEmployeeName" name="MShowEmployeeName" />
+                            <label for="MShowEmployeeName">@HtmlLang.Write(LangKey.Name)</label>
+                        </div>
+                        <div class="field checkbox" style="padding-left:9px;float:left;">
+                            <input type="checkbox" class="radio" id="MShowCnEnName" name="MShowCnEnName" />
+                            <label for="MShowCnEnName">@HtmlLang.Write(LangModule.PA, "ShowCnEnName", "同时显示中英文名字")</label>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                    <div>
+                        <div style="float:left;">
+                            <div class="field checkbox">
+                                <input type="checkbox" class="radio" id="MShowJoinTime" name="MShowJoinTime" />
+                                <label for="MShowJoinTime">@HtmlLang.Write(LangModule.Contact, "JoinTime", "Join Time")</label>
+                            </div>
+                        </div>
+                        <div style="float:left;margin-left:16px;">
+                            <div class="field checkbox">
+                                <input type="checkbox" class="radio" id="MShowIDNumber" name="MShowIDNumber" />
+                                <label for="MShowIDNumber">@HtmlLang.Write(LangModule.Contact, "IDNumber", "ID Number")</label>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </fieldset>
+                <div style="margin-top:7px;float:left;width:527px;">
+                    <fieldset>
+                        <legend><h3>@HtmlLang.Write(LangModule.PA, "EmpSSAndHFInfo", "员工社保和公积金信息")</h3></legend>
+                        <div class="field checkbox">
+                            <input type="checkbox" class="radio" id="MShowAdditionalInfo" name="MShowAdditionalInfo" />
+                            <label for="MShowAdditionalInfo">@HtmlLang.Write(LangModule.Common, "Title", "Title")</label>
+                            <input class="easyui-validatebox mg-data mg-width200 textbox m-lang" data-options="required:true" name="MAdditionalInfo" id="MAdditionalInfo" style="margin-left:7px;" />
+                        </div>
+                        <div id="divAdditionalInfo">
+                            <div style="float:left;width:262px;">
+                                <fieldset>
+                                    <legend><h3>@HtmlLang.Write(LangModule.PA, "SocialSecurity", "Social Security")</h3></legend>
+                                    <div class="field checkbox">
+                                        <input type="checkbox" class="radio" id="MShowPension" name="MShowPension" />
+                                        <label for="MShowPension">@HtmlLang.Write(LangModule.BD, "BaiscRetirementSecurity", "Pension")</label>
+                                    </div>
+                                    <div class="field checkbox">
+                                        <input type="checkbox" class="radio" id="MShowMedicalInsurance" name="MShowMedicalInsurance" />
+                                        <label for="MShowMedicalInsurance">@HtmlLang.Write(LangModule.BD, "BasicMedicalInsurance", "Basic Medical Insurance")</label>
+                                    </div>
+                                    <div class="field checkbox">
+                                        <input type="checkbox" class="radio" id="MShowUmemploymentInsurance" name="MShowUmemploymentInsurance" />
+                                        <label for="MShowUmemploymentInsurance">@HtmlLang.Write(LangModule.BD, "UmemploymentInsurance", "Umemployment Insurance")</label>
+                                    </div>
+                                    <div class="field checkbox">
+                                        <input type="checkbox" class="radio" id="MShowMeternityInsurance" name="MShowMeternityInsurance" />
+                                        <label for="MShowMeternityInsurance">@HtmlLang.Write(LangModule.BD, "MeternityInsurance", "Meternity Insurance")</label>
+                                    </div>
+                                    <div class="field checkbox">
+                                        <input type="checkbox" class="radio" id="MShowIndustrialInjury" name="MShowIndustrialInjury" />
+                                        <label for="MShowIndustrialInjury">@HtmlLang.Write(LangModule.BD, "IndustrialInjury", "Industrial Injury")</label>
+                                    </div>
+                                    <div class="field checkbox">
+                                        <input type="checkbox" class="radio" id="MShowSeriousMedical" name="MShowSeriousMedical" />
+                                        <label for="MShowSeriousMedical">@HtmlLang.Write(LangModule.BD, "SeriousIlinessMedicalTreatment", "Serious Illiness Medical Treatment")</label>
+                                    </div>
+                                    <div class="field checkbox">
+                                        <input type="checkbox" class="radio" id="MShowSocialSecurityOther" name="MShowSocialSecurityOther" />
+                                        <label for="MShowSocialSecurityOther">@HtmlLang.Write(LangModule.BD, "Other", "Other")</label>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div style="float:left;width:228px;margin-left:15px;">
+                                <fieldset>
+                                    <legend><h3>@HtmlLang.Write(LangModule.PA, "HousingProvidentFund", "Housing Provident Fund")</h3></legend>
+                                    <div class="field checkbox">
+                                        <input type="checkbox" class="radio" id="MShowHousingProvidentFund" name="MShowHousingProvidentFund" />
+                                        <label for="MShowHousingProvidentFund">@HtmlLang.Write(LangModule.PA, "HousingProvidentFund", "Housing Provident Fund")</label>
+                                    </div>
+                                    <div class="field checkbox">
+                                        <input type="checkbox" class="radio" id="MShowHousingProvidentFundAdition" name="MShowHousingProvidentFundAdition" />
+                                        <label for="MShowHousingProvidentFundAdition">@HtmlLang.Write(LangModule.PA, "HousingProvidentFundAddition", "Housing Provident Fund(Addition)")</label>
+                                    </div>
+                                </fieldset>
+                                <div class="field checkbox" style="padding-top:6px;">
+                                    <input type="checkbox" class="radio" id="MShowTotalSalary" name="MShowTotalSalary" />
+                                    <label for="MShowTotalSalary">@HtmlLang.Write(LangModule.PA, "TotalSalary", "Total Salary")</label>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+
+<div class="m-toolbar-footer">
+        <div class="left">
+            <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray" id="aCancel">@HtmlLang.Write(LangKey.Cancel)</a>
+        </div>
+        <div class="right">
+            @if (HtmlSECMenu.HavePermission(BizObject.PayRun, PermissionItem.Change))
+            {
+                <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aSave">@HtmlLang.Write(LangKey.Save)</a>
+            }
+        </div>
+</div>
+<input class="mg-data m-form-key" type="hidden" id="hidItemID" name="MItemID" value="@ViewBag.ItemID">
+<input class="mg-data" type="hidden" id="MLogoID" name="MLogoID">
+<script src="@ServerHelper.ScriptServer/scripts/PA/PayrollBasic/PSEdit.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.Common)

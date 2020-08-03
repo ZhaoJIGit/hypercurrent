@@ -1,0 +1,26 @@
+﻿<!--背景,此文件同go站点下相同路径文件相同，修改一边轻记得同步-->
+@using JieNor.Megi.Common.Utility
+<div class="m-login-box-bg"></div>
+
+<div id="popup_container_login" class="m-login-box">
+    <div id="popup_title" style="cursor: move;">&nbsp;</div>
+    <div class="m-login-content lock">
+        <div class="m-login-message" style="">
+
+        </div>
+        <div class="m-login-input">
+            <!--密码显示框-->
+            <input type="text" class="password-text" hint="@HtmlLang.Write(LangModule.Common, "Password", "Password")" />
+            <input type="password" class="password-password" style="display:none;" id="password" />
+        </div>
+        <div id="errorMessage" class="m-login-error">
+            @HtmlLang.Write(LangModule.Common, "passworderror", "Password Error!")
+        </div>
+        <div class="m-login-btns">
+            <input class="easyui-linkbutton easyui-linkbutton-yellow l-btn l-btn-small" type="button" value="@HtmlLang.Write(LangModule.Login, "Login", "Login")" id="login_popup_ok" />
+            <input class="easyui-linkbutton m-btn-s l-btn l-btn-small" type="button" value="@HtmlLang.Write(LangModule.Login, "Loginout", "Login Out")" id="login_popup_cancel" />
+        </div>
+    </div>
+</div>
+@HtmlLang.WriteScript(LangModule.Login)
+<script src="@ServerHelper.StaticServer/fw/scripts/jquery.megi.loginbox.js?@ServerHelper.JSVersion"></script>

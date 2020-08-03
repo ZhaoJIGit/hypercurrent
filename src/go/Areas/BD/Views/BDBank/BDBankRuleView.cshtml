@@ -1,0 +1,43 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+@using JieNor.Megi.Common.Utility;
+
+<div class="m-form">
+    <div class="m-form-field">
+        <div class="m-form-setion">@HtmlLang.Write(LangModule.Bank, "GiveTheRuleATitle", "Give the rule a title...")</div>
+        <div class="m-form-input">
+            <input class="easyui-validatebox mg-width200 mg-data mg-lang" name="MName" disabled="disabled" id="txtBankRuleName" />
+        </div>
+    </div>
+    <div class="m-form-field">
+        <div class="m-form-setion">@HtmlLang.Write(LangModule.Bank, "TargetABankAccount", "Target a bank account...") </div>
+        <div class="m-form-input">
+            <select id="seleBankAccount" class="easyui-combobox mg-data" name="MBankID" disabled="disabled" data-options="editable:false" style="width:300px; height:26px;">
+                @HtmlBDAccount.RuleBankOptions()
+            </select>
+        </div>
+    </div>
+
+    <div class="m-form-field">
+        <div class="m-form-setion">银行交易明细与收付款明细记录自动匹配的条件</div>
+        <div class="m-form-input">
+            <ul>
+                <li><input type="checkbox" class="mg-data" name="MChkAmount" disabled="disabled" checked="checked" />金额相同Amount</li>
+                <li><input type="checkbox" class="mg-data" name="MChkPayee" disabled="disabled" />对方单位类似Payee</li>
+                <li><input type="checkbox" class="mg-data" name="MChkRef" disabled="disabled" />摘要相同Reference</li>
+                <li><input type="checkbox" class="mg-data" name="MChkTransDate" disabled="disabled" />交易日期相同</li>
+            </ul>
+        </div>
+
+        </div>
+
+
+    <div class="m-form-action">
+        <a href="javascript:void(0)" class="mg-btn mg-btn-gray mg-btn-close">@HtmlLang.Write(LangKey.Cancel)</a>
+
+        <input type="hidden" class="mg-data m-form-key" name="MItemID" id="hidBankRuleID" value="@ViewData["BankRuleID"]" />
+        <br class="clear" />
+    </div>
+</div>
+<script src="@ServerHelper.ScriptServer/BD/BDBank/BDBankRuleView.js?@ServerHelper.JSVersion"></script>

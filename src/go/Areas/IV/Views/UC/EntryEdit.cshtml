@@ -1,0 +1,55 @@
+﻿@{
+    DateTime? bizDate = ViewData["BillBizDate"] as DateTime?;
+    
+}
+<div class="line line-tint"></div>
+<div class="m-form m-form-icon">
+    <div class="column" style="width:50%">
+        <div class="cell m-iv-entry-cy">
+            <span class="lbl m-icon-currency" title="@HtmlLang.Write(LangKey.Currency)">&nbsp;</span>
+            <input id="selCurrency" class="easyui-combobox mg-data" name="MCyID" data-options="@JieNor.Megi.Identity.HtmlHelper.HtmlBDCurrency.DataOptions(bizDate),editable:false,onSelect:IVEditBase.changeCurrency" style="width:140px; float:left;" />
+            <span class="mg-prompt" id="spExchangeInfo"></span>
+            <span id="spEditExchangeRate"> </span>
+            @*重复发票要用到 begin*@
+            @*<a href="javascript:void(0);" id="aInsertPlaceholder2" class="insert-placeholder-tagter">@HtmlLang.Write(LangModule.IV, "InsertPlaceholder", "Insert Placeholder")</a>*@
+            <div class="insert-placeholder" id="divInsertPlaceholder2">
+                <ul id="ul-insert-placeholder2">
+                    <li><a href="javascript:void(0);">@HtmlLang.Write(LangModule.IV, "Week", "Week")</a></li>
+                    <li><a href="javascript:void(0);">@HtmlLang.Write(LangModule.IV, "Month", "Month")</a></li>
+                    <li><a href="javascript:void(0);">@HtmlLang.Write(LangModule.IV, "Year", "Year")</a></li>
+                    <li><a href="javascript:void(0);">@HtmlLang.Write(LangModule.IV, "WeekYear", "Week Year")</a></li>
+                    <li style="border:0px;"><a href="javascript:void(0);">@HtmlLang.Write(LangModule.IV, "MonthYear", "Month Year")</a></li>
+                </ul>
+            </div>
+            @*重复发票要用到 end*@
+        </div>
+    </div>
+    <div class="column" id="divAmountsAre" style="float:right; position:relative;">
+        <div class="cell">
+            <span class="lbl m-icon-tax" title="@HtmlLang.Write(LangModule.IV, "AmountsAre", "Amounts are")">&nbsp;</span>
+            <input id="selTaxType" class="easyui-combobox" data-options="@HtmlDataDict.DataOptions(DataDictionaryType.TAX_TYPE),editable:false,onSelect:IVEditBase.changeTaxType" name="dept" style="width:140px;" />
+        </div>
+    </div>
+</div>
+<div class="clear"></div>
+<div class="line"></div>
+<div class="space"></div>
+<div class="space"></div>
+<div class="m-iv-entry">
+    <div class="form-invoice-line">
+        <div id="tbInvoiceDetail" fitcolumns="true"></div>
+    </div>
+    <div class="clear"></div>
+    <div class="form-invoice-line-new" style="display:none;">@*添加新行*@@*暂时隐藏*@
+        <a href="javascript:void(0)" id="aNewLine" class="easyui-linkbutton  m-btn-m">@HtmlLang.Write(LangModule.IV, "AddANewLine", "Add a new line") </a>
+    </div>
+    <div class="form-invoice-total">
+        <div class="sub-total"><span class="mg-total-text">@HtmlLang.Write(LangKey.Subtotal) <lable>@HtmlLang.Write(LangModule.IV, "IncludesADiscountOf", "(includes a discount of )")</lable></span><span class="mg-total-value" id="spSubTotal">0.00</span></div>
+        <div id="divTax">
+        </div>
+        <div class="total"><span class="mg-total-text">@HtmlLang.Write(LangKey.Total)</span><span class="mg-total-value" id="spTotal">0.00</span><span class="mg-total-currency" id="spTotalCurrency" style="display:none;"></span></div>
+        <div id="divCredit"></div>
+    </div>
+</div>
+@*<input type="hidden" id="hidTrack" value='@ViewData["Track"]' />*@
+@*@HtmlREGTaxRate.OrgTaxRate()*@

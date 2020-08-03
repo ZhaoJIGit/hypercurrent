@@ -1,0 +1,199 @@
+﻿@using JieNor.Megi.Identity.HtmlHelper
+@using JieNor.Megi.EntityModel.MultiLanguage
+@using JieNor.Megi.Identity.Go.HtmlHelper
+@using JieNor.Megi.Core.Const
+@using JieNor.Megi.Common.Context
+@using JieNor.Megi.Identity.Go.AutoManager
+@using JieNor.Megi.Common.Utility
+@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    var type = int.Parse(ViewData["Type"].ToString());
+    var index = int.Parse(ViewData["Index"].ToString());
+
+    var ctx = ContextHelper.MContext;
+
+    var invoiceName = type == 0 ? HtmlLang.Write(LangModule.FP, "SalesFapiao", "销项发票") : HtmlLang.Write(LangModule.FP, "PurchaseFapiao", "进项发票");
+
+    bool isSmartVersion = ctx.MOrgVersionID == (int)JieNor.Megi.EntityModel.Enum.OrgVersionEnum.Smart;
+
+    var accessResponse = JieNor.Megi.Tools.AccessHelper.Access();
+
+    var accessList = accessResponse.Access;
+
+    //是否有 销售发票（查看）权限
+    bool isCanSaleFapiaoViewPermission = accessList[BizObject.Sales_Fapiao + PermissionItem.View];
+    bool isCanSaleFapiaoChangePermission = accessList[BizObject.Sales_Fapiao + PermissionItem.Change];
+
+    //是否有 采购发票（查看）权限
+    bool isCanPurchaseFapiaoViewPermission = accessList[BizObject.Purchases_Fapiao + PermissionItem.View];
+
+    bool isCanPurchaseFapiaoChangePermission = accessList[BizObject.Purchases_Fapiao + PermissionItem.Change];
+
+
+    //是否有编辑权限
+    bool isCanEditPermission = accessList[BizObject.BankAccount + PermissionItem.Change];
+
+    bool isRecPermission = accessList[BizObject.Bank_Reconciliation + PermissionItem.Change];
+    //是否有查看报表的权限
+    bool isCanViewReport = accessList[BizObject.General_Reports + PermissionItem.View];
+
+    var defaultStart = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).AddDays(-1).ToString("yyyy-MM-dd");
+    var defaultEnd = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(5).ToString("yyyy-MM-dd");
+
+    var dateString = defaultStart + "~" + defaultEnd;
+}
+
+<link type="text/css" rel="stylesheet" href="~/Scripts/GL/fp.css?@ServerHelper.JSVersion" />
+<link type="text/css" rel="stylesheet" href="~/Scripts/GL/css.css?@ServerHelper.JSVersion" />
+<link href="@ServerHelper.StaticServer/FW/include/daterangepicker/jquery.daterangepicker.css?@ServerHelper.JSVersion" rel="Stylesheet" type="text/css" />
+<link href="@ServerHelper.StaticServer/FW/include/daterangepicker/jquery.daterangepicker.custom.css?@ServerHelper.JSVersion" rel="stylesheet" type="text/css" />
+
+<script src="@ServerHelper.StaticServer/FW/include/daterangepicker/jquery.daterangepicker.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.StaticServer/FW/include/daterangepicker/jquery.daterangepicker.custom.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.StaticServer/FW/scripts/jquery.megi.daterangepicker.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.StaticServer/FW/scripts/jquery.megi.hotkeys.js?@ServerHelper.JSVersion"></script>
+
+<script type="text/javascript" src="~/Scripts/FP/FPHome.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="~/Scripts/FP/model/FPEnum.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="~/Scripts/FP/model/FPTableModel.js?@ServerHelper.JSVersion"></script>
+
+<script type="text/javascript" src="~/Scripts/FP/FPReconcile.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="~/Scripts/FP/FPCoding.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="~/Scripts/FP/FPStatement.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="~/Scripts/FP/FPTransaction.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="~/Scripts/FP/FPImportLog.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="~/Scripts/FP/FPReconcileHome.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="~/Scripts/IO/ImportBySolution/Import.interface.js?@ServerHelper.JSVersion"></script>
+
+<div class="fp-reconcile-main" style="padding-left:20px;padding-right:20px;padding-top: 20px;">
+    <!--表头，显示账户名称，编辑功能-->
+    <div class="main-title">
+        <!--账户名称-->
+        <div class="title-left">
+            <!--账户文本-->
+            <span class="bank-name-text" style="font-size: 24px;font-weight: bold;float:left;">
+                @invoiceName
+            </span>
+            @if (!isSmartVersion && ((type == 0 && isCanSaleFapiaoViewPermission) || (type == 1 && isCanPurchaseFapiaoViewPermission)))
+            {
+                <span class="account-manage-button" style="cursor:pointer;float:left;margin-top:4px;">&nbsp;</span>
+                <div class="account-manage-sub-div">
+                    <ul class="manage-table">
+                        @if ((type == 1 && isCanPurchaseFapiaoChangePermission))
+                        {
+                            <li style="padding: 5px 0px 5px 10px; display:none;">
+                                <span><a href="javascript:void(0);" id="importFapiao">@HtmlLang.Write(LangModule.FP, "ImportFapiaoTitle", "导入发票")</a></span>
+                            </li>
+                        }
+
+                        @if ((type == 0 && isCanSaleFapiaoViewPermission) || (type == 1 && isCanPurchaseFapiaoViewPermission))
+                        {
+                            <li class="fapiaoTable" style="padding: 5px 0px 5px 10px;">
+                                <span><a href="javascript:void(0);" id="btnOutputFPTable">@HtmlLang.Write(LangModule.FP, "fapiaoTable", "开票单")</a></span>
+                            </li>
+                        }
+                    </ul>
+
+                </div>
+            }
+        </div>
+        <!--日期选择-->
+        <div class="title-right">
+            <!--日期选择控件-->
+            <div class="daterangepicker-div">
+                <!--日期选择标签-->
+                <span class="m-icon-date"></span>
+                <!--input-->
+                <span class="daterangepicker-span">@dateString</span>
+                <!--右边一个箭头-->
+                @*<span class="daterangepicker-arrow" style="cursor:pointer;">&nbsp;</span>*@
+            </div>
+        </div>
+    </div>
+    <!--中间的，对账，查看银行记录，修改交易记录，Cash Coding-->
+    <div class="main-header">
+        @if (!isSmartVersion)
+        {
+        <!--对账-->
+            <div class="header-reconcile" index="0">
+                <!--显示对账单数量的span-->
+                <div class="header-reconcile-count">0</div>
+                <!--对账-->
+                <span index="0" class="header-reconcile-text main-header-selected" id="reconcile">@HtmlLang.Write(LangModule.Bank, "reconcile", "Reconcile")</span>
+            </div>
+        }
+        <!--查看银行记录-->
+        <div class="header-statement" index="1">
+
+            <span index="1" class='header-statement-text @(isSmartVersion ? " main-header-selected" : "")' id="statement">@HtmlLang.Write(LangModule.FP, "FapiaoStatement", "发票导入清单")</span>
+        </div>
+
+        <div class="header-transaction" index="2">
+            <span index="2" class="header-transaction-text" id="transaction">@HtmlLang.Write(LangModule.FP, "FapiaoTransaction", "发票明细")</span>
+        </div>
+
+        @if (isSmartVersion)
+        {
+            <div class="header-coding" index="3">
+                <span index="3" class="header-statement-detail-text" id="cashcoding">@HtmlLang.Write(LangModule.FP, "FapiaoCashcoding", "发票 Coding")</span>
+            </div>
+        }
+
+        <div class="header-importlog" index="4">
+            <span index="4" class="header-cash-coding-text" id="autoImport">@HtmlLang.Write(LangModule.FP, "AutoImportLog", "自动获取日志")</span>
+        </div>
+
+    </div>
+    <!--底层的子功能，对账/查看银行记录/修改交易记录/Cash Coding分布视图-->
+    <div class="main-buttom">
+        <!--自动勾兑列表-->
+        @if (!isSmartVersion)
+        {
+            <div class="fp-reconcile-div div-partial-0" style="display:block;width:100%;">
+                @Html.Partial("FPPartial/FPReconcilePartial")
+            </div>
+        }
+        <!--发票导入清单-->
+        <div class="fp-statement-div div-partial-1" style="display:@(isSmartVersion ? "block" : "none");">
+            @Html.Partial("FPPartial/FPStatementPartial")
+        </div>
+        <!--发票交易明细-->
+        <div class="fp-transaction-div div-partial-2" style="display:none;width:100%;">
+            @Html.Partial("FPPartial/FPTransactionPartial")
+        </div>
+        <!--发票Coding-->
+        @if (isSmartVersion)
+        {
+            <div class="fp-coding-div div-partial-3" style="display:none;width:100%;">
+                @Html.Partial("FPPartial/FPCodingPartial")
+            </div>
+        }
+        <!--自动导入日志-->
+        <div class="fp-import-div div-partial-4" style="display:none;width:100%;">
+            @Html.Partial("FPPartial/FPImportLogPartial")
+        </div>
+
+    </div>
+</div>
+<!--显示键盘快捷键-->
+<div class="tip-hotkey-table-div tip-hide">
+    <!--显示一张键盘的图片-->
+    @Html.Partial("FPPartial/HotKeyTablePartial")
+</div>
+<input type="hidden" value="@type" id="typeInput" />
+
+<input type="hidden" value='@(isSmartVersion ? "1" : "0")' id="orgVersion" />
+
+<div id="fpMaskDiv" style="position:absolute;width:100%;height:100%;font-size:0px;margin:0px;padding:0px;background-color:#C3D5ED;z-index:999;opacity:0.0;left:0;top:0;display:none;cursor:text;">
+
+</div>
+@HtmlLang.WriteScript(LangModule.FP)
+@HtmlLang.WriteScript(LangModule.GL)
+@HtmlLang.WriteScript(LangModule.Bank)
+<script src="@ServerHelper.StaticServer/FW/include/My97Datepicker/WdatePicker.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript">
+
+    $(function () {
+        new FPReconcileHome().init(@type, @index);
+    })
+</script>

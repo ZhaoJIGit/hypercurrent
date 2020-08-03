@@ -1,0 +1,47 @@
+﻿
+<div id="divSearch" class="m-form-vtcl">
+    <div class="m-imain-content">
+        <div class="m-form-section section-type4" style="padding-bottom: 0;">
+            <div class="m-form-item" style="height: 40px; width: 20%">
+                <ul>
+                    <li>
+                        <input id="bizObjectSel" />
+                    </li>
+                </ul>
+            </div>
+            <div class="m-form-item" style="height: 40px; width: 20%">
+                <ul>
+                    <li>
+                        <input id="bizColumnSel" />
+                    </li>
+                </ul>
+            </div>
+            <div class="m-form-item" style="height: 40px; width: 20%">
+                <ul>
+                    <li>
+                        <input id="operateSel" />
+                    </li>
+                </ul>
+            </div>
+            <div class="m-form-item" style="height: 40px; width: 20%">
+                <ul>
+                    <li>
+                        <input id="keywordInput" class="mg-data textbox" name="keyword" hint="@HtmlLang.Write(LangModule.My, "InputSearchKeyword", "input search keyword")" />
+                        <input id="dateInput" class="mg-data textbox" style="display:none" name="keyword" hint="@HtmlLang.Write(LangModule.BD, "Date", "Date")" />
+                    </li>
+                </ul>
+            </div>
+            <div class="m-form-item" style="height: 40px; width: 20%">
+                <ul>
+                    <li class="m-tab-toolbar">
+                        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow l-btn l-btn-small" filter="track;topSearch" id="btnSearch" style="height:25px;">@HtmlLang.Write(LangKey.Search)</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div id="dataGridDiv">
+            <div id="dataGrid"></div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,165 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Tracking";
+    List<BDTrackModel> items = ViewBag.list as List<BDTrackModel>;
+}
+@using JieNor.Megi.Common.Utility;
+<style>
+    .mg-track-content-item {
+        width: 208px !important;
+        word-break: normal;
+        display: block;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        overflow: hidden;
+    }
+</style>
+<div class="m-toolbar">
+    @*编辑权限*@
+    @if (HtmlSECMenu.HavePermission(BizObject.Setting, PermissionItem.Change))
+    {
+        <a href="#" class="easyui-linkbutton easyui-linkbutton-yellow"  filter="track;CreateTrackCategory" id="AddTrackingCategory">@HtmlLang.Write(LangModule.BD, "AddCategory", "添加类别")</a>
+        <input type="hidden" id="hidChangeAuth" value="1" />
+    }
+    else
+    {
+        <input type="hidden" id="hidChangeAuth" value="0" />
+    }
+
+</div>
+
+<div class="m-imain">
+    <div class="m-imain-content">
+        <div id="mtabs" class="easyui-tabs">
+            @*动态创建选项卡*@
+            @{
+                if (items != null)
+                {
+                    var groupItems = items.GroupBy(e => e.MItemID);
+                    int index = 0;
+                    foreach (var item in groupItems)
+                    {
+                        index += 1;
+                        string AddAnotherOption_ID = "AddAnotherOption" + "Exist" + index.ToString();
+                        var title = item.ToList()[0].MName;
+                        var tabContentId = "TabContent" + index.ToString();
+                        <div title="@title" class="mg-track-tab" id="@tabContentId">
+                            <div class="mg-track-content">
+                                <div class="mg-track-content-title">
+                                    <strong>@HtmlLang.Write(LangModule.BD, "TrackingCategoryName", "Tracking category name")</strong>
+                                </div>
+                                <div class="mg-track-content-items">
+                                    <span class="mg-track-content-item">@title</span>
+                                    <div style="float:right;">
+                                        <a class="mg-track-delete" href="javascript:void(0)">&nbsp;</a>
+                                        <a class="mg-track-Rename" href="javascript:void(0)">&nbsp;</a>
+                                        <input type="hidden" value="@item.ToList()[0].MItemID" id="MItemID" />
+                                        <input type="hidden" value="@item.ToList()[0].MPKID" id="MPKID" />
+                                    </div>
+                                </div>
+                                @* 循环创建Options*@
+                                <div class="mg-track-content-title">
+                                    <strong>@HtmlLang.Write(LangModule.BD, "CategoryOptions", "Category options")</strong>
+                                </div>
+                                <div class="mg-track-content-items">
+                                    @{
+                                        List<BDTrackModel> optionList = item.ToList();
+                                        for (int i = 0; i < optionList.Count; i++)
+                                        {
+                                            <div class="mg-track-items-options">
+                                                @if (optionList[i].MEntryID != null)
+                                                {
+                                                    <span class="mg-track-content-item">@optionList[i].MEntryName</span>
+                                                    <div style="float: right; padding-top: 2px" class="track-option">
+                                                        @if (optionList[i].MIsActive)
+                                                        {
+                                                            <span class="track-option-name" style="">@HtmlLang.Write(LangModule.BD, "Enable", "Enable")</span>
+                                                            <a class="mg-track-status mg-track-enable" href="javascript:void(0)" value="1">&nbsp;</a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="track-option-name" style="">@HtmlLang.Write(LangModule.BD, "Disable", "Disable")</span>
+                                                            <a class="mg-track-status mg-track-disable" href="javascript:void(0)" value="0">&nbsp;</a>
+                                                        }
+
+                                                        @{
+                                                            var deleteid = "mg-track-delete" + optionList[i].MEntryID;
+                                                            var Renameid = "mg-track-Rename" + optionList[i].MEntryID;
+                                                        }
+                                                        @if (optionList[i].MIsActive)
+                                                        {
+                                                            <a class="mg-track-delete" id="@deleteid" href="javascript:void(0)">&nbsp;</a>
+                                                            <a class="mg-track-Rename" id="@Renameid" href="javascript:void(0)">&nbsp;</a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a class="mg-track-delete" id="@deleteid" href="javascript:void(0)" style="visibility:hidden">&nbsp;</a>
+                                                            <a class="mg-track-Rename" id="@Renameid" href="javascript:void(0)" style="visibility:hidden">&nbsp;</a>
+                                                        }
+
+                                                        <input type="hidden" value="@optionList[i].MEntryID" id="MEntryID" />
+                                                        <input type="hidden" value="@optionList[i].MEntryPKID" id="MEntryPKID" />
+                                                    </div>
+                                                            }
+                                            </div>
+                                                            }
+                                    }
+                                </div>
+
+                                <a href="#" class="easyui-linkbutton easyui-linkbutton-gray m-btn-m" flag="add" id="@AddAnotherOption_ID" style="float:left;margin-top: 10px;clear:both">+ @HtmlLang.Write(LangModule.BD, "AddOption", "添加选项")</a>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                                                                }
+                                                            }
+            }
+
+        </div>
+        <input id="tabKeySel" type="hidden" value="@ViewBag.tabKeySelected" />
+
+        @*Add Tabs 用于新增一个跟踪项*@
+        <div id="AddTbs" style="display:none">
+            <div class="" id="TabContent-NEW">
+                <div class="mg-track-content">
+                    <!--跟踪项的标题-->
+                    <div class="">
+                        <h1 style="height:20px;">@HtmlLang.Write(LangModule.BD, "TrackingCategoryName", "Tracking category name")</h1>
+                        <div>
+                            <input class="easyui-validatebox textbox m-lang" data-options="required:true,filterChar:' ',isOnlyFirst:true,validType:'isBlank'" id="MName" name="MName" />
+                        </div>
+                    </div>
+                    <!--跟踪项的子项 默认给三个-->
+                    <div class="tracking-options">
+                        <h1 style="height:20px;padding-top:15px;">@HtmlLang.Write(LangModule.BD, "CategoryOptions", "Category options")</h1>
+                        <div>
+                            <input class="easyui-validatebox  textbox m-lang" data-options="filterChar:' ',isOnlyFirst:true,validType:'isBlank'" name="MName-0" />
+                        </div>
+                        <div class="">
+                            <input class="easyui-validatebox  textbox m-lang" data-options="filterChar:' ',isOnlyFirst:true,validType:'isBlank'" name="MName-1" />
+                        </div>
+                        <div class="">
+                            <input class="easyui-validatebox  textbox m-lang" data-options="filterChar:' ',isOnlyFirst:true,validType:'isBlank'" name="MName-2" />
+                        </div>
+
+                    </div>
+
+                    <a href="javascript:void(0);" class="easyui-linkbutton easyui-linkbutton-gray m-btn-m" style="" id="AddAnotherOption">@HtmlLang.Write(LangModule.BD, "AddAnotherOption", "Add another option")</a>
+
+                </div>
+
+
+                <div class="mg-track-bottom-buttons">
+
+                    <a href="@ServerHelper.GoServer/BD/Tracking/Index" class="easyui-linkbutton easyui-linkbutton-gray" id="aCancel-NEW">@HtmlLang.Write(LangKey.Cancel)</a>
+                    <a href="javascript:void(0);" url="@ServerHelper.GoServer/BD/Tracking/Index" class="easyui-linkbutton  easyui-linkbutton-yellow" id="aSave-NEW">@HtmlLang.Write(LangKey.Save)</a>
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+
+    </div>
+</div>
+<script src="@ServerHelper.ScriptServer/scripts/BD/Tracking/Index.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.StaticServer/fw/scripts/jquery.megi.filterchar.js?@ServerHelper.JSVersion"></script>
+<input type="hidden" id="hideGoServer" value="@ServerHelper.GoServer"/>
+@HtmlLang.WriteScript(LangModule.BD)

@@ -1,0 +1,45 @@
+﻿@using JieNor.Megi.Common.Utility;
+@*编辑权限*@
+@if (HtmlSECMenu.HavePermission(BizObject.Setting, PermissionItem.Change))
+{
+    <div class="m-toolbar">
+        <a href="javascript:void(0)" id="aNewTaxRate" class="easyui-linkbutton easyui-linkbutton-yellow">@HtmlLang.Write(LangModule.Bank, "NewTaxRate", "New Tax Rate")</a>
+    </div>
+}
+
+<script src="@ServerHelper.StaticServer/FW/include/easyui/jquery.easyui.min.js"></script>
+
+<div class="m-imain-content">
+    <div id="tt" class="easyui-tabs">
+        <div title="@HtmlLang.Write(LangModule.BD, "ALL", "ALL")">
+            @if (HtmlSECMenu.HavePermission(BizObject.Setting, PermissionItem.Change))
+            {
+                <div class="m-tab-toolbar">
+                    <a href="javascript:void(0)" id="aArchiveTaxRate" class="easyui-linkbutton">@HtmlLang.Write(LangModule.BD, "Archive", "Archive")</a>
+                    <a href="javascript:void(0)" id="aDeleteTaxRate" class="easyui-linkbutton">@HtmlLang.Write(LangKey.Delete)</a>
+                </div>
+            }
+            <div class="@(Convert.ToBoolean(ViewData["IsSetup"]) ? "" : "m-imain")">
+                <div id="tbTax"></div>
+            </div>
+        </div>
+        <div title="@HtmlLang.Write(LangKey.Archive)">
+            @if (HtmlSECMenu.HavePermission(BizObject.Setting, PermissionItem.Change))
+            {
+                <div class="m-tab-toolbar">
+                    <a href="javascript:void(0)" class="easyui-linkbutton" id="btnRestore">@HtmlLang.Write(LangModule.Acct, "Restore", "恢复")</a>
+                </div>
+            }
+            <div class="@(Convert.ToBoolean(ViewData["IsSetup"]) ? "" : "m-imain")">
+                <div id="tbNoActiveTax"></div>
+            </div>
+        </div>
+    </div>
+</div>
+@HtmlLang.WriteScript(LangModule.Common)
+@HtmlLang.WriteScript(LangModule.Bank)
+@HtmlLang.WriteScript(LangModule.Org)
+@HtmlLang.WriteScript(LangModule.BD)
+<script src="@ServerHelper.ScriptServer/scripts/BD/BDQuote.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.ScriptServer/scripts/BD/TaxRate/TaxRateList.js?@ServerHelper.JSVersion"></script>
+

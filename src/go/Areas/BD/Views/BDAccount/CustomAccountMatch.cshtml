@@ -1,0 +1,33 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+@using JieNor.Megi.Common.Utility
+<style>
+    .datagrid-header-check, .datagrid-cell-check {
+        height: 20px !important;
+    }
+</style>
+<div class="m-form m-imain">
+    <div style="padding-left:10px;float:left">
+        <table id="tbAll" class="easyui-treegrid" style="height:380px;width:520px"></table>
+    </div>
+
+    <div style="width: 180px; border: 1px solid #e9e9e9; float: right; margin-right: 10px; padding: 5px">
+        <span style="padding:5px">@HtmlLang.Write(LangModule.GL,"Businesssystemfortheamountofsynchronization","为了和业务系统的资金帐户余额进行同步，我们需要将您导入的以下科目进行匹配:")</span>
+    </div>
+</div>
+<div class="m-toolbar-footer">
+    <div class="left">
+        <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray">@HtmlLang.Write(LangKey.Cancel)</a>
+    </div>
+    <div class="right">
+        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="btnFinishMatch">@HtmlLang.Write(LangModule.Common, "FinishAccountMatch", "完成匹配")</a>
+    </div>
+    <br class="clear" />
+</div>
+
+@HtmlLang.WriteScript(LangModule.Acct)
+@HtmlLang.WriteScript(LangModule.Bank)
+@HtmlLang.WriteScript(LangModule.BD)
+<script src="@ServerHelper.GoServer/scripts/BD/BDAccount/CustomAccountMatch.js?@ServerHelper.JSVersion"></script>
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)

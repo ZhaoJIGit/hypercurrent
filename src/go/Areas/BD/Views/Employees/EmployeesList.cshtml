@@ -1,0 +1,96 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = HtmlLang.Write(LangModule.Contact, "Employees", "Employees");
+    //List<BDContactsTypeLModel> contactTypes = ViewData["ContactType"] as List<BDContactsTypeLModel>;
+}
+@using JieNor.Megi.Common.Utility;
+<div class="m-toolbar">
+    @*编辑权限*@
+    @if (HtmlSECMenu.HavePermission(BizObject.Contact, PermissionItem.Change))
+    {
+        <a href="#" class="easyui-linkbutton easyui-linkbutton-yellow" id="NewEmployee">@HtmlLang.Write(LangModule.Contact, "NewEmployee", "New Employee")</a>
+        @*<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" id="NewGroup">@HtmlLang.Write(LangModule.Contact, "NewGroup", "New Group")</a>*@
+        <a href="#" class="easyui-linkbutton" id="aImport">@HtmlLang.Write(LangKey.Import)</a>
+        
+    }
+
+    @if (HtmlSECMenu.HavePermission(BizObject.Contact, PermissionItem.Export))
+    {
+        <a href="#" class="easyui-linkbutton" id="aExport">@HtmlLang.Write(LangKey.Export)</a>
+    }
+</div>
+<div class="m-imain" style="overflow-y:hidden;">
+    <div id="divMessage"></div>
+    <div class="m-imain-content" style="padding-bottom:0px;">
+        @*员工类别*@
+        <div id="tbEmployeesGroups" class="easyui-tabs">
+
+            <div title="@HtmlLang.Write(LangModule.Contact, "ALL", "ALL")" class="mg-track-tab" id="ALL">
+                <div class="m-filter-item">
+                    <a href="#" class="easyui-linkbutton " id="ALLSearchALL" style="margin-left:0px;">@HtmlLang.Write(LangModule.Contact, "ALL", "ALL")</a>
+                    <a href="#" class="easyui-linkbutton " id="ALLSearch123">123</a>
+                    @{
+                        for (int i = (int)'A'; i <= (int)'Z'; i++)
+                        {
+                            char iName = (char)i;
+                            string searchId = "ALLSearch" + iName.ToString();
+                            <a href="#" class="easyui-linkbutton " id="@searchId">@iName</a>
+                        }
+                    }
+                    <div class="clear"></div>
+                </div>
+                @*编辑权限*@
+                
+                    <div class="m-tab-toolbar">
+                    @if (HtmlSECMenu.HavePermission(BizObject.Contact, PermissionItem.Change))
+                    {
+                        <a href="#" class="easyui-linkbutton " id="AllArchive">@HtmlLang.Write(LangModule.Contact, "Archive", "Archive")</a>
+                        <a href="#" class="m-btn-s easyui-linkbutton" id="btnDelete">@HtmlLang.Write(LangKey.Delete)</a>
+                    }
+                    </div>
+                
+                @{
+                    var allGridId = "tbGrid" + HtmlLang.Write(LangModule.Contact, "ALL", "ALL");
+                    <div id="@allGridId" fitcolumns="true">
+                    </div>
+                }
+            </div>
+
+
+            <div title="@HtmlLang.Write(LangModule.Contact, "Archive", "Archive")" class="mg-track-tab" id="tabArchive">
+                
+                    <div class="m-tab-toolbar">
+                    @if (HtmlSECMenu.HavePermission(BizObject.Contact, PermissionItem.Change))
+                    {
+                        <a href="#" class="easyui-linkbutton " id="btnUnArchive">@HtmlLang.Write(LangModule.Contact, "Restore", "Restore")</a>
+                    }
+                    </div>
+                
+
+
+                <div id="girdArchive" fitcolumns="true">
+                </div>
+            </div>
+        </div>
+        <input id="tabKeySel" type="hidden" value="@ViewData["tabKeySelected"]" />
+        <div class="clear"></div>
+    </div>
+    <input type="hidden" id="aGoServer" value="@ServerHelper.GoServer" />
+    @if (HtmlSECMenu.HavePermission(BizObject.Contact, PermissionItem.Change))
+    {
+        <input type="hidden" id="hidChangeAuth" value="1" />
+    }
+    else
+    {
+        <input type="hidden" id="hidChangeAuth" value="0" />
+    }
+    @HtmlLang.WriteScript(LangModule.BD)
+    @HtmlLang.WriteScript(LangModule.Contact)
+
+
+    <script src="@ServerHelper.ScriptServer/scripts/BD/BDQuote.js?@ServerHelper.JSVersion"></script>
+    <script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/BD/Import/ImportBase.js?@ServerHelper.JSVersion"></script>
+    <script type="text/javascript" src="@ServerHelper.ScriptServer/scripts/BD/Employees/EmployeesList.js?@ServerHelper.JSVersion"></script>
+
+</div>
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)

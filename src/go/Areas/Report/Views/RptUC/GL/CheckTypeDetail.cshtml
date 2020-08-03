@@ -1,0 +1,70 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+@using JieNor.Megi.Common.Utility
+<div class="m-form m-imain" style="padding-left:20px">
+    <div>
+        <div class="gl-report-checktypelist left" style="width:200px">
+            <span class="m-bold">@HtmlLang.Write(LangModule.Report, "CheckType", "核算维度")</span>
+            <div id="checkTypeList" class="gl-report-checktypediv">
+                <ul id="ulCheckTypeList" class="gl-report-checktypeul backgroup">
+                </ul>
+            </div>
+        </div>
+        <div>
+            @*<a href="javacript:void(0)">移入</a>
+            <a href="javacript:void(0)">移除</a>*@
+        </div>
+        <div class="gl-report-checktypevalue left">
+            <span class="m-bold" style="">@HtmlLang.Write(LangModule.Report, "CheckTypeItem", "项目")</span>
+            <span class="gl-report-selectall"><input type="checkbox" class="gl-report-allcheckbox"/><span style="padding-left:5px">@HtmlLang.Write(LangModule.Report, "SelectAll", "全选")</span> </span>
+            <div class="gl-report-checktypediv" style="height:270px;overflow-y:visible">
+                <div><input type="text" id="tbxSearch" hint="@HtmlLang.Write(LangModule.Report, "QuickSearch", "快速搜索")" style="width:227px;height:21px" /></div>
+                <ul id="checktype-value" class="gl-report-checktypeul" style="max-height:243px;min-height:243px; overflow:auto"></ul>
+            </div>
+        </div>
+        <div style="float:left;padding:5px">
+            <div style="position:relative;left:2px;top:100px">
+                <p><a href="javascript:void(0)" id="btnAddCheckTypeValue">@HtmlLang.Write(LangModule.Report, "AddIn", "移入")</a></p>
+                <p><a href="javascript:void(0)" id="btnDeleteCheckTypeValue">@HtmlLang.Write(LangModule.Report, "Remove", "移除")</a></p>
+            </div>
+        </div>
+        <div class="gl-report-checktype-selectitem">
+            <span class="m-bold">@HtmlLang.Write(LangModule.Report, "CheckTypeItemSelected", "已选项目")</span>
+            <span class="gl-report-selectall"><input type="checkbox" class="gl-report-selected-allcheckbox" style="padding-right: 5px" /><span style="padding-left:5px">@HtmlLang.Write(LangModule.Report, "SelectAll", "全选")</span></span>
+            <div class="gl-report-checktypediv selected-item" style="height:270px;overflow-y:visible">
+                <ul id="checktype-value-selected" class="gl-report-checktypeul" style=" max-height:270px;min-height:270px; overflow:auto"></ul>
+            </div>
+        </div>
+
+    </div>
+    <div class="clear"></div>
+
+    <div class="gl-report-checktypereview" style="max-width:736px">
+        <span class="m-bold">@HtmlLang.Write(LangModule.Report, "CheckTypeView", "预览")</span><span style="padding-left:5px"><a href="javascript:void(0);" id="btnClearReview">@HtmlLang.Write(LangModule.Report, "ClearAll", "清空")</a></span>
+        <div class="gl-report-checktypediv review" style="overflow-y: visible">
+            <ul id="ulChecktypeView" style="max-height: 100px; overflow:auto"></ul>
+        </div>
+    </div>
+
+</div>
+<div class="m-toolbar-footer">
+    @if (HtmlSECMenu.HavePermission(BizObject.General_Reports, PermissionItem.View))
+    {
+        <div class="left">
+            <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-gray" id="btnCancel">@HtmlLang.Write(LangKey.Cancel)</a>
+        </div>
+        <div class="right">
+            <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="btnSave">@HtmlLang.Write(LangKey.Save)</a>
+        </div>
+    }
+</div>
+<input type="hidden" id="hideCheckTypeValueList" value="@ViewBag.CheckTypeValueList" />
+<script src="@ServerHelper.ScriptServer/scripts/Report/RptUC/GL/CheckTypeDetail.js?@ServerHelper.JSVersion"></script>
+
+<script>
+    $(document).ready(function () {
+        CheckTypeDetail.init();
+    });
+</script>
+

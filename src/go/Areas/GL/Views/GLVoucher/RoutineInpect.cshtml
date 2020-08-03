@@ -1,0 +1,104 @@
+﻿
+@{
+    ViewBag.Title = "GLDocVoucherEdit";
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    var year = ViewData["year"].ToString();
+    var period = ViewData["period"].ToString();
+}
+<link type="text/css" rel="stylesheet" href="~/Scripts/GL/ri.css?@ServerHelper.JSVersion" />
+@HtmlLang.WriteScript(LangModule.GL)
+@using JieNor.Megi.Identity.HtmlHelper
+@using JieNor.Megi.EntityModel.MultiLanguage
+@using JieNor.Megi.Core.Const
+@using JieNor.Megi.Common.Utility
+<!--顶部-->
+<div class="ri-top-div m-form m-imain" style="overflow:hidden;">
+
+    <div class="ri-title-div">
+        <span class="ri-period-span" style="float:left">
+            @string.Format(HtmlLang.GetText(LangModule.GL, "InspectPeriod", "结账期间，{0}年{1}月"), year, period)
+        </span>
+        <a href="javascript:void(0)" style="float:left" class="easyui-linkbutton easyui-linkbutton-yellow ri-inpsect-button l-btn l-btn-small">@HtmlLang.Write(LangModule.GL, "Inspect", "检查")</a>
+        <div class="ri-period-message">
+            @*12月份帐表检查完成，该月资产负债表不平衡，不能结账*@
+        </div>
+    </div>
+
+    <div class="ri-accordion-top" style="width:100%;">
+        <ul class="ri-accordion-ul">
+            <li class="ri-accordion-li demo" style="display:none;">
+                <div class="ri-accordion-title">
+                    <div class="ri-title-name">
+                        @*业务系统*@
+                    </div>
+                    <div class="ri-title-detail" style="display:none">
+                        @*共有x项，其中y项有风险*@
+                    </div>
+                    <div class="ri-inspect-progressbar" style="width:400px;">
+
+                    </div>
+                    <span class="ri-down-icon ri-accordion-icon">
+                        &nbsp;
+                    </span>
+                </div>
+                <div class="ri-accordion-body">
+                    <ul class="ri-accordion-body-ul">
+                        <li class="ri-accordion-body-li demo">
+                            <div class="ri-inpsect-sub-category">
+                                @*- 销售*@
+                            </div>
+                            <!--单个结果显示-->
+                            <div class="ri-inpsect-sub-result" style="display:none;">
+                                <div class="ri-inspect-sub-result-div">
+                                    <span class="ri-inpsect-passed ri-states-span">&nbsp;</span>
+                                    <a href="###" class="ri-inpsect-detail-link">
+                                        @*已审核销售发票*@
+                                    </a>
+                                    <span class="ri-down-icon ri-children-accordion-icon">
+                                        &nbsp;
+                                    </span>
+                                </div>
+                                <div class="ri-children-body" style="display:none;">
+                                    <ul class="ri-children-ul">
+                                        <li class="ri-children-li demo">
+                                            <a href="###" class="ri-inpsect-children-link">
+
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+</div>
+
+<div class="m-toolbar-footer">
+    @if (HtmlSECMenu.HavePermission(BizObject.General_Ledger, PermissionItem.Change))
+    {
+        <div class="left">
+            <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray de-cancel-button">@HtmlLang.Write(LangKey.Cancel)</a>
+        </div>
+        <div class="right">
+            <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-gray ri-close-button">@HtmlLang.Write(LangModule.GL, "CloseAccount", "结账")</a>
+        </div>
+    }
+</div>
+@HtmlLang.WriteScript(LangModule.GL)
+@HtmlLang.WriteScript(LangModule.IV)
+@HtmlLang.WriteScript(LangModule.BD)
+@HtmlLang.WriteScript(LangModule.Report)
+<script src="~/Scripts/GL/GLVoucherHome.js?@ServerHelper.JSVersion"></script>
+<script src="~/Scripts/GL/RIInspect.js?@ServerHelper.JSVersion"></script>
+<input id="year" type="hidden" value='@year' />
+<input id="period" type="hidden" value='@period' />
+<script type="text/javascript">
+    $(function () {
+        new RIInspect().init();
+    })
+</script>

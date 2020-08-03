@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "EmployeesMoveTo";
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+@using JieNor.Megi.Common.Utility;
+
+
+<div id="divEmployeesMoveTo" class="m-form m-imain">
+    <div class="m-form-item">
+        <ul>
+            <li class="mg-bold">@HtmlLang.Write(LangModule.Contact, "Department", "department")</li>
+            <li>
+                <select style="width:155px" class="mg-data easyui-combobox m-form-item-select" id="deptSelectID" data-options="multiple:true" panelheight="100">
+                    @HtmlBDDepartment.SelectOptions(Convert.ToString(ViewData["orgid"]))
+                </select>
+            </li>
+        </ul>
+    </div>
+    <input type="hidden" value="@ViewData["empids"]" id="empids" />
+    <input type="hidden" value="@ViewData["olderdeptid"]" id="olderDeptId" />
+    <br class="clear" />
+    @*<div class="m-form-action">
+        <a href="javascript:" class="mg-btn mg-btn-gray mg-btn-cancel" id="aCancel">@HtmlLang.Write(LangKey.Cancel)</a>
+        <a href="javascript:" class="mg-btn mg-btn-green mg-btn-save" id="aSave" style="width: 60px">@HtmlLang.Write(LangKey.Save)</a>
+        <br class="clear" />
+    </div>*@
+</div>
+<div class="m-toolbar-footer">
+    @if (HtmlSECMenu.HavePermission(BizObject.Contact, PermissionItem.Change)) { 
+    <div class="left">
+        <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray">@HtmlLang.Write(LangKey.Cancel)</a>
+    </div>
+    <div class="right">
+        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aSave">@HtmlLang.Write(LangKey.Save)</a>
+    </div>
+    }
+</div>
+<script src="@ServerHelper.ScriptServer/scripts/BD/Dept/EmployeesMoveTo.js?@ServerHelper.JSVersion"></script>
+
+
+

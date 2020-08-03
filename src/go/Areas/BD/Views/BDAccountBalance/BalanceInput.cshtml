@@ -1,0 +1,151 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    int sysVersion = Convert.ToInt32(ViewData["SysVersion"]);
+}
+@using JieNor.Megi.Common.Utility
+@if (HtmlSECMenu.HavePermission(BizObject.Setting, PermissionItem.Change))
+{
+    <div class="m-toolbar">
+        <a href="javascript:void(0)" id="btnTrialBalance" class="easyui-linkbutton easyui-linkbutton-gray">@HtmlLang.Write(LangModule.Acct, "TrialBalance", "Trial balance")</a>
+        @if (HtmlSECMenu.HavePermission(BizObject.BankAccount, PermissionItem.Export))
+        {
+            /*<a href="#" class="easyui-linkbutton" id="aExport">@HtmlLang.Write(LangKey.Export)</a>*/
+        }
+        <a href="javascript:void(0)" id="btnFinish" style="float: right; width: 115px; display: none" class="easyui-linkbutton easyui-linkbutton-yellow">
+            @HtmlLang.Write(LangModule.Acct, "FinishInitialization", "Finish Initialization")
+        </a>
+
+        <a href="javascript:void(0)" id="btnReInit" style="float: right; width: 115px; display: none" class="easyui-linkbutton easyui-linkbutton-yellow">
+            @HtmlLang.Write(LangModule.Acct, "ReInitialization", "Re-Initialization")
+        </a>
+    </div>
+}
+<script src = "@ServerHelper.StaticServer/FW/scripts/jquery.megi.tip.js"></script>
+<div class="m-form m-imain" style="padding-left: 15px; overflow: hidden;">
+    <div class="bi-left" style="height:100%;float:left">
+        <!--左侧联系人搜索款-->
+        <div class="bi-content-left">
+            <!--搜索框-->
+            <div class="bi-contact-search-div">
+                <!--搜索输入框-->
+                <input class="bi-contact-search-input searchbox-f" tabindex="9900" style="display: none;" inited="1">
+                <span class="bi-searchbox searchbox">
+                    <a class="searchbox-menu l-btn l-btn-small l-btn-plain m-btn m-btn-small" href="javascript:void(0)" style="height: 23px;">
+                        <span class="l-btn-left" style="height: 23px;width:84px">
+                            <span class="l-btn-text" style="height: 23px; line-height: 23px;">@HtmlLang.Write(LangModule.Acct, "AllAccount", "所有科目")</span>
+                            <span class="m-btn-downarrow"></span><span class="m-btn-line"></span>
+                        </span>
+                    </a>
+                    <input type="text" class="searchbox-text searchbox-prompt" name="全部类型" style="width: 113px; height: 23px; line-height: 23px;" />
+                    <span>
+                        <span class="searchbox-button" style="height: 23px;"></span>
+                    </span>
+                </span>
+                <!--搜索内容框-->
+                <div class="bi-searchbox-content-div menu" style="">
+
+                </div>
+            </div>
+            <div class="bi-account-tree-div">
+                <ul class="easyui-tree" id="treeAccount" style="height:120px"></ul>
+            </div>
+        </div>
+        <div class="bi-menu-shrink bi-menu-shrink-open" status="open">
+        </div>
+    </div>
+    <!--右侧单据输入框-->
+    @{
+        
+        var autoCreateBillRuleTips1 = HtmlLang.Write(LangModule.Acct, "autoCreateBillRuleTips1", @"系统会按以下逻辑自动生成单据:
+        1.收付款单默认取银行的第一个账户，如币别不符系统则去银行账户里面自动找一个合法的银行账户。如果您银行账号不符合，请在单据编辑界面更改账号或者删除单据手动录入;");
+
+
+        var autoCreateBillRuleTips2 = HtmlLang.Write(LangModule.Acct, "autoCreateBillRuleTips2", @" 2.在初始化单据界面业务类型不可修改，如果不符合需要手动录入，自动生成的单据类型规则:
+          应收帐款：销售单;
+          预收账款：收款单;
+          应付账款：采购单;
+          预付账款：付款单;
+          其它应收款：付款单;
+          其它应付款：收款单");
+
+         var autoCreateBillRuleTips3 = HtmlLang.Write(LangModule.Acct, "autoCreateBillRuleTips3", @"3.核算维度对于的单据信息，如果不合法，将不推送，例如：应收账款没有选择联系人的核算维度，因其销售单客户必填，所以无法自动生成单据。");
+
+        string autoCreateRuleTips = autoCreateBillRuleTips1 + "\\n" + autoCreateBillRuleTips2 + "\\n" + autoCreateBillRuleTips3;                                                          
+}
+    <div class="bi-content-right">
+        <div style="">
+            <div id="lblCurrentAccount" class="m-bold">
+                <span>@HtmlLang.Write(LangModule.Acct, "CurrentAccountName", "当前科目")</span>:<span class="bi-account-text" style="display:inline-block"></span>
+                @if (sysVersion != 1)
+                {
+                <span class="bi-auto-addinitdocument" style="display:none;font-weight:normal;padding-left:20px" >
+                    <input type="checkbox" id="ckbAutoAddInitDocument" />
+                    @HtmlLang.Write(LangModule.Acct, "IsAutoCreateInitDocument", "是否自动生成期初单据")
+                    <span mtitle="@autoCreateRuleTips" class="bi-createbill-tips">&nbsp;</span>
+                </span>
+                }
+            </div>
+            <div>
+                <!-- bug 23623 -->
+                <table id="gridAccountBalance" style="height:150px"></table>
+            </div>
+        </div>
+        <!--合计栏-->
+        <div class="bi-balance-total">
+            <span>@HtmlLang.Write(LangModule.Acct, "InitBalanceTotal", "金额合计")</span>
+            <div style="overflow-y: auto; height:100px">
+                <table cellspacing="1" border="1" id="tableTotal" style="border-collapse: collapse; width: 100%; border 1px solid #ddd;">
+                    <tr>
+                        <th style="text-align:center" class="datagrid-header">@HtmlLang.Write(LangModule.Acct, "Currency", "币别")</th>
+                        <th class="bi-total-text title-ori datagrid-header">@HtmlLang.Write(LangModule.Acct, "InitialBalanceOriginalCurrency", "期初余额原币")</th>
+                        <th class="bi-total-text datagrid-header">@HtmlLang.Write(LangModule.Acct, "InitialBalanceBaseCurrency", "期初余额本位币")</th>
+                        <th class="bi-total-text title-ori datagrid-header">@HtmlLang.Write(LangModule.Acct, "CumulativeDebitThisYearOriginalCurrency", "本年累计借方原币")</th>
+                        <th class="bi-total-text datagrid-header">@HtmlLang.Write(LangModule.Acct, "CumulativeDebitThisYearBaseCurrency", "本年累计借方本位币")</th>
+                        <th class="bi-total-text title-ori datagrid-header">@HtmlLang.Write(LangModule.Acct, "CumulativeCreditThisYearOriginalCurrency", "本年累计贷方原币")</th>
+                        <th class="bi-total-text datagrid-header">@HtmlLang.Write(LangModule.Acct, "CumulativeCreditThisYearBaseCurrency", "本年累计贷方本位币")</th>
+                    </tr>
+                    <tr class="bi-total-all" currency="0" style="">
+                        <td class="bi-total-currency" style="text-align:center"><div class="" style="text-align:center"></div></td>
+                        <td class="bi-money-init-ori" style="text-align:right"></td>
+                        <td class="bi-money-init-base" style="text-align:right">0.00</td>
+                        <td class="bi-money-ytddebit-ori" style="text-align:right"></td>
+                        <td class="bi-money-ytddebit-base" style="text-align:right">0.00</td>
+                        <td class="bi-money-ytdcredit-ori" style="text-align:right"></td>
+                        <td class="bi-money-ytdcredit-base" style="text-align:right">0.00</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="m-toolbar-footer">
+    <div class="right">
+        @if (sysVersion != 1)
+        {
+            <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-gray" id="btnFinishInput">@HtmlLang.Write(LangModule.Acct, "FinishBalanceInput", "完成期初余额录入")</a>
+        }
+
+        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="btnSave">@HtmlLang.Write(LangKey.Save)</a>
+    </div>
+    <br class="clear" />
+</div>
+<input type="hidden" id="hideDefaultId" value="@ViewBag.DefaultId" />
+<input type="hidden" id="hideBaseCurrency" value="@ViewBag.BaseCurrencyId" />
+<input type="hidden" id="hideEditPage" value="false" />
+<input type="hidden" id="hideForbitEdit" value="@Convert.ToString(ViewData["ForbidEdit"])" />
+<input type="hidden" id="hideGoServer" value="@ServerHelper.GoServer" />
+<input type="hidden" id="hideGLMonth" value="@ViewData["GLBeginMonth"]"/>
+@HtmlLang.WriteScript(LangModule.Acct)
+@HtmlLang.WriteScript(LangModule.BD)
+<script src="@ServerHelper.ScriptServer/Scripts/BD/BDAccountBalance/AccountInitBalanceBase.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.GoServer/Scripts/BD/BDAccountBalance/BalanceInput.js?@ServerHelper.JSVersion"></script>
+@*<script src="@ServerHelper.StaticServer/FW/scripts/jquery.megi.combotree.add.js"></script>*@
+<script>
+    $(document).ready(function () {
+        BalanceInput.init();
+        AccountInitBalanceBase.init();
+    });
+
+</script>
+
+

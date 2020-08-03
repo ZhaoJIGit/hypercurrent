@@ -1,0 +1,318 @@
+﻿@{
+
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+
+    var dashBoardInfoModel = ViewData["DashboardInfo"] as JieNor.Megi.DataModel.GL.GLDashboardInfoModel;
+    var isCanEditPermission = dashBoardInfoModel.CanEdit;
+    var defaultDate = dashBoardInfoModel.DefaultDate;
+    var ctx = dashBoardInfoModel.ctx;
+
+    var userName = ViewData["UserName"];
+    var itemID = ViewData["MItemID"];
+    var number = ViewData["MNumber"] == null? "": ViewData["MNumber"];
+    var isCopy = ViewData["IsCopy"];
+    var isReverse = ViewData["IsReverse"];
+    var dir = ViewData["MDir"];
+    var fromPeriod = ViewData["FromPeriodTransfer"];
+    var fromDocVoucher = ViewData["FromDocVoucher"];
+    var docVoucherID = ViewData["MDocVoucherID"];
+    var isModule = ViewData["IsModule"] != null && ViewData["IsModule"].ToString() == "1";
+    //年
+    var year = ViewData["MYear"];
+    //期
+    var period = ViewData["MPeriod"];
+    //
+    var day = ViewData["Day"];
+    //金额
+    var amount = ViewData["MAmount"];
+    //百分比
+    var percent0 = ViewData["MPercent0"];
+    //百分比
+    var percent1 = ViewData["MPercent1"];
+    //百分比
+    var percent2 = ViewData["MPercent2"];
+    //期末转结类型
+    var transferTypeID = ViewData["MTransferTypeID"];
+    //
+    var entryAccountPair = ViewData["MEntryAccountPair"];
+}
+
+@using JieNor.Megi.Identity.HtmlHelper
+@using JieNor.Megi.EntityModel.MultiLanguage
+@using JieNor.Megi.Core.Const
+@using JieNor.Megi.Identity.Go.HtmlHelper
+@using JieNor.Megi.Common.Utility
+@using JieNor.Megi.Identity
+
+<link type="text/css" rel="stylesheet" href="~/Scripts/GL/css.css?@ServerHelper.JSVersion" />
+@HtmlLang.WriteScript(LangModule.GL)
+<script type="text/javascript" src="@ServerHelper.StaticServer/FW/scripts/jquery.megi.hotkeys.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.StaticServer/FW/scripts/jquery.megi.top.js?@ServerHelper.JSVersion"></script>
+
+<!--所有的弹出框顶部样式-->
+<div class="m-imain" style="overflow:hidden;">
+    <div class="m-imain-content" style="overflow:hidden;">
+        @if (fromDocVoucher == null || fromDocVoucher.ToString() != "1")
+        {
+        <!--状态-->
+            <div class="vc-voucher-status">
+                <span class="vc-voucher-operate"></span>
+                <span class="vc-status-span vc-status"></span>
+                <span class="vc-status-voucher vc-hide">@HtmlLang.Write(LangModule.GL, "Voucher", "凭证")</span>
+            </div>
+        }
+        <!--抬头-->
+
+        <div class="vc-header">
+            @if (!isModule)
+            {
+                    <!--凭证字和凭证号-->
+                <div class="vc-group-no" style="float:left;">
+                    <span class="vc-header-span vc-number">@HtmlLang.Write(LangModule.GL, "VoucherNumber", "凭证编号")</span>
+                    <!--凭证号-->
+                    <input class="vc-group easyui-numberspinner" id="MNumber" value="" style="text-align:left;"/>
+                </div>
+                    <!--日期-->
+                <div class="vc-date-select">
+                    <span class="vc-header-span vc-date">@HtmlLang.Write(LangModule.GL, "VoucherDate", "凭证日期")</span>
+                    <input type="text"  style="text-align:left;" class="mg-data vc-date-select easyui-datebox" id="MDate" hint="@HtmlLang.Write(LangKey.Date)" data-options="required: true,width:100,validType:'minDate[\'@ctx.MGLBeginDate\']'" />
+                </div>
+                    <!--如果是模板就不显示了-->
+                if (dashBoardInfoModel.CanEdit)
+                {
+                    <!--打开和关闭高级选项-->
+                    <div class="vc-adv-switch vc-hide">
+                        <a href="####" class="vc-adv-show">&nbsp;</a><span class="vc-text-span" style="margin-left: 10px;">@HtmlLang.Write(LangModule.Common, "AdvancedOptions", "Advanced Options")</span>
+                    </div>
+                }
+                    <!--附件数量-->
+                <div class="vc-header-attachment">
+                    <span class="vc-header-span vc-attachment">@HtmlLang.Write(LangModule.GL, "AttachmentCount", "附件张数")</span>
+                    <!--凭证附件数-->
+                    <input class="mg-data vc-group-amount easyui-numberspinner" id="Attachments" name='MAttachments' data-options="width:50,min:0,max:999,value:0" />
+                </div>
+            }
+            else
+            {
+                    <!--凭证字和凭证号-->
+                <div class="vc-group-no" style="float:left;">
+                    <span class="vc-header-span vc-fastcode-span">@HtmlLang.Write(LangModule.Common, "FastCode", "快速码")</span>
+                    <!--凭证号-->
+                    <input class="vc-fast-code" id="MFastCode" value="" hint="@HtmlLang.Write(LangModule.Common, "FastCode", "快速码")" />
+                </div>
+                    <!--日期-->
+                <div class="vc-date-select">
+                    <span class="vc-header-span vc-description-span">@HtmlLang.Write(LangKey.Description)</span>
+                    <input type="text" class="mg-data vc-description" id="MDescription" hint="@HtmlLang.Write(LangKey.Description)" />
+                </div>
+            }
+            <!--显示一个键盘-->
+            <div class="vc-hotkey-div">
+                @HtmlLang.Write(LangModule.GL, "FastInput", "快捷录入")
+            </div>
+        </div>
+        <div class="line"></div>
+        <!--凭证单据表体-->
+        <div class="vc-body" style="overflow-y:auto">
+            <!--放置一个表格-->
+            <div class="vc-body-div">
+                <!--表格-->
+                <table class="vc-table-body vc-fixed-table m-resize-table" style="float:left">
+                    <!--第一行 标题-->
+                    <tr class="vc-table-th">
+                        <!--快速码-->
+                        <th class="vc-fastcode" rowwidth="100">@HtmlLang.Write(LangModule.Common, "FastCode", "快速码")</th>
+                        <!--摘要-->
+                        <th class="vc-explanation" rowwidth="140">@HtmlLang.Write(LangModule.GL, "Explanation", "摘要")</th>
+                        <!--科目-->
+                        <th class="vc-account" rowwidth="200">@HtmlLang.Write(LangModule.GL, "Account_L", "Account")</th>
+                        <!--币别-->
+                        <th class="vc-currency" rowwidth="160">@HtmlLang.Write(LangModule.GL, "CheckForCurrency", "外币核算")</th>
+                        <!--核算维度组-->
+                        <th class="vc-checkgroup" rowwidth="250">@HtmlLang.Write(LangModule.GL, "CheckForOther", "辅助核算")</th>
+                        <!--借方金额-->
+                        <th class="vc-debit" rowwidth="120">@HtmlLang.Write(LangModule.GL, "Debit", "Debit")</th>
+                        <!--贷方金额-->
+                        <th class="vc-credit" rowwidth="120">@HtmlLang.Write(LangModule.GL, "Credit", "Credit")</th>
+                    </tr>
+                </table>
+                @if (dashBoardInfoModel.CanView && !isModule)
+                {
+                        <!--高级选项-->
+                    <div class="vc-adv-options vc-hide" style="float:right">
+                        <!--accordin-->
+                        <div class="vc-adv" style="width:200px;height:180px">
+                            <!--显示高级选项-->
+                            <div title='@HtmlLang.Write(LangModule.Common,"AdvancedOptions","Advanced Options")'>
+                                <!--复制-->
+                                @if (dashBoardInfoModel.CanEdit)
+                                {
+
+                                    <div>
+                                        <a href="###" class="vc-adv-copy vc-adv-href">@HtmlLang.Write(LangKey.Copy)</a>
+                                    </div>
+
+                                }
+                                <!--反审核-->
+                                @if (dashBoardInfoModel.CanApprove)
+                                {
+                                    <div class="vc-hide">
+                                        <a href="###" class="vc-adv-unapprove vc-adv-href">@HtmlLang.Write(LangModule.Common, "Unapprove", "Un Approve")</a>
+                                    </div>
+                                }
+                                <!--打印-->
+                                <div>
+                                    <a href="###" class="vc-adv-print vc-adv-href">@HtmlLang.Write(LangModule.Common, "Print", "Print")</a>
+                                </div>
+                                <div>
+                                    <a href="###" class="vc-prev-voucher vc-adv-href">@HtmlLang.Write(LangModule.GL, "PrevVoucher", "上一张")</a>
+                                </div>
+                                <div>
+                                    <a href="###" class="vc-next-voucher vc-adv-href">@HtmlLang.Write(LangModule.GL, "NextVoucher", "下一张")</a>
+                                </div>
+                                <div class="vc-doc-view-div" style="display:none">
+                                    <a href="###" class="vc-doc-view vc-adv-href">@HtmlLang.Write(LangModule.GL, "BusinessTransaction", "业务单据")</a>
+                                </div>
+
+                                @if (dashBoardInfoModel.CanEdit || dashBoardInfoModel.CanApprove)
+                                {
+                                    <div class="vc-reverse-view-div" style="display:none">
+                                        <a href="###" class="vc-reverse-view vc-adv-href"></a>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            @if (!isModule)
+            {
+                <div class="vc-creator">
+                    <span class="vc-creator-span">@HtmlLang.Write(LangModule.Common, "Creator", "创建者"):</span>
+                    <span class="vc-creator-name"></span>
+                </div>
+
+            }
+
+        </div><!--显示作者-->
+    </div>
+    <!--显示键盘快捷键-->
+    <div class="vc-hotkey-table-div vc-hide">
+        <!--显示一张键盘的图片-->
+        @Html.Partial("GLVoucherPartial/HotKeyTablePartial")
+        <!--凭证内容-->
+    </div>
+    <!--汇率维护-->
+    <div class="vc-currency-setup-demo-div vc-hide">
+        <!--汇率维护表格-->
+        @Html.Partial("GLVoucherPartial/CurrencySetupPartial")
+    </div>
+    <!--汇率维护-->
+    <div class="vc-checkgroup-setup-demo-div vc-hide">
+        <!--汇率维护表格-->
+        @Html.Partial("GLVoucherPartial/CheckGroupSetupPartial")
+    </div>
+    <!--保存为凭证模板时，弹出输入快速码和描述-->
+    <div class="vc-fastcode-setup-div vc-hide" id="fastcodeSetupDiv">
+        <!--汇率维护表格-->
+        @Html.Partial("GLVoucherPartial/FastCodeSetupPartial")
+    </div>
+    <!--凭证模板预览-->
+    <div class="vc-module-preview-div vc-hide">
+        <!--汇率维护表格-->
+        @Html.Partial("GLVoucherPartial/VoucherModulePreviewPartial")
+    </div>
+
+    <!--核算维度设置div-->
+    <div class="vc-checkgroup-setup-div vc-hide">
+        <!--汇率维护表格-->
+        @Html.Partial("GLVoucherPartial/CheckGroupSetupPartial")
+    </div>
+    <!--删除和添加新行-->
+    <div class="vc-new-delete-div vc-hide">
+        <!--添加-->
+        <a class="vc-new-href" href="javascript:void(0)"></a>
+        <!--删除-->
+        <a class="vc-delete-href" href="javascript:void(0)"></a>
+    </div>
+    <!--金额编辑TD的内容-->
+    <div class="vc-amount-edit-div demo vc-hide">
+        <div class="vc-amount-div vc-amount-for"><span></span><input type="text" style="height:15px;line-height: 15px;border: 0;border-bottom: 1px solid #ccc;padding: 0;float: right;width: 100px;text-align: right;"></div>
+        <div class="vc-amount-div vc-amount-rate"><span>x</span><input type="text" style="height:15px;line-height: 15px;border: 0;border-bottom: 1px solid #ccc;padding: 0;float: right;width: 100px;text-align: right;"></div>
+        <div class="vc-amount-div  vc-amount-base"><span></span><input type="text" style="height:15px;line-height: 15px;border: 0;border-bottom: 1px solid #ccc;padding: 0;float: right;width: 100px;text-align: right;" readonly="readonly"></div>
+    </div>
+</div>
+<!--底部的操作按钮-->
+<div class="m-toolbar-footer">
+    @if (!isModule)
+    {
+
+        <div class="center" style="width:50%;">
+            <div class="m-toolbar-icon" style="width: 100px; float: right;">
+                <!--没有日志的ID就不进行显示-->
+                @if (ViewData["MItemID"] != null && !string.IsNullOrWhiteSpace(ViewData["MItemID"].ToString()) && (isCopy == null || isCopy.ToString() != "1"))
+                {
+                    <a href="javascript:void(0)" id="aHistory" class="m-icon-msg" title='@HtmlLang.Write(LangModule.IV, "History", "History")'>&nbsp;</a>
+                }
+                @HtmlREGRelatedAttach.RelatedAttach(BizObject.Voucher, Convert.ToString(itemID))
+                <div class="clear"></div>
+            </div>
+        </div>
+
+    }
+    <!--取确认按钮-->
+    <div class="right" style="width: 50%; min-width: 580px">
+        @if (isCanEditPermission)
+        {
+            if (dashBoardInfoModel.CanApprove && !isModule)
+            {
+                <a href="javascript:void(0)" id="btnSaveAndApprove" class="easyui-linkbutton easyui-linkbutton-base">@HtmlLang.Write(LangModule.GL, "SaveAndApprove", "Save&Approve") [F11]</a>
+            }
+            <a href="javascript:void(0)" id="btnSave" class="easyui-linkbutton  easyui-linkbutton-yellow"> @HtmlLang.Write(LangKey.Save) [Ctrl+S]</a>
+            <a href="javascript:void(0)" id="btnSaveAndAddAnother" class="easyui-linkbutton">@HtmlLang.Write(LangModule.GL, "SaveAndNew", "Save&New") [F12]</a>
+            <!--如果不是模板过来的，则新增一个保存为模板的按钮-->
+            if (!isModule)
+            {
+                <a href="javascript:void(0)" id="btnSaveAsModule" class="easyui-linkbutton">@HtmlLang.Write(LangModule.GL, "SaveAsModule", "保存为模板") [F10] </a>
+            }
+        }
+    </div>
+
+</div>
+
+
+<!--MID 日志-->
+<input type="hidden" id="hidInvoiceId" value="@ViewData["MItemID"]" />
+
+<input type="hidden" id="hideBeginDate" value="@ctx.MBeginDate" />
+<input type="hidden" id="hideGLBeginDate" value="@ctx.MGLBeginDate" />
+<input type="hidden" id="hidIsEdit" value="@Html.Raw(@dashBoardInfoModel.CanEdit)" />
+<input type="hidden" id="hidHaveAttachChangePermission" value="@Html.Raw(dashBoardInfoModel.CanChangeAttachment)" />
+@HtmlLang.WriteScript(LangModule.BD)
+@HtmlLang.WriteScript(LangModule.GL)
+<script src="~/Scripts/Log/BusLog.interface.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.StaticServer/fw/scripts/jquery.megi.print.js?@ServerHelper.JSVersion"></script>
+<script src="~/Scripts/GL/GLVoucherHome.js?@ServerHelper.JSVersion"></script>
+<script src="~/Scripts/GL/GLCheckType.js?@ServerHelper.JSVersion"></script>
+<script src="~/Scripts/GL/GLVoucherEdit.js?@ServerHelper.JSVersion"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var userAgent = window.navigator.userAgent.toLowerCase();
+
+        if ($.browser.msie && /msie 10\.0/i.test(userAgent)) {
+
+            $("table.vc-table-body").addClass("ie10-table");
+        }
+
+        var voucher = new GLVoucher();
+        voucher.init('@itemID','@number','@isCopy', '@isReverse', '@dir', '@ViewData["IsModule"]', '@fromDocVoucher', '@docVoucherID', '@entryAccountPair', '@fromPeriod', '@transferTypeID', '@year', '@period', '@day', '@amount', '@percent0', '@percent1', '@percent2', '@ctx.MOrgVersionID');
+        //把
+        window.MReady = null;
+        //日志
+        HistoryView.init();
+    });
+</script>
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)
+

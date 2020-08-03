@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+<html>
+@using JieNor.Megi.Common.Utility
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="@ServerHelper.StaticServer/include/easyui/blue/easyui.css?@ServerHelper.JSVersion" rel="stylesheet" />
+    <link href="@ServerHelper.StaticServer/include/easyui/icon.css?@ServerHelper.JSVersion" rel="stylesheet" />
+    <link href="@ServerHelper.StaticServer/framework/themes/blue/css.css?@ServerHelper.JSVersion" rel="stylesheet" />
+    <link href="@ServerHelper.StaticServer/fw/themes/base/css.css?@ServerHelper.JSVersion" rel="stylesheet" />
+     @HtmlLang.WriteScript(LangModule.Common)
+    <script type="text/javascript">
+        @Html.Raw(string.Format("document.domain ='{0}';", ServerHelper.Domain))
+    </script>
+</head>
+<body>
+    <div class="login-top">
+    </div>
+    @RenderBody()
+</body>
+</html>

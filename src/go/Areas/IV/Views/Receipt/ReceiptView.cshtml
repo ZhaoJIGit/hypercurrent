@@ -1,0 +1,23 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    IVReceiveModel receiveModel = ViewData["ReceiveModel"] as IVReceiveModel;
+}
+@using JieNor.Megi.Common.Utility;
+@Html.Partial("ReceiptPartial/ReceiptEditPartial")
+@*底部工具栏*@
+<div class="m-toolbar-footer">
+    <div class="left">&nbsp;</div>
+    <div class="center">
+        <div class="m-toolbar-icon" style="width:150px;">
+        @{
+            string mid = receiveModel == null ? string.Empty : receiveModel.MID;
+        }
+        @HtmlREGRelatedAttach.RelatedAttach(BizObject.Receive, mid)
+        <div class="clear"></div>
+        </div>
+    </div>
+    <div class="right">&nbsp;</div>
+    <div class="clear"></div>
+</div>
+
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/IV/Receipt/ReceiptView.js?@ServerHelper.JSVersion"></script>

@@ -1,0 +1,70 @@
+﻿
+
+@using JieNor.Megi.Common.Utility
+@using JieNor.Megi.EntityModel.MultiLanguage
+@using JieNor.Megi.Identity.HtmlHelper
+
+
+<!--工具栏-->
+<div class="fa-tp-toolbar m-tab-toolbar" style="margin: 5px 15px 10px 0px;">
+    <!--撤销处置-->
+    <a href="javascript:void(0)" showindex="0,2" newstatus="0" id="aUnhandle" class="easyui-linkbutton" style="margin-left:10px;">@HtmlLang.Write(LangModule.FA, "ReHandleFixAssets", "撤销处置")</a>
+    <!--处置-->
+    <a href="javascript:void(0)" showindex="0,1" id="aHandleTop" newstatus="1" class="easyui-splitbutton easyui-splitbutton-base l-btn l-btn-small easyui-linkbutton-m">@HtmlLang.Write(LangModule.FA, "HandleFixAssets", "处置")</a>
+    <!--银行/现金/信用卡帐户-->
+    <div id="divHandle" style="width:180px;display:none;">
+        <div><a href="javascript:void(0)" id="aSell" newstatus="1" >@HtmlLang.Write(LangModule.FA, "Sell", "出售")</a></div>
+        <div><a href="javascript:void(0)" id="aDispose" newstatus="2" >@HtmlLang.Write(LangModule.FA, "Dispose", "报废")</a></div>
+    </div>
+
+    <a href="javascript:void(0)" showindex="0,1,2" id="aDeleteFixAssets" class="easyui-linkbutton" style="margin-left:10px;">@HtmlLang.Write(LangKey.Delete)</a>
+
+    <div class="fa-toolbar-right" style="float:right;">
+        <div style="float:left;margin-left:5px;" >
+            <!--编号-->
+            <input class="fa-number-input" hint="@HtmlLang.Write(LangKey.Number)" />
+        </div>
+        <div style="float:left;margin-left:5px;">
+            <!--关键字-->
+            <input class="fa-keyword-input" hint="@HtmlLang.Write(LangKey.Keywords)" />
+        </div>
+        <div style="float:left;margin-left:5px;">
+            <!--维度-->
+            <input class="easyui-combobox fa-checkgroup-input" hint="@HtmlLang.Write(LangModule.GL, "AssistanceCheck", "核算维度")" />
+        </div>
+        <div style="float:left;margin-left:5px;">
+            <!--一开始时候显示-->
+            <input class="fa-checkgroupvalue-input demo easyui-combobox" typeid="-1" style="width:200px;" hint="@HtmlLang.Write(LangModule.Common, "AssistanceCheckItem", "维度项")" />
+        </div>
+        <div style="float:left">
+            <!--选择-->
+            <input class="fa-checkgroupvalue-input demo" typeid="0" style="display:none" />
+            <input class="fa-checkgroupvalue-input demo" typeid="1" style="display:none" />
+            <input class="fa-checkgroupvalue-input demo" typeid="2" style="display:none" />
+            <input class="fa-checkgroupvalue-input demo" typeid="3" style="display:none" />
+            <input class="fa-checkgroupvalue-input demo" typeid="4" style="display:none" />
+            <input class="fa-checkgroupvalue-input demo" typeid="5" style="display:none" />
+            <input class="fa-checkgroupvalue-input demo" typeid="6" style="display:none" />
+            <input class="fa-checkgroupvalue-input demo" typeid="7" style="display:none" />
+            <input class="fa-checkgroupvalue-input demo" typeid="8" style="display:none" />
+            <input class="fa-checkgroupvalue-input demo" typeid="9" style="display:none" />
+        </div>
+        <a href="javascript:void(0)" id="aClear" style="float:right;margin-left:10px;">@HtmlLang.Write(LangModule.GL, "ResetDocVoucher", "重置")</a>
+
+        <a href="javascript:void(0)" id="aSearchFixAssets" class="easyui-linkbutton" style="float:right;margin-left:10px;">@HtmlLang.Write(LangKey.Search)</a>
+
+    </div>
+</div>
+
+<!--删除操作栏-->
+<div class="fa-fixassets-gridDiv">
+
+    <!--表格div-->
+    <div class="fa-fixassets-grid">
+
+    </div>
+
+    <div class="fa-fixassets-pager">
+
+    </div>
+</div>

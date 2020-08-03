@@ -1,0 +1,48 @@
+﻿
+@model BDLayoutListModel
+
+@{
+    System.Web.Script.Serialization.JavaScriptSerializer jss = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+@using JieNor.Megi.Common.Utility;
+<div class="groupItem mg-dash-box" style="opacity: 1;">
+    <div class="itemHeader"><a href="/Bank/Trans/@(Model.MRefID)" class="title"><span class="main">@(Model.MBankAcctName)</span><span class="sub">@(Model.MBankNo)</span></a></div>
+    <div class="itemContent">
+        <div class="mg-summary">
+            <div class="mg-action">
+                @if (Model.MBankRecCount == 0)
+                {
+                    if (Model.MBankIsUse)
+                    {
+                        <span>@HtmlLang.Write(LangModule.Bank, "NoTransactionsImported", "No transactions imported")</span>
+                        <a href="/Bank/Import/@Html.Raw(@Model.MItemID)?type=@Html.Raw(@Model.MBankTypeID)">@HtmlLang.Write(LangModule.Bank, "ImportBankStatementToGetStarted", "Import a bank statement to get started")</a>
+                    }
+                    else
+                    {
+                        <a href="javascript:void(0)" class="mg-btn mg-btn-green">@HtmlLang.Write(LangModule.Bank, "GetBankFeeds", "Get Bank Feeds")</a>
+                        <br /><p> <a href="/Bank/Import/@Html.Raw(@Model.MItemID)?type=@Html.Raw(@Model.MBankTypeID)">@HtmlLang.Write(LangModule.Bank, "ManuallyImportAStatement", "Or manually import a statement")</a></p>
+                    }
+                }
+                else
+                {
+                    <a href="/Bank/Rec/@Model.MRefID" class="mg-btn mg-btn-blue">@HtmlLang.WriteFormat(LangModule.Bank, "ReconcileItemsFormat", "Reconcile {0} items", Model.MBankRecCount)</a>
+                }
+            </div>
+            <div class="mg-summary-detail">
+                <ul>
+                    <li><span>@Html.Raw(@Model.MBankBalance.ToMoneyFormat())</span><label>@HtmlLang.WriteFormat(LangModule.Bank, "BalanceInMegi", "Balance in Megi")</label></li>
+                    <li><span>@Html.Raw(@Model.MBankStatement.ToMoneyFormat())</span><label>@HtmlLang.WriteFormat(LangModule.Bank, "BankBalance", "Bank balance")</label></li>
+
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+        @Html.Raw(string.Format("<div class='m-chart' id='divBankChart{0}'></div>", ViewData["Index"]))
+
+        <div class="clear"></div>
+    </div>
+    <script src="@ServerHelper.ScriptServer/go/scripts/Areas/Chart/Bank/ChtBank.js?@ServerHelper.JSVersion"></script>
+    <script type="text/javascript">
+        @Html.Raw(string.Format(" ChtBank.init('divBankChart{0}',{1})", ViewData["Index"], MText.ToJson(  @Model.MBankChartInfo))))
+    </script>
+</div>

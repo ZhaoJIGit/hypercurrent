@@ -1,0 +1,28 @@
+﻿@model JieNor.Megi.DataModel.BD.BDAttachmentFolderListModel
+    @{
+        var attachmentCategoryList = Model.List as List<BDAttachmentCategoryListModel>;
+    }
+    <table id="tbFolders" class="m-grid-folders" cellspacing="0" cellpadding="0">
+        <tbody>
+            @{
+                if (@attachmentCategoryList != null)
+                {
+                    for (int i = 0; i < @attachmentCategoryList.Count; i++)
+                    {
+                        var model = @attachmentCategoryList[i];
+                        <tr data-id="@(model.MItemID)">
+                            <td>
+                                @{
+                                    var displayName = string.IsNullOrWhiteSpace(model.MBizObject) ? model.MCategoryNameEllipsis : HtmlLang.GetText(LangModule.Docs, model.MBizObject);
+                                    var oriName = string.IsNullOrWhiteSpace(model.MBizObject) ? model.MCategoryName : HtmlLang.GetText(LangModule.Docs, model.MBizObject);
+                                    <label>@displayName</label><em>(<span>@Html.Raw(model.AttachmentCount)</span>)</em>
+                                    <input name="hdnOriCategoryName" type="hidden" value="@Html.Raw(oriName)" />
+                                    <input name="hdnBizObject" type="hidden" value="@Html.Raw(model.MBizObject)" />
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>

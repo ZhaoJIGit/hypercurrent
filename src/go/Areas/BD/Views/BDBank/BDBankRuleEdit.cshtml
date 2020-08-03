@@ -1,0 +1,56 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    string disabled = HtmlSECMenu.HavePermission(BizObject.Bank_Reconciliation, PermissionItem.Change) ? "" : " disabled='disabled' ";
+}
+@using JieNor.Megi.Common.Utility;
+
+<div class="m-form m-imain" style="padding-left:20px">
+    <div class="m-form-field">
+        <div class="m-form-setion">@HtmlLang.Write(LangModule.Bank, "GiveTheRuleATitle", "Give the rule a title...")</div>
+        <div class="m-form-input">
+            <input class="easyui-validatebox mg-width200 mg-data m-lang" name="MName" id="txtBankRuleName" @disabled />
+        </div>
+    </div>
+    <div class="m-form-field">
+        <div class="m-form-setion">@HtmlLang.Write(LangModule.Bank, "TargetABankAccount", "Target a bank account...") </div>
+        <div class="m-form-input">
+            <select id="seleBankAccount" class="easyui-combobox mg-data" name="MBankID" @disabled data-options="editable:false" style="width:200px; height:26px;">
+                @JieNor.Megi.Identity.Go.HtmlHelper.HtmlBDAccount.RuleBankOptions()
+            </select>
+        </div>
+    </div>
+    <div class="m-form-field">
+        <div class="m-form-setion">@HtmlLang.Write(LangModule.Bank, "BankRuleConditionTitle", "When money spent or received on the bank statement matches following Conditions")</div>
+        <div class="m-form-input">
+            <ul>
+                <li><input type="checkbox" class="mg-data" name="MChkAmount" disabled="disabled" checked="checked" />@HtmlLang.Write(LangModule.Bank, "AmountMatch", "Amount Matches")</li>
+                <li><input type="checkbox" class="mg-data" name="MChkPayee" @disabled />@HtmlLang.Write(LangModule.Bank, "PayeeMatch", "Payee Matches")</li>
+                <li><input type="checkbox" class="mg-data" name="MChkRef" @disabled />@HtmlLang.Write(LangModule.Bank, "ReferencMatch", "Reference Matches")</li>
+                <li><input type="checkbox" class="mg-data" name="MChkTransDate" @disabled />@HtmlLang.Write(LangModule.Bank, "BusinessMatchs", "Business Date Matches")</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <input type="hidden" class="mg-data m-form-key" name="MItemID" id="hidBankRuleID" value="@ViewData["BankRuleID"]" />
+    @*<div class="m-form-action">
+            <a href="javascript:void(0)" class="mg-btn mg-btn-gray mg-btn-close">@HtmlLang.Write(LangKey.Cancel)</a>
+            <a href="javascript:void(0)" class="mg-btn mg-btn-green mg-btn-save">Save</a>
+
+
+            <br class="clear" />
+        </div>*@
+</div>
+<div class="m-toolbar-footer">
+    @if (HtmlSECMenu.HavePermission(BizObject.Bank_Reconciliation, PermissionItem.Change))
+    {
+    <div class="left">
+        <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray">@HtmlLang.Write(LangKey.Cancel)</a>
+    </div>
+    <div class="right">
+        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aSave">@HtmlLang.Write(LangKey.Save)</a>
+    </div>
+    }
+</div>
+@HtmlLang.WriteScript(LangModule.Bank)
+<script src="~/Scripts/BD/BDBank/BDBankRuleEdit.js?@ServerHelper.JSVersion"></script>

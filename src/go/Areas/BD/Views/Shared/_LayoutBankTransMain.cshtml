@@ -1,0 +1,77 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+@using JieNor.Megi.Common.Utility;
+<div class="m-imain" id="DivBankFeeds">
+    <div class="space"></div>
+    <div class="mg-info-manage">
+        <div class="bank right-line">
+            <span class="title">@HtmlLang.Write(LangModule.Bank, "BankBalance", "Bank Balance") </span>
+            <span class="amount">0.00</span>
+        </div>
+
+        <div class="bank">
+            <span class="title">@HtmlLang.Write(LangModule.Bank, "BalanceInMegi", "Balance in Megi")</span>
+            <span class="amount">0.00</span>
+        </div>
+        @if (HtmlSECMenu.HavePermission(BizObject.BankAccount, PermissionItem.Change))
+        {
+            <div class="action">
+                <a href="javascript:void(0)" class="easyui-splitbutton" data-options="menu:'#divManageAccount'">@HtmlLang.Write(LangModule.Bank, "ManageAccount", "Manage Account")</a>
+                <div id="divManageAccount" style="width:180px;">
+                    <p><a href="/IV/Payment/PaymentEdit?acctid=@Html.Raw(@ViewData["BankID"])">@HtmlLang.Write(LangModule.Bank, "SpendMoney", "Spend Money")</a></p>
+                    <p><a href="/IV/Receipt/ReceiptEdit?acctid=@Html.Raw(@ViewData["BankID"])">@HtmlLang.Write(LangModule.Bank, "ReceiveMoney", "Receive Money")</a></p>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="space"></div>
+    <div style="padding:20px 0;background-color: #f1f7e7;border: 2px solid #44ad00;border-radius: 5px;text-align: center;" id="feedStepOne">
+        <a href="javascript:void(0)" id="getBankFeeds" class="mg-btn mg-btn-green" style="display: inline;padding: 6px 12px;" >@HtmlLang.Write(LangModule.Bank, "GetBankFeeds", "Get Bank Feeds")</a>
+        Automatic bank feeds are available for this account
+    </div>
+    <div style="padding:10px 20px;background-color: #f1f7e7;border: 2px solid #44ad00;border-radius: 5px;display:none;" id="feedStepTwo">
+        <div style="width:20%;float:left;">
+            <ul>
+                <li class="mg-bold">@HtmlLang.Write(LangModule.Bank, "accountno", "account no")</li>
+                <li><input type="text" class="mg-data textbox" style="height:20px" name="AccNo" /></li>
+            </ul>
+        </div>
+        <div style="width:20%;float:left;">
+            <ul>
+                <li class="mg-bold">@HtmlLang.Write(LangModule.Bank, "startdate", "start date")</li>
+                <li><input type="text" class="mg-data easyui-datebox" required="required" name="StartDate" /></li>
+            </ul>
+        </div>
+        <div style="width:20%;float:left;">
+            <ul>
+                <li class="mg-bold">@HtmlLang.Write(LangModule.Bank, "enddate", "end date")</li>
+                <li><input type="text" class="mg-data easyui-datebox" required="required" name="EndDate" /></li>
+            </ul>
+        </div>
+        <div style="width:40%; float:left;margin-top:15px;">
+            <a href="javascript:void(0)" id="StartImport" class="mg-btn mg-btn-green" style="float:left; width: 100px; height: 20px;margin-left:20px;">@HtmlLang.Write(LangModule.Bank, "StartImport", "Start Import")</a>
+            <a href="javascript:void(0)" id="Cancel" class="mg-btn mg-btn-gray" style="float:left;width: 100px; height: 20px;margin-left:20px;">@HtmlLang.Write(LangKey.Cancel)</a>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="space"></div>
+    <br class="clear" />
+    <div class="easyui-tabs" id="tabTrans" data-options="">
+        
+        <div title="@HtmlLang.Write(LangModule.Bank, "Reconcile", "Reconcile")">
+        </div>
+        <div title="@HtmlLang.Write(LangModule.Bank, "BankCashCoding", "Cash Coding")">
+        </div>
+        <div title="@HtmlLang.Write(LangModule.Bank, "BankStatements", "Bank statements")">
+        </div>
+        <div title="@HtmlLang.Write(LangModule.Bank, "AccountTransactions", "Account transactions")">
+        </div>
+    </div>
+    @RenderBody()
+
+    <input type="hidden" class="mg-data" value="@Html.Raw(@ViewData["BankID"])" id="hidBankID" name="AcctID" />
+    <br class="clear" />
+</div>
+<script src="@ServerHelper.ScriptServer/go/scripts/Areas/Bank/_LayoutBankTransMain.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.Bank)

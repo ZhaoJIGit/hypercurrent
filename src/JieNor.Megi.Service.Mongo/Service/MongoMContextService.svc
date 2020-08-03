@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="JieNor.Megi.Service.Mongo.Service.MongoMContextService" CodeBehind="MongoMContextService.svc.cs" %>

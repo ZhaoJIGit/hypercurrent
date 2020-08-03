@@ -1,0 +1,154 @@
+﻿<!DOCTYPE html>
+@using JieNor.Megi.Common.Utility
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+    <meta name="viewport" content="width=device-width" />
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="@ServerHelper.StaticServer/include/easyui/blue/easyui.css?@ServerHelper.JSVersion" rel="stylesheet" />
+    <link href="@ServerHelper.StaticServer/include/easyui/icon.css?@ServerHelper.JSVersion" rel="stylesheet" />
+    <link href="@ServerHelper.StaticServer/FW/themes/base/css.css?@ServerHelper.JSVersion" rel="stylesheet" />
+    @RenderSection("Css", false)
+
+    <script src="@ServerHelper.StaticServer/fw/scripts/jquery-1.8.2.min.js?@ServerHelper.JSVersion"></script>
+    <script src="@ServerHelper.StaticServer/fw/scripts/jquery.cookie.js?@ServerHelper.JSVersion"></script>
+    <script src="@ServerHelper.StaticServer/fw/scripts/jquery.json-2.3.min.js?@ServerHelper.JSVersion"></script>
+    <script src="@ServerHelper.StaticServer/fw/scripts/jquery.megi.common.js?@ServerHelper.JSVersion"></script>
+    <script src="@ServerHelper.StaticServer/fw/scripts/jquery.megi.framework.js?@ServerHelper.JSVersion"></script>
+    <script src="@ServerHelper.StaticServer/fw/scripts/jquery.megi.date.js?@ServerHelper.JSVersion"></script>
+    <script src="@ServerHelper.StaticServer/fw/scripts/jquery.megi.extend.easyui.js?@ServerHelper.JSVersion"></script>
+    <script src="@ServerHelper.StaticServer/fw/scripts/jquery.megi.lang.combobox.js?@ServerHelper.JSVersion"></script>
+    <script src="@ServerHelper.ScriptServer/go/scripts/megi.go.common.js?@ServerHelper.JSVersion"></script>
+
+    @HtmlLang.WriteScript(LangModule.Common)
+    @HtmlLang.GlobalInfo()
+</head>
+<body>
+    <div data-role="page">
+        <div data-role="header">
+            <div class="mg-wrapper">
+                <div class="mg-grid-a mg-header-info">
+                    <div class="mg-block-a">
+                        @HtmlOrg.OrgChange(false)
+                    </div>
+
+                    <div class="mg-block-b">
+                        @HtmlLang.OrgLangSelect()
+                        <a href="javascript:void(0)" id="aUserName" class="mg-header-user-name">@ViewData["LoginUserName"]</a>
+                        <div id="divHeaderUser" class="mg-header-user">
+                            <div class="mg-header-user-my"><span><a href="@ServerHelper.MyServer">@ViewData["LoginUserName"]</a></span><img /></div>
+                            <div class="mg-header-user-action"><a href="@ServerHelper.MyServer/Profile/ProfileEdit" class="link-profile">@HtmlLang.Write(LangModule.BD, "Profile", "Profile")</a><a href="@ServerHelper.MyServer/Account/AccountEdit" class="link-account">@HtmlLang.Write(LangKey.Accounts)</a><a class="link-logout" href="@ServerHelper.LoginServer/Account/Logout">@HtmlLang.Write(LangModule.BD, "Logout", "Logout")</a></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mg-header-menu">
+                    <input type="hidden" id="hidModule" value='@ViewData["Module"]' />
+                    <div class="mg-block-a">
+                        <div class="mg-navbar-toggle">
+                            <a href="javascript:void(0)">
+                                <span>&nbsp;</span>
+                                <span>&nbsp;</span>
+                                <span>&nbsp;</span>
+                            </a>
+                        </div>
+                        <ul class="mg-menu-m-container">
+                            <li class="mg-menu-m">
+                                <a href="/" class="mg-menu-m-name" data-module="dashboard">@HtmlLang.Write(LangKey.Dashboard)</a>
+                            </li>
+                            <li class="mg-menu-m">
+                                <a href="#" class="mg-menu-m-name" data-module="account">@HtmlLang.Write(LangKey.Accounts)</a>
+                                <ul class="mg-menu-s">
+                                    @HtmlSECMenu.SelectLiHtml("Accounts")
+                                    @*<li><a href="/Bank/BankAccountList">@HtmlLang.Write(LangKey.BankAccounts)</a></li>
+                                        <li><a href="/IV/Sale/">@HtmlLang.Write(LangModule.BD, "Sales", "Sales")</a></li>
+                                        <li><a href="/IV/Purchase/">@HtmlLang.Write(LangModule.BD, "Purchases", "Purchases")</a></li>
+                                        <li><a href="">@HtmlLang.Write(LangModule.BD, "PayRun", "Pay Run")</a></li>
+                                        <li><a href="">@HtmlLang.Write(LangModule.BD, "ExpenseClaims", "Expense Claims")</a></li>
+                                        <li><a href="">@HtmlLang.Write(LangModule.BD, "FixedAssets", "Fixed Assets")</a></li>*@
+                                </ul>
+                            </li>
+                            <li class="mg-menu-m">
+                                <a href="#" class="mg-menu-m-name" data-module="report">@HtmlLang.Write(LangKey.Reports)</a>
+                                <ul class="mg-menu-s">
+                                    @HtmlSECMenu.SelectLiHtml("Reports")
+                                    @*<li><a href="/Report">@HtmlLang.Write(LangModule.BD, "AllReports", "All Reports")</a></li>
+                                        <li><a href="">@HtmlLang.Write(LangModule.BD, "BudgetManager", "Budget Manager")</a></li>
+                                        <li class="favorite"><a href="">@HtmlLang.Write(LangModule.BD, "AgedPayables", "Aged Payables")</a></li>
+                                        <li class="favorite"><a href="">@HtmlLang.Write(LangModule.BD, "AgedReceivables", "Aged Receivables")</a></li>
+                                        <li class="favorite"><a href="">@HtmlLang.Write(LangModule.BD, "BalanceSheet", "Balance Sheet")</a></li>
+                                        <li class="favorite"><a href="">@HtmlLang.Write(LangModule.BD, "CashSummary", "Cash Summary")</a></li>
+                                        <li class="favorite"><a href="">@HtmlLang.Write(LangModule.BD, "ProfitAndLoss", "Profit and Loss")</a></li>
+                                        <li class="favorite"><a href="">@HtmlLang.Write(LangModule.BD, "SalesTaxReport", "Sales Tax Report")</a></li>*@
+                                </ul>
+                            </li>
+                            <li class="mg-menu-m">
+                                <a href="#" class="mg-menu-m-name" data-module="adviser">@HtmlLang.Write(LangKey.Adviser)</a>
+                                <ul class="mg-menu-s">
+                                    @HtmlSECMenu.SelectLiHtml("Adviser")
+                                </ul>
+                            </li>
+                            <li class="mg-menu-m">
+                                <a href="#" class="mg-menu-m-name" data-module="contact">@HtmlLang.Write(LangKey.Contacts)</a>
+                                <ul class="mg-menu-s">
+                                    @HtmlSECMenu.SelectLiHtml("Contacts")
+                                    @*<li><a href="/Contacts/ContactsList">@HtmlLang.Write(LangModule.BD, "All Contacts", "All Contacts")</a></li>
+                                        <li><a href="">@HtmlLang.Write(LangModule.BD, "SmartLists", "Smart Lists")</a></li>
+                                        <li><a href="">@HtmlLang.Write(LangModule.BD, "Customers", "Customers")</a></li>
+                                        <li><a href="">@HtmlLang.Write(LangModule.BD, "Suppliers", "Suppliers")</a></li>
+                                        <li><a href="">@HtmlLang.Write(LangModule.BD, "Employees", "Employees")</a></li>*@
+                                </ul>
+                            </li>
+                            <li class="mg-menu-m">
+                                <a href="#" class="mg-menu-m-name" data-module="setting">@HtmlLang.Write(LangKey.Settings)</a>
+                                <ul class="mg-menu-s">
+                                    @HtmlSECMenu.SelectLiHtml("Settings")
+                                    @*<li><a href="/Setting/">@HtmlLang.Write(LangModule.BD, "GeneralSettings", "General Settings")</a></li>
+                                        <li><a href="/Account/AccountList">@HtmlLang.Write(LangModule.BD, "ChartOfAccounts", "Chart of Accounts")</a></li>
+                                        <li><a href="">@HtmlLang.Write(LangModule.BD, "InventoryItems", "Inventory Items")</a></li>*@
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="mg-block-b">
+                        <ul>
+                            <li><a href="/Docs/Folders" class="mg-file">&nbsp;</a></li>
+                            <li><a href="@ServerHelper.MyServer/Message/MessageList" class="mg-inbox">&nbsp;</a></li>
+                            <li><a href="" class="mg-help">&nbsp;</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        @{if (@ViewBag.Position != null && !string.IsNullOrEmpty(@ViewBag.Position))
+            {
+
+                <div data-role="crumb">
+                    <div class="mg-wrapper">
+                        <div class="mg-block-a">@ViewBag.Position</div>
+                        <div class="mg-block-b">
+                            @{
+                                if (@ViewData["Crumb"] != null && @ViewData["Crumb"].ToString().Length > 0)
+                                {
+                                    <span class="crumb-postion-promt">@HtmlLang.Write(LangModule.BD, "YouAreHere:", "You are here:")</span>@ViewData["Crumb"]
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+                                }}
+        <div data-role="content">
+            @RenderBody()
+        </div>
+        <div data-role="footer">
+
+        </div>
+    </div>
+    <div id="divDialogContainer"></div>
+    @HtmlLang.OrgLang()
+    <script src="@ServerHelper.StaticServer/go/Scripts/layout.js?@ServerHelper.JSVersion" type="text/javascript"></script>
+</body>
+</html>

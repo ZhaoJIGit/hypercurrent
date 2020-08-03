@@ -1,0 +1,23 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml"; 
+    JieNor.Megi.DataModel.IV.IVPaymentModel model = ViewData["PaymentModel"] as JieNor.Megi.DataModel.IV.IVPaymentModel;
+
+    bool isEdit = model.MActionPermission.MIsInitCanEdit ;
+
+}
+@using JieNor.Megi.Common.Utility;
+@Html.Partial("PaymentPartial/PaymentEditPartial")
+@*底部工具栏*@
+<div class="m-toolbar-footer">
+    <div class="left">
+    <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray">@HtmlLang.Write(LangKey.Cancel)</a>
+    </div>
+    @if(isEdit)
+    { 
+    <div class="right">
+        <a href="javascript:void(0)" id="aSavePayment" class="easyui-linkbutton easyui-linkbutton-yellow">@HtmlLang.Write(LangKey.Save)</a>
+    </div>
+    }
+    <div class="clear"></div>
+</div>
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/IV/Payment/PaymentInitEdit.js?@ServerHelper.JSVersion"></script>

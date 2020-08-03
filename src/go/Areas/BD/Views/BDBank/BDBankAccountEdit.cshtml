@@ -1,0 +1,125 @@
+﻿@{
+    ViewBag.Title = "BDBankAccountEdit";
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    var canEditBank = HtmlSECMenu.HavePermission(BizObject.BankAccount, PermissionItem.Change);
+    var canEditCurrency = HtmlSECMenu.HavePermission(BizObject.Setting, PermissionItem.Change);
+
+    JieNor.Megi.EntityModel.Context.MContext ctx = JieNor.Megi.Common.Context.ContextHelper.MContext;
+
+    bool isSmartVersion = ctx.MOrgVersionID == (int)JieNor.Megi.EntityModel.Enum.OrgVersionEnum.Smart;
+}
+@using JieNor.Megi.Common.Utility;
+<div class="m-form">
+    <div class="m-form-field" id="bankBankTypeInputDiv">
+        <div class="m-form-section">@HtmlLang.Write(LangKey.YourBank)</div>
+        <!--银行选择，编辑列表-->
+        <div class="m-form-input">
+            <input class="mg-data" id="MBankTypeID" add-combobox-type="bank" name='MBankTypeID' style="width:200px; height:26px;" data-options="required: true,
+                valueField: 'MItemID',
+                textField: 'MName',
+                url: '/BD/BDBank/GetBDBankTypeList'"
+                   add-options="hasPermission:@Convert.ToString(canEditBank).ToLower()" />
+        </div>
+        <!--提醒信息-->
+        <div class="m-form-tip m-form-tip-box">@HtmlLang.Write(LangModule.Bank, "BankFeedsAvailable", "Bank feeds are available for recognised banks.")</div>
+    </div>
+
+    <!--帐户名称编辑/添加-->
+    <div class="m-form-field">
+        <div class="m-form-section">@HtmlLang.Write(LangKey.Account_Name)</div>
+        <div class="m-form-input">
+            <input type="text" class="easyui-validatebox mg-width200 mg-data m-lang" @*validtype="length[1,50]"*@  data-options="required:true" id="txtMName" name="MName" />
+        </div>
+        <!--提醒信息-->
+        <div class="m-form-tip m-form-tip-box">@*@HtmlLang.Write(LangModule.Bank, "NameAppearLimited", "As you would like it to appear in Megi (limited 50 characters).")*@ &nbsp;&nbsp;</div>
+    </div>
+    <!--帐户所属币种选择-->
+    <div class="m-form-field">
+        <div class="m-form-section">@HtmlLang.Write(LangKey.Currency)</div>
+        <div class="m-form-input">
+            <input id="selCurrencyCode" class="mg-data" name="MCyID" add-combobox-type="currency" data-options="required: true,
+                valueField: 'MCurrencyID',
+                textField: 'MName',
+                url: '/BD/Currency/GetBDCurrencyList?isIncludeBase=true'" add-options="hasPermission:@Convert.ToString(canEditCurrency).ToLower()" style="width:200px; height:26px;" />
+        </div>
+        <div class="m-form-tip m-form-tip-box">&nbsp;</div>
+    </div>
+
+    
+    <!--帐户编号，用户自定义-->
+    <div class="m-form-field" id="bankBankNoInputDiv">
+        <div class="m-form-section">@HtmlLang.Write(LangModule.Bank, "AccountNumber", "Account Number")</div>
+        <div class="m-form-input">
+            <input class="easyui-validatebox mg-width200 mg-data" data-options="required:true" id="txtMBankNo" name="MBankNo" />
+        </div>
+        <!--提醒信息-->
+        <div class="m-form-tip m-form-tip-box">@HtmlLang.Write(LangModule.Bank, "AccountIDTip", "Input your account ID here.") </div>
+    </div>
+    <!--帐户编号，用户自定义-->
+    <div class="m-form-field" id="creditBankNoInputDiv">
+        <div class="m-form-section">@HtmlLang.Write(LangModule.Bank, "CreditCardNumber", "Credit Card Number")</div>
+        <div class="m-form-input">
+            XXXX - XXXX - XXXX - <input class="easyui-validatebox mg-width80 mg-data" data-options="required:true" id="txtMBankNo" name="MBankNo" />
+        </div>
+        <div class="m-form-tip .m-form-tip-box">
+            @HtmlLang.Write(LangModule.Bank, "EnterTheLastCard", "Only enter the last four digits of your card")
+        </div>
+    </div>
+    <div class="m-form-field">
+        <div class="m-form-input">
+            <p style="margin-top: 10px;"><input type="hidden" name="MAccountID" class="mg-data" /></p>
+        </div>
+    </div>
+
+    <!--是否把此帐户信息显示在dashboard-->
+    @if (!isSmartVersion)
+{
+         <div class="m-form-field">
+        <div class="m-form-input">
+            <p style="margin-top: 10px;"><input type="checkbox" checked="checked" class="mg-data" name="MIsShowInHome" />@HtmlLang.Write(LangModule.Bank, "ShowAccOnDashboard", "Show on Dashboard Watchlist") </p>
+        </div>
+    </div>
+}
+   
+
+    <div class="m-form-field">
+        <div class="m-form-input">
+            @if (!isSmartVersion)
+            {
+                 <p style="margin-top: 10px;"><input type="checkbox" checked="checked" class="mg-data" id="MIsNeedReconcile" name="MIsNeedReconcile" />@HtmlLang.Write(LangModule.Bank, "IsNeedReconcile", "Whether to reconcile or not？") </p>
+            }
+            else
+            {
+                 <p style="margin-top: 10px;"><input type="checkbox" checked="checked" class="mg-data" id="MIsNeedReconcile" name="MIsNeedReconcile" />@HtmlLang.Write(LangModule.Bank, "IsImportBankTransaction", "是否导入银行对账单？") </p>
+            }
+           
+        </div>
+    </div>
+
+
+    <!--保存与取消按钮-->
+    <div class="m-fixed-bottom">
+        <div class="m-toolbar-footer">
+            @if (canEditBank)
+            {
+                <div class="left">
+                    <a href="javascript:void(0);" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray" id="btnCancel"><span class="l-btn-left"><span class="l-btn-text">@HtmlLang.Write(LangKey.Cancel)</span></span></a>
+                </div>
+                <div class="right">
+                    <a href="javascript:void(0);" class="easyui-linkbutton easyui-linkbutton-yellow" id="btnSave">@HtmlLang.Write(LangKey.Save)</a>
+                </div>
+            }
+            <br class="clear">
+            <input type="hidden" class="mg-data" name="MIsActive" value="true" />
+            <input type="hidden" class="mg-data m-form-key" name="MItemID" id="hidAccountID" value='@ViewData["Id"]' />
+        </div>
+    </div>
+</div>
+@HtmlLang.WriteScript(LangModule.Bank)
+<script src="/Scripts/BD/BDBank/BDBankAccountEdit.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.StaticServer/FW/scripts/window.constant.variable.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript">
+    new BDBankAccountEdit(@ViewBag.Type).init();
+</script>
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)
+

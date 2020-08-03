@@ -1,0 +1,118 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+@using JieNor.Megi.Identity.Go.HtmlHelper
+@using JieNor.Megi.Core.Const
+@using JieNor.Megi.Common.Utility
+<script src="@ServerHelper.StaticServer/FW/include/daterangepicker/jquery.daterangepicker.js?@ServerHelper.JSVersion"></script>
+<link href="@ServerHelper.StaticServer/fw/include/jquery-fallr/css/jquery-fallr-1.3.css?@ServerHelper.JSVersion" rel="Stylesheet" type="text/css" />
+<link href="@ServerHelper.StaticServer/fw/include/jquery-fallr/css/main.css?@ServerHelper.JSVersion" rel="stylesheet" type="text/css" />
+<script src="@ServerHelper.StaticServer/fw/include/ichartjs/ichart.1.2.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="~/Scripts/BD/BDBank/BDBankHome.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="~/Scripts/Dashboard/FWDashboardHome.js?@ServerHelper.JSVersion"></script>
+
+<div class="m-ititle m-ititle1" style="background-color:white;">
+    <div class="content">
+        <span class="title-text data-home-title">@HtmlLang.Write(LangKey.Dashboard)</span>
+        <span class="title-text message-home-title" style="display:none;">Message Home</span>
+    </div>
+    <div class="action" style="display:none;">
+        <div class="m-select-group">
+            <a href="###" class="user-data-btn current">Data Home</a>
+            <a href="###" class="user-msg-btn">Message Home</a>
+        </div>
+    </div>
+</div>
+
+<!--权限使用示例-->
+@using JieNor.Megi.Tools
+@using JieNor.Megi.Common.Context
+@using JieNor.Megi.EntityModel.Enum
+@{
+    //获取所有的权限（包括了所有权限列表，以及上下文信息）
+    var accessResponse = AccessHelper.Access();
+
+
+    //获取上下文
+    var ctx = accessResponse.ctx;
+    //所有权限
+    Dictionary<string, bool> accessList = accessResponse.Access;
+
+    //是否是总账版
+    bool isSmartVersion = ctx.MOrgVersionID == OrgVersionEnum.Smart;
+
+    //是否有总账的审核权限（使用模块的名字+权限的名字）
+    bool isGeneralLedgerApprove = accessList[BizObject.General_Ledger + PermissionItem.Approve];
+
+    //本版本是否需要展示销售单模块（只传一个模块的名字）
+    bool isShowInvoice = accessList[BizObject.Invoice_Sales];
+
+
+}
+
+<!--顶层-->
+
+<div class="m-imain" style="width:100%;">
+    <div class="dashboard-home">
+        <div class="space"></div>
+        <!--toolbar，以及文本展示-->
+        <!--我的数据-->
+        <div class="m-imain-content data-home">
+            <!--银行权限-->
+            @if (accessList[BizObject.Bank_Reconciliation + PermissionItem.View])
+            {
+                <!--银行分布视图-->
+                <div class="dasboard-bank">
+                    @Html.Partial("FWDashboardPartial/BankPartial")
+                </div>
+            }
+            @if (accessList[BizObject.Invoice_Sales + PermissionItem.View])
+            {
+                <!--销售分布视图-->
+                <div class="dasboard-sale">
+                    @Html.Partial("FWDashboardPartial/SalePartial")
+                </div>
+            }
+            @if (accessList[BizObject.Invoice_Purchases + PermissionItem.View])
+            {
+                <!--采购分布视图-->
+                <div class="dasboard-purchase">
+                    @Html.Partial("FWDashboardPartial/PurchasePartial")
+                </div>
+            }
+            @if (accessList[BizObject.Expense + PermissionItem.View])
+            {
+                <!--费用分布视图-->
+                <div class="dasboard-expense">
+                    @Html.Partial("FWDashboardPartial/ExpensePartial")
+                </div>
+            }
+        </div>
+        <!--消息内容-->
+        <div class="i-imain-content message-home" style="display:none;">
+            <!--银行分布视图-->
+            <div class="message-top">
+                @Html.Partial("FWDashboardPartial/MessagePartial")
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    //需要等浏览器加载完以后再执行
+    $(function () {
+        //刷新按钮
+        //主页
+        var home = new FWDashboardHome();
+        //银行
+        (typeof FWDashboardBank != "undefined") ? new FWDashboardBank('@accessList[BizObject.BankAccount+PermissionItem.Change]', '@accessList[BizObject.Bank_Reconciliation+PermissionItem.View]', '@ctx.MOrgVersionID').InitAll() : "";
+        //销售
+        (typeof FWDashboardSale != "undefined") ? new FWDashboardSale('@accessList[BizObject.Invoice_Sales+PermissionItem.Change]').InitAll() : "";
+        //采购
+        (typeof FWDashboardPurchase != "undefined") ? new FWDashboardPurchase('@accessList[BizObject.Invoice_Purchases+ PermissionItem.Change]').InitAll() : "";
+        //费用报销
+        (typeof FWDashboardExpense != "undefined") ? new FWDashboardExpense('@accessList[BizObject.Expense+ PermissionItem.Change]').InitAll() : "";
+        //初始化
+        home.InitAll();
+    })
+</script>

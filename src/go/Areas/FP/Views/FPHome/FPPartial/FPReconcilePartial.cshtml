@@ -1,0 +1,100 @@
+﻿@using JieNor.Megi.Identity.HtmlHelper
+@using JieNor.Megi.EntityModel.MultiLanguage
+@using JieNor.Megi.Identity.Go.HtmlHelper
+@using JieNor.Megi.Core.Const
+@using JieNor.Megi.Common.Context
+@using JieNor.Megi.Identity.Go.AutoManager
+@using JieNor.Megi.Common.Utility
+
+@{
+    var rCanReconcileFapiao = HtmlSECMenu.HavePermission(int.Parse(ViewData["Type"].ToString()) == 0 ? BizObject.Sales_Fapiao : BizObject.Purchases_Fapiao, PermissionItem.Change);
+}
+
+<div class="fp-reconcile-partial" style="overflow-y:auto;">
+    <!--如果没有数据，则显示一行文字-->
+    <div class="fp-reconcile-empty" style="display:none;">
+        <span style="font-size: 14px;font-style: oblique;">
+            @HtmlLang.Write(LangModule.FP, "NoData2Show", "没有可展示的数据")
+        </span>
+    </div>
+    <!--复制的模版-->
+    <div class="fp-reconcile-demo" style="display:none;">
+        <!--匹配状态-->
+        <p>
+            <div class="match-condition">
+                <!--已经完成对账-->
+                <span class="unmatch-ico ico"></span>
+                <!--文字 已匹配-->
+                <span class="match-text"></span>
+                <!--匹配数量-->
+                <span class="match-count"></span>
+            </div>
+        </p>
+        <!--匹配内容-->
+        <p>
+            <!--整个勾兑单-->
+            <div class="record unmatch-record">
+                <!--开票单记录-->
+                <div class="fp-table-record">
+                    <!--中间的内容用一个表格来展示-->
+                    <table class="record-table">
+                        <tr>
+                            <td class="record-table-title-1">@HtmlLang.Write(LangModule.FP, "TableNumber", "开票单号"):</td>
+                            <td class="record-table-value-1"></td>
+                            <td class="record-table-title-2">@HtmlLang.Write(LangModule.FP, "CompanyName", "公司名称"):</td>
+                            <td class="record-table-value-2" style="text-align:right;"><span></span></td>
+                        </tr>
+                        <tr>
+                            <td class="record-table-title-1">@HtmlLang.Write(LangModule.FP, "TableDate", "开票单日期"):</td>
+                            <td class="record-table-value-1" style="text-align:left;"></td>
+                            <td class="record-table-title-2">@HtmlLang.Write(LangModule.FP, "FPLastAmount2Reconcile", "待开票金额"):</td>
+                            <td class="record-table-value-2" style="text-align:right;"></td>
+                        </tr>
+                    </table>
+                </div>
+                <!--中间的锁链-->
+                <div class="fp-reconcile-match-lock" style="display:block;"></div>
+                <!--发票记录-->
+                <div class="fp-fapiao-record">
+                    <!--中间的内容用一个表格来展示-->
+                    <table class="record-table">
+                        <tr>
+                            <td class="record-table-title-1">@HtmlLang.Write(LangModule.FP, "FPNumber", "发票号"):</td>
+                            <td class="record-table-value-1"></td>
+                            <td class="record-table-title-2">@HtmlLang.Write(LangModule.FP, "CompanyName", "公司名称"):</td>
+                            <td class="record-table-value-2" style="text-align:right;"><span></span></td>
+                            
+                        </tr>
+                        <tr>
+                            <td class="record-table-title-1">@HtmlLang.Write(LangModule.FP, "FPDate", "发票日期"):</td>
+                            <td class="record-table-value-1" style="text-align:left;"></td>
+                            <td class="record-table-title-2">@HtmlLang.Write(LangModule.FP, "FPTotalAmount", "价税合计"):</td>
+                            <td class="record-table-value-2" style="text-align:right;"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </p>
+    </div>
+</div>
+<!--翻页控件-->
+<div class="fp-reconcile-partial-pager"></div>
+
+@*发票勾对（需要对应的发票勾对编辑权限）*@
+@if (rCanReconcileFapiao)
+{
+        <!--悬浮的编辑层-->
+    <div class="fp-reconcile-function-layer" style="display:none">
+        <!--用来控制居中-->
+        <div class="fp-reconcile-function-button">
+            <!--查找按钮-->
+            <span class="fp-reconcile-search">
+                @HtmlLang.Write(LangModule.Bank, "Find", "Find")
+            </span>
+            <!--应用按钮-->
+            <span class="fp-reconcile-apply" style="margin-left:30px;">
+                @HtmlLang.Write(LangModule.Bank, "OK", "OK")
+            </span>
+        </div>
+    </div>
+}

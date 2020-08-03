@@ -1,0 +1,57 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+@using JieNor.Megi.Common.Utility
+<div id="divEdit" class="m-form m-imain" style="padding-left:20px">
+    <div class="m-help-bar" style=" width: 202px">
+        <span>@HtmlLang.Write(LangModule.Acct, "BalanceHelpTips", "1.如果是新增：当你选择了联系人的时候，我们将会帮您记录一条该联系人的数据，并将这条数据累加到该科目。</br>2.如果是编辑，当您选择联系人时，加载的数据将时这条联系人对应的科目余额，我们同样会对联系人对应的科目做相关的操作。")</span>
+    </div>
+    <div class="m-form-item">
+        <span>@HtmlLang.Write(LangModule.Acct, "BankAccName", "Account Balance")</span>
+        <br />
+        <span><input type="text" class="easyui-validatebox mg-data" style="height: 18px; line-height: 18px; width: 150px" value="@ViewData["name"]" disabled />  </span>
+        <br />
+        <!--原币-->
+        <span>@HtmlLang.Write(LangModule.Acct, "OriginalCurrency", "Original currency")</span>
+        <br /> 
+
+        <input type="text" id="tbxInitBalanceFor" class="easyui-numberbox" precision="2" value="@ViewData["initBalanceFor"]" data-options="required:true" />
+        <br />
+        <!--本位币-->      
+        <span> @HtmlLang.Write(LangModule.Acct, "StandardCurrency", "Standard currency")</span>
+        <br />
+        <input type="text" id="tbxInitBalance" class="easyui-numberbox" precision="2" value="@ViewData["initBalance"]" data-options="required:true" />
+        <br />
+        <span> @HtmlLang.Write(LangModule.Acct, "AccumulatedDebitThisYear", "Accumulated debit this year")</span>
+        <br />
+        <input type="text" id="tbxAccumulatedDebit" class="easyui-numberbox" precision="2" value="@ViewData["accumulatedDebit"]" data-options="" />
+        <br />
+        <span> @HtmlLang.Write(LangModule.Acct, "AccumulatedCreditThisYear", "Accumulated credit this year")</span>
+        <br />
+        <input type="text" id="tbxAccumulatedCredit" class="easyui-numberbox" precision="2" value="@ViewData["accumulatedCredit"]" data-options="" />
+        <br />
+        <span> @HtmlLang.Write(LangModule.Acct, "Contact", "Contact")</span>
+        <br />
+        <input type="text" id="sltContact" class="easyui-combobox" />
+    </div>
+    
+    <input type="hidden" class="mg-data" value="@ViewData["accountId"]" id="accountId" />
+    <input type="hidden" class="mg-data" value="@ViewData["cyId"]" id="mcyId"/>
+    <input type="hidden" class="mg-data" value="@ViewData["exchange"]" id="exchange" />
+    <input type="hidden" class="mg-data" value="@ViewData["balanceId"]" id="id"></div>
+<div class="m-toolbar-footer">
+    @if (HtmlSECMenu.HavePermission(BizObject.Contact, PermissionItem.Change))
+    {
+        <div class="left">
+            <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-gray" id="aCancel">@HtmlLang.Write(LangKey.Cancel)</a>
+        </div>
+        <div class="right">
+            <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aSave">@HtmlLang.Write(LangKey.Save)</a>
+        </div>
+    }
+</div>
+
+<script src="@ServerHelper.ScriptServer/Scripts/BD/BDAccount/AccountBalancesEdit.js?@ServerHelper.JSVersion"></script>
+
+@HtmlLang.WriteScript(LangModule.Bank)
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)

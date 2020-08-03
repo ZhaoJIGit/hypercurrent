@@ -1,0 +1,35 @@
+﻿@model JieNor.Megi.DataModel.BD.BDAttachmentFolderListModel
+@{
+    var attachmentCategoryList = Model.List as List<BDAttachmentCategoryListModel>;
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+@using JieNor.Megi.Common.Utility;
+<div class="m-imain">
+    <div class="m-form-hrtl m-form-hrtl-lbl100 m-box-container m-imain-content">
+        <div class="m-box-folders">
+            <div id="divFolderList" style="width: 148px;">
+                @Html.Partial("FoldersPartial", Model)
+            </div>
+        </div>
+        <div class="m-box m-box-select-files">
+            <div id="divFileList">
+                <div id="tbFileList" fitcolumns="true"></div>
+            </div>
+        </div>
+        </div>
+        <br class="clear" />
+    </div>
+</div>
+<div class="m-toolbar-footer">
+    <div class="left">
+        <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray" id="aCancel">@HtmlLang.Write(LangKey.Cancel)</a>
+    </div>
+    <div class="right">
+        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aAddFiles">@HtmlLang.Write(LangModule.Docs, "AddFiles", "Add Files")</a>
+    </div>
+</div>
+<input type="hidden" id="hdnCurFolderID" value="@ViewBag.CurrentFolderId" />
+@HtmlLang.WriteScript(LangModule.Docs)
+<script type="text/javascript" src="@ServerHelper.GoServer/scripts/BD/Docs/FileBase.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.GoServer/scripts/BD/Docs/SelectFiles.js?@ServerHelper.JSVersion"></script>
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)

@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{AAC3FE46-AF90-473B-AADC-35340CFEFD18}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>Library</OutputType>
+    <AssemblyName>JieNor.Megi.BusinessContract</AssemblyName>
+    <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System.Data" />
+    <Reference Include="System.ServiceModel">
+      <HintPath>C:\WINDOWS\Microsoft.NET\assembly\GAC_MSIL\System.ServiceModel\v4.0_4.0.0.0__b77a5c561934e089\System.ServiceModel.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="JieNor.Megi.BusinessContract.BAS\IBASCountryBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.BAS\IBASCountryRegionBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.BAS\IBASCurrencyBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.BAS\IBASDataDictionaryBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.BAS\IBASLangBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.BAS\IBASModuleBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.BAS\IBASMyHomeBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.BAS\IBASNationalLanguageBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.BAS\IBASOrganisationBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.BAS\IBASOrgInitSettingBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.BAS\IBASOrgPrefixSettingBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.BAS\IBASSearchBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.BAS\IBASSettleTypeBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.BAS\IBASTimezoneBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.BAS\IOptLogListBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.BD\IBDAccountBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.BD\IBDAccountMatchLogBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.BD\IBDAttachmentBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.BD\IBDBankAccountBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.BD\IBDBankRuleBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.BD\IBDBankTypeBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.BD\IBDContactsBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.BD\IBDEmailTemplateBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.BD\IBDEmployeesBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.BD\IBDEmpPayrollDetailBll.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.BD\IBDExchangeRateBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.BD\IBDExpenseItemBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.BD\IBDInitDocumentBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.BD\IBDInspect.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.BD\IBDItemBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.BD\IBDOrganisationBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.BD\IBDTrackBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.BD\IBDTrackEntryBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.BD\IBDVoucherSettingBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.COM\ICOMMultiLangBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.COM\ICOMTableInfoBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.FA\IFADepreciationBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.FA\IFAFixAssetsBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.FA\IFAFixAssetsChangeBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.FA\IFAFixAssetsTypeBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.FC\IFCCashCodingModuleBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.FC\IFCFapiaoModuleBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.FC\IFCVoucherModuleBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.FP\IFPFapiaoBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.FP\IFPSettingBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.FP\IFPTableBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.GL\IGLBalanceBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.GL\IGLCheckGroupBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.GL\IGLCheckGroupValueBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.GL\IGLCheckTypeBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.GL\IGLDocVoucherBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.GL\IGLExcelBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.GL\IGLInitBalanceBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.GL\IGLPeriodTransferBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.GL\IGLSettlementBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.GL\IGLVoucherBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.GL\IGLVoucherEntryBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.GL\IGLVoucherReferenceBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.IO\IIOImportBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.IO\IIOSolutionBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.IV\IIVBankApiBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.IV\IIVBankBillBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.IV\IIVExpenseBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.IV\IIVInvoiceBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.IV\IIVPaymentBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.IV\IIVReceiveBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.IV\IIVTransactionsBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.IV\IIVTransferBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.IV\IIVVerificationBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.MSG\IMSGMessageBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.PA\IPAPayItemBussiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.PA\IPAPayItemGroupBussiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.PA\IPAPaySettingBll.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.PA\IPAPaySettingBussiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.PA\IPASalaryPaymentBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.PT\IPTBizBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.PT\IPTSalaryListBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.PT\IPTVoucherBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.REG\IREGCurrencyBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.REG\IREGFinancialBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.REG\IREGGlobalizationBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.REG\IREGTaxRateBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.REG\IREGTaxRateEntryBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.RI\IRIInspectable.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.RI\IRIInspectBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.RPT\IRPTAccountBalanceBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.RPT\IRPTAgedInvoiceBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.RPT\IRPTAgedPayableBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.RPT\IRPTAgedReceivableBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.RPT\IRPTAssetChangeBussiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.RPT\IRPTAssetDepreciationBussiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.RPT\IRPTBalanceSheetBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.RPT\IRPTBankAndCashSummaryBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.RPT\IRPTBankBillRecSummaryBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.RPT\IRPTBankStatementBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.RPT\IRPTBizReportBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.RPT\IRPTCashFlowStatementBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.RPT\IRPTCashSummaryBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.RPT\IRPTDepreciationDetailBussiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.RPT\IRPTDepreciationSummaryBussiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.RPT\IRPTExpenseClaimBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.RPT\IRPTFilterScheme.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.RPT\IRPTGeneralLedgerBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.RPT\IRPTIncomeByContactBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.RPT\IRPTIncomeStatementBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.RPT\IRPTIncomeTransBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.RPT\IRPTReportBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.RPT\IRPTSalesByItemTransBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.RPT\IRPTSalesTaxAuditReportBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.RPT\IRPTSalesTaxReportBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.RPT\IRPTSalseByItemBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.RPT\IRPTSubsidiaryLedgerBussiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.SEC\IBASUserInfoBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.SEC\ISECAccountBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.SEC\ISECPermissionBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.SEC\ISECSendLinkInfoBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.SEC\ISECUserAccountBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.SEC\ISECUserBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.SEC\ISECUserLoginLog.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.SYS\ISYSCouponBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.SYS\ISYSOrgAppBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.SYS\ISYSOrgAppStorageBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.SYS\ISYSStorageBusiness.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract\IRPTAccountDimensionSummaryBusiness.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.COM\ICOMAccessBusiness.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\core\JieNor.Megi.Core.csproj">
+      <Project>{e56a4df7-e8eb-407f-aafd-5b763bffa364}</Project>
+      <Name>JieNor.Megi.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\datamodel\JieNor.Megi.DataModel.csproj">
+      <Project>{2f8cbbd3-6276-49a4-87e0-8b6c4597e3e0}</Project>
+      <Name>JieNor.Megi.DataModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\entitymodel\JieNor.Megi.EntityModel.csproj">
+      <Project>{eef2457d-0b83-44e8-96ce-d6c0cf427a8a}</Project>
+      <Name>JieNor.Megi.EntityModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\repository\JieNor.Megi.DataRepository.csproj">
+      <Project>{ff80992b-400a-4f45-b45a-1f96977f49a8}</Project>
+      <Name>JieNor.Megi.DataRepository</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

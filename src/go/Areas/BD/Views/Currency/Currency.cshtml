@@ -1,0 +1,49 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+@using JieNor.Megi.Common.Utility;
+<!--权限-->
+@if (HtmlSECMenu.HavePermission(BizObject.Setting, PermissionItem.Change))
+{
+    <input type="hidden" id="hidChangeAuth" value="1" />
+}
+else
+{
+    <input type="hidden" id="hidChangeAuth" value="0" />
+}
+<div class="m-toolbar">
+    <div class="btn">
+        @if (HtmlSECMenu.HavePermission(BizObject.Setting, PermissionItem.Change))
+       {
+         <a href="#" class="easyui-linkbutton  easyui-linkbutton-yellow" id="btnNewCurrency">@HtmlLang.Write(LangModule.BD, "NewCurrency", "New Currency")</a>
+         <a href="#" class="easyui-linkbutton easyui-linkbutton-gray" id="btnNewExchange">@HtmlLang.Write(LangModule.BD, "NewExchange rate", "New exchange rate")</a>
+       }
+    </div>
+    
+    <div class="clear"></div>
+</div>
+<div class="m-imain">
+    <div class="m-imain-content">
+        <!--常用币种添加-->
+        <!--没有change权限时隐藏-->
+@*@if (HtmlSECMenu.HavePermission(BizObject.Setting, PermissionItem.Change))
+{
+        @Html.Partial("UCCurrencyAdd")
+}*@
+        <!--常用币种显示-删除等-->
+        @Html.Partial("UCCurrencyList")
+        <!--常用币种对本位币的汇率维护-->
+        @Html.Partial("UCExchangeRateList")
+
+        <!--隐藏控件-->
+        <!--组织代码-->
+        <input type="hidden" id="hidOrgID" value="@ViewBag.OrgID" />
+        <!--本位币-->
+        <input type="hidden" id="hidCurrency" value="@ViewBag.Currency" />
+
+        <!--结尾符-->
+        <br class="clear" />
+    </div>
+</div>
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)
+

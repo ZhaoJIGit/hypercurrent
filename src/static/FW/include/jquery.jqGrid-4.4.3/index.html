@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <meta charset="utf-8" />
+    <script src="js/jquery-1.7.2.min.js"></script>
+    <script src="js/jquery.jqGrid.src.js"></script>
+    <script src="js/i18n/grid.locale-cn.js"></script>
+    <link type="text/css" rel="stylesheet" href="css/ui.jqgrid.css" />
+    <style type='text/css'>
+        .mg-hover {
+            background-color: blue;
+        }
+    </style>
+</head>
+
+<body>
+
+    <table id="list"></table>
+
+    <script type="text/javascript">
+        $(function() {
+
+            var mydata = [];
+
+            for (var i = 0; i < 100000; i++) {
+                mydata.push({
+                    id: "id" + i,
+                    invdate: "2007-10-01",
+                    name: "test",
+                    note: "note",
+                    amount: "200.00",
+                    tax: "10.00",
+                    total: "210.00"
+                });
+            }
+
+            var results = {
+                page: "0",
+                total: 200,
+                records: mydata.length,
+                rows: mydata
+            };
+
+
+
+            var reader = {
+                root: function(obj) {
+                    return results.rows;
+                },
+                page: function(obj) {
+                    return results.page;
+                },
+                total: function(obj) {
+                    return results.total;
+                },
+                records: function(obj) {
+                    return results.records;
+                }
+            };
+
+            grid = $("#list");
+
+            grid.jqGrid({
+                datatype: 'local',
+                data: mydata,
+                rowNum: 200,
+                loadonce: true,
+                scroll: 1,
+                height: '500',
+                colNames: ['Inv No', 'Date', 'Client', 'Amount', 'Tax', 'Total', 'Notes'],
+                colModel: [{
+                    name: 'id',
+                    index: 'id',
+                    width: 70,
+                    align: 'center',
+                    formatter: function(value, grid, row) {
+                        return "<a href='http://www.baidu.com' onmouseover='idover(this);'>" + value + "</a>";
+                    }
+                }, {
+                    name: 'invdate',
+                    index: 'invdate',
+                    width: 80,
+                    align: 'center',
+                    sorttype: 'date',
+                    formatter: 'date',
+                    formatoptions: {
+                        newformat: 'd-M-Y'
+                    },
+                    datefmt: 'd-M-Y'
+                }, {
+                    name: 'name',
+                    index: 'name',
+                    width: 70
+                }, {
+                    name: 'amount',
+                    index: 'amount',
+                    width: 100,
+                    formatter: 'number',
+                    align: 'right'
+                }, {
+                    name: 'tax',
+                    index: 'tax',
+                    width: 70,
+                    formatter: 'number',
+                    align: 'right'
+                }, {
+                    name: 'total',
+                    index: 'total',
+                    width: 120,
+                    formatter: 'number',
+                    align: 'right'
+                }, {
+                    name: 'note',
+                    index: 'note',
+                    width: 100,
+                    sortable: false
+                }]
+            });
+        });
+
+        function idover(a) {
+            var tr = $(a).closest("tr");
+            tr.siblings().removeClass("mg-hover");
+            tr.addClass("mg-hover");
+        }
+    </script>
+</body>
+
+</html>

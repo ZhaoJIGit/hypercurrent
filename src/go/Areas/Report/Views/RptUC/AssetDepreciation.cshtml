@@ -1,0 +1,42 @@
+﻿@{
+    Layout = "~/Areas/Report/Views/Shared/_LayoutReport.cshtml";
+    DateTime now = DateTime.Now;
+    DateTime curMonthFirstDay = now.AddDays(1 - now.Day);//当月第一天的时间
+    DateTime curMonthLastDay = curMonthFirstDay.AddMonths(1).AddDays(-1);//当月最后一天的时间
+}
+
+@using JieNor.Megi.Common.Utility
+
+<div class="m-form-vtcl m-form-min">
+    <div class="m-form-vtcl-content">
+        <div class="m-form-section section-type">
+            <span class="m-bold">@HtmlLang.Write(LangModule.Report, "AccountingPeriod", "会计期间")</span>
+            <span>
+                <select class="easyui-combobox mg-data" name="MStartPeroid" id="cbxStartPeriod" style="width: 100px">
+                    @HtmlAccount.AccountPeriodOptions()
+                </select>
+                <span>@HtmlLang.Write(LangModule.Report, "To", "至")</span>
+                <select class="easyui-combobox mg-data" name="MEndPeroid" id="cbxEndPeriod" style="width: 100px">
+                    @HtmlAccount.AccountPeriodOptions()
+                </select>
+            </span>
+            <span><a href="javascript:void(0);" id="btnMoreFilter" class="gl-rpt-a">@HtmlLang.Write(LangModule.Report, "AdvancedSearch", "更多过滤条件")</a></span>
+            <span><a href="javascript:void(0)" class="m-btn l-btn" id="aReportUpdate" style="width: 60px">@HtmlLang.Write(LangModule.Report, "Update", "Update")</a></span>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("~/Areas/Report/Views/RptUC/DepreciationReportFilter.cshtml")
+<script src="@ServerHelper.ScriptServer/scripts/Report/RptUC/AssetDepreciation.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.Report)
+
+<script>
+    $(document).ready(function () {
+        DepreciationReportBase.init();
+    });
+</script>
+
+
+
+
+

@@ -1,0 +1,51 @@
+﻿@{
+    ViewBag.Title = "EmployeeEdit";
+    Layout = "~/Views/Shared/_DialogLayout.cshtml";
+}
+@using JieNor.Megi.Common.Utility;
+<link href="@ServerHelper.StaticServer/include/easyui/icon.css?@ServerHelper.JSVersion" rel="stylesheet" />
+
+<div id="divEmployeeEdit" class="m-form m-form-hrtl">
+    <div class="m-form-item">
+        <ul>
+            <li class="mg-bold">@HtmlLang.Write(LangModule.Contact, "Department", "department")</li>
+            <li>
+                <select style="width:155px" class="mg-data easyui-combobox m-form-item-select" id="deptSelectID" data-options="multiple:true">
+                    @HtmlBDDepartment.SelectOptions(Convert.ToString(ViewData["orgid"]))
+                </select>
+            </li>
+        </ul>
+    </div>
+    <div class="m-form-item">
+        <ul>
+            <li class="mg-bold">@HtmlLang.Write(LangModule.Contact, "employeefirstname", "employee first name")</li>
+            <li><input class="mg-data m-lang" name="MFirstName" /></li>
+        </ul>
+    </div>
+    <div class="m-form-item">
+        <ul>
+            <li class="mg-bold">@HtmlLang.Write(LangModule.Contact, "employeelastname", "employee last name")</li>
+            <li><input class="mg-data m-lang" name="MLastName" /></li>
+        </ul>
+    </div>
+    <div class="m-form-item">
+        <ul>
+            <li class="mg-bold">@HtmlLang.Write(LangModule.Contact, "employeeemail", "employee email")</li>
+            <li><input class="mg-data easyui-validatebox" name="MEmail" data-options="validType:'email'" /></li>
+        </ul>
+    </div>
+    <input type="hidden" class="mg-data" value="@ViewData["orgid"]" id="orgid" name="MOrgID" />
+    <input type="hidden" value="@ViewData["deptid"]" id="deptDefaultID" />
+    <input type="hidden" class="mg-data m-form-key" value="@ViewData["empid"]" id="empid" name="MItemID" />
+    <br class="clear" />
+    <div class="m-form-action">
+        @if (HtmlSECMenu.HavePermission(BizObject.Contact, PermissionItem.Change)) { 
+        <a href="javascript:" class="mg-btn mg-btn-gray mg-btn-cancel" id="aCancel">@HtmlLang.Write(LangKey.Cancel)</a>
+        <a href="javascript:" class="mg-btn mg-btn-green mg-btn-save" id="aSave" style="width:60px">@HtmlLang.Write(LangKey.Yes)</a>
+        <br class="clear" />
+        }
+    </div>
+</div>
+<script src="@ServerHelper.ScriptServer/scripts/BD/Dept/EmployeeEdit.js?@ServerHelper.JSVersion"></script>
+
+

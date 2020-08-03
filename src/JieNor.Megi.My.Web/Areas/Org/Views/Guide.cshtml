@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "Start";
+}
+
+<div class="mg-wrapper">
+    <div class="mg-start">
+        <p>@HtmlLang.Write(LangModule.My, "Hiyong", "Hi yong,")</p>
+        <div class="mg-start-content">@HtmlLang.Write(LangModule.My, "AddYourBusiness", "Add your business to see your cashflow in realtime") <br />@HtmlLang.Write(LangModule.My, "WithOnlineBilling", "with online billing, banking and accounting.")</div>
+        <div class="mg-start-action"><a href="/Organisation/OrganisationAdd" class="mg-btn mg-btn-green">@HtmlLang.Write(LangModule.My, "Void", "Void")Add an Organisation</a></div>
+    </div>
+
+    <div class="clear"></div>
+</div>
+<div class="mg-start-footer">
+    <a href="">@HtmlLang.Write(LangModule.My, "TryTheDemoCompany", "Try the Demo Company (US)")</a>@HtmlLang.Write(LangModule.My, "HaveAPlay", "Have a play, try out new features and get familiar with Megi.")  <a href="">Reset</a> or <a href="">@HtmlLang.Write(LangModule.My, "ChangeCountry", "Change Country")</a>
+</div>

@@ -1,0 +1,62 @@
+﻿@using JieNor.Megi.Identity.HtmlHelper
+@using JieNor.Megi.EntityModel.MultiLanguage
+@using JieNor.Megi.Identity.Go.HtmlHelper
+@using JieNor.Megi.Core.Const
+@using JieNor.Megi.Common.Utility
+@using JieNor.Megi.Identity
+@{
+    ViewBag.Title = "Reference";
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+
+<link type="text/css" rel="stylesheet" href="~/Scripts/GL/css.css" />
+
+<div class="re-top-div">
+    <!--标题-->
+    <div class="re-title-div">
+        @HtmlLang.Write(LangModule.Common, "Reference", "Reference"):
+    </div>
+
+    <!--一个文本输入框-->
+    <div class="re-context-div">
+        <div class="re-textarea-div">
+            <!--输入框-->
+            <textarea class="re-content-textarea"></textarea>
+        </div>
+        <div class="re-button-div">
+            @if (HtmlSECMenu.HavePermission(BizObject.General_Ledger, PermissionItem.Change))
+            {
+            <!--保存按钮-->
+                <a href="javascript:void(0)" class="easyui-linkbutton  easyui-linkbutton-yellow re-save-button"> @HtmlLang.Write(LangKey.Save) </a>
+            }
+            <!--取消按钮-->
+            <a href="javascript:void(0)" class="easyui-linkbutton  easyui-linkbutton-base re-cancel-button">@HtmlLang.Write(LangKey.Cancel)</a>
+
+        </div>
+    </div>
+
+    <!--一个表格，展示目前已经有的摘要的列表-->
+    <div class="re-list-div">
+        <!--表格-->
+        <table class="re-reference-table">
+            <thead>
+                <tr>
+                    <th class="content">@HtmlLang.Write(LangModule.Common, "Content", "Content")</th>
+                    <th class="operate">@HtmlLang.Write(LangModule.Common, "Operation", "Operation")</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <!--底部一个分页控件集-->
+    <div class="re-pager-div">
+
+    </div>
+</div>
+<script src="~/Scripts/GL/GLReferenceEdit.js?@ServerHelper.JSVersion"></script>
+
+<script type="text/javascript">
+    var reference = new GLReferenceEdit();
+    reference.init();
+</script>
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)

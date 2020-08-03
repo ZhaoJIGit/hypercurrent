@@ -1,0 +1,243 @@
+﻿@using JieNor.Megi.Identity.HtmlHelper
+@using JieNor.Megi.EntityModel.MultiLanguage
+@using JieNor.Megi.Identity.Go.HtmlHelper
+@using JieNor.Megi.Core.Const
+@using JieNor.Megi.Common.Context
+@using JieNor.Megi.Identity.Go.AutoManager
+@using JieNor.Megi.Common.Utility
+
+@{
+    var rCanReconcileFapiao = HtmlSECMenu.HavePermission(int.Parse(ViewData["Type"].ToString()) == 0 ? BizObject.Sales_Fapiao : BizObject.Purchases_Fapiao, PermissionItem.Change);
+    var type = int.Parse(ViewData["Type"].ToString());
+
+    var buttonWidth = ContextHelper.MContext.MLCID == "0x0009" ? "150px" : "80px";
+}
+
+<div class="fp-coding-partial" style="overflow-y:hidden;">
+
+    <div class="fp-coding-toolbar" style="height:40px;width:100%;">
+        @if (rCanReconcileFapiao)
+        {
+
+
+            <a class="easyui-linkbutton easyui-linkbutton-yellow" id="btnSaveNCreate" style="margin-left:10px;float:left;width: @buttonWidth ">@HtmlLang.Write(LangModule.FP, "CreateVoucher", "生成凭证")</a>
+            <a class="easyui-linkbutton" id="btnMergeCreate" style="margin-left:10px;float:left">@HtmlLang.Write(LangModule.FP, "MergeCreateVoucher", "合并生成凭证")</a>
+            <a class="easyui-linkbutton" id="markCodingStatus" status="2" style="margin-left:10px;float:left">@HtmlLang.Write(LangModule.FP, "NoCoding", "无需生成")</a>
+            <a class="easyui-linkbutton" id="resetCodingData" style="margin-left:10px;float:left">@HtmlLang.Write(LangModule.GL, "ResetDocVoucher", "重置")</a>
+
+            <a class="easyui-linkbutton" id="bthSearchCoding" style="margin-left:10px;float:right">@HtmlLang.Write(LangModule.FP, "Search", "搜索")</a>
+
+            <input type="text" class="easyui-validatebox fp-coding-keyword" style="width: 120px; float: right; margin-top: 2px; height: 25px;" hint="@HtmlLang.Write(LangModule.FP, "FapiaoNo_ContactName_Amount", "发票号#联系人#金额")"/>
+            <!--显示一个键盘-->
+            <div class="tip-hotkey-div">
+                @HtmlLang.Write(LangModule.FP, "hothandeltip", "快捷操作提示")
+            </div>
+        }
+    </div>
+    <div class="fp-coding-body" style="width:100%;">
+
+        <table class="fp-coding-table"></table>
+    </div>
+
+    <!--翻页控件-->
+    <div class="fp-coding-partial-pager"></div>
+
+
+
+</div>
+
+<div class="fp-select-div" style="position:absolute">
+    <span class="fp-all-selected">&nbsp;</span>
+    <span class="fp-part">&nbsp;</span>
+    <span class="fp-set" id="fpSet">&nbsp;</span>
+</div>
+<style>
+    .fp-coding-toolbar .l-btn-text {
+        width: @buttonWidth !important;
+    }
+
+    .tooltip-content {
+        max-width: 360px !important;
+    }
+
+    .fp-coding-div .datagrid-row-over {
+        background: none !important;
+    }
+
+    .fp-coding-div .datagrid-row-selected {
+        background: none !important;
+        color: #444 !important;
+    }
+
+    .fp-coding-div .datagrid-row-over td {
+        background: none !important;
+        color: #444 !important;
+    }
+
+        .fp-coding-div .datagrid-row-over td div, .fp-coding-div .datagrid-row-over td span, .fp-coding-div .datagrid-row-over td li {
+            color: #444 !important;
+        }
+
+        .fp-coding-div .datagrid-row-over td:not([rowspan]) div, .fp-coding-div .datagrid-row-over td:not([rowspan]) span, .fp-coding-div .datagrid-row-over td:not([rowspan]) a, .fp-coding-div .datagrid-row-over td:not([rowspan]) li {
+            color: #fff !important;
+        }
+
+        .fp-coding-div .datagrid-row-over td:not([rowspan]) {
+            background: #62a6dc !important;
+            color: #fff !important;
+        }
+
+
+    .fp-coding-div .datagrid-row-over a {
+        text-decoration: underline !important;
+        color: #048fc2 !important;
+    }
+</style>
+
+<!--字段设置-->
+<div class="fp-coding-setting" id="fpSettingDiv" style="display:none;width:350px;padding:5px 5px 5px 5px;">
+    <a class="fp-close fp-field-close" href="javascript:void(0);">
+        &nbsp;
+    </a>
+    <div class="fp-setting-header" style="font-weight:bold;">
+        @HtmlLang.Write(LangModule.FP, "SelectField2Show", "请选择要显示的字段"):
+    </div>
+    <div class="fp-setting-body">
+        <table class="fp-setting-table">
+            <tr class="fp-setting-tr">
+                <td class="fp-setting-field-name">@HtmlLang.Write(LangModule.FP, "FapiaoNumber", "发票号")</td>
+                <td class="fp-setting-field-value">
+                    <input type="checkbox" field="MFapiaoNumber" />
+                </td>
+                <td class="fp-setting-field-name">@HtmlLang.Write(LangModule.FP, "Explanation", "摘要")</td>
+                <td class="fp-setting-field-value">
+                    <input type="checkbox" field="MExplanation" style="display:none;" />
+                </td>
+            </tr>
+            <tr class="fp-setting-tr">
+                <td class="fp-setting-field-name">@HtmlLang.Write(LangModule.FP, "FapiaoDate", "开票时间")</td>
+                <td class="fp-setting-field-value">
+                    <input type="checkbox" field="MBizDate" />
+                </td>
+                <td class="fp-setting-field-name"></td>
+                <td class="fp-setting-field-value">
+                    <input type="checkbox" style="display:none;" />
+                </td>
+            </tr>
+            <tr class="fp-setting-tr">
+                <td class="fp-setting-field-name">@(type == 0 ? HtmlLang.Write(LangModule.FP, "Buyer", "购买方") : HtmlLang.Write(LangModule.FP, "Seller", "销售方"))</td>
+                <td class="fp-setting-field-value">
+                    <input type="checkbox" field="MPSContactName" />
+                </td>
+                <td class="fp-setting-field-name"></td>
+                <td class="fp-setting-field-value">
+                    <input type="checkbox" style="display:none;" />
+                </td>
+            </tr>
+            <tr class="fp-setting-tr">
+                <td class="fp-setting-field-name">@HtmlLang.Write(LangModule.FP, "InventoryName", "货物或应税劳务、服务名称")</td>
+                <td class="fp-setting-field-value">
+                    <input type="checkbox" field="MInventoryName" />
+                </td>
+                <td class="fp-setting-field-name"></td>
+                <td class="fp-setting-field-value">
+                    <input type="checkbox" style="display:none;" />
+                </td>
+            </tr>
+            <tr class="fp-setting-tr">
+                <td class="fp-setting-field-name">@HtmlLang.Write(LangModule.FP, "Contact", "联系人")</td>
+                <td class="fp-setting-field-value">
+                    <input type="checkbox" field="MContactID" />
+                </td>
+                <td class="fp-setting-field-name"></td>
+                <td class="fp-setting-field-value">
+                    <input type="checkbox" style="display:none;" />
+                </td>
+            </tr>
+            <tr class="fp-setting-tr">
+                <td class="fp-setting-field-name">@HtmlLang.Write(LangModule.FP, "BDItem", "商品项目")</td>
+                <td class="fp-setting-field-value">
+                    <input type="checkbox" field="MMerItemID" />
+                </td>
+                <td class="fp-setting-field-name"></td>
+                <td class="fp-setting-field-value">
+                    <input type="checkbox" style="display:none;" />
+                </td>
+            </tr>
+            <tr class="fp-setting-tr">
+                <td class="fp-setting-field-name">@HtmlLang.Write(LangModule.FP, "Amount", "金额")</td>
+                <td class="fp-setting-field-value">
+                    <input type="checkbox" field="MAmount" />
+                </td>
+                <td class="fp-setting-field-name"></td>
+                <td class="fp-setting-field-value">
+                    <input type="checkbox" style="display:none;" />
+                </td>
+            </tr>
+            <tr class="fp-setting-tr">
+                <td class="fp-setting-field-name">@HtmlLang.Write(LangModule.FP, "TaxRate", "税率")</td>
+                <td class="fp-setting-field-value">
+                    <input type="checkbox" field="MTaxRate" />
+                </td>
+                <td class="fp-setting-field-name"></td>
+                <td class="fp-setting-field-value">
+                    <input type="checkbox" style="display:none;" />
+                </td>
+            </tr>
+            <tr class="fp-setting-tr">
+                <td class="fp-setting-field-name">@HtmlLang.Write(LangModule.FP, "TaxAmount", "税额")</td>
+                <td class="fp-setting-field-value">
+                    <input type="checkbox" field="MTaxAmount" />
+                </td>
+                <td class="fp-setting-field-name"></td>
+                <td class="fp-setting-field-value">
+                    <input type="checkbox" style="display:none;" />
+                </td>
+            </tr>
+            <tr class="fp-setting-tr">
+                <td class="fp-setting-field-name">@HtmlLang.Write(LangModule.FP, "TotalAmount", "价税合计")</td>
+                <td class="fp-setting-field-value">
+                    <input type="checkbox" field="MTotalAmount" />
+                </td>
+                <td class="fp-setting-field-name"></td>
+                <td class="fp-setting-field-value">
+                    <input type="checkbox" style="display:none;" />
+                </td>
+            </tr>
+            <tr class="fp-setting-tr">
+                <td class="fp-setting-field-name">@HtmlLang.Write(LangModule.FP, "FastCode", "快速码")</td>
+                <td class="fp-setting-field-value">
+                    <input type="checkbox" field="MFastCode" />
+                </td>
+                <td class="fp-setting-field-name"></td>
+                <td class="fp-setting-field-value">
+                    <input type="checkbox" style="display:none;" />
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="fp-setting-bottom" style="margin-top:10px;">
+        <a class="easyui-linkbutton easyui-linkbutton-yellow" id="btnSaveSetting" style="float:right;">@HtmlLang.Write(LangModule.FP, "Save", "保存")</a>
+    </div>
+</div>
+
+
+<!--鼠标放在展开和显示按钮的时候提醒的文字-->
+<div id="fpTipsDiv1" class="fp-coding-tips" style="display:none;width:200px;padding:5px 5px 5px 5px;">
+    <div class="fp-setting-header" style="font-weight:bold;">
+        @HtmlLang.Write(LangModule.FP, "SwithColumnsShow", "切换显示界面"):
+    </div>
+    <div class="fp-tips-body">
+        @HtmlLang.WriteFormat(LangModule.FP, "FapiaoCodingTips", "当您进入发票手动匹配列表界面时，系统将列表自动做[全部]显示。您可以根据需要在全部显示{0}和部分显示{1}来回切换, 您也可以点击设置{2}进行列显示设置。", "<span class='fp-all-selected'>&nbsp;</span>", "<span class='fp-part'>&nbsp;</span>", "<span class='fp-set'>&nbsp;</span>")
+    </div>
+</div>
+<!--鼠标放在展开和显示按钮的时候提醒的文字-->
+<div id="fpTipsDiv2" class="fp-coding-tips" style="display:none;width:200px;padding:5px 5px 5px 5px;">
+    <div class="fp-setting-header" style="font-weight:bold;">
+        @HtmlLang.Write(LangModule.FP, "SwithColumnsShow", "切换显示界面"):
+    </div>
+    <div class="fp-tips-body">
+        @HtmlLang.WriteFormat(LangModule.FP, "FapiaoCodingTips", "当您进入发票手动匹配列表界面时，系统将列表自动做[全部]显示。您可以根据需要在全部显示{0}和部分显示{1}来回切换, 您也可以点击设置{2}进行列显示设置。", "<span class='fp-all-selected'>&nbsp;</span>", "<span class='fp-part'>&nbsp;</span>", "<span class='fp-set'>&nbsp;</span>")
+    </div>
+</div>
+@Html.Partial("FPPartial/FPFastCodePartial")

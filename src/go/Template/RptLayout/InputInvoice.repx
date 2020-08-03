@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XtraReportsLayoutSerializer SerializerVersion="15.1.5.0" Ref="1" Name="InputInvoice" ControlType="DevExpress.XtraReports.UI.XtraReport, DevExpress.XtraReports.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" DataSource="#Ref-0" Version="15.1" PageWidth="850" PageHeight="1100" Margins="0, 0, 100, 100">
+  <Bands>
+    <Item1 Ref="2" ControlType="DetailBand" Name="Detail" TextAlignment="TopLeft" Font="微软雅黑, 9.75pt" Padding="0,0,0,0,100" HeightF="25">
+      <Controls>
+        <Item1 Ref="3" Name="xrTable2" ControlType="XRTable" SizeF="1719.213,25" LocationFloat="0, 0">
+          <Rows>
+            <Item1 Ref="4" ControlType="XRTableRow" Name="xrTableRow2" Weight="1">
+              <Cells>
+                <Item1 Ref="5" Name="xrTableCell15" ControlType="XRTableCell" Weight="0.6706989234418862">
+                  <DataBindings>
+                    <Item1 Ref="6" PropertyName="Text" DataMember="FapiaoCodeTitle" />
+                  </DataBindings>
+                </Item1>
+                <Item2 Ref="7" Name="xrTableCell16" ControlType="XRTableCell" Weight="0.705883940350702">
+                  <DataBindings>
+                    <Item1 Ref="8" PropertyName="Text" DataMember="FapiaoNumberTitle" />
+                  </DataBindings>
+                </Item2>
+                <Item3 Ref="9" Name="xrTableCell17" ControlType="XRTableCell" Weight="0.65246180132775122">
+                  <DataBindings>
+                    <Item1 Ref="10" PropertyName="Text" DataMember="SalesEnterpriseTitle" />
+                  </DataBindings>
+                </Item3>
+                <Item4 Ref="11" Name="xrTableCell18" ControlType="XRTableCell" Weight="0.757830135468943">
+                  <DataBindings>
+                    <Item1 Ref="12" PropertyName="Text" DataMember="SalesEnterpriseTaxCodeTitle" />
+                  </DataBindings>
+                </Item4>
+                <Item5 Ref="13" Name="xrTableCell29" ControlType="XRTableCell" Weight="0.68808057457607041">
+                  <DataBindings>
+                    <Item1 Ref="14" PropertyName="Text" DataMember="BizDateTitle" />
+                  </DataBindings>
+                </Item5>
+                <Item6 Ref="15" Name="xrTableCell32" ControlType="XRTableCell" Weight="0.68808057457607041">
+                  <DataBindings>
+                    <Item1 Ref="16" PropertyName="Text" DataMember="VerifyStatusTitle" />
+                  </DataBindings>
+                </Item6>
+                <Item7 Ref="17" Name="xrTableCell34" ControlType="XRTableCell" Weight="0.68808175705104158">
+                  <DataBindings>
+                    <Item1 Ref="18" FormatString="{0:yyyy-MM}" PropertyName="Text" DataMember="VerifyPeriodTitle" />
+                  </DataBindings>
+                </Item7>
+                <Item8 Ref="19" Name="xrTableCell19" ControlType="XRTableCell" Weight="0.74478983317553382">
+                  <DataBindings>
+                    <Item1 Ref="20" PropertyName="Text" DataMember="TypeTitle" />
+                  </DataBindings>
+                </Item8>
+                <Item9 Ref="21" Name="xrTableCell35" ControlType="XRTableCell" Weight="0.53931266241135023">
+                  <DataBindings>
+                    <Item1 Ref="22" PropertyName="Text" DataMember="StatusTitle" />
+                  </DataBindings>
+                </Item9>
+                <Item10 Ref="23" Name="xrTableCell20" ControlType="XRTableCell" Weight="1.03419082027226">
+                  <DataBindings>
+                    <Item1 Ref="24" PropertyName="Text" DataMember="RemarkTitle" />
+                  </DataBindings>
+                </Item10>
+                <Item11 Ref="25" Name="xrTableCell21" ControlType="XRTableCell" Weight="0.8026669499482838">
+                  <DataBindings>
+                    <Item1 Ref="26" PropertyName="Text" DataMember="ItemNameTitle" />
+                  </DataBindings>
+                </Item11>
+                <Item12 Ref="27" Name="xrTableCell22" ControlType="XRTableCell" Weight="0.68248143176307918">
+                  <DataBindings>
+                    <Item1 Ref="28" PropertyName="Text" DataMember="ItemTypeTitle" />
+                  </DataBindings>
+                </Item12>
+                <Item13 Ref="29" Name="xrTableCell23" ControlType="XRTableCell" Weight="0.61891191343498209">
+                  <DataBindings>
+                    <Item1 Ref="30" PropertyName="Text" DataMember="UnitTitle" />
+                  </DataBindings>
+                </Item13>
+                <Item14 Ref="31" Name="xrTableCell24" ControlType="XRTableCell" Weight="0.61891191569394677">
+                  <DataBindings>
+                    <Item1 Ref="32" PropertyName="Text" DataMember="QuantityTitle" />
+                  </DataBindings>
+                </Item14>
+                <Item15 Ref="33" Name="xrTableCell25" ControlType="XRTableCell" Weight="0.828158021769586">
+                  <DataBindings>
+                    <Item1 Ref="34" PropertyName="Text" DataMember="PriceTitle" />
+                  </DataBindings>
+                </Item15>
+                <Item16 Ref="35" Name="xrTableCell26" ControlType="XRTableCell" Weight="0.776303128997562">
+                  <DataBindings>
+                    <Item1 Ref="36" PropertyName="Text" DataMember="AmountTitle" />
+                  </DataBindings>
+                </Item16>
+                <Item17 Ref="37" Name="xrTableCell27" ControlType="XRTableCell" Weight="0.75640300761344414">
+                  <DataBindings>
+                    <Item1 Ref="38" PropertyName="Text" DataMember="TaxPercentTitle" />
+                  </DataBindings>
+                </Item17>
+                <Item18 Ref="39" Name="xrTableCell28" ControlType="XRTableCell" Weight="0.55257901339840065">
+                  <DataBindings>
+                    <Item1 Ref="40" PropertyName="Text" DataMember="TaxAmountTitle" />
+                  </DataBindings>
+                </Item18>
+              </Cells>
+            </Item1>
+          </Rows>
+        </Item1>
+      </Controls>
+      <StylePriority Ref="41" UseFont="false" />
+    </Item1>
+    <Item2 Ref="42" Name="TopMargin" ControlType="TopMarginBand" TextAlignment="TopLeft" Padding="0,0,0,0,100" HeightF="100" />
+    <Item3 Ref="43" Name="BottomMargin" ControlType="BottomMarginBand" TextAlignment="TopLeft" Padding="0,0,0,0,100" HeightF="100" />
+    <Item4 Ref="44" ControlType="DetailReportBand" Name="DetailReport" DataMember="ListRows" Level="0" DataSource="#Ref-0">
+      <Bands>
+        <Item1 Ref="45" ControlType="DetailBand" Name="Detail1" HeightF="25">
+          <Controls>
+            <Item1 Ref="46" Name="xrTable1" ControlType="XRTable" SizeF="1719.213,25" LocationFloat="0, 0">
+              <Rows>
+                <Item1 Ref="47" ControlType="XRTableRow" Name="xrTableRow1" Weight="1">
+                  <Cells>
+                    <Item1 Ref="48" Name="xrTableCell2" ControlType="XRTableCell" Weight="0.57989970347292552">
+                      <DataBindings>
+                        <Item1 Ref="49" PropertyName="Text" DataMember="ListRows.MCode" />
+                      </DataBindings>
+                    </Item1>
+                    <Item2 Ref="50" Name="xrTableCell3" ControlType="XRTableCell" Weight="0.61032137221089167">
+                      <DataBindings>
+                        <Item1 Ref="51" PropertyName="Text" DataMember="ListRows.MNumber" />
+                      </DataBindings>
+                    </Item2>
+                    <Item3 Ref="52" Name="xrTableCell4" ControlType="XRTableCell" Weight="0.56413133472920185">
+                      <DataBindings>
+                        <Item1 Ref="53" PropertyName="Text" DataMember="ListRows.MSContactName" />
+                      </DataBindings>
+                    </Item3>
+                    <Item4 Ref="54" Name="xrTableCell30" ControlType="XRTableCell" Weight="0.65523480171988013">
+                      <DataBindings>
+                        <Item1 Ref="55" PropertyName="Text" DataMember="ListRows.MSContactTaxCode" />
+                      </DataBindings>
+                    </Item4>
+                    <Item5 Ref="56" Name="xrTableCell5" ControlType="XRTableCell" Weight="0.59492867202072119">
+                      <DataBindings>
+                        <Item1 Ref="57" FormatString="{0:yyyy-MM-dd}" PropertyName="Text" DataMember="ListRows.MBizDate" />
+                      </DataBindings>
+                    </Item5>
+                    <Item6 Ref="58" Name="xrTableCell1" ControlType="XRTableCell" Weight="0.59492867202072119">
+                      <DataBindings>
+                        <Item1 Ref="59" PropertyName="Text" DataMember="ListRows.MVerifyTypeName" />
+                      </DataBindings>
+                    </Item6>
+                    <Item7 Ref="60" Name="xrTableCell33" ControlType="XRTableCell" Weight="0.59492867202072119">
+                      <DataBindings>
+                        <Item1 Ref="61" PropertyName="Text" DataMember="ListRows.MVerifyDate" />
+                      </DataBindings>
+                    </Item7>
+                    <Item8 Ref="62" Name="xrTableCell6" ControlType="XRTableCell" Weight="0.64396139038297062">
+                      <DataBindings>
+                        <Item1 Ref="63" PropertyName="Text" DataMember="ListRows.MFapiaoTypeName" />
+                      </DataBindings>
+                    </Item8>
+                    <Item9 Ref="64" Name="xrTableCell36" ControlType="XRTableCell" Weight="0.46629939564234152">
+                      <DataBindings>
+                        <Item1 Ref="65" PropertyName="Text" DataMember="ListRows.MStatusName" />
+                      </DataBindings>
+                    </Item9>
+                    <Item10 Ref="66" Name="xrTableCell7" ControlType="XRTableCell" Weight="0.89418308277600178">
+                      <DataBindings>
+                        <Item1 Ref="67" PropertyName="Text" DataMember="ListRows.MRemark" />
+                      </DataBindings>
+                    </Item10>
+                    <Item11 Ref="68" Name="xrTableCell8" ControlType="XRTableCell" Weight="0.69400236745228328">
+                      <DataBindings>
+                        <Item1 Ref="69" PropertyName="Text" DataMember="ListRows.MItemName" />
+                      </DataBindings>
+                    </Item11>
+                    <Item12 Ref="70" Name="xrTableCell31" ControlType="XRTableCell" Weight="0.59008557193908862">
+                      <DataBindings>
+                        <Item1 Ref="71" PropertyName="Text" DataMember="ListRows.MItemType" />
+                      </DataBindings>
+                    </Item12>
+                    <Item13 Ref="72" Name="xrTableCell9" ControlType="XRTableCell" Weight="0.53512325018769191">
+                      <DataBindings>
+                        <Item1 Ref="73" PropertyName="Text" DataMember="ListRows.MUnit" />
+                      </DataBindings>
+                    </Item13>
+                    <Item14 Ref="74" Name="xrTableCell10" ControlType="XRTableCell" Weight="0.53512561263077218">
+                      <DataBindings>
+                        <Item1 Ref="75" PropertyName="Text" DataMember="ListRows.MQuantity" />
+                      </DataBindings>
+                    </Item14>
+                    <Item15 Ref="76" Name="xrTableCell11" ControlType="XRTableCell" Weight="0.71604120287363349">
+                      <DataBindings>
+                        <Item1 Ref="77" PropertyName="Text" DataMember="ListRows.MPrice" />
+                      </DataBindings>
+                    </Item15>
+                    <Item16 Ref="78" Name="xrTableCell12" ControlType="XRTableCell" Weight="0.671205524490755">
+                      <DataBindings>
+                        <Item1 Ref="79" PropertyName="Text" DataMember="ListRows.MEntryAmount" />
+                      </DataBindings>
+                    </Item16>
+                    <Item17 Ref="80" Name="xrTableCell13" ControlType="XRTableCell" Weight="0.65400113759234535">
+                      <DataBindings>
+                        <Item1 Ref="81" PropertyName="Text" DataMember="ListRows.MTaxPercent" />
+                      </DataBindings>
+                    </Item17>
+                    <Item18 Ref="82" Name="xrTableCell14" ControlType="XRTableCell" Weight="0.47777184599881517">
+                      <DataBindings>
+                        <Item1 Ref="83" PropertyName="Text" DataMember="ListRows.MEntryTaxAmount" />
+                      </DataBindings>
+                    </Item18>
+                  </Cells>
+                </Item1>
+              </Rows>
+            </Item1>
+          </Controls>
+        </Item1>
+      </Bands>
+    </Item4>
+  </Bands>
+  <ObjectStorage>
+    <Item1 ObjectType="DevExpress.XtraReports.Serialization.ObjectStorageInfo, DevExpress.XtraReports.v15.1" Ref="0" Content="~Xtra#NULL" Type="System.Windows.Forms.BindingSource" />
+  </ObjectStorage>
+</XtraReportsLayoutSerializer>

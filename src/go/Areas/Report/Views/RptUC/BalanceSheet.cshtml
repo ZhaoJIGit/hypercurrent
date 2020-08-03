@@ -1,0 +1,27 @@
+﻿@{
+    Layout = "~/Areas/Report/Views/Shared/_LayoutReport.cshtml";
+}
+@using JieNor.Megi.Common.Utility
+<div class="m-form-vtcl m-form-min">
+    <div class="m-form-vtcl-content">
+        <div class="m-form-section section-type">
+            <div class="m-form-item">
+                <ul>
+                    <li class="m-bold">@HtmlLang.Write(LangKey.Date)</li>
+                    <li id="liMonthlyDate">
+                        <select id="selDate" class="easyui-combobox mg-data" name="MDateString" data-options="required:true" style="width:120px; height:22px;">
+                            @HtmlGLSettlement.FromMonth()
+                        </select>
+                    </li>
+                </ul>
+            </div>
+            <div class="m-form-item">
+                <ul>
+                    <li><a href="javascript:void(0)" class="m-btn l-btn" id="aReportUpdate">@HtmlLang.Write(LangModule.Report, "Update", "Update")</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="@ServerHelper.ScriptServer/scripts/Report/RptUC/BalanceSheet.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.Report)

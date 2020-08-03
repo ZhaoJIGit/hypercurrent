@@ -1,0 +1,74 @@
+﻿@using System.Web.Script.Serialization
+@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Import your sales invoices";
+    //是否覆盖导入
+    bool isCover = Convert.ToBoolean(ViewBag.IsCover);
+    string type = ViewBag.Type;
+}
+@using JieNor.Megi.Common.Utility;
+<div class="m-imain mg-setup">
+    <div class="m-imain-content">
+        <div id="divMatch" style="display:none;">
+            @Html.Partial("ImportPartial/AccountMatchPartial")
+        </div>
+        <div id="divConfirm" style="display:none;">
+            <div class="m-confirm-import-notify">
+                <em class="m-confirm-import-icon">
+                    &nbsp;
+                </em>
+                <div class="m-confirm-import-msg">
+                    @Html.Raw(ViewBag.ConfirmImportNotify)
+                    @Html.Raw(ViewBag.ConfirmImpCnt)
+                </div>
+            </div>
+            <div class="m-confirm-import-form">
+                <fieldset>
+                    <p>
+                        @Html.Raw(ViewBag.ConfirmImpState)
+                    </p>
+                </fieldset>
+            </div>
+            @if (ViewBag.IsContact)
+            {
+                <div @*class="m-confirm-import-notice"*@>
+                    <p style=" padding: 10px; color: red;">@Html.Raw(ViewBag.ConfirmImportNotice)</p>
+                </div>
+            }
+        </div>
+        <div id="divPreview" style="display:none;">
+            @Html.Partial("ImportPartial/PreviewMatchPartial")
+        </div>
+    </div>
+</div>
+<div class="m-toolbar-footer">
+    <div class="left">
+        <a id="aGoBack" href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-gray" action="@ViewBag.Type">@HtmlLang.Write(LangModule.Common, "GoBack", "< Go Back")</a>
+    </div>
+    <div class="right">
+        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aCompleteImport">@HtmlLang.Write(LangModule.Common, "CompleteImport", "Complete Import")</a>
+    </div>
+</div>
+<input id="hidType" type="hidden" value="@ViewBag.Type" />
+<input id="hidContactType" type="hidden" value="@ViewBag.ContactType" />
+<input id="hidAccountId" type="hidden" value="@ViewBag.AccountId" />
+<input id="hidOriFileName" type="hidden" value="@ViewBag.OriFileName" />
+<input id="hidNewFileName" type="hidden" value="@ViewBag.NewFileName" />
+<input id="hidImportingCount" type="hidden" value="@ViewBag.ImportingCount" />
+@if (isCover)
+{
+    <input id="hideIsCover" type="hidden" value="true"/>
+}
+else
+{
+    <input id="hideIsCover" type="hidden" value="false"/>
+}
+
+@HtmlLang.WriteScript(LangModule.Common)
+@HtmlLang.WriteScript(LangModule.Bank)
+@HtmlLang.WriteScript(LangModule.IV)
+@HtmlLang.WriteScript(LangModule.Acct)
+@HtmlLang.WriteScript(LangModule.PA)
+<script src="@ServerHelper.GoServer/scripts/BD/BDAccount/AccountMatch.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.GoServer/Scripts/BD/Import/ImportBase.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.GoServer/Scripts/BD/Import/ConfirmImport.js?@ServerHelper.JSVersion"></script>

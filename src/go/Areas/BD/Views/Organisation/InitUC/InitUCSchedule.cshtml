@@ -1,0 +1,19 @@
+﻿<div class="mg-schedule">
+    <div class="m-imain">
+        <ul>
+            <li><a href="/Setting/Setup/Start/@ViewBag.OrgCode">@HtmlLang.Write(LangKey.Start)</a></li>
+            <li><a href="/Setting/Setup/Organisation/@ViewBag.OrgCode">@HtmlLang.Write(LangModule.BD, "OrganizationSettings", "Organization Settings")</a></li>
+            <li><a href="/Setting/Setup/Globalization/@ViewBag.OrgCode">@HtmlLang.Write(LangModule.BD, "GlobalizationSettings", "Globalization Settings")</a></li>
+            <li><a href="/Setting/Setup/Financial/@ViewBag.OrgCode">@HtmlLang.Write(LangModule.BD, "FinancialSettings", "Financial Settings")</a></li>
+            <li><a href="/Setting/Setup/Invoice/@ViewBag.OrgCode">@HtmlLang.Write(LangModule.BD, "InvoiceSettings", "Invoice Settings")</a></li>
+            <li><a href="/Setting/Setup/InviteUser/@ViewBag.OrgCode">@HtmlLang.Write(LangModule.BD, "InviteUsers", "Invite Users")</a></li>
+            <li><a href="/Setting/Setup/Currency/@ViewBag.OrgCode">@HtmlLang.Write(LangModule.BD, "Currencies", "Currencies")</a></li>
+            <li><a href="/Setting/Setup/TaxRateSetting/@ViewBag.OrgCode">@HtmlLang.Write(LangKey.TaxRate)</a></li>
+            <li><a href="/Setting/Setup/ChartOfAccount/@ViewBag.OrgCode">@HtmlLang.Write(LangModule.BD, "ChartOfAccounts", "Chart of Accounts")</a></li>
+            <li class="arrow-selected"><a href="/Setting/Setup/ConversionDate/@ViewBag.OrgCode">@HtmlLang.Write(LangModule.BD, "ConversionDate", "ConversionDate")</a></li>
+            <li class="current">@HtmlLang.Write(LangModule.BD, "InitBills", "Init Bills")</li>
+            <li>@HtmlLang.Write(LangModule.BD, "AccountBalances", "Account Balances")</li>
+            <li>@HtmlLang.Write(LangModule.BD, "Done", "Done.")</li>
+        </ul>
+    </div>
+</div>

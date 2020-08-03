@@ -1,0 +1,56 @@
+﻿@using System.Web.Script.Serialization
+@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Import your sales invoices";
+}
+@using JieNor.Megi.Common.Utility;
+<div class="m-imain mg-setup">
+    <div class="m-imain-content">
+        <div id="divConfirm">
+            <div class="m-confirm-import-notify">
+                <em class="m-confirm-import-icon">
+                    &nbsp;
+                </em>
+                <div class="m-confirm-import-msg">
+                    @Html.Raw(ViewBag.ConfirmImportNotify)
+                    @Html.Raw(ViewBag.ConfirmImpCnt)
+                </div>
+            </div>
+            @if (!string.IsNullOrWhiteSpace(ViewBag.ConfirmImpState))
+            {
+                <div class="m-confirm-import-form">
+                    <fieldset>
+                        <p>
+                            @Html.Raw(ViewBag.ConfirmImpState)
+                        </p>
+                    </fieldset>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div class="m-toolbar-footer">
+    <div class="left">
+        <a id="aGoBack" href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-gray">@HtmlLang.Write(LangModule.Common, "GoBack", "< Go Back")</a>
+    </div>
+    <div class="right">
+        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aCompleteImport">@HtmlLang.Write(LangModule.Common, "CompleteImport", "Complete Import")</a>
+    </div>
+</div>
+
+<input type="hidden" id="hidtype" value="@ViewBag.Type" />
+<input type="hidden" id="hidSolutionID" value="@ViewBag.SolutionID" />
+<input type="hidden" id="hidOriFileName" value="@ViewBag.OriFileName" />
+<input type="hidden" id="hidNewFileName" value="@ViewBag.NewFileName" />
+<input type="hidden" id="hidImportingCount" value="@ViewBag.ImportingCount" />
+
+
+@HtmlLang.WriteScript(LangModule.Common)
+@HtmlLang.WriteScript(LangModule.Bank)
+@HtmlLang.WriteScript(LangModule.IV)
+@HtmlLang.WriteScript(LangModule.Acct)
+@HtmlLang.WriteScript(LangModule.PA)
+@HtmlLang.WriteScript(LangModule.FP)
+
+<script src="@ServerHelper.GoServer/Scripts/BD/Import/ImportBase.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.GoServer/Scripts/IO/ImportBySolution/ConfirmImport.js?@ServerHelper.JSVersion"></script>

@@ -1,0 +1,38 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+@using JieNor.Megi.Common.Utility;
+<style>
+    .m-toolbar, .m-ititle{padding-top:10px !important;}
+</style>
+<div class="m-imain" style="overflow-y:hidden;">
+    <div class="m-imain-content" style="padding:15px 20px 0px 20px;">
+        @Html.Partial("InitUC/InitUCTabs")
+        <div class="datagrid-div">
+            <div id="gridInitData" fitcolumns="true" style="margin-top:10px;"></div>
+        </div>
+        <input type="hidden" value="@ViewBag.InvoiceType" id="hidInitType" />
+        <input type="hidden" id="hidOrgCode" value="@ViewBag.OrgCode" />
+        <input type="hidden" id="hidConversionDate" value="@ViewBag.ConversionDate" />
+    </div>
+</div>
+@if (HtmlSECMenu.HavePermission(BizObject.Setting, PermissionItem.Change))
+{
+    <input type="hidden" id="hidChangeAuth" value="1" />
+}
+else
+{
+    <input type="hidden" id="hidChangeAuth" value="0" />
+}
+
+<input type="hidden" id="hideInitBalanceOver" value="@ViewBag.IsInitBalanceOver" />
+<input type="hidden" id="hideGoServer" value="@JieNor.Megi.Common.Utility.ServerHelper.GoServer"/>
+@HtmlLang.WriteScript(LangModule.BD)
+@HtmlLang.WriteScript(LangModule.IV)
+<script src="@JieNor.Megi.Common.Utility.ServerHelper.ScriptServer/Scripts/IV/IVBase.js?@ServerHelper.JSVersion"></script>
+<script src="@JieNor.Megi.Common.Utility.ServerHelper.ScriptServer/Scripts/IV/Expense/ExpenseEditBase.js?@ServerHelper.JSVersion"></script>
+<script src="@JieNor.Megi.Common.Utility.ServerHelper.ScriptServer/Scripts/IV/Expense/ExpenseList.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.ScriptServer/Scripts/BD/Organisation/InitBills.js?@ServerHelper.JSVersion"></script>
+
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)
+

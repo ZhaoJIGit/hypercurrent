@@ -1,0 +1,10 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "错误";
+}
+
+<hgroup class="title">
+    <h1 class="error">@HtmlLang.Write(LangModule.BD, "Error", "Error")</h1>
+    <h2 class="error">@HtmlLang.Write(LangModule.BD, "DealError", "Deal with your error.")</h2>
+</hgroup>

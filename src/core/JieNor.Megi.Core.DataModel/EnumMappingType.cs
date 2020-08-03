@@ -1,0 +1,37 @@
+namespace JieNor.Megi.Core.DataModel
+{
+	public enum EnumMappingType
+	{
+		None,
+		EmployeeStatus,
+		InvoiceStatus,
+		VoucherStatus,
+		CheckTypeStatus,
+		AccountDirection,
+		InvoiceType,
+		TaxType,
+		RecOrPayCondition,
+		AccountingStandards,
+		AccountGroup,
+		BankAccountType,
+		OrganizationType,
+		OrganizationIndustry,
+		UserActiveStatus,
+		UserStatus,
+		UserRole,
+		UserPosition,
+		SubscriptionStatus,
+		Timezone,
+		OrganizationVersion,
+		TaxpayerType,
+		CommonStatus,
+		AccountInputType,
+		AccountType,
+		Gender,
+		Country,
+		FapiaoType,
+		FapiaoCategory,
+		FapiaoVerifiedStatus,
+		FapiaoStatus
+	}
+}

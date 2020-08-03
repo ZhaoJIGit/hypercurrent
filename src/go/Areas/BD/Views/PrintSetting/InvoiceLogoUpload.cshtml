@@ -1,0 +1,47 @@
+﻿
+@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+@using JieNor.Megi.Common.Utility;
+<div class="m-imain">
+    <div class="m-imain-content">
+        @using (Ajax.BeginForm("UploadLogo", "PrintSetting", new AjaxOptions { HttpMethod = "POST" }, new { ID = "logoUpload", enctype = "multipart/form-data" }))
+        {
+            <div class="row m-financial-attach-row">
+                <div>
+                    <p>
+                        @HtmlLang.Write(LangModule.IV, "UploadLogoDesc", "Choose a logo to appear at the top of PDFs you print or send. Your image will be scaled to a maximum of 400 pixels wide and 120 pixels high, and must be supplied in one of the following formats: <strong>.jpg .gif .png</strong>")                        
+                    </p>
+                    <div style="padding-top:5px;">
+                        <label for="logoFile" style="width: auto"><strong>@HtmlLang.Write(LangModule.Common, "ChooseFileToUpload", "Choose a file to upload")</strong></label>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="select">
+                        <label class="upload-image">&nbsp;</label>
+                        <input type="file" id="fileInput" class="import-file-input" name="fileInput" />
+                        <a href="javascript:void(0)" class="upload-label non-alert">@HtmlLang.Write(LangModule.Common, "UploadLabel", "Browse...")</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<div class="m-toolbar-footer">
+    <div class="left">
+        <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray" id="aCancel">@HtmlLang.Write(LangKey.Cancel)</a>
+    </div>
+    <div class="right">
+        @if (HtmlSECMenu.HavePermission(BizObject.Setting, PermissionItem.Change))
+        {
+            <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aSave">@HtmlLang.Write(LangKey.Save)</a>
+        }
+    </div>
+</div>
+<input type="hidden" id="hidItemID" name="MItemID" value="@ViewBag.CopyID">
+<script type="text/javascript" src="@ServerHelper.StaticServer/fw/scripts/jquery.form.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.GoServer/scripts/BD/Docs/FileBase.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.GoServer/Scripts/BD/Import/ImportBase.js?@ServerHelper.JSVersion"></script>
+
+@HtmlLang.WriteScript(LangModule.IV)
+<script src="@ServerHelper.ScriptServer/scripts/BD/PrintSetting/LogoUpload.js?@ServerHelper.JSVersion"></script>

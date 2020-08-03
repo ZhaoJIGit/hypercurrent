@@ -1,0 +1,90 @@
+﻿@{
+    ViewBag.Title = "EditContactAddr";
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+@using JieNor.Megi.Common.Utility;
+<div class="m-imain mg-setup" id="divStateEditAddr">
+    <div class="m-form-vtcl">
+        <div class="m-form-vtcl-content">
+            <div class="m-form-sub-section" style="width: 100%">
+                <div class="m-form-item">
+                    <div class="m-form-lable">&nbsp;</div>
+                    <div class="m-form-input m-bold">@HtmlLang.Write(LangModule.IV, "EmailAddress", "Email Address")</div>
+                    <br class="clear"/>
+                </div>
+                <div class="m-form-item">
+                    <div class="m-form-lable">@HtmlLang.Write(LangKey.Email)</div>
+                    <div class="m-form-input">
+                        <input class="mg-data textbox" name="MEmail"/>
+                    </div>
+                    <br class="clear"/>
+                </div>
+            </div>
+            <div class="m-form-sub-section" style="width: 100%">
+                <div class="m-form-item">
+                    <div class="m-form-lable">&nbsp;</div>
+                    <div class="m-form-input m-bold">@HtmlLang.Write(LangModule.IV, "PostalAddress", "Postal Address")</div>
+                    <br class="clear"/>
+                </div>
+                <div class="m-form-item">
+                    <div class="m-form-lable" style="padding-top: 10px">@HtmlLang.Write(LangKey.Attention)</div>
+                    <div class="m-form-input">
+                        <input class="mg-data textbox postal6 m-lang" name="MPAttention"/>
+                    </div>
+                    <br class="clear"/>
+                </div>
+                <div class="m-form-item">
+                    <div class="m-form-lable" style="padding-top: 10px">@HtmlLang.Write(LangModule.IV, "StreetAddressOrPOBox", "Street Address or PO Box")</div>
+                    <div class="m-form-input">
+                        <input class="mg-data textbox postal1 m-lang" name="MPStreet"/>
+                    </div>
+                    <br class="clear"/>
+                </div>
+                <div class="m-form-item">
+                    <div class="m-form-lable" style="padding-top: 10px">@HtmlLang.Write(LangModule.IV, "TownCity", "Town / City")</div>
+                    <div class="m-form-input">
+                        <input class="mg-data textbox postal2 m-lang" name="MPCityID"/>
+                    </div>
+                    <br class="clear"/>
+                </div>
+                <div class="m-form-item">
+                    <div class="m-form-lable" style="padding-top: 10px">@HtmlLang.Write(LangModule.IV, "StateRegion", "State / Region")</div>
+                    <div class="m-form-input">
+                        <input class="mg-data textbox postal3 m-lang" name="MPRegion"/>
+                    </div>
+                    <br class="clear"/>
+                </div>
+                <div class="m-form-item">
+                    <div class="m-form-lable">@HtmlLang.Write(LangModule.IV, "PostalZipCode", "Postal / Zip Code") </div>
+                    <div class="m-form-input">
+                        <input class="mg-data textbox postal4" name="MPPostalNo"/>
+                    </div>
+                    <br class="clear"/>
+                </div>
+                <div class="m-form-item">
+                    <div class="m-form-lable">@HtmlLang.Write(LangModule.IV, "Country", "Country")</div>
+                    <div class="m-form-input">
+                        <select id="selMPCountryID" name="MPCountryID" class="easyui-combobox mg-data" style="width:180px; height:28px;" data-options="@HtmlBASCountry.DataOptions()"></select>
+                    </div>
+                    <br class="clear"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" class="mg-data m-form-key" name="MItemID" value="@ViewData["contactID"]" id="ContactID" />
+</div>
+<div class="m-toolbar-footer">
+    <div class="left">
+        <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray" id="aCancel">@HtmlLang.Write(LangKey.Cancel)</a>
+    </div>
+    <div class="right">
+        @if (HtmlSECMenu.HavePermission(BizObject.Invoice_Sales, PermissionItem.Change))
+        {
+            <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aSave">@HtmlLang.Write(LangKey.Save)</a>
+        }
+    </div>
+</div>
+@HtmlLang.WriteScript(LangModule.IV)
+@HtmlLang.WriteScript(LangModule.BD)
+<input type="hidden"  value="@ViewData["viewFrom"]" id="viewFrom"/>
+<script src="@ServerHelper.ScriptServer/Scripts/IV/Invoice/EditContactAddr.js?@ServerHelper.JSVersion"></script>

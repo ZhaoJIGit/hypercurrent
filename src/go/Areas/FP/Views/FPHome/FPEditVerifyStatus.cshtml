@@ -1,0 +1,41 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+@using JieNor.Megi.Common.Utility;
+@using JieNor.Megi.Common.Context;
+
+
+
+<script type="text/javascript" src="~/Scripts/FP/FPReconcileHome.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="~/Scripts/FP/FPEditVerifyStatus.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="~/Scripts/FP/model/FPEnum.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.StaticServer/FW/include/My97Datepicker/WdatePicker.js?@ServerHelper.JSVersion"></script>
+<div class="m-imain">
+    <div class="m-imain-content" style="min-height:350px;">
+        <div class="m-form-vtcl">
+            <div style="margin-bottom:30px">
+                <div id="batchGrid" fitcolumns="true"></div>
+            </div>
+        </div>
+    </div>
+</div>
+@HtmlLang.WriteScript(LangModule.FP)
+<div class="m-toolbar-footer">
+    <div class="left">
+        <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray" id="aCancel">@HtmlLang.Write(LangKey.Cancel)</a>
+    </div>
+    <div class="right">
+        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aSave">@HtmlLang.Write(LangKey.Save)</a>
+    </div>
+    <br class="clear" />
+</div>
+<input type="hidden" value="@ContextHelper.MContext.MOrgVersionID" id="orgVersion" />
+<input type="hidden" value="@ViewData["selectIds"]" id="hidIds"/>
+<input type="hidden" value="@ViewData["lang"]" id="langId"/>
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)
+<script type="text/javascript">
+
+    $(function () {
+        new FPEditVerifyStatus().init();
+    })
+</script>

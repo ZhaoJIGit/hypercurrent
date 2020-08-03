@@ -1,0 +1,309 @@
+﻿
+
+@using JieNor.Megi.Common.Utility
+@using JieNor.Megi.EntityModel.MultiLanguage
+@using JieNor.Megi.Identity.HtmlHelper
+
+@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+
+    var dashBoardInfoModel = ViewData["DashboardInfo"] as JieNor.Megi.DataModel.GL.GLDashboardInfoModel;
+    var dateString = dashBoardInfoModel.FixAssetsDisposalDateString;
+    var depreciationDateString = "minDate:'" + dashBoardInfoModel.FixAssetsDefaultDate + "'";
+    var defaultDate = dashBoardInfoModel.FixAssetsDefaultDate;
+    var lang = dashBoardInfoModel.LangID;
+    var dates = dashBoardInfoModel.FixAssetsLastFinishedPeriod.Split(',');
+    var depreciateFromDateString = "minDate:'" + dates[2] + "',maxDate:'" + dates[1] + "'";
+
+    var isCopy = ViewData["MIsCopy"] != null && ViewData["MIsCopy"].ToString() == "1";
+}
+
+<link type="text/css" rel="stylesheet" href="~/Scripts/FA/fa.css?@ServerHelper.JSVersion" />
+<script src="@ServerHelper.StaticServer/FW/include/My97Datepicker/WdatePicker.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="~/Scripts/GL/GLVoucherHome.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="~/Scripts/GL/GLCheckType.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="~/Scripts/FA/entity/FAEnums.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="~/Scripts/FA/FAHome.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="~/Scripts/FA/FAFixAssetsEdit.js?@ServerHelper.JSVersion"></script>
+
+
+<div class="fa-edit-top m-imain">
+
+    <table class="fa-edit-table" style="width:100%;">
+        <tr class="fa-row-title">
+            <td colspan="6" style="line-height:40px;position:relative;top:5px;" class="fa-cards-status">
+                <div style="float:left;font-size: 16px;">
+                    @HtmlLang.Write(LangModule.FA, "BaseInfoAndStatusOfFixAssets", "基本信息")
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @HtmlLang.Write(LangModule.FA, "FixAssetsNumber", "资产编码")
+            </td>
+            <td>
+                <input type="text" class="fa-edit-column fa-fixassets-prefix" style="width:80px;height:22px;text-align:right;" />
+                <input type="text" class="fa-edit-column fa-fixassets-number easyui-numberbox" style="width:120px;" />
+            </td>
+            <td>
+                @HtmlLang.Write(LangModule.FA, "FixAssetsName", "资产名称")
+            </td>
+            <td>
+                <input type="text" class="fa-edit-column fa-fixassets-name m-lang m-lang-input easyui-validatebox" name="MName" />
+            </td>
+            <td>
+                @HtmlLang.Write(LangModule.FA, "FixAssetsPurchaseDate", "采购日期")
+            </td>
+            <td>
+                <input type="text" class="fa-edit-column fa-purchase-date easyui-datebox" data-options="height:26,width:200" />
+            </td>
+            <td class="fa-last-column">&nbsp;</td>
+        </tr>
+        <tr>
+            <td>
+                @HtmlLang.Write(LangModule.FA, "FixAssetsTypeOptions", "资产类别")
+            </td>
+            <td>
+                <input type="text" class="fa-edit-column fa-fixassets-type easyui-combobox" data-options="height:26,width:200" />
+            </td>
+            <td>
+                @HtmlLang.Write(LangModule.FA, "DisposePeriod", "清理期间")
+            </td>
+            <td>
+                <input type="text" style="margin-top:3px;width:200px;height:26px;border-color: rgb(194, 203, 211);" class="fa-dispose-period left" disabled="disabled" />
+            </td>
+            <td>
+                @HtmlLang.Write(LangModule.FA, "FixAssetsQuantity", "数量")
+            </td>
+            <td>
+                <input type="text" class="fa-edit-column fa-fixassets-quantity easyui-numberspinner" data-options="height:26,width:200,min:1,groupSeparator:','" style="text-align:right;" />
+            </td>
+            <td class="fa-last-column">&nbsp;</td>
+        </tr>
+        <tr class="fa-row-title"><td colspan="6" style="line-height:30px;">@HtmlLang.Write(LangModule.FA, "DepreciationType", "折旧方式")</td> </tr>
+        <tr>
+            <td>
+                @HtmlLang.Write(LangModule.FA, "DepreciationType", "折旧方式")
+            </td>
+            <td>
+                <input type="text" class="fa-edit-column fa-depreciation-type easyui-combobox" data-options="height:26,width:200" />
+            </td>
+            <td title="@HtmlLang.Write(LangModule.Common, "MegiDeprecationFromDate", "美记开始折旧期间")">
+                @HtmlLang.Write(LangModule.FA, "DepreciateFromPeriod", "开始折旧期间")
+            </td>
+            <td>
+                <input type="text" style="width:180px;" class="fa-edit-column fa-depreciation-from  Wdate left" onfocus="WdatePicker({ dateFmt: 'yyyy-MM',readOnly:true, onpicked: function(){ new FAFixAssetsEdit().calculateDepreciatedPeriods();}, lang: '@lang', skin:'@lang',  @depreciateFromDateString })" hint="@HtmlLang.Write(LangModule.Common, "MegiDeprecationFromDate", "美记开始折旧期间")" value="@defaultDate" />
+                <span style="width:16px;float:right;display:none;" mtitle="@HtmlLang.Write(LangModule.Common, "MegiDeprecationFromDateTips", "此处选择资产卡片在美记系统开始折旧的期间，不一定为卡片开始计提期间!")" class="fa-depereciate-from-tips">&nbsp;</span>
+            </td>
+            <td>
+                @HtmlLang.Write(LangModule.FA, "ExpectedUsefulPeriods", "预计使用期数")
+            </td>
+            <td>
+                <input type="text" class="fa-edit-column fa-useful-periods easyui-numberspinner" data-options="height:26,width:200,min:1" style="text-align:right;" />
+            </td>
+            <td class="fa-last-column">&nbsp;</td>
+        </tr>
+        <tr>
+            <td>
+                @HtmlLang.Write(LangModule.FA, "FixAssetsAccount", "固定资产科目")
+            </td>
+            <td>
+                <input type="text" class="fa-edit-column fa-fixassets-account easyui-combobox" data-options="height:26,width:200" />
+            </td>
+            <td>
+                @HtmlLang.Write(LangModule.FA, "DepreciationAccount", "累计折旧科目")
+            </td>
+            <td>
+                <input type="text" class="fa-edit-column fa-depreciation-account easyui-combobox" data-options="height:26,width:200" />
+            </td>
+            <td>
+                @HtmlLang.Write(LangModule.FA, "DepreciationExpenseAccount", "折旧费用科目")
+            </td>
+            <td>
+                <input type="text" class="fa-edit-column fa-expense-account easyui-combobox" data-options="height:26,width:200" />
+            </td>
+            <td class="fa-last-column" style="line-height:20px;">
+                <span class="fa-edit-icon list-item-edit" style="display:inline-block;">&nbsp;</span>
+                <span class="fa-edit-checktype" style="line-height:20px;">@HtmlLang.Write(LangModule.FA, "ViewOrSetCheckGroupValue", "查看/设置核算维度")</span>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td style="position: relative;top: -10px;"><a href="###" class="fa-setdefault-account" style="color: rgb(57, 164, 248); cursor: pointer;"> @HtmlLang.Write(LangModule.FA, "SetAsDefaultExpenseAccount", "设置为默认折旧费用科目")</a></td>
+            <td class="fa-last-column"></td>
+        </tr>
+
+        <tr class="fa-row-title"><td colspan="6" style="line-height:30px;">@HtmlLang.Write(LangModule.FA, "OriginalValueNetValue", "原值、净值、累计折旧")</td> </tr>
+        <tr>
+            <td>
+                @HtmlLang.Write(LangModule.FA, "OriginalValue", "原值")
+
+            </td>
+            <td>
+                <div style="float:left;">
+                    <input type="text" class="fa-edit-column easyui-numberbox fa-original-value" data-options="height:26,width:200,requied:true,precision: 2,groupSeparator:','" />
+                </div>
+                <div class="fa-change-info" style="display:none;float:left;padding-left:20px;">
+                    <input type="checkbox" class="fa-back-adjust" /> <span>@HtmlLang.Write(LangModule.FA, "BackAdjust", "追溯调整")</span>
+                </div>
+            </td>
+            <td>
+                @HtmlLang.Write(LangModule.FA, "DepreciatedPeriodsCount", "已折旧期数")
+            </td>
+            <td>
+                <input type="text" class="fa-edit-column fa-depreciated-periods easyui-numberspinner" data-options="height:26,width:200,min:0" style="text-align:right;" />
+            </td>
+            <td rowspan="4">
+                @HtmlLang.Write(LangModule.FA, "Remark", "备注")
+            </td>
+            <td rowspan="4">
+                <textarea type="text" class="fa-edit-column fa-fixassets-remark"></textarea>
+            </td>
+            <td class="fa-last-column"></td>
+        </tr>
+        <tr>
+            <td>
+                @HtmlLang.Write(LangModule.FA, "DepreciatedValue", "累计折旧")
+            </td>
+            <td>
+                <input type="text" class="fa-edit-column easyui-numberbox fa-depreciated-value" style="text-align:right;" data-options="height:26,width:200,precision: 2,groupSeparator:','" />
+            </td>
+            <td>
+                @HtmlLang.Write(LangModule.FA, "PrepareDecreaseValue", "减值准备")
+            </td>
+            <td>
+                <input type="text" class="fa-edit-column easyui-numberbox fa-prepare-decrease" style="text-align:right;" data-options="height:26,width:200,precision: 2,groupSeparator:','" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @HtmlLang.Write(LangModule.FA, "RateOfSalvage", "残值率")
+            </td>
+            <td>
+                <input type="text" class="fa-edit-column easyui-numberbox fa-fixassets-rateofsalvage" style="text-align:right;" data-options="height:26,min:0,max:100,precision: 2" />&nbsp;&nbsp;%
+            </td>
+            <td>
+                @HtmlLang.Write(LangModule.FA, "ExpectedSalvageValue", "预计残值")
+            </td>
+            <td>
+                <input type="text" class="fa-edit-column fa-expected-salvage easyui-numberbox" data-options="height:26,width:200,disabled:true,precision: 2,groupSeparator:','" />
+            </td>
+        </tr>
+        <tr>
+
+            <td>
+                @HtmlLang.Write(LangModule.FA, "PeriodDepreciationValue", "月折旧额")
+            </td>
+            <td>
+                <input type="text" class="fa-edit-column fa-period-depreciation easyui-numberbox" data-options="height:26,width:200,requied:true,precision: 2" />
+            </td>
+            <td>
+                @HtmlLang.Write(LangModule.FA, "NetValue", "净值")
+            </td>
+            <td>
+                <input type="text" class="fa-edit-column fa-net-value easyui-numberbox" data-options="height:26,width:200,precision: 2,disabled:true,groupSeparator:','" />
+            </td>
+
+
+
+        </tr>
+
+        <tr class="fa-row-title fa-change-info" style="display:none;">
+            <td colspan="6" style="line-height:40px;position:relative;top:5px;" class="fa-cards-status">
+                <div style="float:left;font-size: 16px;">
+                    @HtmlLang.Write(LangModule.FA, "ChangeSetting", "变更设置")
+                </div>
+            </td>
+        </tr>
+        <tr class="fa-change-info" style="display:none">
+            <td style="line-height:20px;">
+                @HtmlLang.Write(LangModule.FA, "ChangeEffectFromtPeriod", "变更开始影响期间")
+            </td>
+            <td>
+                <input type="text" class="fa-edit-column fa-change-from  Wdate left" onfocus="WdatePicker({ dateFmt: 'yyyy-MM',readOnly:true, lang: '@lang', skin:'@lang',  @depreciationDateString })" hint="@HtmlLang.Write(LangModule.FA, "ChangeEffectFromtPeriod", "变更开始影响期间")" value="@defaultDate" />
+            </td>
+        </tr>
+
+    </table>
+</div>
+
+<div class="m-toolbar-footer">
+    <div class="left" style="width:35%;">
+        <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray fa-cancel-button">@HtmlLang.Write(LangKey.Cancel)</a>
+    </div>
+
+    <div class="center" style="width:10%;">
+        <div class="m-toolbar-icon">
+            @if (Convert.ToString(ViewData["MItemID"]).Trim() != "" && !isCopy)
+            {
+                <a href="javascript:void(0)" id="aHistory" class="m-icon-msg" title='@HtmlLang.Write(LangModule.IV, "History", "History")'>&nbsp;</a>
+            }
+            <div class="clear"></div>
+        </div>
+    </div>
+
+    <div class="right" style="width:55%">
+        <div class="fa-new-div" style="display:none;">
+            <a href="javascript:void(0)" id="aSaveAndCopy" type="2" class="easyui-linkbutton easyui-linkbutton-gray">@HtmlLang.Write(LangModule.FA, "SaveAndCopy", "保存并复制")</a>
+            <a href="javascript:void(0)" id="aSave" type="0" class="easyui-linkbutton  easyui-linkbutton-yellow fa-save-button">@HtmlLang.Write(LangModule.FA, "SaveFixAssets", "保存")</a>
+            <a href="javascript:void(0)" id="aSaveAndNew" type="1" class="easyui-linkbutton easyui-linkbutton-gray">@HtmlLang.Write(LangModule.FA, "SaveAndNew", "保存并新增")</a>
+
+            @if (ViewData["MItemID"] != null && !string.IsNullOrWhiteSpace(ViewData["MItemID"].ToString()) && !isCopy)
+            {
+            <!--处置-->
+                <a href="javascript:void(0)" id="aHandleTop" newstatus="1" class="easyui-splitbutton easyui-splitbutton-base">@HtmlLang.Write(LangModule.FA, "HandleFixAssets", "处置")</a>
+            <!--银行/现金/信用卡帐户-->
+                <div id="divHandle" style="width:180px;display:none;">
+                    <div><a href="javascript:void(0)" id="aSell" newstatus="1">@HtmlLang.Write(LangModule.FA, "Sell", "出售")</a></div>
+                    <div><a href="javascript:void(0)" id="aDispose" newstatus="2">@HtmlLang.Write(LangModule.FA, "Dispose", "报废")</a></div>
+                </div>
+            }
+        </div>
+        @if (ViewData["MItemID"] != null && !string.IsNullOrWhiteSpace(ViewData["MItemID"].ToString()) && !isCopy)
+        {
+            <div class="fa-change-div" style="display:none;">
+                <a href="javascript:void(0)" id="aChange" type="0" class="easyui-linkbutton  easyui-linkbutton-yellow fa-change-button">@HtmlLang.Write(LangModule.FA, "ChangeFixAssets", "变更")</a>
+                <!--处置-->
+                <a href="javascript:void(0)" style="padding-right:10px;" id="aHandleTop" newstatus="1" class="easyui-splitbutton easyui-splitbutton-base l-btn l-btn-small">@HtmlLang.Write(LangModule.FA, "HandleFixAssets", "处置")</a>
+                <!--银行/现金/信用卡帐户-->
+                <div id="divHandle" style="width:180px;display:none;">
+                    <div><a href="javascript:void(0)" id="aSell" newstatus="1">@HtmlLang.Write(LangModule.FA, "Sell", "出售")</a></div>
+                    <div><a href="javascript:void(0)" id="aDispose" newstatus="2">@HtmlLang.Write(LangModule.FA, "Dispose", "报废")</a></div>
+                </div>
+            </div>
+            <div class="fa-handle-div" style="display:none;">
+                <!--撤销处置-->
+                <a href="javascript:void(0)" newstatus="0" id="aUnhandle" class="easyui-linkbutton  easyui-linkbutton-yellow" style="margin-left:10px;">@HtmlLang.Write(LangModule.FA, "ReHandleFixAssets", "撤销处置")</a>
+            </div>
+        }
+    </div>
+
+
+
+</div>
+
+<input type="hidden" id="itemID" value="@ViewData["MItemID"]" />
+<input type="hidden" id="isCopy" value="@ViewData["MIsCopy"]" />
+<input type="hidden" id="minDepreciateDate" value="@dashBoardInfoModel.FixAssetsDefaultDate" />
+
+<div class="fa-checkgroup-setup" id="divCheckGroupSetup" style="display:none;">
+    @Html.Partial("FAPartial/EditCheckGroupValueSetupPartial")
+</div>
+<div class="fa-checkgroup-tips" id="divCheckGroupTips" style="display:none;">
+    @Html.Partial("FAPartial/CheckGroupValueTipsPartial")
+</div>
+@HtmlLang.WriteScript(LangModule.BD)
+@HtmlLang.WriteScript(LangModule.GL)
+@HtmlLang.WriteScript(LangModule.FA)
+
+
+<script type="text/javascript">
+
+    $(function () {
+        new FAFixAssetsEdit().init();
+    });
+</script>

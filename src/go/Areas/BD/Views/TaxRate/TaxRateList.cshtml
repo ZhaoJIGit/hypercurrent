@@ -1,0 +1,16 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+
+@if (HtmlSECMenu.HavePermission(BizObject.Setting, PermissionItem.Change))
+{
+    <input type="hidden" id="hidChangeAuth" value="1" />
+}
+else
+{
+    <input type="hidden" id="hidChangeAuth" value="0" />
+}
+
+@Html.Partial("UCTaxRateList")
+
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)

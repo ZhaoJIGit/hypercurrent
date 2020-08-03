@@ -1,0 +1,35 @@
+@{
+    Layout = null;
+}
+@using JieNor.Megi.Common.Utility
+<html>
+<head>
+    <link type="text/css" rel="stylesheet" href="@ServerHelper.StaticServer/fw/min/jquery.megi.min.css?@ServerHelper.JSVersion" />
+    <script type="text/javascript" src="@ServerHelper.StaticServer/fw/min/jquery.megi.min.js?@ServerHelper.JSVersion"></script>
+    <script>
+        $(document).ready(function () {
+            $(".m-error-close").off("click").on("click", function () {
+                $("#XYTipsWindowBg").remove();
+                $(".m-error-close").closest("div[class='XYTipsWindow']").parent().remove();
+            });
+
+            
+        });
+
+        window.onbeforeunload = function () {
+            window.location.href = window.location.host;
+        }
+    </script>
+</head>
+<body>
+    <div class="m-error-parentdiv" style="position: relative; width: 600px;display:none">
+        <span class="m-error-close">关闭</span>
+    </div>
+    <div class="m-notfound-img" style="margin-left: auto; margin-right: auto;  width: 100%;height: 55%; margin-top: 6%;">&nbsp;</div>
+    <div class="m-error-msg" style="text-align: center; margin: 0 auto; font-size: 24px;">
+        <p class="tips-cn">美记系统正在维护，请稍后再试...</p>
+        <p class="tips-en">MEGI system is being maintained. Please try again later...</p>
+    </div>
+
+</body>
+</html>

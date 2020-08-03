@@ -1,0 +1,52 @@
+﻿@using JieNor.Megi.Identity.HtmlHelper
+@using JieNor.Megi.EntityModel.MultiLanguage
+@using JieNor.Megi.Identity.Go.HtmlHelper
+@using JieNor.Megi.Core.Const
+@using JieNor.Megi.Common.Context
+@using JieNor.Megi.Identity.Go.AutoManager
+@using JieNor.Megi.Common.Utility
+@{
+    ViewBag.Title = "Fapiao";
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    //
+    var invoiceName = int.Parse(ViewData["invoiceType"].ToString()) == 0 ? @HtmlLang.Write(LangModule.FP, "SaleList", "销售列表") : @HtmlLang.Write(LangModule.FP, "PurchaseList", "采购列表");
+    //是否有编辑凭证模板权限
+    bool isCanEditTablePermission = HtmlSECMenu.HavePermission(BizObject.General_Ledger, PermissionItem.Change);
+}
+
+<link type="text/css" rel="stylesheet" href="~/Scripts/GL/fp.css?@ServerHelper.JSVersion" />
+<link type="text/css" rel="stylesheet" href="~/Scripts/GL/css.css?@ServerHelper.JSVersion" />
+
+<script src="@ServerHelper.StaticServer/FW/include/My97Datepicker/WdatePicker.js?@ServerHelper.JSVersion"></script>
+
+<script type="text/javascript" src="~/Scripts/FP/FPHome.js?@ServerHelper.JSVersion"></script>
+<!--tool bar-->
+<div class="m-toolbar">
+    <div class="action" style="float:right;">
+        <div class="m-select-group">
+            <a href="###" class="fp-fapiao-btn current">@HtmlLang.Write(LangModule.FP, "MegiFapiao", "美记发票")</a>
+           
+            <a href="###" class="fp-invoice-btn">@invoiceName</a>
+                     
+        </div>
+    </div>
+
+</div>
+@*主体内容*@
+<div class="m-imain fp-imain">
+    <div class="m-imain-content m-imain-content-min ">
+        <div class="fp-fapiao-div" style="display:block;">
+            @Html.Partial("FPPartial/FPFapiaoPartial")
+        </div>
+        <div class="fp-invoice-div" style="display:none;">
+            @Html.Partial("FPPartial/FPInvoicePartial")
+        </div>
+    </div>
+</div>
+@HtmlLang.WriteScript(LangModule.FP)
+<script type="text/javascript">
+    $(function () {
+        var home = new FPHome('@ViewData["index"]', '@ViewData["invoiceType"]');
+        home.init();
+    })
+</script>

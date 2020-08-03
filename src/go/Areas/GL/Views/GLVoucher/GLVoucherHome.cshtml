@@ -1,0 +1,119 @@
+﻿@using JieNor.Megi.Identity.HtmlHelper
+@using JieNor.Megi.EntityModel.MultiLanguage
+@using JieNor.Megi.Identity.Go.HtmlHelper
+@using JieNor.Megi.Core.Const
+@using JieNor.Megi.Common.Context
+@using JieNor.Megi.Identity.Go.AutoManager
+@using JieNor.Megi.EntityModel.Enum
+@using JieNor.Megi.Common.Utility
+@{
+    ViewBag.Title = "GLVoucher";
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+
+    var dashBoardInfoModel = ViewData["DashboardInfo"] as JieNor.Megi.DataModel.GL.GLDashboardInfoModel;
+    var isCanEditPermission = dashBoardInfoModel.CanEdit;
+
+    var lang = dashBoardInfoModel.LangID;
+    var dateString = dashBoardInfoModel.DateString;
+    var defaultDate = dashBoardInfoModel.DefaultDate;
+    //是否有导入权限
+    bool isCanImportPermission = dashBoardInfoModel.CanImport;
+    //是否有导出权限
+    bool isCanExportPermission = dashBoardInfoModel.CanExport;
+    //是否有导出权限
+    bool isCanViewReport = dashBoardInfoModel.CanViewReport;
+    //是否是自定义会计准则
+    var isUDAS = dashBoardInfoModel.IsUDAS;
+    //当前可结算月份
+    var avaliablePeriod = dashBoardInfoModel.DefaultDate;
+
+    var isSmartVersion = dashBoardInfoModel.ctx.MOrgVersionID == OrgVersionEnum.Smart;
+
+    var liStyle = isSmartVersion ? " style=min-width:150px; " : " style=min-width:110px; ";
+
+}
+
+<link type="text/css" rel="stylesheet" href="~/Scripts/GL/css.css?@ServerHelper.JSVersion" />
+<link type="text/css" rel="stylesheet" href="~/Scripts/GL/scroll.css?@ServerHelper.JSVersion" />
+<script src="@ServerHelper.StaticServer/FW/include/My97Datepicker/WdatePicker.js?@ServerHelper.JSVersion"></script>
+
+@*主体内容*@
+<div class="m-imain">
+    <div class="m-imain-content m-imain-content-min ">
+        <!--页面头-->
+        <div class="m-extend-tabs gl-main-tabs">
+            <div class="iv-tab-links">
+                <ul class="tab-links">
+                    <li class="current">
+                        <div class="statistics">
+                            <div class="tab-home tab-single">&nbsp;</div>
+                        </div>
+                        <div class="title gl-avaliable-period" style="display:none;">@avaliablePeriod</div>
+                    </li>
+                    <li @liStyle>
+                        <div class="statistics">@HtmlLang.Write(LangModule.GL, "Summary", "Summary")</div>
+                    </li>
+                    @if (!isSmartVersion)
+                    {
+                        <li>
+                            <div class="statistics">@HtmlLang.Write(LangModule.GL, "Tranaction2GL", "Transaction to GL")</div>
+                            <div class="title">0/0</div>
+                        </li>
+                    }
+                    <!--对于自定义会计准则的，不提供期末结转的业务-->
+                    @if (!isUDAS)
+                    {
+                        <li @liStyle>
+                            <div class="statistics">@HtmlLang.Write(LangModule.GL, "MonthlyProcess", "Monthly Process")</div>
+                            <div class="title"></div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+
+        <!--各种分布视图-->
+        <div class="gl-partial">
+            <div class="mp-mask-div">
+            </div>
+            <!--entry-->
+            <div class="gl-partial-0" style="display: none;">
+                @Html.Partial("GLVoucherPartial/DashboardPartial")
+            </div>
+            <!--Summary-->
+            <div class="gl-partial-1" style="display: none;">
+                @Html.Partial("GLVoucherPartial/SummaryPartial")
+            </div>
+            @if (!isSmartVersion)
+            {
+                <!--Manager GL-->
+                <div class="gl-partial-2" style="display: none;">
+                    @Html.Partial("GLVoucherPartial/DocVoucherPartial")
+                </div>
+            }
+
+            @if (!isUDAS)
+            {
+                <!--MonthlyProcess-->
+                <div class="gl-partial-@(isSmartVersion ? "2" : "3")" style="display: none;">
+                    @Html.Partial("GLVoucherPartial/MonthlyProcessPartial")
+                </div>
+            }
+        </div>
+
+    </div>
+</div>
+<input type="hidden" value='@(isSmartVersion ? "1" : "0")' id="orgVersion" />
+
+<script type="text/javascript" src="@ServerHelper.StaticServer/fw/scripts/jquery.megi.print.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="~/Scripts/GL/GLVoucherHome.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.Report)
+@HtmlLang.WriteScript(LangModule.FA)
+<script type="text/javascript">
+    $(function () {
+        var home = new GLVoucherHome();
+        home.init('@ViewData["Index"]', '@ViewData["SubIndex"]', '@dashBoardInfoModel.ctx.MOrgVersionID');
+        //把
+        window.MReady = GLVoucherHome.checkDocTableUpdate;
+    });
+</script>

@@ -1,0 +1,35 @@
+﻿@{    
+    IVInvoiceModel model = ViewData["InvoiceModel"] as IVInvoiceModel;
+    bool isCanViewFapiao = model.MStatus >= (int)IVInvoiceStatusEnum.WaitingPayment
+        && (model.MType.StartsWith(BizType.Invoice_Sale) && HtmlSECMenu.HavePermission(BizObject.Sales_Fapiao, PermissionItem.View)
+        || model.MType.StartsWith(BizType.Invoice_Purchase) && HtmlSECMenu.HavePermission(BizObject.Purchases_Fapiao, PermissionItem.View));
+
+    bool isCanChangeFapiao = model.MStatus >= (int)IVInvoiceStatusEnum.WaitingPayment 
+        && (model.MType.StartsWith(BizType.Invoice_Sale) && HtmlSECMenu.HavePermission(BizObject.Sales_Fapiao, PermissionItem.Change)
+        || model.MType.StartsWith(BizType.Invoice_Purchase) && HtmlSECMenu.HavePermission(BizObject.Purchases_Fapiao, PermissionItem.Change));
+    bool isSale = model.MType == BizType.Invoice_Sale || model.MType == BizType.Invoice_Sale_Red;
+    string lblIssueFp = isSale ? HtmlLang.GetText(LangModule.FP, "IssueFapiao", "开票申请") : HtmlLang.GetText(LangModule.FP, "CollectFapiao", "收票申请");
+}
+@using JieNor.Megi.Core.Const;
+@using JieNor.Megi.Common.Utility;
+@if (isCanViewFapiao) { 
+    <div>
+        @if (isCanChangeFapiao)
+        {
+            <div id="divIssueFapiao" style="float:left;padding-right:10px;">
+                <a id="aIssue" href="javascript:void(0)" class="folder-options easyui-linkbutton easyui-linkbutton-yellow">@lblIssueFp</a>
+            </div>
+        }
+        <div id="divStatus" class="issued-info" style="float:left;">
+            <div id="divStatusTitle" style="font-size:13px;line-height:32px;"></div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div id="divNumber" class="issued-info" style="padding-top:3px;"></div>
+    <div id="divDate" class="issued-info" style="padding-top:3px;"></div>
+    <div id="divIssuedAmount" class="issued-info" style="padding-top:3px;"></div>
+}
+<input type="hidden" id="hidInvoiceID2" value="@(model.MID)" />
+<input type="hidden" id="hidTaxId" value="@(model.MTaxID)" />
+<input type="hidden" id="hidInvoiceType" value="@Html.Raw(isSale ? 0 : 1)" />
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/IV/UC/IssueFapiaoInfo.js?@ServerHelper.JSVersion"></script>

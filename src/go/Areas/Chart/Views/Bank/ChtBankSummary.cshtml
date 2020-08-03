@@ -1,0 +1,12 @@
+﻿@using JieNor.Megi.Common.Utility;
+<div class="groupItem mg-dash-box" style="opacity: 1;">
+    <div class="itemHeader"><h3>@HtmlLang.Write(LangModule.Bank, "TotalCashInAndOut", "Total cash in and out") </h3></div>
+    <div class="itemContent">
+        <div class='m-chart' id='divBankSummaryChart'>
+
+        </div>
+
+        <div class="clear"></div>
+    </div>
+    <script src="@ServerHelper.ScriptServer/go/scripts/Areas/Chart/Bank/ChtBankSummary.js?@ServerHelper.JSVersion"></script>
+</div>

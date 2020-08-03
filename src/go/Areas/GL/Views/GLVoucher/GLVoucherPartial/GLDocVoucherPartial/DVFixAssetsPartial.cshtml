@@ -1,0 +1,84 @@
+﻿@using JieNor.Megi.Identity.HtmlHelper
+@using JieNor.Megi.EntityModel.MultiLanguage
+@using JieNor.Megi.Identity.Go.HtmlHelper
+@using JieNor.Megi.Core.Const
+@using JieNor.Megi.Common.Utility
+@using JieNor.Megi.Common.Context
+@using JieNor.Megi.EntityModel.Enum
+
+<!--转帐单-->
+<div class="dv-fixassets-div dv-doc-div">
+    <div class="dv-table-div">
+        <table class="dv-fixassets-table dv-table m-location-restore">
+            <thead>
+                <tr>
+                    <!--全选框-->
+                    <th class="dv-doc-check" style="width:2%;"><input type="checkbox" /></th>
+                    <!--资产编码-->
+                    <th class="dv-doc-number" style="width: 8%;">@HtmlLang.Write(LangModule.FA, "FixAssetNumber", "资产编码")</th>
+                    <!--名称-->
+                    <th class="dv-doc-name" style="width:10%;">@HtmlLang.Write(LangModule.FA, "FixAssetName", "名称")</th>
+                    <!--类别名称-->
+                    <th class="dv-doc-typename" style="width: 8%;">@HtmlLang.Write(LangModule.FA, "FixAssetTypeName", "类别名称")</th>
+                    <!--原值-->
+                    <th class="dv-doc-original" style="width: 8%;">@HtmlLang.Write(LangModule.FA, "OriginalAmount", "原值")</th>
+                    <!--月折旧-->
+                    <th class="dv-doc-perioddepreciated tright" style="width: 8%;">@HtmlLang.Write(LangModule.FA, "PeriodDepreciateAmount", "月折旧")</th>
+                    <!--金额本年累计折旧-->
+                    <th class="dv-doc-yeardepreciated tright" style="width: 8%;">@HtmlLang.Write(LangModule.FA, "DepreciatedAmountOfYear", "本年累计折旧")</th>
+                    <!--减值准备-->
+                    <th class="dv-doc-preparefordecrease tright" style="width: 8%;">@HtmlLang.Write(LangModule.FA, "PrepareForDecreaseAmount", "减值准备")</th>
+                    <!--期末净值-->
+                    <th class="dv-doc-netvalue tright" style="width: 8%;">@HtmlLang.Write(LangModule.FA, "PeriodNetAmount", "期末净值")</th>
+                    <!--空列-->
+                    <th class="dv-empty" style="width:1%;">&nbsp;&nbsp;</th>
+                    @*<!--应收科目(贷方)-->
+                    <th class="dv-voucher-debit" style="width:10%;">@HtmlLang.Write(LangModule.FA, "DepreciateExpenseAccount", "折旧费用科目")</th>
+                    <!--收入科目(借方)-->
+                    <th class="dv-voucher-credit" style="width:10%;">@HtmlLang.Write(LangModule.FA, "DepreciateAccount", "累计折旧科目")</th>*@
+                    <!--凭证编号-->
+                    <th class="dv-voucher-number" style="width:13%;">@HtmlLang.Write(LangModule.GL, "Voucher", "Voucher")</th>
+                    <!--边距-->
+                    <th class="dv-border" style="width:1%;">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="dv-tr demo-tr" style="display:none;">
+                    <!--全选框-->
+                    <td class="dv-doc-check" style="width: 2%;"><div><input type="checkbox" /></div></td>
+                    <!--业务日期-->
+                    <td class="dv-doc-number dv-doc-td dv-td-left tleft" style="width: 8%;"><div>&nbsp;</div></td>
+                    <!--摘要-->
+                    <td class="dv-doc-name dv-doc-td  tleft" style="width: 10%;"><div>&nbsp;</div></td>
+                    <!--转出-->
+                    <td class="dv-doc-typename dv-doc-td tleft" style="width: 8%;"><div>&nbsp;</div></td>
+                    <!--转入-->
+                    <td class="dv-doc-original dv-doc-td tright" style="width: 8%;"><div>&nbsp;</div></td>
+                    <!--转入-->
+                    <td class="dv-doc-perioddepreciated dv-doc-td tright" style="width: 8%;"><div>&nbsp;</div></td>
+                    <!--转入-->
+                    <td class="dv-doc-yeardepreciated dv-doc-td tright" style="width: 8%;"><div>&nbsp;</div></td>
+                    <!--转入-->
+                    <td class="dv-doc-preparefordecrease dv-doc-td tright" style="width:8%;"><div>&nbsp;</div></td>
+                    <!--金额-->
+                    <td class="dv-doc-netvalue dv-doc-td tright dv-td-right" style="width: 13%;"><div>&nbsp;</div></td>
+                    <!--空列-->
+                    <td class="dv-empty" style="width: 1%;"><div>&nbsp;&nbsp;</div></td>
+                    @*<!--应收科目(借方)-->
+                    <td class="dv-voucher-debit dv-voucher-td  dv-td-left" style="width: 10%;"><div>&nbsp;</div></td>
+                    <!--收入科目(贷方)-->
+                    <td class="dv-voucher-credit dv-voucher-td" style="width: 10%;"><div>&nbsp;</div></td>*@
+                    <!--凭证编号-->
+                    <td class="dv-voucher-number dv-voucher-td  dv-td-right   dv-td-left tcenter" style="width: 8%;"><div>&nbsp;</div></td>
+                    <!--边距-->
+                    <td class="dv-border" style="width:1%;"><div>&nbsp;&nbsp;</div></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!--分页功能-->
+<div class="dv-pagination">
+
+</div>

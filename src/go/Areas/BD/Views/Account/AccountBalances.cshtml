@@ -1,0 +1,59 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Account Balances";
+
+    bool isCanEditPermission = HtmlSECMenu.HavePermission(BizObject.BankAccount, PermissionItem.Change);
+}
+
+<div class="m-imain mg-setup">
+    @if (isCanEditPermission)
+    {
+        <div class="m-toolbar">
+            <!--帐户管理-->
+            <a href="javascript:void(0)" id="btnAddBankAccountTop" class="easyui-splitbutton easyui-linkbutton-yellow"
+               data-options="menu:'#divNewBankAccount'">@HtmlLang.Write(LangModule.Bank, "New", "New")</a>
+            <!--银行/现金/信用卡帐户-->
+            <div id="divNewBankAccount" style="width:180px;">
+                <div><a href="javascript:void(0)" id="btnAddBankAccount">@HtmlLang.Write(LangModule.Bank, "BankAccount", "Bank Account")</a></div>
+                <div><a href="javascript:void(0)" id="btnAddCreditAccount">@HtmlLang.Write(LangModule.Bank, "CreditAccount", "Credit Account")</a></div>
+                <div><a href="javascript:void(0)" id="btnAddCashAccount">@HtmlLang.Write(LangModule.Bank, "CashAccount", "Cash Account")</a></div>
+                <div><a href="javascript:void(0)" id="btnAddPayPalAccount">@HtmlLang.Write(LangModule.Bank, "PayPal", "PayPal")</a></div>
+                <div><a href="javascript:void(0)" id="btnAddAlipayAccount">@HtmlLang.Write(LangModule.Bank, "Alipay", "Alipay")</a></div>
+            </div>
+
+        </div>
+    }
+    <div class="m-imain-content">
+       
+        <div id="tbAccountBalance" fitcolumns="true">
+        </div>
+
+    </div>
+</div>
+<input type="hidden" id="hidOrgCode" value="@ViewBag.OrgCode" />
+
+@if (HtmlSECMenu.HavePermission(BizObject.Setting, PermissionItem.Change))
+{
+    <input type="hidden" id="hidChangeAuth" value="1" />
+}
+else
+{
+    <input type="hidden" id="hidChangeAuth" value="0" />
+}
+<script src="@ServerHelper.StaticServer/fw/include/ichartjs/ichart.1.2.min.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.ScriptServer/Scripts/BD/BDBank/BDBankHome.js?@ServerHelper.JSVersion"></script>
+
+<script type="text/javascript">
+    //
+    $(document).ready(function () {
+        var bankHomeOj = new BDBankHome('@ViewData["acctId"]');
+    });
+</script>
+@HtmlLang.WriteScript(LangModule.BD)
+@HtmlLang.WriteScript(LangModule.Bank)
+<script src="@ServerHelper.ScriptServer/Scripts/BD/Account/AccountBalances.js?@ServerHelper.JSVersion"></script>
+
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)
+
+
+

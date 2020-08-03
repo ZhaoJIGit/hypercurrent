@@ -1,0 +1,44 @@
+﻿@using JieNor.Megi.Common.Utility
+<div class="tip-hotkey-tab-div">
+    <span class="tip-hotkey-tab-span tip-hotkey-tab-show" id="tabHotKey">@HtmlLang.Write(LangModule.Bank, "hotkey", "快捷键")</span>
+    <span class="tip-hotkey-tab-span" id="tabHotHandle">@HtmlLang.Write(LangModule.Bank, "hothandle", "页面快捷操作")</span>
+</div>
+<div id="hotKeyDiv">
+    <table class="tip-hotkey-table">
+        <tr>
+            <td style="width:50px">@HtmlLang.Write(LangModule.Bank, "hotswitch", "切换")</td>
+            <td class="tip-hotkey-table-td1"><span class="tip-hotkey">Enter</span> &nbsp;/&nbsp;<span class="tip-hotkey">Tab</span></td>
+            <td>@HtmlLang.Write(LangModule.Bank, "hotswitchnextinput", "切换到下一个输入框")</td>
+        </tr>
+        <tr>
+            <td rowspan="3">@HtmlLang.Write(LangModule.Bank, "hotselect", "选定")</td>
+            <td class="tip-hotkey-table-td1" rowspan="2"><span class="tip-hotkey">Shift</span></td>
+            <td>@HtmlLang.Write(LangModule.Bank, "hotshiftselect", "先选定开始行,使用Shift按键同时选定结束行,则是选定连续多行明细,可用于复制填充编辑")</td>
+        </tr>
+        <tr>
+            <td>@HtmlLang.Write(LangModule.Bank, "hotshiftcheck", "先勾选开始银行流水,使用Shift按键同时选择结束银行流水,则是选定连续多条银行流水,可用于批量提交")</td>
+        </tr>
+        <tr>
+            <td class="tip-hotkey-table-td1"><span class="tip-hotkey">Ctrl</span></td>
+            <td>@HtmlLang.Write(LangModule.Bank, "hotctrlselect", "选择任意行,使用Ctrl按键,同时选择其他行,则可以选择不一定连续的多行,可用于复制填充编辑")</td>
+        </tr>
+    </table>
+</div>
+<div id="hotHandleDiv" style="display: none;">
+    <table class="tip-hotkey-table">
+        <tr>
+            <td style="width: 50px">@HtmlLang.Write(LangModule.Bank, "hotcopyandfill", "复制填充")</td>
+            <td>@HtmlLang.Write(LangModule.Bank, "hotcopyandfillcontent", "先批量选定多行,选择其中一行进行编辑,其他行对应编辑框被复制填充基准行内容")</td>
+        </tr>
+        <tr>
+            <td rowspan="2">@HtmlLang.Write(LangModule.Bank, "hotsort", "排序")</td>
+            <td>@HtmlLang.Write(LangModule.Bank, "hotdatesort", "点击表头\"日期\",将银行流水按照日期排序")</td>
+        </tr>
+        <tr>
+            <td>@HtmlLang.Write(LangModule.Bank, "hotpaymansort", "点击表头\"收/付款人\",将银行流水按照收/付款人的名称首字母排序")</td>
+        </tr>
+    </table>
+</div>
+<script src="~/Scripts/FP/HotKeyTip.js?@ServerHelper.JSVersion"></script>
+
+

@@ -1,0 +1,88 @@
+﻿@{
+    ViewBag.Title = "Account Balances";
+    bool isCanEditBankPermission = HtmlSECMenu.HavePermission(BizObject.BankAccount, PermissionItem.Change) ;
+    bool isGLPermission = (bool)ViewData["IsGLPermission"];//HtmlSECMenu.HavePermission(JieNor.Megi.Core.Const.BizObject.General_Ledger, PermissionItem.Change);
+}
+<style>
+   .datagrid-cell-c1-text {
+        padding: 3px 0px;
+    }
+</style>
+<link type="text/css" rel="stylesheet" href="~/Scripts/GL/css.css?@ServerHelper.JSVersion" />
+<div id="divbalance" style="display: none; z-index:10; border: 1px solid #E7E7E7; box-shadow: 1px 1px 2px #787878; background-color: white;width:188px">
+    <div style="padding:10px">
+        <span>Currency</span><br />
+        <input class="easyui-combobox" /><br />
+        <span>Amount</span><br />
+        <input class="easyui-valudatebox easy-numberbox" />
+    </div>
+    <div style="padding:10px">
+        <span>Amount in CNY:</span><br />
+        <label>1200.00</label>
+    </div>
+</div>
+<div class="m-toolbar">
+    @if(isGLPermission)
+    {
+        <a href="javascript:void(0)" id="btnTrialBalance" class="easyui-linkbutton easyui-linkbutton-gray">@HtmlLang.Write(LangModule.Acct, "TrialBalance", "Trial balance")</a>
+        <a href="javascript:void(0)" id="btnClearInitBalance" class="easyui-linkbutton easyui-linkbutton-gray">@HtmlLang.Write(LangModule.Acct, "ClearInitBalance", "清空期初余额")</a>
+                                                                                                                                             
+                                                                                                                                             
+        if (HtmlSECMenu.HavePermission(BizObject.BankAccount, PermissionItem.Export))
+        {
+            <a href="#" class="easyui-linkbutton" id="aExport">@HtmlLang.Write(LangKey.Export)</a>
+        }
+        <a href="javascript:void(0)" id="btnFinish" style="float: right; width: 115px; display: none" class="easyui-linkbutton easyui-linkbutton-yellow">
+            @HtmlLang.Write(LangModule.Acct, "FinishInitialization", "Finish Initialization")
+        </a>
+
+    <a href="javascript:void(0)" id="btnReInit" style="float: right; width: 115px; display: none" class="easyui-linkbutton easyui-linkbutton-yellow">
+        @HtmlLang.Write(LangModule.Acct, "ReInitialization", "Re-Initialization")
+    </a>
+
+    }
+</div>
+
+<div class="mg-setup">
+    <div class="m-imain-content">
+        <div id="tbAccountBalance" fitcolumns="true" style="height:380px">
+        </div>
+    </div>
+    
+</div>
+
+<input type="hidden" id="hidOrgCode" value="@ViewBag.OrgCode" />
+<input type="hidden" id="hideForbidEdit" value="@ViewData["ForbidEdit"]" />
+<input type="hidden" id="hideBaseCy" value="@ViewData["BaseCurrency"]" />
+<input type="hidden" id="hideGLBeginMonth" value="@ViewData["GLBeginMonth"]" />
+<input type="hidden" id="hideCanEditBankBalance" value="@ViewData["IsCanEditBankBalance"]"/>
+@if (HtmlSECMenu.HavePermission(BizObject.Setting, PermissionItem.Change))
+{
+    <input type="hidden" id="hidChangeAuth" value="1" />
+}
+else
+{
+    <input type="hidden" id="hidChangeAuth" value="0" />
+}
+<input type="hidden" id="hideGoService" value="@ServerHelper.GoServer" />
+<input type="hidden" id="hidePermission" value="@isGLPermission" />
+<input type="hidden" id="hideAccountStandard" value="@ViewData["AccountStandard"]">
+<input type="hidden" value="@ServerHelper.GoServer" id="hidGoServer" />
+<script src="@ServerHelper.StaticServer/fw/include/ichartjs/ichart.1.2.min.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.ScriptServer/Scripts/BD/BDBank/BDBankHome.js?@ServerHelper.JSVersion"></script>
+
+<script type="text/javascript">
+    //
+    $(document).ready(function () {
+        var bankHomeOj = new BDBankHome('@ViewData["acctId"]');
+    });
+</script>
+@HtmlLang.WriteScript(LangModule.BD)
+@HtmlLang.WriteScript(LangModule.Acct)
+@HtmlLang.WriteScript(LangModule.Bank)
+<script src="@ServerHelper.ScriptServer/Scripts/BD/BDAccount/AccountBalances.js?@ServerHelper.JSVersion"></script>
+
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)
+
+
+

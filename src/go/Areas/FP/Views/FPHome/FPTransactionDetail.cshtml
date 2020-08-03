@@ -1,0 +1,53 @@
+﻿@using JieNor.Megi.Identity.HtmlHelper
+@using JieNor.Megi.EntityModel.MultiLanguage
+@using JieNor.Megi.Identity.Go.HtmlHelper
+@using JieNor.Megi.Core.Const
+@using JieNor.Megi.Common.Context
+@using JieNor.Megi.Identity.Go.AutoManager
+@using JieNor.Megi.Common.Utility
+@{
+
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    var importID = ViewData["ImportID"].ToString();
+    var type = ViewData["MFapiaoCategory"].ToString();
+    var orgVersion = ViewData["OrgVersion"].ToString();
+    string fapiaoType = int.Parse(type) == 0 ? BizObject.Sales_Fapiao : BizObject.Purchases_Fapiao;
+    var isCanDeletePermission = HtmlSECMenu.HavePermission(fapiaoType, PermissionItem.Change);
+}
+
+<link type="text/css" rel="stylesheet" href="~/Scripts/GL/fp.css?@ServerHelper.JSVersion" />
+<link type="text/css" rel="stylesheet" href="~/Scripts/GL/css.css?@ServerHelper.JSVersion" />
+
+<script type="text/javascript" src="~/Scripts/FP/FPHome.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="~/Scripts/FP/model/FPEnum.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="~/Scripts/FP/model/FPTableModel.js?@ServerHelper.JSVersion"></script>
+
+<script type="text/javascript" src="~/Scripts/FP/FPTransactionDetail.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="~/Scripts/FP/FPReconcileHome.js?@ServerHelper.JSVersion"></script>
+
+<div class="fp-transaction-detail" style="overflow:hidden;height:100%;">
+
+    <div class="fp-transaction-toolbar" style="height:40px;width:100%;">
+        @if (isCanDeletePermission)
+        {
+            <a href="javascript:void(0)" class="easyui-linkbutton" style="width:120px;margin-left:10px;margin-top:10px" id="btnDeleteFP">@HtmlLang.Write(LangKey.Delete)</a>
+        }
+
+    </div>
+
+    <div class="fp-transaction-body" style="width:100%;margin:10px 10px 0px 10px;">
+
+        <table class="fp-transaction-table"></table>
+    </div>
+
+    <!--翻页控件-->
+    <div class="fp-transaction-detail-pager"></div>
+</div>
+@HtmlLang.WriteScript(LangModule.FP)
+@HtmlLang.WriteScript(LangModule.Bank)
+<script type="text/javascript">
+    $(function () {
+
+        new FPTransactionDetail().init('@importID', '@type','@orgVersion');
+    });
+</script>

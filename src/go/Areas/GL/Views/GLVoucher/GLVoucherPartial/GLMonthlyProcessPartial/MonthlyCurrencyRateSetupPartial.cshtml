@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "MonthlyCurrencyRateSetupPartial";
+}
+
+<!--期末调汇的时候设置汇率-->
+<div class="mp-rate-setup-div" style="display:none;" id="currencyRateSetupDiv">
+    <!--显示所有需要维护汇率的列表-->
+    <div class="mp-rate-setup-table-div">
+        <div class="mp-rate-setup-table">
+        </div>
+    </div>
+    <div class="m-toolbar-footer">
+        <div class="left">
+            <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray de-cancel-button">@HtmlLang.Write(LangKey.Close)</a>
+        </div>
+        <div class="right">
+            <!--下面放一个保存按钮-->
+            <a class="easyui-linkbutton easyui-linkbutton-yellow mp-rate-save">@HtmlLang.Write(LangKey.Save)</a>
+        </div>
+    </div>
+</div>
+

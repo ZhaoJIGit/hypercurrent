@@ -1,0 +1,77 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Import Employees";
+}
+<style>
+    body {
+        overflow: hidden;
+    }
+</style>
+<div class="m-imain" style="padding:10px">
+
+    <div class="import-step-container">
+        <div class="import-step">
+            <h2 class="import-step-title">
+                @HtmlLang.Write(LangModule.Contact, "ImportEmployeesStep1Title", "Step 1. Download our employees template file")
+            </h2>
+
+            <p class="import-step-content">
+                @HtmlLang.Write(LangModule.Contact, "ImportEmployeesStep1Desc", "Start by downloading our employees Xls template file. This file has the correct column headings Megi needs to import your employee data.")
+            </p>
+            <div class="import-step-downtemplate">
+                <a href="javascript:void(0);" onclick="Import.downloadTemplate();" class="download-tmplate-link">
+                    <span class="down-file">
+                        &nbsp;
+                    </span>
+                    @HtmlLang.Write(LangModule.Contact, "ImportEmployeesStep1Download", "Download template file")
+                </a>
+            </div>
+        </div>
+        <div class="import-step">
+            <h2 class="import-step-title">
+                @HtmlLang.Write(LangModule.Contact, "ImportEmployeesStep2Title", "Step 2. Copy your employees into the template")
+            </h2>
+            <p class="import-step-content">
+                @HtmlLang.Write(LangModule.Contact, "ImportEmployeesStep2Desc", "Export your employees from your old system as a comma separated list. Using Excel or another spreadsheet editor, copy and paste your employees from the exported file into the Megi template. Make sure the employee data you copy matches the column headings provided in the template.")
+            </p>
+            <p class="import-step-warning">
+                @Html.Raw(HtmlLang.Write(LangModule.Contact, "ImportEmployeesStep2Warning1", "IMPORTANT:Do not change the column headings in the template file. These need to be unchanged for the import to work in the next step."))
+            </p>
+        </div>
+        <div class="import-step">
+            <h2 class="import-step-title">
+                @HtmlLang.Write(LangModule.Contact, "ImportEmployeesStep3Title", "Step 3. Import the updated template file")
+            </h2>
+            <label class="import-step-content">
+                @HtmlLang.Write(LangModule.Contact, "ImportEmployeesStep3Desc", "Choose a file to import")
+            </label>
+            @using (Ajax.BeginForm("VerifyImportData", "Employees", new AjaxOptions { HttpMethod = "POST" }, new { ID = "fileSelectForm", enctype = "multipart/form-data" }))
+            {
+                <div class="import-step-downtemplate">
+                    <label class="upload-image">&nbsp;</label>
+                    <input type="file" id="fileInput" name="fileInput" class="import-file-input" />
+                    <a href="javascript:void(0)" class="upload-label non-alert">@HtmlLang.Write(LangModule.Common, "UploadLabel", "Browse...")</a>
+                    <div class="import-step-content">
+                        @HtmlLang.Write(LangModule.Contact, "ImportEmployeesStep3limit", "The file you import must be a Xls or Xlsx file. The name of your file should end with either <em>.xls</em> or <em>.xlsx</em>.")
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div class="m-toolbar-footer">
+    @if (HtmlSECMenu.HavePermission(BizObject.Contact, PermissionItem.Change)) 
+    { 
+    <div class="left">
+        <a href="javascript:void(0)" onclick="ImportBase.closeImportBox();" class="easyui-linkbutton easyui-linkbutton-gray" id="aCancel">@HtmlLang.Write(LangKey.Cancel)</a>
+    </div>
+    <div class="right">
+        <a href="/BD/Employees/EmployeeView" class="easyui-linkbutton easyui-linkbutton-yellow" id="aImport">@HtmlLang.Write(LangKey.Import)</a>
+    </div>
+    }
+</div>
+@HtmlLang.WriteScript(LangModule.Docs)
+<script type="text/javascript" src="@ServerHelper.StaticServer/fw/scripts/jquery.form.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.GoServer/scripts/BD/Docs/FileBase.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.GoServer/scripts/BD/Import/ImportBase.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.GoServer/scripts/BD/Employees/Import.js?@ServerHelper.JSVersion"></script>

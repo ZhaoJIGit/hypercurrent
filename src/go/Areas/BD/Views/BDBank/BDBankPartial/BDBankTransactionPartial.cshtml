@@ -1,0 +1,75 @@
+﻿@{
+
+    JieNor.Megi.DataModel.BD.BDBankAccountEditModel bankModel = ViewData["BankModel"] as JieNor.Megi.DataModel.BD.BDBankAccountEditModel;
+
+    JieNor.Megi.EntityModel.Context.MContext ctx = JieNor.Megi.Common.Context.ContextHelper.MContext;
+
+    bool isSmartVersion = ctx.MOrgVersionID == (int)JieNor.Megi.EntityModel.Enum.OrgVersionEnum.Smart;
+}
+@using JieNor.Megi.EntityModel.MultiLanguage;
+@using JieNor.Megi.Common.Utility
+<div class="transaction">
+    @*查看交易记录*@
+    <input id="hidTabSelectedIndex" type="hidden" value="3" />
+    @if (HtmlSECMenu.HavePermission(BizObject.BankAccount, PermissionItem.Change))
+    {
+        @*新建“付款单”和“收款单”*@
+        <a href="javascript:void(0)" id="aNewTransactionTop" class="easyui-splitbutton easyui-linkbutton-yellow"
+           data-options="menu:'#divNewTransaction'"
+           onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Bank, "NewSpendMoney", "New Spend Money")', '/IV/Payment/PaymentEdit?acctId=@Html.Raw(@ViewData["id"])');">@HtmlLang.Write(LangModule.Bank, "New", "New")</a>
+        <div id="divNewTransaction" style="width:180px;">
+            <div><a href="javascript:void(0)" id="aNewPayment" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Bank, "NewSpendMoney", "New Spend Money")', '/IV/Payment/PaymentEdit?acctId=@Html.Raw(@ViewData["id"])');">@HtmlLang.Write(LangModule.Bank, "SpendMoney", "Spend Money")</a></div>
+            <div><a href="javascript:void(0)" id="aNewReceipt" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Bank, "NewReceiveMoney", "New Receive Money")', '/IV/Receipt/ReceiptEdit?acctId=@Html.Raw(@ViewData["id"])');">@HtmlLang.Write(LangModule.Bank, "ReceiveMoney", "Receive Money")</a></div>
+            <div><a href="javascript:void(0)" id="aNewTransfer" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Bank, "Transfer", "Transfer")', '/IV/IVTransfer/IVTransferHome?acctId=@Html.Raw(@ViewData["id"])');">@HtmlLang.Write(LangModule.Bank, "Transfer", "Transfer")</a></div>
+        </div>
+        @*删除*@
+        <a class="easyui-linkbutton" id="btnDeleteTransaction" style="margin-left:10px;">@HtmlLang.Write(LangModule.Bank, "Delete", "Delete")</a>
+        @*导入*@
+        <a data-options="menu:'#divImport'" href="javascript:void(0)" id="aImport" style="margin-left:10px;" class="easyui-splitbutton easyui-splitbutton-base">@HtmlLang.Write(LangKey.Import)</a>
+        <div id="divImport" style="width:120px;height:60px;display:none;">
+            <div id="divImportSpend">
+                <a href="javascript:void(0)">@HtmlLang.Write(LangModule.Bank, "SpendMoney", "Spend Money")</a>
+            </div>
+            <div id="divImportReceive">
+                <a href="javascript:void(0)">@HtmlLang.Write(LangModule.Bank, "ReceiveMoney", "Receive Money")</a>
+            </div>
+        </div>
+    }
+    @if (HtmlSECMenu.HavePermission(BizObject.BankAccount, PermissionItem.Export))
+    {
+        <a data-options="menu:'#divExport'" href="javascript:void(0)" id="aExport" style="margin-left:10px;" class="easyui-splitbutton easyui-splitbutton-base">@HtmlLang.Write(LangModule.Bank, "ExportTransaction", "Export Transaction")</a>
+        <div id="divExport" style="width:120px;height:60px;display:none;">
+            <div id="divExportSpend">
+                <a href="javascript:void(0)">@HtmlLang.Write(LangModule.Bank, "SpendMoney", "Spend Money")</a>
+            </div>
+            <div id="divExportReceive">
+                <a href="javascript:void(0)">@HtmlLang.Write(LangModule.Bank, "ReceiveMoney", "Receive Money")</a>
+            </div>
+        </div>
+    }
+    @if (HtmlSECMenu.HavePermission(BizObject.Bank_Reconciliation, PermissionItem.Change) && bankModel.MIsNeedReconcile)
+    {
+
+        <a data-options="menu:'#divMark'" href="javascript:void(0)" id="aMarkAsRec" status="@Convert.ToInt32(JieNor.Megi.DataModel.IV.IVReconcileStatus.Marked)" style="margin-left:10px;" class="easyui-splitbutton easyui-splitbutton-m easyui-splitbutton-base">@HtmlLang.Write(LangModule.Bank, "MarkAsReconciled", "Mark as reconciled")</a>
+        <div id="divMark" style="width:160px;height:30px;display:none;">
+            <div id="divMarkAsUnRec" status="@Convert.ToInt32(JieNor.Megi.DataModel.IV.IVReconcileStatus.None)">
+                <a href="javascript:void(0)">@HtmlLang.Write(LangModule.Bank, "MarkAsUnReconciled", "Mark as unreconciled")</a>
+            </div>
+        </div>
+
+    }
+
+
+    <div class="m-keyword-search">
+        <a class="easyui-linkbutton btnSearchDiv" href="javascript:void(0)">@HtmlLang.Write(LangKey.Search)</a>
+    </div>
+    <div class="space"></div>
+    <div class="m-adv-search m-adv-search-transactions">
+        @Html.Partial("BDBankPartial/BDBankSearchPartial")
+    </div>
+    <div id="gridTransactionDiv">
+        <div id="gridTransaction" fitcolumns="true"></div>
+    </div>
+    <script type="text/javascript" src="@ServerHelper.GoServer/Scripts/BD/Import/ImportBase.js?@ServerHelper.JSVersion"></script>
+    <script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/BD/BDBank/BDBankTransaction.js?@ServerHelper.JSVersion"></script>
+</div>

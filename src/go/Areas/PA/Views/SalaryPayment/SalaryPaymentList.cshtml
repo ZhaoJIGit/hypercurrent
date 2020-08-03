@@ -1,0 +1,166 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    //是否有编辑权限
+    bool haveChangePermission = HtmlSECMenu.HavePermission(BizObject.PayRun, PermissionItem.Change);
+    bool haveApprovePermission = HtmlSECMenu.HavePermission(BizObject.PayRun, PermissionItem.Approve);
+    var model = ViewData["PayRunModel"] as PAPayRunModel;
+    bool showAdvance = string.IsNullOrEmpty(Request["showAdvance"]) ? true : false;
+    var paymentTitle = Convert.ToString(HtmlLang.Write(LangModule.PA, "MakeAPayment", "Make a payment"));
+    var sendPaySlipTitle = Convert.ToString(HtmlLang.Write(LangModule.PA, "SendPaySlips", "Send pay slips"));
+    PASalaryPaymentSummaryModel summary = ViewBag.SalaryPaymentSummary as PASalaryPaymentSummaryModel;
+}
+@using JieNor.Megi.DataModel.PA
+@using JieNor.Megi.Common.Utility
+<div class="m-imain">
+    <div class="m-imain-content m-payrun-list">
+        @*列表分类Tab*@
+        @{var lblItems = HtmlLang.GetText(LangModule.Common, "items", "items");}
+        <div class="m-extend-tabs">
+            <div class="pa-tab-links">
+                <ul class="tab-links">
+                    <li class="current">
+                        @*所有*@
+                        <div class="statistics">@HtmlLang.Write(LangModule.IV, "All", "All")</div>
+                        <div class="sub-title">(@summary.AllCount @lblItems)</div>
+                        <div class="title">@summary.AllAmount.ToMoneyFormat()</div>
+                    </li>
+                    <li>
+                        @*草稿*@
+                        <div class="statistics">@HtmlLang.Write(LangModule.IV, "Draft", "Draft")</div>
+                        <div class="sub-title">(@summary.DraftCount @lblItems)</div>
+                        <div class="title">@summary.DraftAmount.ToMoneyFormat()</div>
+                    </li>
+                    <li style="display:none;">
+                        @*等待审核*@
+                        <div class="statistics">@HtmlLang.Write(LangModule.IV, "AwaitingApproval", "Awaiting Approval")</div>
+                        <div class="sub-title">(@summary.WaitingApprovalCount @lblItems)</div>
+                        <div class="title">@summary.WaitingApprovalAmount.ToMoneyFormat()</div>
+                    </li>
+                    <li>
+                        @*等待付款*@
+                        <div class="statistics">@HtmlLang.Write(LangModule.IV, "AwaitingPayment", "Awaiting Payment")</div>
+                        <div class="sub-title">(@summary.WaitingPaymentCount @lblItems)</div>
+                        <div class="title">@summary.WaitingPaymentAmount.ToMoneyFormat()</div>
+                    </li>
+                    <li>
+                        @*已支付*@
+                        <div class="statistics">@HtmlLang.Write(LangModule.IV, "Paid", "Paid")</div>
+                        <div class="sub-title">(@summary.PaidCount @lblItems)</div>
+                        <div class="title">@summary.PaidAmount.ToMoneyFormat()</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        @*内页工具栏*@
+        <div class="m-tab-toolbar">
+            <div class="left">
+                @*编辑权限*@
+                @if (haveChangePermission)
+                {
+                    //if (model.MStatus == (int)PASalaryPaymentStatusEnum.Draft)
+                    //{
+                        @*添加员工*@
+                        <a href="#" class="easyui-linkbutton m-btn-m m-tool-bar-btn" id="aAddEmp">@HtmlLang.Write(LangModule.PA, "AddEmployee", "Add Employee")</a>
+                        @*删除*@
+                        <a href="#" class="easyui-linkbutton m-btn-m m-tool-bar-btn" id="aDelete">@HtmlLang.Write(LangKey.Delete)</a>
+                    //}
+                }
+                @*预览*@
+                <a href="#" class="easyui-linkbutton m-btn-m m-tool-bar-btn" id="aPreview">@HtmlLang.Write(LangModule.PA, "Preview", "Preview")</a>
+                @if (haveApprovePermission)// && model.MStatus < (int)PASalaryPaymentStatusEnum.WaitingPayment)
+                {
+                    <a href="javascript:void(0)" class="easyui-linkbutton m-btn-m m-tool-bar-btn" id="aApprove">@HtmlLang.Write(LangKey.Approve)</a>
+                }
+                @*发送工资单*@
+                @if (haveChangePermission)// && model.MStatus == (int)PASalaryPaymentStatusEnum.WaitingPayment)
+                {
+                    <a href="#" class="easyui-linkbutton m-btn-m m-tool-bar-btn" id="aEmail">@sendPaySlipTitle</a>
+                }
+                @*}
+                @if (showAdvance == true && model.MStatus == (int)PASalaryPaymentStatusEnum.WaitingPayment && haveChangePermission)
+                {*@
+                    @*if (haveApprovePermission)// && model.MStatus == (int)PASalaryPaymentStatusEnum.WaitingPayment)
+                    {
+                        <a href="#" class="easyui-linkbutton m-btn-m m-tool-bar-btn" id="aUnApprove">@HtmlLang.Write(LangModule.Common, "Unapprove", "Un Approve")</a>
+                    }*@
+                @if(HtmlSECMenu.HavePermission(BizObject.PayRun, PermissionItem.Approve) && HtmlSECMenu.HavePermission(BizObject.BankAccount, PermissionItem.Change)){
+                    <a data-options="menu:'#divBatchPay'" href="javascript:void(0)" id="aBatchPay" class="easyui-splitbutton easyui-linkbutton-yellow easyui-splitbutton-m">@paymentTitle</a>
+                      <div id="divBatchPay" style="width: 220px; height: 60px; display: none;">
+                          <div id="divBatchPayBy">
+                              <a href="javascript:void(0)">@paymentTitle</a>
+                          </div>
+                          <div id="divMergeBatchPay">
+                              <a href="javascript:void(0)">@HtmlLang.Write(LangModule.PA, "MergeBatchPay", "合并生成付款单")</a>
+                          </div>
+                      </div>
+                }
+            </div>
+        </div>
+    @*高级选项*@
+        @*@if (showAdvance == true && model.MStatus == (int)PASalaryPaymentStatusEnum.WaitingPayment && haveChangePermission)
+        {
+            <div class="m-iv-adv-switch" style="position:inherit;height:26px;">
+                <a href="javascript:void(0)" class="show">&nbsp;</a><span>@HtmlLang.Write(LangModule.PA, "PowerMode", "Power Mode")</span>
+            </div>
+        }*@
+        @*工资清单列表*@
+        <div>
+            <div id="divPAList" class="m-pa-sp-list" style="float:left;">
+                <div id="salaryPaymentList" style="height:200px;"></div>
+            </div>
+            @*@if (showAdvance == true && model.MStatus == (int)PASalaryPaymentStatusEnum.WaitingPayment && haveChangePermission)
+            {
+            <div class="m-iv-adv" style="float:right;">
+                <div id="aa" class="easyui-accordion" style="width:260px;min-height:344px;">
+                    <div title="@HtmlLang.Write(LangModule.PA, "PowerMode", "Power Mode")" data-options="selected:true" style="padding:10px;">
+                        <ul>
+                            <li><a href="javascript:void(0)" id="aBatchPay">@paymentTitle</a></li>
+                            @if (haveApprovePermission && model.MStatus == (int)PASalaryPaymentStatusEnum.WaitingPayment)
+                            {
+                            <li><a href="javascript:void(0)" id="aUnApprove">@HtmlLang.Write(LangModule.Common, "Unapprove", "Un Approve")</a></li>       
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            }*@
+        </div>
+    </div>
+</div>
+@*底部工具栏*@
+@*<div class="m-toolbar-footer">
+    <div class="left">
+        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-gray" id="aCancel">@HtmlLang.Write(LangKey.Cancel)</a>
+    </div>
+    <div class="center">
+        <div class="m-toolbar-icon" style="width:100px;">
+            @if (HtmlSECMenu.HavePermission(BizObject.PayRun, PermissionItem.View))
+            {
+                <a href="javascript:void(0)" class="m-icon-preview" id="aPreview">&nbsp;</a>
+            }
+        </div>
+    </div>
+    <div class="right">
+    @if (haveApprovePermission && model.MStatus < (int)PASalaryPaymentStatusEnum.WaitingPayment)
+    {
+        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aApprove">@HtmlLang.Write(LangKey.Approve)</a>
+    }
+    </div>
+    <div class="clear"></div>
+</div>*@
+<input id="hidIsCopy" type="hidden" value="@ViewBag.IsCopy" />
+<input id="hidRunId" type="hidden" value="@(model.MID)" />
+<input id="hidSalaryDate" type="hidden" value="@(model.MDate.ToString("yyyy-MM-dd"))" />
+<input id="hidSalaryMonth" type="hidden" value="@(model.MDate.ToString("yyyy-MM"))" />
+<input id="hidStatus" type="hidden" value="@(@ViewBag.Status > 0 ? (@ViewBag.Status).ToString() : model.MStatus.ToString())" />
+<input type="hidden" id="hidChangeAuth" value="@haveChangePermission" />
+@*<input type="hidden" id="hidStatus" value="@ViewBag.Status" />*@
+@HtmlLang.WriteScript(LangModule.PA)
+@HtmlLang.WriteScript(LangModule.IV)
+@HtmlLang.WriteScript(LangModule.BD)
+<script src="@ServerHelper.StaticServer/fw/include/ichartjs/ichart.1.2.min.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.StaticServer/fw/scripts/jquery.megi.print.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.ScriptServer/Scripts/PA/SalaryPayment/PayRunBase.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.ScriptServer/Scripts/IV/IVBase.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.ScriptServer/Scripts/PA/SalaryPayment/SalaryPaymentList.js?@ServerHelper.JSVersion"></script>
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)

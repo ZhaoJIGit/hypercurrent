@@ -1,0 +1,157 @@
+﻿@{
+
+    ViewBag.Title = "BankStatementView";
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    JieNor.Megi.DataModel.IV.IVBankStatementsModel statement = ViewData["statement"] as JieNor.Megi.DataModel.IV.IVBankStatementsModel;
+    List<JieNor.Megi.DataModel.IV.IVBankStatementViewModel> stateViewList = ViewData["statementViews"] as List<JieNor.Megi.DataModel.IV.IVBankStatementViewModel>;
+    var mStatus = new System.Web.Mvc.MvcHtmlString[] { JieNor.Megi.Identity.HtmlHelper.HtmlLang.Write(JieNor.Megi.EntityModel.MultiLanguage.LangModule.Bank, "unreconciled", "Unreconciled"), JieNor.Megi.Identity.HtmlHelper.HtmlLang.Write(JieNor.Megi.EntityModel.MultiLanguage.LangModule.Bank, "reconciled", "Reconciled"), JieNor.Megi.Identity.HtmlHelper.HtmlLang.Write(JieNor.Megi.EntityModel.MultiLanguage.LangModule.Common, "deleted", "Deleted") };
+    var showAcctNo = statement.MBankTypeID != "Cash";
+    //是否有编辑权限
+    bool isCanEditPermission = HtmlSECMenu.HavePermission(BizObject.Bank_Reconciliation, PermissionItem.Change);
+
+    JieNor.Megi.EntityModel.Context.MContext ctx = JieNor.Megi.Common.Context.ContextHelper.MContext;
+
+    bool isSmartVersion = ctx.MOrgVersionID == (int)JieNor.Megi.EntityModel.Enum.OrgVersionEnum.Smart;
+}
+@using JieNor.Megi.Core.MultiLanguage;
+@using JieNor.Megi.Identity.Go.HtmlHelper;
+@using JieNor.Megi.Common.Utility;
+<!--头部-->
+<div class="m-toolbar">
+    <div class="statement-date" style="font-size:24px;margin-top:14px;">
+        @HtmlLang.Write(LangModule.Bank, "Transactions", "Transactions") @HtmlLang.Write(JieNor.Megi.EntityModel.MultiLanguage.LangKey.From) @statement.MStartDate.ToMShortDateString() @HtmlLang.Write(LangKey.To) @statement.MEndDate.ToMShortDateString()
+    </div>
+</div>
+@*主体内容*@
+<div class="m-imain  m-location-restore">
+    <div class="m-imain-content">
+        <div class="statement-table">
+            <table class="m-statement-view">
+                <thead>
+                    <tr>
+                        <td class="checkbox">
+                            <input type="checkbox" title="Select all accounts" onclick="BDBankStatementView.checkAll();" id="CheckAll">
+                        </td>
+                        <td>@HtmlLang.Write(LangModule.Bank, "Date", "Date")</td>
+                        <td>@HtmlLang.Write(LangModule.Bank, "Type", "Type")</td>
+                        <td>@HtmlLang.Write(LangModule.Bank, "PayeeAcctName", "Payee Account Name")</td>
+                        @if (showAcctNo)
+                        {
+                            <td>@HtmlLang.Write(LangModule.Bank, "PayeeAcctNo", "Payee Account No")</td>
+                        }
+                        <td>@HtmlLang.Write(LangKey.Reference)</td>
+                        <td class="textright">@HtmlLang.Write(LangModule.Bank, "Spent", "Spent")</td>
+                        <td class="textright">@HtmlLang.Write(LangModule.Bank, "Received", "Received")</td>
+                        <td class="textright">@HtmlLang.Write(LangModule.Bank, "Balance", "Balance")</td>
+                        @if (!isSmartVersion)
+                        {
+                            <td>@HtmlLang.Write(LangModule.Bank, "Status", "Status")</td>
+                        }
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @*Opening Balance*@
+                    <tr class="tr-Balance">
+                        <td></td>
+                        <td><strong>@{ var statementDate = statement.MStartDate.Year <= 1970 ? "" : statement.MStartDate.ToMShortDateString();@statementDate}</strong></td>
+                        <td colspan="2"><strong>@HtmlLang.Write(LangModule.IV, "OpeningBalance", "Opening Balance")</strong> </td>@if (showAcctNo)
+                        {
+                            <td></td>
+                        }
+                        <td></td>
+                        <td class="td-money"></td>
+                        <td class="td-money"></td>
+                        <td class="td-money" style="font-weight:bold;">@decimal.Parse(statement.MStartBalance).ToOrgDigitalFormat()</td>
+                        @if (!isSmartVersion)
+                        {
+                            <td></td>
+                        }
+
+                    </tr>
+                    @{
+                        foreach (var item in stateViewList)
+                        {
+                            <tr>
+                                <td class="checkbox">
+                                    @if (int.Parse(item.MCheckState) == 1)
+                                    {
+                                        <input id="IsSelected" type="checkbox" value="@item.MEntryID" disabled="disabled">
+                                    }
+                                    else
+                                    {
+                                        <input id="IsSelected" type="checkbox" value="@item.MEntryID">
+                                    }
+                                </td>
+                                <td>@{ var itemDate = item.MDate.Year <= 1970 ? "" : item.MDate.ToMShortDateString();@itemDate}</td>
+                                <td>@item.MTransType</td>
+                                <td>@item.MTransAcctName</td>
+                                @if (showAcctNo)
+                                {
+                                    <td>@item.MTransAcctNo</td>
+                                }
+                                <td>@item.MDesc</td>
+                                <td class="td-money">@{var MSpentAmt = string.IsNullOrEmpty(item.MSpentAmt) ? "" : decimal.Parse(item.MSpentAmt).ToOrgDigitalFormat();@MSpentAmt}</td>
+                                <td class="td-money">@{var MReceivedAmt = string.IsNullOrEmpty(item.MReceivedAmt) ? "" : decimal.Parse(item.MReceivedAmt).ToOrgDigitalFormat();@MReceivedAmt}</td>
+                                <td class="td-money">@{var MBalance = string.IsNullOrEmpty(item.MBalance) ? "" : decimal.Parse(item.MBalance).ToOrgDigitalFormat(); @MBalance}</td>
+                                @if (!isSmartVersion)
+                                {
+                                    <td class="mark" state="@int.Parse(item.MCheckState)">@mStatus[int.Parse(item.MCheckState)]</td>
+                                }
+                                else
+                                {
+                                    <td class="mark" style="display:none;" state="@int.Parse(item.MCheckState)"></td>
+                                }
+                               
+                            </tr>
+                        }
+                    }
+                    @*Closing Balance*@
+                    <tr class="tr-Balance">
+                        <td></td>
+                        <td><strong>@statement.MEndDate.ToShortDateString()</strong></td>
+                        <td colspan="2"><strong>@HtmlLang.Write(LangModule.Bank, "closebalance", "Close Balance")</strong></td>
+                        @if (showAcctNo)
+                        {
+                            <td></td>
+                        }
+                        <td></td>
+                        <td class="textright"></td>
+                        <td class="textright"></td>
+                        <td class="td-money" style="font-weight:bold;">@decimal.Parse(statement.MEndBalance).ToOrgDigitalFormat()</td>
+                        @if (!isSmartVersion)
+                        {
+                            <td></td>
+                        }
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!--底部内容-->
+<div class="m-toolbar-footer">
+    <div class="" style="float:left">
+        @*<a href="#" class="easyui-linkbutton" id="deleteAll">@HtmlLang.Write(LangModule.Bank, "DeleteEntireStatement", "Delete Entire Statement")</a>*@
+        @if (isCanEditPermission)
+        {
+            <a href="#" class="easyui-linkbutton" id="tbRestore">@HtmlLang.Write(LangModule.Bank, "Restore", "Restore")</a>
+            <a href="#" class="easyui-linkbutton" id="tbDelete">@HtmlLang.Write(LangKey.Delete)</a>
+        }
+    </div>
+    @*<div class="" style="float:right">
+            <a href="javascript:void(0);" class="easyui-linkbutton easyui-linkbutton-yellow" id="EditBankStatement">@HtmlLang.Write(LangKey.Edit)</a>
+        </div>*@
+</div>
+
+<input type="hidden" value="@ViewData["MID"]" id="MID" />
+<input type="hidden" value="@ViewData["MBankID"]" id="MBankID" />
+<input type="hidden" value="@Html.Raw(isSmartVersion)" id="hideVersion" />
+@HtmlLang.WriteScript(LangModule.Bank)
+@HtmlLang.WriteScript(LangModule.Common)
+<script src="~/Scripts/BD/BDBank/BDBankStatementView.js?@ServerHelper.JSVersion"></script>
+
+<script type="text/javascript">
+    BDBankStatementView.init('@ViewData["viewId"]');
+</script>
+

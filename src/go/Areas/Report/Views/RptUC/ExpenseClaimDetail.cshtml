@@ -1,0 +1,74 @@
+﻿@{
+    Layout = "~/Areas/Report/Views/Shared/_LayoutReport.cshtml";
+}
+@using JieNor.Megi.Common.Utility
+<div class="m-report-toolbar">
+    <a class="easyui-linkbutton easyui-linkbutton-l" id="aBackToReport"  href="javascript:void(0)">@HtmlLang.Write(LangModule.Report, "BackToExpenseClaim", "Back to Expense Claim Report")</a>
+</div>
+<div class="m-form-vtcl margin m-form-min">
+    <div class="m-form-vtcl-content">
+        <div class="m-form-section section-type">
+
+            <div class="m-form-item">
+                <ul>
+                    <li class="m-bold">@HtmlLang.Write(LangKey.StartDate)</li>
+                    <li>
+                        <input type="text" class="easyui-datebox mg-data" name="StartDate" id="StartDate" />
+                    </li>
+                </ul>
+            </div>
+            <div class="m-form-item">
+                <ul>
+                    <li class="m-bold">@HtmlLang.Write(LangKey.EndDate)</li>
+                    <li>
+                        <input type="text" class="easyui-datebox mg-data" name="EndDate" id="EndDate" />
+                    </li>
+                </ul>
+            </div>
+
+            <div class="m-form-item">
+                <ul>
+                    <li class="m-bold">@HtmlLang.Write(LangModule.Report, "SortBy", "Sort by")</li>
+                    <li>
+                        <select id="sltSortBy" class="easyui-combobox mg-data" name="StatisticsType" style="width:120px; height:22px;">
+                            @*<option value="1">@HtmlLang.Write(LangModule.Report, "SortByDepartment", "Department")</option>*@
+                            <option value="2">@HtmlLang.Write(LangModule.Report, "SortByEmployee", "Employee")</option>
+                            <option value="3">@HtmlLang.Write(LangModule.Report, "SortByExpenseItem", "Expense Item")</option>
+                        </select>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="m-form-item">
+                <ul>
+                    <li class="m-bold">&nbsp;</li>
+                    <li>
+                        <input id="sltSortByOptions" class="easyui-combobox mg-data" name="StatisticsFieldId" style="width:120px; height:22px;" />
+                    </li>
+                </ul>
+            </div>
+
+            @*<div class="m-form-item">
+                <ul>
+                    <li class="m-bold">@HtmlLang.Write(LangModule.Report, "ShowBy", "Show By")</li>
+                    <li>
+                        <select id="sltMonthFamtter" class="easyui-combobox mg-data" name="MonthShowType" style="width:120px; height:22px;">
+                            <option value="1">@HtmlLang.Write(LangModule.Report, "MonthName", "Month Name")</option>
+                            <option value="2">@HtmlLang.Write(LangModule.Report, "MonthNumber", "Month Number")</option>
+                        </select>
+                    </li>
+                </ul>
+            </div>*@
+            <input type="hidden" value="5" name="MPeriodCount" />
+
+
+            <div id="divUpdate" class="m-form-item">
+                <ul>
+                    <li><a href="javascript:void(0)" class="m-btn l-btn" id="aReportUpdate">@HtmlLang.Write(LangModule.Report, "Update", "Update")</a></li>
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
+<script src="@ServerHelper.ScriptServer/Scripts/Report/RptUC/ExpenseClaimDetail.js?@ServerHelper.JSVersion"></script>

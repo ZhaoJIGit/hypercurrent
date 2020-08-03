@@ -1,0 +1,100 @@
+﻿@{
+    Layout = "~/Views/Shared/_DialogLayout.cshtml";
+    List<MessageOrgUserModel> userList = ViewData["UserList"] as List<MessageOrgUserModel>;
+    MessageViewModel msgModel = ViewData["MsgModel"] as MessageViewModel;
+    string type = ViewData["Type"].ToString();
+    MessageUserModel senderInfo=type=="reply"?msgModel.MSenderInfo:msgModel.MReceiverInfo;
+    
+    System.Web.Script.Serialization.JavaScriptSerializer jss = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+@using JieNor.Megi.Common.Utility;
+<div class="space"></div>
+<div id="divMsgBoard" class="mg-msg-board">
+@{
+    if (msgModel != null && msgModel.MGroupMessageList != null && msgModel.MGroupMessageList.Count > 0)
+    {
+        foreach (MessageListModel item in msgModel.MGroupMessageList)
+        {
+            string css = item.MIsSendByMe ? "msg-to" : "msg-from";
+            string userName = item.MSenderInfo.MUserName ;
+            <div class="@css">
+                <div class="msg-title">@item.MTitle<span class="time">@HtmlLang.ToLangDate(@item.MCreateDate)</span><span class="user">@userName</span><div class="clear"></div></div>
+                <div>
+                   @Html.Raw(@item.MContent)
+                </div>
+            </div>
+            <div class="space"></div>
+        }
+    }
+}
+</div>
+
+<div class="mg-msg-form">
+
+    <div class="m-form">
+        <div class="m-form-field">
+            <div class="m-form-setion">收件人</div>
+            <div class="m-form-input">
+                <div class="mg-msg-receiver" id="divReceiverList"></div>
+            </div>
+            <div class="m-form-tip">请在右边选择收件人</div>
+        </div>
+
+
+        <div class="m-form-field">
+            <div class="m-form-setion">标题</div>
+            <div class="m-form-input">
+                <input class="textbox mg-msg-title" data-options="required:true" id="txtTitle" name="MTitle" value="RE:@msgModel.MTitle" />
+            </div>
+        </div>
+
+
+        <div class="m-form-field">
+            <div class="m-form-setion">是否发送邮件</div>
+            <div class="m-form-input">
+                <input type="checkbox" id="txtIsSendEmail" />
+            </div>
+
+        </div>
+        <div class="m-form-field">
+            <div class="m-form-setion">内容</div>
+            <div class="m-form-input">
+                <textarea id="txtContent" class="mg-msg-content"></textarea>
+            </div>
+        </div>
+
+
+        <div class="m-form-action">
+            <a href="javascript:void(0)" class="mg-btn mg-btn-gray mg-btn-close">@HtmlLang.Write(LangKey.Cancel)</a>
+            <a href="javascript:void(0)" class="mg-btn mg-btn-green mg-btn-save" id="aSend">发送</a>
+
+            <br class="clear" />
+        </div>
+    </div>
+</div>
+<div class="mg-msg-contact">
+    <div id="divUserList" class="easyui-accordion" style="width:163px;">
+        @{
+            foreach (MessageOrgUserModel model in userList)
+            {
+                if (model.MUserList != null && model.MUserList.Count > 0)
+                {
+                    <div title="@model.MOrgName" style="overflow:auto;padding:10px;">
+                        <ul>
+                            @foreach (MessageUserModel item in model.MUserList)
+                            {
+                                <li><a href="javascript:void(0)" class="mg-msg-user" data-model="@MText.ToJson(item)">@item.MUserName</a></li>
+                            }
+                        </ul>
+                    </div>
+                }
+            }
+        }
+
+    </div>
+</div>
+@using JieNor.Megi.Common.Utility
+<input type="hidden" value="@msgModel.MID" id="hidMsgID">
+<input type="hidden" value="@MText.ToJson(@senderInfo)" id="hidSenderInfo" />
+
+<script src="@ServerHelper.ScriptServer/my/scripts/Message/MessageCreate.js?@ServerHelper.JSVersion"></script>

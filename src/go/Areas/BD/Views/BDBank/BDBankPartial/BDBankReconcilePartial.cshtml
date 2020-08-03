@@ -1,0 +1,125 @@
+﻿@using JieNor.Megi.Identity.Go.HtmlHelper
+@using JieNor.Megi.Core.Const
+@{
+    var canReconcile = HtmlSECMenu.HavePermission(BizObject.Bank_Reconciliation, PermissionItem.Change);
+}
+@using JieNor.Megi.Common.Utility
+<div class="reconcile-toolbar">
+    @if (HtmlSECMenu.HavePermission(BizObject.Bank_Reconciliation, PermissionItem.Change))
+    {
+    <a class="easyui-linkbutton easyui-linkbutton-yellow" id="btnReconclie">@HtmlLang.Write(LangModule.Bank, "ToReconcile", "勾对")</a>
+    }
+    <a class="easyui-linkbutton" id="btnExpand">@HtmlLang.Write(LangModule.Common, "CollapseDown", "展开")</a>
+    <a class="easyui-linkbutton" id="btnCollspan" style="display:none">@HtmlLang.Write(LangModule.Common, "CollapseUp", "收起")</a>
+    <div class="m-f-right">
+        <input type="checkbox" id="showSysMatch" />
+        <span>@HtmlLang.Write(LangModule.Bank, "OnlyShowSysMatch", "只显示系统建议匹配项")</span>
+        <a class="easyui-linkbutton btnSearchDiv" href="javascript:void(0)">@HtmlLang.Write(LangKey.Search)</a>
+    </div>
+</div>
+<div class="m-adv-search m-adv-search-reconclie">
+    @Html.Partial("BDBankPartial/BDBankSearchPartial")
+</div>
+<div class="reconclie-header">
+    <input type="checkbox" id="chkAll" />
+    <table class="bank-header">
+        <tr>
+            <td style="width:15%"><span class="header-date">@HtmlLang.Write(LangModule.Common, "Date", "日期")</span></td>
+            <td style="width:55%"></td>
+            <td style="width:15%"><span class="header-spent">@HtmlLang.Write(LangModule.Common, "spent", "Spent")</span></td>
+            <td style="width:15%"><span class="header-recevied">@HtmlLang.Write(LangModule.Common, "recevied", "Received")</span></td>
+        </tr>
+    </table>
+    <table class="megi-header">
+        <tr>
+            <td style="width:15%"><div class="header-date">@HtmlLang.Write(LangModule.Common, "Date", "日期")</div></td>
+            <td style="width:55%"></td>
+            <td style="width:15%">@HtmlLang.Write(LangModule.Common, "spent", "Spent")</td>
+            <td style="width:15%">@HtmlLang.Write(LangModule.Common, "recevied", "Received")</td>
+        </tr>
+    </table>
+</div>
+<div class="reconcile-main m-location-restore">
+    <!--对账单功能,这是一个模版-->
+    <div class="reconcile" id="reconcileModel" style="display:none;">
+        <!--整个对账表单-->
+        <div class="record match-record">
+            <input type="checkbox"/>
+            <!--银行记录-->
+            <table class="bank-record">
+                <tr>
+                    <td style="width:20%">
+                        <!--日期-->
+                        <span class="record-table-date"></span><input type="hidden" class="record-entry-id" />
+                    </td>
+                    <td class="record-table-transaction-no hidetext" style="width:50%">
+                        <!--收/付款人 账号-->
+                    </td>
+                    <td style="width:15%">
+                        <!--借-->
+                        <span class="record-table-spent"></span>
+                    </td>
+                    <td style="width:15%">
+                        <!--贷-->
+                        <span class="record-table-received"></span>
+                    </td>
+                </tr>
+            </table>
+            <!--中间的锁链-->
+            <div class="reconcile-match-lock" style="display:none;"></div>
+            <!--美记记录-->
+            <table class="megi-record">
+                <tr>
+                    <td style="width:20%">
+                        <!--日期-->
+                        <span class="record-table-date"></span><input type="hidden" class="record-entry-id" />
+                    </td>
+                    <td class="record-table-transaction-no hidetext" style="width:50%">
+                    </td>
+                    <td style="width:15%">
+                        <!--借-->
+                        <span class="record-table-spent"></span>
+                    </td>
+                    <td style="width:15%">
+                        <!--贷-->
+                        <span class="record-table-received"></span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    @*银行勾对（需要银行勾对编辑权限）*@
+    @if (HtmlSECMenu.HavePermission(BizObject.Bank_Reconciliation, PermissionItem.Change))
+    {
+        <!--悬浮的编辑层-->
+        <div class="reconcile-function-layer" style="display:none">
+            <!--用来控制居中-->
+            <div class="reconcile-function-button">
+                <!--匹配-->
+                <span class="reconcile-match">
+                    <span class="match-text">@HtmlLang.Write(LangModule.Bank, "MatchItem", "匹配项")</span>
+                    <span class="match-count"></span>
+                </span>
+                <!--展开收起按钮-->
+                <span class="reconcile-expand reconcile-ico expand-ico"><span class="ico-span">@HtmlLang.Write(LangModule.Common, "CollapseDown", "展开")</span></span>
+                <!--查找按钮-->
+                <span class="reconcile-search reconcile-ico "><span class="ico-span">@HtmlLang.Write(LangModule.Bank, "Find", "查找")</span></span>
+                <!--应用按钮-->
+                <span class="reconcile-apply reconcile-ico"><span class="ico-span">@HtmlLang.Write(LangModule.Common, "Sure", "确定")</span></span>
+            </div>
+        </div>
+    }
+
+    <div class="bank-reconcile-bottom"></div>
+</div>
+<!--翻页控件-->
+<div class="bank-reconcile-pager">
+
+</div>
+<script src="~/Scripts/BD/BDBank/BDBankReconcile.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript">
+    //手动调用一次，减免引入js带来的执行花销
+    $(document).ready(function () {
+        new BDBankReconcile('@canReconcile').InitAll();
+    });
+</script>

@@ -1,0 +1,77 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+@using JieNor.Megi.Common.Utility;
+<div class="m-form m-imain" style="padding-left:20px;">
+    <div>
+        <ul>
+            <li class="m-bold">@HtmlLang.Write(LangModule.Bank, "TaxRateDisplayName", "Tax Rate Display Name") </li>
+            <li><input class="easyui-validatebox textbox m-lang " name="MName" data-options="required:true,validType:'length[1,50]'" id="txtTaxRateName" /></li>
+            <li class="m-lable-promt">@HtmlLang.Write(LangModule.Bank, "NameAppearLimited", "The name as you would like it to appear in Megi (limited to 50 characters).")</li>
+        </ul>
+    </div>
+    <input id="hideIsSysData" type="hidden" name="MIsSysData" />
+    <div class="m-tax-component">
+        <p class="m-bold">@HtmlLang.Write(LangModule.Bank, "TaxRates", "税率")</p>
+        <ul> </ul>
+        <div class="m-taxrate-total " id="divEffectiveTaxRate" style="display:none;">
+            <span class="m-span-empty">&nbsp;</span>
+            <span class="m-span">@HtmlLang.Write(LangModule.Bank, "EffectiveTaxRate", "Effective tax rate")</span>
+            <span class="m-span-total" id="effectRate" style="padding-left: 20px;">0.00%</span>
+        </div>
+    </div>
+    @if (ViewBag.IsEnableGL == true)
+    {
+        <div class="m-form-field-label" style="  height: 50px;">
+            <div class="m-form-setion">&nbsp;</div>
+            <div class="m-form-sub-title">
+                <span class="mg-width80" style="display:inline-block;width:135px;">@HtmlLang.Write(LangModule.BD, "SaleTax", "Sale Tax")</span>
+                <span class="mg-width150" style="display:inline-block;width:135px;">@HtmlLang.Write(LangModule.BD, "PurchaseTax", "Purchase Tax")</span>
+                <span class="mg-width80" style="display:inline-block;width:135px;">@HtmlLang.Write(LangModule.BD, "PaymentTax", "Payment Tax")</span>
+            </div>
+            <br class="clear" />
+        </div>
+        <div class="m-form-field">
+            <div class="m-form-setion"></div>
+            <div class="m-form-input">
+                <!--采购类对应的科目-->
+                <input class="easyui-combobox mg-data m-account-combobox" data-options="valueField:'MCode',textField:'MFullName',url:'/BD/BDAccount/GetBDAccountListByCode?IsActive=true'" id="cbxIA" style="height:26px;width:133px" name="MInventoryAccountCode" />
+                <!--收入类对应的科目-->
+                <input class="easyui-combobox mg-data m-account-combobox" data-options="valueField:'MCode',textField:'MFullName',url:'/BD/BDAccount/GetBDAccountListByCode?IsActive=true'" id="cbxInA" style="height: 26px; width: 133px" name="MIncomeAccountCode" />
+                <!--成本类对应的科目-->
+                <input class="easyui-combobox mg-data m-account-combobox" data-options="valueField:'MCode',textField:'MFullName',url:'/BD/BDAccount/GetBDAccountListByCode?IsActive=true'" id="cbxCA" style="height: 26px; width: 133px" name="MCostAccountCode" />
+            </div>
+        </div>
+
+    }
+    <div class="space"></div>
+</div>
+@if (HtmlSECMenu.HavePermission(BizObject.Setting, PermissionItem.Change))
+{
+    <div class="m-toolbar-footer">
+
+        <div class="left">
+            <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray">@HtmlLang.Write(LangKey.Cancel)</a>
+        </div>
+        <div class="right">
+            <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aOK">@HtmlLang.Write(LangKey.Save)</a>
+        </div>
+
+    </div>
+}
+<input type="hidden" value="@ViewBag.RateCode" id="hidRateCode" />
+<input type="hidden" value="@ViewBag.IsSetup" id="hidIsSetup" />
+<input type="hidden" value="@ServerHelper.Domain" id="hidDomain" />
+<input type="hidden" id="hideIsEnableGL" value="@ViewBag.IsEnableGL" />
+@if (HtmlSECMenu.HavePermission(BizObject.Setting, PermissionItem.Change))
+{
+    <input type="hidden" id="hidChangeAuth" value="1" />
+}
+else
+{
+    <input type="hidden" id="hidChangeAuth" value="0" />
+}
+@HtmlLang.WriteScript(LangModule.BD)
+@HtmlLang.WriteScript(LangModule.Bank)
+
+<script src="@ServerHelper.ScriptServer/scripts/BD/TaxRate/TaxRateEdit.js?@ServerHelper.JSVersion"></script>

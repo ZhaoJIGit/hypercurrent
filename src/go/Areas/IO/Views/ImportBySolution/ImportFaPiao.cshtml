@@ -1,0 +1,60 @@
+﻿@using JieNor.Megi.Core.Context
+@using JieNor.Megi.DataModel.IV
+@using JieNor.Megi.Common.Utility
+@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+
+<div class="m-imain">
+    <div class="m-imain-content" style="text-align: center;">
+        <div id="divImport" class="import-banktransaction" style="padding-top: 30px;">
+            <div class="title">@HtmlLang.Write(LangModule.FP, "UploadFaPiao", "上传您的发票")</div>
+            <div class="field-section">
+                <div style="float: left; line-height: 32px; width: 160px;">@HtmlLang.Write(LangModule.Bank, "SelectImportSolution", "Select import solution")</div>
+                <div style="float: left;">
+                    <select id="selSolution" class="mg-data m-form-item-select easyui-combobox" style="width: 200px; height: 32px;"></select>
+                </div>
+                <div id="divTmplName" style="float: left; padding-left: 10px;">
+                    <input type="text" id="MName" name="MName" hint="@HtmlLang.Write(LangModule.Common, "TemplateName", "Template Name")" class="easyui-validatebox textbox" data-options="required:true" size="36" maxlength="100" style="height:28px; width:240px;" />
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="second-title-txt">@HtmlLang.Write(LangModule.Bank, "UploadFiletype", "你的上传文件必须是以下格式")</div>
+            <ul style="padding-left: 16px;">
+                <li style="">xls</li>
+                <li style="">xlsx</li>
+                <li style="">csv</li>
+            </ul>
+            <div class="file-selected">
+                @using (Ajax.BeginForm("Upload", "ImportBySolution", new AjaxOptions { HttpMethod = "POST" }, new { ID = "fileSelectForm", enctype = "multipart/form-data" }))
+                {
+                    <label class="upload-image">&nbsp;</label>
+                    <input type="file" id="fileInput" name="fileInput" class="import-file-input" />
+                    <a href="javascript:void(0)" class="upload-label non-alert">@HtmlLang.Write(LangModule.Common, "UploadLabel", "Browse...")</a>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="m-toolbar-footer">
+    <div class="left">
+        <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray">@HtmlLang.Write(LangKey.Cancel)</a>
+    </div>
+    <div class="right">
+        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aImport">@HtmlLang.Write(LangModule.Bank, "ImportButtonName", "Import")</a>
+    </div>
+</div>
+<input type="hidden" id="hidMessage" value="@Request.Params["message"]" />
+<input type="hidden" id="inOrOutType" value="@ViewBag.InOrOuttype" />
+<input type="hidden" id="fpType" value="@ViewBag.FpType" />
+@HtmlLang.WriteScript(LangModule.Common)
+@HtmlLang.WriteScript(LangModule.Docs)
+@HtmlLang.WriteScript(LangModule.Bank)
+@HtmlLang.WriteScript(LangModule.FP)
+
+<script type="text/javascript" src="@ServerHelper.StaticServer/FW/scripts/jquery.form.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/BD/Docs/FileBase.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/BD/Import/ImportBase.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/IO/ImportBySolution/ImportFaPiao.js?@ServerHelper.JSVersion"></script>
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)

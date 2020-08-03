@@ -1,0 +1,80 @@
+﻿.fcv-hide,.fcf-hide{display:none;}
+.fc-main-tabs .title {margin-top: 10px !important;font-size: 14px !important;}
+.fcv-operate-right{float:right;}
+.fcv-operate-left{float:left;}
+.fcv-keyword-input,.fcv-cashcodingkeyword-input,.fcf-keyword-input{width:110px;height:16px;line-height: 20px;}
+.fcv-code-input,.fcv-cashcodingcode-input,.fcf-code-input{width:110px;height:16px;line-height: 20px;}
+.fcv-clear-button,.fcv-cashcodingclear-button,.fcf-clear-button{margin-left: 5px;margin-top: 5px;cursor: pointer;text-decoration:underline;}
+.fcv-search-button,.fcv-cashcodingsearch-button.fcf-search-button{margin-left: 5px;float:none !important;}
+.fcv-operate-top,.fcf-operate-top{height:30px;}
+.fcv-voucher-list,.fcv-cashcoding-list,.fcf-fapiao-list{padding-top: 10px;border-bottom: 1px solid #ccc;}
+.fcv-check-input,.fcf-check-input{padding-left:10px;float:left;}
+.fcv-check-div,.fcf-check-div{float:left;padding:5px 10px;  }
+.fcv-check-text,.fcf-check-text{font-weight: bold;font-size: 14px;}
+.fcv-voucher-table,.fcv-cashcoding-table,.fcf-fapiao-table{width:100%;border-collapse:collapse;table-layout: fixed;}
+.fcv-entry-select,.fcv-entry-cachcodingselect,.fcf-entry-select{width:30px;padding-left:10px !important;}
+.fcv-voucher-table td,.fcv-cashcoding-table td,.fcf-fapiao-table td {border:1px solid #ccc;    line-height: 30px;    padding: 0 5px;    word-break: keep-all;white-space: nowrap;overflow: hidden; text-overflow: ellipsis;}
+.fcv-voucher-table-header th,.fcv-cashcoding-table-header th,.fcf-fapiao-table-header th{font-weight:normal;color:#FFF;padding:6px 0px 6px 0px;  font-size: 14px;text-align:center;border:1px solid #ccc;background-color: #67ade9;}
+.fcv-voucher-header td,.fcv-cashcoding-header td,.fcf-fapiao-header td{font-weight:bold;}
+.fcv-voucher-total td,.fcv-cashcoding-total td,.fcf-fapiao-total td{font-weight:bold;}
+.fcv-voucher-operation,.fcv-cashcoding-operation,.fcf-fapiao-operation{margin-top: 5px;text-align: center;}
+.fcv-voucher-operation a,.fcv-cashcoding-operation a,.fcf-fapiao-operation a{display:inline-block;cursor:pointer;}
+.fcv-expand-button{float:left;    margin-top: 6px;}
+.fcv-entry-currency{text-align:right;}
+.fcv-voucher-number-title,.fcv-voucher-status-title,.fcv-cashcoding-number-title,.fcv-cashcoding-status-title,.fcf-fapiao-number-title,.fcf-fapiao-status-title{  margin-left: 50px;}
+.fcv-bleft,.fcf-bleft{border-left:1px solid #e9e9e9;padding-left:10px;}
+.fcv-bright,.fcf-bright{border-right:1px solid #e9e9e9;padding-left:10px;}
+.fcv-btop,.fcf-btop{border-top:1px solid #e9e9e9;padding-left:10px;}
+.fcv-bbottom,.fcf-bbottom{border-bottom:1px solid #e9e9e9;padding-left:10px;}
+.fcv-voucher-select,.fcv-cashcoding-select,.fcf-fapiao-select{width:20px;}
+.fcv-voucher-col-div,.fcv-cashcoding-col-div,.fcf-fapiao-col-div{border: 1px solid #e9e9e9;border-radius: 3px 3px 0 0;height: 35px;line-height: 35px;padding-left: 10px;border-bottom: 0px;background-color: #f2f7fd;}
+.fcv-voucher-total-div,.fcv-cashcoding-total-div,.fcv-fapiao-total-div{border: 1px solid #e9e9e9;padding: 5px 5px 5px 5px;}
+.fcv-settlement-button,.fcv-approve-button,.fcv-export-button,.fcf-export-button  {margin-right:5px;}
+.fcv-norecord-row,.fcf-norecord-row{height: 40px;}
+.fcv-function-layer{text-align: center;background-color: #61abe5;color: #FFF;filter: alpha(opacity=70);opacity: .7;position: absolute;z-index: 9999;border-radius: 0 0 0px 0px;}
+.fcv-function-button{margin: 0 auto;}
+.fcv-function-ico{width: 62px;height: 62px;display: inline-block;line-height: 150px;color: #FFF;font-weight: bold;font-size: 12px;}
+.fcv-function-ico:hover{background-color: #2981C6;border-radius: 31px;font-size: 12px;cursor:pointer;color:#2981C6;}
+.fcv-function-approve{background: url(images/vl-approve.png) no-repeat;}
+.fcv-function-unapprove{background: url(images/vl-unapprove.png) no-repeat;}
+.fcv-function-edit{background: url(images/gl-edit.png) no-repeat;}
+.fcv-function-view{background: url(images/vl-view.png) no-repeat;}
+.fcv-function-delete{background: url(images/vl-delete.png) no-repeat;}
+.fcv-function-new{background: url(images/vl-new.png) no-repeat;}
+.fcv-function-print {background: url(images/vl-print.png) no-repeat;}
+.fcv-voucher-entry:hover{background-color: rgb(103, 173, 233);cursor:pointer;color:#fff;}
+.fcv-no-hover:hover{background-color: #FFF !important;}
+.fcv-no-hover{background-color: #FFF !important;}
+
+.fcv-function-button{background-color: #61abe5;opacity: 1;}
+.fcv-function-layer{text-align: center;background-color: #fff;color: #FFF;filter: alpha(opacity=70);opacity: .7;position: absolute;z-index: 99999; border-radius: 0;width:100%;}
+.fcv-function-layer .fcv-function-ico{ width: 44px;height: 42px;display: inline-block;color: #FFF;font-weight: bold;line-height: 103px;font-size: 12px;margin-top: 1px;}
+.fcv-function-layer .fcv-function-delete{background: url(images/vl-delete.png) no-repeat 0 0px; background-size: 100% 100%;}
+.fcv-function-layer .fcv-function-edit{background: url(images/vl-edit.png) no-repeat  0 0px; background-size:100% 100%;}
+.fcv-function-layer .fcv-function-print{background: url(images/vl-print.png) no-repeat 0 0px;background-size: 100% 100%;}
+.fcv-function-ico:hover{background:none;background-color: #2981C6;border-radius: 22px;font-size: 12px;cursor:pointer;color:#fff;height: 42px;}
+.fcv-clear-button{text-decoration:underline;cursor:pointer;}
+.fcv-function-span{float:left;color: #fff;width: 44px;height: 42px;line-height: 43px;opacity: 0;}
+.fcv-function-span:hover{opacity: 1;}
+
+
+.fcv-function-div{height: 24px;position: absolute;left:50%;}
+.fcv-button-ico{height: 24px;width: 24px;display: block;background-position: center center;float: left;background-repeat: no-repeat;}
+.fcv-print-button{background-image: url(images/print.png);}
+.fcv-export-button{background-image: url(images/export.png);margin-left:15px;}
+.fcv-import-button{background-image: url(images/import.png);margin-left:15px;}
+.fcv-print-button:hover{background-image: url(images/print-hover.png);}
+.fcv-export-button:hover{background-image: url(images/export-hover.png);margin-left:15px;}
+.fcv-import-button:hover{background-image: url(images/import-hover.png);margin-left:15px;}
+.fcv-print-button:active{background-image: url(images/print-active.png);}
+.fcv-export-button:active{background-image: url(images/export-active.png);margin-left:15px;}
+.fcv-import-button:active{background-image: url(images/import-active.png);margin-left:15px;}
+
+.fcv-entry-div{overflow-x:hidden;overflow-y:auto;}
+.fcv-entry-debit,.fcv-entry-credit,fcv-entry-total-amount{padding-right: 10px;font-weight: bold;}
+.fc-main-tabs .title{margin-top: 10px !important;font-size:14px !important;}
+.fc-main-tabs .tab-home{margin: 0 auto !important;}
+.fc-partial{margin-top:10px;}
+
+.fcv-voucher-description-title,.fcv-cashcoding-description-title{margin-left:50px;}
+

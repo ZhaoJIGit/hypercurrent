@@ -1,0 +1,72 @@
+﻿@{
+    Layout = "~/Views/Shared/_DialogLayout.cshtml";
+    List<MessageOrgUserModel> userList = ViewData["UserList"] as List<MessageOrgUserModel>;
+    System.Web.Script.Serialization.JavaScriptSerializer jss = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+
+<div class="mg-msg-form">
+
+    <div class="m-form">
+        <div class="m-form-field">
+            <div class="m-form-setion">收件人</div>
+            <div class="m-form-input">
+                <div class="mg-msg-receiver" id="divReceiverList"></div>
+            </div>
+            <div class="m-form-tip">请在右边选择收件人</div>
+        </div>
+
+
+        <div class="m-form-field">
+            <div class="m-form-setion">标题</div>
+            <div class="m-form-input">
+                <input class="textbox mg-msg-title" data-options="required:true" id="txtTitle" name="MTitle" value="@ViewData["MsgTitle"]" />
+            </div>
+        </div>
+
+
+        <div class="m-form-field">
+            <div class="m-form-setion">是否发送邮件</div>
+            <div class="m-form-input">
+                <input type="checkbox" id="txtIsSendEmail" />
+            </div>
+
+        </div>
+        <div class="m-form-field">
+            <div class="m-form-setion">内容</div>
+            <div class="m-form-input">
+                <textarea id="txtContent" class="mg-msg-content"></textarea>
+            </div>
+        </div>
+
+
+        <div class="m-form-action">
+            <a href="javascript:void(0)" class="mg-btn mg-btn-gray mg-btn-close">@HtmlLang.Write(LangKey.Cancel)</a>
+            <a href="javascript:void(0)" class="mg-btn mg-btn-green mg-btn-save" id="aSend">发送</a>
+
+            <br class="clear" />
+        </div>
+    </div>
+</div>
+@using JieNor.Megi.Common.Utility
+<div class="mg-msg-contact">
+    <div id="divUserList" class="easyui-accordion" style="width:165px;">
+        @{
+            foreach (MessageOrgUserModel model in userList)
+            {
+                if (model.MUserList != null && model.MUserList.Count > 0)
+                {
+                    <div title="@model.MOrgName" style="overflow:auto;padding:10px;">
+                        <ul>
+                            @foreach (MessageUserModel item in model.MUserList)
+                            {
+                                <li><a href="javascript:void(0)" class="mg-msg-user" data-model="@MText.ToJson(item)" >@item.MUserName</a></li>
+                            }
+                        </ul>
+                    </div>
+                }
+            }
+        }
+
+    </div>
+</div>
+<script src="@ServerHelper.ScriptServer/my/scripts/Message/MessageCreate.js?@ServerHelper.JSVersion"></script>

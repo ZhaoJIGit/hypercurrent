@@ -1,0 +1,44 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+
+    var glBegin = JieNor.Megi.Common.Context.ContextHelper.MContext.MRegProgress == (int)JieNor.Megi.DataModel.BAS.BASOrgScheduleTypeEnum.GLSuccess ? "1" : "0";
+}
+@using JieNor.Megi.Common.Utility;
+<div class="m-imain">
+    <div class="m-imain-content">
+        <div class="m-form-field">
+            <div class="m-form-setion">@HtmlLang.Write(LangModule.Acct, "ExchangeRate", "Exchange Rate")</div>
+            <div class="m-form-input">
+                <label id="lblUnCurrencyName" style="display: inline-block; width: 60px">1 @ViewBag.EditCurrency = </label>
+                <input type="text" id="tbxUnCurrency" class="easyui-numberbox mg-data m-form-key" name="" data-options="required: true,precision:6,minPrecision:2,max:999999999999" style="width:123px; height:26px;" />
+                <label>@ViewBag.Currency</label>
+            </div>
+
+            <div class="m-form-input" style="padding-top:5px">
+                <label style="display: inline-block; width: 60px; ">1 @ViewBag.Currency = </label>
+                <input type="text" id="tbxTargetCurrency" class="easyui-numberbox mg-data m-form-key" name="" data-options="required: true,precision:6,minPrecision:2,max:999999999999" style="width:123px; height:26px;" />
+                <label id="lblTargetCurrencyName">@ViewBag.EditCurrency</label>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+<!--本位币-->
+<input type="hidden" id="hidCurrency" value="@ViewBag.Currency" />
+<input type="hidden" id="hidEditCurrency" value="@ViewBag.EditCurrency" />
+<input type="hidden" id="hidGLBegin" value="@glBegin" />
+<input type="hidden" id="hidMExchangeRate" value="@ViewBag.MExchangeRate" />
+<div class="m-toolbar-footer">
+    <div class="left">
+        <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray" id="aCancel">@HtmlLang.Write(LangKey.Cancel)</a>
+    </div>
+    <div class="right">
+        <a href="javascript:void(0);" class="easyui-linkbutton easyui-linkbutton-yellow" id="aSave">@HtmlLang.Write(LangKey.Save)</a>
+    </div>
+    <br class="clear" />
+</div>
+@HtmlLang.WriteScript(LangModule.Acct)
+@HtmlLang.WriteScript(LangModule.BD)
+<script src="@ServerHelper.ScriptServer/scripts/BD/Currency/ExchangeRateEdit.js?@ServerHelper.JSVersion"></script>
+

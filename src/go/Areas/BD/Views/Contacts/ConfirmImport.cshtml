@@ -1,0 +1,43 @@
+﻿@using System.Web.Script.Serialization
+@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Import Contacts";
+}
+<div class="m-imain mg-setup">
+    <div class="m-imain-content">
+        <div id="divMessage"></div>
+        <div class="m-confirm-import-notify">
+            <em class="m-confirm-import-icon">
+                &nbsp;
+            </em>
+            <div class="m-confirm-import-msg">
+                @Html.Raw(string.Format(HtmlLang.Write(LangModule.Contact, "confirmImportNotify", "<p>The imported file <strong>{0}</strong> contained {1} contact. From this file  the following contact will be imported into Megi:</p><ul><li><strong>{1}</strong> total contact will be imported</li></ul>").ToString(), ViewBag.ImportingFileName, ViewBag.ImportingCount))
+            </div>
+            <p>
+                @Html.Raw(HtmlLang.Write(LangModule.Contact, "", "If you're happy to continue with the import please click the \"Complete Import\" button below, otherwise click \"Go Back\" button to import a different file."))
+            </p>
+        </div>
+        <div class="m-confirm-import-form">
+            <fieldset>
+                <p>
+                    @Html.Raw(HtmlLang.Write(LangModule.Contact, "confirmImportState", "If you're happy to continue with the import please click the \"Complete Import\" button below. Please note <em>this action CANNOT be undone</em>"))
+                </p>
+            </fieldset>
+        </div>
+    </div>
+</div>
+<div class="m-toolbar-footer">
+    @if (HtmlSECMenu.HavePermission(BizObject.Contact, PermissionItem.Change))
+    {
+    <div class="left">
+        <a id="aGoBack" href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-gray">@HtmlLang.Write(LangModule.Common, "GoBack", "< Go Back")</a>
+    </div>
+    <div class="right">
+        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aCompleteImport">@HtmlLang.Write(LangModule.Common, "CompleteImport", "Complete Import")</a>
+    </div>
+    }
+</div>
+<input id="hidImportingFileName" type="hidden" value="@ViewBag.ImportingFileName" />
+<input id="hidImportingCount" type="hidden" value="@ViewBag.ImportingCount" />
+<script src="@ServerHelper.GoServer/scripts/BD/Import/ImportBase.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.GoServer/scripts/BD/Contacts/ConfirmImport.js?@ServerHelper.JSVersion"></script>

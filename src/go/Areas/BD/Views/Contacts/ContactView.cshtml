@@ -1,0 +1,449 @@
+﻿@{
+                Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+                ViewBag.Title = "ContactView";
+                JieNor.Megi.Core.DataModel.ChartPie2DModel saleData = ViewData["saleData"] as JieNor.Megi.Core.DataModel.ChartPie2DModel;
+                JieNor.Megi.Core.DataModel.ChartPie2DModel purData = ViewData["purData"] as JieNor.Megi.Core.DataModel.ChartPie2DModel;
+                IVContactInvoiceSummaryModel summary = ViewBag.InvoiceSummary as IVContactInvoiceSummaryModel;
+                bool hasViewSaleAuth = HtmlSECMenu.HavePermission(BizObject.Invoice_Sales, PermissionItem.View);
+                bool hasViewPurchaseAuth = HtmlSECMenu.HavePermission(BizObject.Invoice_Purchases, PermissionItem.View);
+                bool hasChangeSaleAuth = HtmlSECMenu.HavePermission(BizObject.Invoice_Sales, PermissionItem.Change);
+                bool hasChangePurchaseAuth = HtmlSECMenu.HavePermission(BizObject.Invoice_Purchases, PermissionItem.Change);
+                bool hasChangeContactAuth = HtmlSECMenu.HavePermission(BizObject.Contact, PermissionItem.Change);
+                bool isCustomer = Convert.ToBoolean(ViewData["IsCustomer"]);
+                bool isSupplier = Convert.ToBoolean(ViewData["IsSupplier"]);
+                bool isOther = Convert.ToBoolean(ViewData["MIsOther"]);
+                bool isDisable = Convert.ToBoolean(ViewData["IsDisable"]);
+            }
+            @using JieNor.Megi.Common.Utility;
+<style type="text/css">
+    .mg-contactView-baseinfo {
+        float: left;
+        width: 100%;
+    }
+
+        .mg-contactView-baseinfo .record {
+            /*border: 1px solid #1c708f;*/
+            color: #fff;
+        }
+
+            .mg-contactView-baseinfo .record em.toggle-arrow {
+        display: none;
+    }
+
+        .mg-contactView-baseinfo .hide em.toggle-arrow {
+        display: block;
+    }
+
+        .mg-contactView-baseinfo .record span {
+        font: bold 16px Helvetica,Arial,sans-serif;
+        letter-spacing: 0;
+        margin-right: 5px;
+        color: #2670AD;
+        }
+
+        .mg-contactView-baseinfo .view {
+            background-color: #fff;
+            border-bottom-width: 0;
+            border-color: #ccc;
+            color: #333;
+            font: 12px Helvetica,Arial,sans-serif;
+            padding: 10px;
+            float: left;
+            width: 90%;
+            line-height: 26px;
+        }
+
+            .mg-contactView-baseinfo .view a {
+        cursor: pointer;
+        display: block;
+                float: right;
+        font-weight: normal;
+    }
+
+        .mg-contactView-baseinfo .hide {
+            background-color: #f2f2f2;
+            cursor: pointer;
+        }
+
+        .mg-contactView-baseinfo div#finances.hide {
+            border-bottom-width: 1px;
+            border-top-width: 0;
+        }
+
+        .mg-contactView-baseinfo .hide span {
+        color: #048fc2;
+        }
+
+        .mg-contactView-baseinfo .hide a {
+        display: none;
+    }
+
+        .mg-contactView-baseinfo .form {
+            /*border: 1px solid #c1c1c1;*/
+            clear: both;
+            padding: 10px;
+            background-color: #fff;
+            background-image: none;
+            float: left;
+        }
+
+        .mg-contactView-baseinfo .contView {
+            border-top-width: 0;
+            padding-top: 0;
+        }
+
+        .mg-contactView-baseinfo .contHide {
+            display: none;
+        }
+
+    .contact-info .form .field {
+        margin: 0;
+        padding: 8px 0;
+        float: left;
+        width: 49%;
+        min-width: 160px;
+    }
+
+    .financial-info .form .field {
+        margin: 0;
+        padding: 8px 0;
+        float: left;
+        width: 33%;
+        min-width: 160px;
+    }
+
+    .form .field .category {
+        color: #226EA8;
+        font-size: 16px;
+    }
+
+    .form .field .title {
+        font-weight: bold;
+    }
+
+    .form .field.first {
+        border-top: 0 none;
+        padding: 0 0 16px;
+    }
+
+    .form .field label {
+        display: block;
+        padding: 2px 5px 0 0;
+        color: #666;
+        margin-top: 1px;
+        padding-top: 0;
+        text-align: left;
+        float: left;
+        /*width: 130px;*/
+    }
+
+    .form .field span {
+        font: 14px Helvetica,Arial,sans-serif;
+        float: left;
+        line-height: 25px;
+    }
+
+    .mg-contactView-invinfo {
+        padding-bottom: 16px;
+    }
+
+        .mg-contactView-invinfo .summary {
+            margin-bottom: 20px;
+            margin-right: 10px;
+            width: 240px;
+            float: left;
+        }
+
+            .mg-contactView-invinfo .summary div {
+        width: 103px;
+    }
+
+                .mg-contactView-invinfo .summary div label {
+                    display: block;
+                }
+
+                .mg-contactView-invinfo .summary div span, .mg-contactView-invinfo .summary div a {
+                    clear: both;
+                    display: block;
+                    font: bold 14px Helvetica,Arial,sans-serif;
+                }
+
+            .mg-contactView-invinfo .summary h3 {
+        color: #444;
+                font: bold 14px Helvetica,Arial,sans-serif;
+        margin: 0 0 19px;
+        white-space: nowrap;
+        width: 220px;
+        line-height: 25px;
+    }
+
+            .mg-contactView-invinfo .summary .outstanding-overdue {
+                width: 218px;
+            }
+
+                .mg-contactView-invinfo .summary .outstanding-overdue .out {
+                    width: 103px;
+                    color: #939799;
+                }
+
+    .red {
+        color: #c00 !important;
+    }
+
+    .no-margin-right {
+        margin-right: 0 !important;
+    }
+
+    .mg-contactView-invinfo .flash {
+        width: 540px;
+        float: left;
+    }
+
+    .contact-info {
+        float: left;
+        width: 40%;
+    }
+
+    .financial-info {
+        float: left;
+        width: 60%;
+    }
+</style>
+
+@using JieNor.Megi.Tools
+@using JieNor.Megi.Common.Context
+@using JieNor.Megi.EntityModel.Enum
+@{
+        var ctx = ContextHelper.MContext;
+        //是否是总账版
+        bool isSmartVersion = ctx.MOrgVersionID == OrgVersionEnum.Smart;
+    }
+
+@if (hasChangeContactAuth && (hasChangeSaleAuth || hasChangePurchaseAuth) && !isSmartVersion)
+{
+    <div class="m-toolbar">
+
+ @if ((hasChangeSaleAuth && isCustomer) || (hasChangePurchaseAuth && isSupplier))
+   {
+    var Url = "";
+    var UrlRed = "";
+    var LangValue = "";
+    //isSupplier 供应商
+    if (isSupplier && !isCustomer)
+    {
+        Url = "/IV/Bill/BillEdit";
+        UrlRed = "/IV/Bill/CreditNoteEdit";
+    }
+    else if (isCustomer)
+    {
+        Url = "/IV/Invoice/InvoiceEdit";
+        UrlRed = "/IV/Invoice/CreditNoteEdit";
+    }
+
+        <a href="javascript:void(0)" id="aNew" class="easyui-splitbutton easyui-linkbutton-yellow" onclick="$.mTab.addOrUpdate('@if (isSupplier && !isCustomer)
+             {@HtmlLang.Write(LangModule.Contact, "NewBill","New Bill")}else{@HtmlLang.Write(LangModule.Contact, "NewSalesInvoice", "New Sales Invoice")}', '@Url/?contactId=@ViewData["viewID"]' );"
+           data-options="menu:'#divNewInvoiceBill'">@HtmlLang.Write(LangModule.Contact, "NewSomething", "New...")</a>
+            <div id="divNewInvoiceBill" style="width:180px;">
+                @if ((hasChangeSaleAuth && isCustomer && !isDisable))
+                {
+                    <div><a href="javascript:void(0)" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Contact, "NewSalesInvoice", "New Sales Invoice")', '/IV/Invoice/InvoiceEdit/?contactId=@ViewData["viewID"]');" id="aNewSalesInvoice">@HtmlLang.Write(LangModule.Contact, "NewSalesInvoice", "New Sales Invoice")</a></div>
+                    <div><a href="javascript:void(0)" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Contact, "NewSalesCreditNote", "New Sales Credit Note")', '/IV/Invoice/CreditNoteEdit/?contactId=@ViewData["viewID"]');" id="aNewSalesCreditNote">@HtmlLang.Write(LangModule.Contact, "NewSalesCreditNote", "New Sales Credit Note")</a></div>
+                }
+                @if ((hasChangePurchaseAuth && isSupplier && !isDisable))
+                {
+                    <div><a href="javascript:void(0)" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Contact, "NewBill","New Bill")', '/IV/Bill/BillEdit/?contactId=@ViewData["viewID"]');" id="aNewBil">@HtmlLang.Write(LangModule.Contact, "NewBill", "New Bill")</a></div>
+                    <div><a href="javascript:void(0)" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Contact, "NewBillCreditNote", "New Bill Credit Note")', '/IV/Invoice/CreditNoteEdit/?contactId=@ViewData["viewID"]');" id="aNewBillCreditNote">@HtmlLang.Write(LangModule.Contact, "NewBillCreditNote", "New Bill Credit Note")</a></div>
+                }
+            </div>
+        }
+        @if (hasChangeSaleAuth && isCustomer && !isDisable)
+    {
+            <a href="javascript:void(0)" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Contact, "SendStatements", "Send Statements")', '/IV/Invoice/Statements')" id="aSendStatements" class="easyui-linkbutton">@HtmlLang.Write(LangKey.SendStatements)</a>
+        }
+    </div>
+}
+<div class="m-imain">
+    <div class="m-imain-content">
+        <div class="m-contact-view-name" style="font-size: 26px;font-weight:bold; color: #2F6C9B;padding-bottom:13px;">
+            @ViewData["viewName"]
+        </div>
+        <div class="m-extend-tabs">
+            <div class="contac-view-tab-links">
+                <ul class="tab-links">
+                    <li id="liContactInfo" class="current">
+                        <div class="statistics">@HtmlLang.Write(LangModule.Contact, "Info", "Info")</div>
+                        <div class="title">
+                            <div class="tab-contact-view-home">&nbsp;</div>
+                        </div>
+                    </li>
+                    @*isCustomer  false顾客
+                        isSupplier  false供应商*@
+
+                    @if (hasViewSaleAuth && isCustomer)
+                    {
+                        <li id="liSale">
+                            <div class="statistics">@HtmlLang.Write(LangModule.Contact, "SalesInvoices", "Sales Invoices")</div>
+                            <div class="title">@summary.SaleAmount.ToMoneyFormat()</div>
+                        </li>
+                    }
+                    @if (hasViewPurchaseAuth && isSupplier)
+                    {
+                        <li id="liPurchase">
+                            <div class="statistics">@HtmlLang.Write(LangModule.Contact, "Bills", "Bills")</div>
+                            <div class="title">@summary.BillAmount.ToMoneyFormat()</div>
+                        </li>
+                    }
+                    <li id="liHistory">
+                        <div class="statistics">@HtmlLang.Write(LangModule.Contact, "HistoryNotes", "History & Notes")</div>
+                        <div class="title">0 @HtmlLang.Write(LangModule.Common, "items", "items")</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div id="divContact">
+            <div class="mg-contactView-baseinfo">
+                <div class="contact-info">
+                    <div id="person" class="record view">
+                        <em class="icons toggle-arrow"></em>
+                        <span>@HtmlLang.Write(LangModule.Contact, "ContactInformation", "Contact Information")@*@ViewData["viewName"]*@</span>
+                        @if (HtmlSECMenu.HavePermission(BizObject.Contact, PermissionItem.Change)&&!isDisable)
+                        {
+                            <a class="icons edit-arrow" id="aEdit1" href="javascript:void(0);" onclick="ContactView.editContactInfo('@ViewData["viewID"]', 0)">
+                                <strong>@HtmlLang.Write(LangKey.Edit) </strong>
+                            </a>
+                        }
+                    </div>
+                    <div id="person-cont" class="form contView">
+                        @HtmlBDContact.ContactViewHtml(Convert.ToString(@ViewData["viewID"]))
+                    </div>
+                </div>
+                <div class="financial-info">
+                    <div id="finances" class="record view">
+                        <em class="icons toggle-arrow"></em>
+                        <span>@HtmlLang.Write(LangModule.Contact, "FinancialDetails", "Financial Details")</span>
+                        @if (HtmlSECMenu.HavePermission(BizObject.Contact, PermissionItem.Change) && !isDisable)
+                        {
+                            <a class="icons edit-arrow" id="aEdit2" href="javascript:" onclick="ContactView.editContactInfo('@ViewData["viewID"]', 1)">
+                                <strong>@HtmlLang.Write(LangKey.Edit) </strong>
+                            </a>
+                        }
+                    </div>
+                    <div id="finances-cont" class="form contView">
+                        @HtmlBDContact.ContactViewHtml(Convert.ToString(@ViewData["viewID"]), false)
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+
+        <div id="divInvoice">
+            @{
+                string outstanding_sale = saleData == null ? "0.00" : @saleData.value.ToString("0.00");
+                string overdue_sale = saleData == null ? "0.00" : @saleData.MOverDue.ToString("0.00");
+                string outstanding_pur = purData == null ? "0.00" : @purData.value.ToString("0.00");
+                string overdue_pur = purData == null ? "0.00" : @purData.MOverDue.ToString("0.00");
+            }
+            <div class="mg-contactView-invinfo">
+                <div class="flash">
+                    <h3>@HtmlLang.Write(LangModule.Contact, "ActivityOverMonths", "Activity over the past 12 months") </h3>
+                    <div id="divOverPastChart">
+
+                    </div>
+                </div>
+                <div id="divSales" class="summary">
+                    <h3>@HtmlLang.Write(LangModule.Contact, "SalesInvoices", "Sales Invoices")</h3>
+                    <div class="outstanding-overdue">
+                        <div>
+                            @if (HtmlSECMenu.HavePermission(BizObject.Sale_Reports, PermissionItem.View))
+                            {
+                                <a href="javascript:void(0)" onclick="ContactView.getSaleReportUrl('@ViewData["viewName"]', '@HtmlLang.Write(LangModule.Report, "agedreceivables", "Aged Receivables")', '@Convert.ToInt32(BizReportType.Invoices)', '@Convert.ToInt32(BizReportType.AgedReceivables)');">@outstanding_sale</a>
+                            }
+                            else
+                            {
+                                <a href="javascript:void(0)" onclick="return false">@outstanding_sale</a>
+                            }
+                            <div class="out">
+                                @HtmlLang.Write(LangModule.Contact, "Outstanding", "Outstanding")
+                            </div>
+                        </div>
+                        <div style="padding-top:10px;">
+                            <span style="color: #EC7659;font-weight:bold;">@overdue_sale</span>
+                            <div class="out">
+                                @HtmlLang.Write(LangModule.Contact, "Overdue", "Overdue")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="divPurchases" class="summary no-margin-right">
+                    <h3>@HtmlLang.Write(LangModule.Contact, "Bills", "Bills")</h3>
+                    <div class="outstanding-overdue">
+                        <table>
+                            <tr>
+                                <td class="out">@HtmlLang.Write(LangModule.Contact, "Outstanding", "Outstanding")</td>
+                                <td><a href="#">@outstanding_pur</a></td>
+                            </tr>
+                            <tr>
+                                <td class="out">@HtmlLang.Write(LangModule.Contact, "Overdue", "Overdue")</td>
+                                <td>@overdue_pur</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div id="divList">
+                <div id="gridInvoice" fitcolumns="true"></div>
+            </div>
+        </div>
+        <div id="divHistoryNote">
+            @{
+                //是否有 销售发票（编辑）权限
+                bool isCanInvoiceSalesChangePermission = HtmlSECMenu.HavePermission(BizObject.Invoice_Sales, PermissionItem.Change);
+                //是否有 采购发票（编辑）权限
+                bool isCanInvoicePurchasesChangePermission = HtmlSECMenu.HavePermission(BizObject.Invoice_Purchases, PermissionItem.Change);
+                //是否有 费用报销（编辑）权限
+                bool isCanExpenseChangePermission = HtmlSECMenu.HavePermission(BizObject.Expense, PermissionItem.Change);
+            }
+            @*操作日志列表*@
+            <div id="gridBusLog" fitcolumns="true"></div>
+            @*@if (isCanInvoiceSalesChangePermission || isCanInvoicePurchasesChangePermission)
+                {
+                    <div id="divNotes" style="padding-bottom:20px;padding-top:20px;bottom:2px;">
+                        <label>@HtmlLang.Write(LangModule.IV, "AddNotes", "Add Notes")：</label>
+                        <textarea id="txtNote" rows="3" cols="60" class="easyui-validatebox" hint="@HtmlLang.Write(LangModule.IV, "AddYourNotes", "Add your notes...")"
+                                  style="min-width:575px;width:575px;max-width:575px;height:50px;min-height:50px;max-height:50px;padding:8px;margin-right:10px;"></textarea>
+                        <a href="javascript:void(0);" class="easyui-linkbutton easyui-linkbutton-yellow easyui-linkbutton-s-s btnCredit" id="aSaveNote">@HtmlLang.Write(LangModule.IV, "Save", "Save")</a>
+                    </div>
+                }*@
+            <input type="hidden" id="hidInvoiceIds" value="@ViewData["InvoiceId"]">@*发票ID*@
+            <input type="hidden" id="hidBillType" value="@ViewData["BillType"]">@*发票类型*@
+        </div>
+        <div class="clear"></div>
+        <input type="hidden" id="ContactID" value="@ViewData["viewID"]" />
+        <input type="hidden" id="hidType" />
+        @if (hasChangeSaleAuth)
+        {
+            <input type="hidden" id="hidChangeInvoiceAuth" value="1" />
+        }
+        else
+        {
+            <input type="hidden" id="hidChangeInvoiceAuth" value="0" />
+        }
+        @if (hasChangePurchaseAuth)
+        {
+            <input type="hidden" id="hidChangeBillAuth" value="1" />
+        }
+        else
+        {
+            <input type="hidden" id="hidChangeBillAuth" value="0" />
+        }
+    </div>
+</div>
+
+@HtmlLang.WriteScript(LangModule.Contact)
+@HtmlLang.WriteScript(LangModule.BD)
+@HtmlLang.WriteScript(LangModule.IV)
+<script src="@ServerHelper.StaticServer/fw/include/ichartjs/ichart.1.2.min.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.ScriptServer/Scripts/IV/IVBase.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.ScriptServer/scripts/BD/Contacts/ContactView.js?@ServerHelper.JSVersion"></script>
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)

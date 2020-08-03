@@ -1,0 +1,41 @@
+﻿@{
+    Layout = "~/Areas/Report/Views/Shared/_LayoutReport.cshtml";
+}
+@using JieNor.Megi.Common.Utility
+<div class="m-form-vtcl m-form-min">
+    <div class="m-form-vtcl-content">
+        <div class="m-form-section section-type">
+            <span class="m-bold">@HtmlLang.Write(LangModule.Report, "AccountingPeriod", "会计期间")</span>
+            <span>
+                <select class="easyui-combobox mg-data" name="MStartPeroid" id="cbxStartPeriod" data-options="required:true" style="width:100px">
+                    @HtmlAccount.AccountPeriodOptions(true)
+                </select>
+                <span>@HtmlLang.Write(LangModule.Report, "To", "至")</span>
+                <select class="easyui-combobox mg-data" name="MStartPeroid" id="cbxEndPeriod" data-options="required:true" style="width:100px">
+                    @HtmlAccount.AccountPeriodOptions(true)
+                </select>
+            </span>
+            <span><a href="javascript:void(0);" id="btnMoreFilter" class="gl-rpt-a">@HtmlLang.Write(LangModule.Report, "AdvancedSearch", "更多过滤条件")</a></span>
+            <span><a href="javascript:void(0)" class="m-btn l-btn" id="aReportUpdate" style="width:60px">@HtmlLang.Write(LangModule.Report, "Update", "Update")</a></span>
+            <!--快速切换-->
+            <span>@HtmlLang.Write(LangModule.Report, "AccountFastSwitch", "科目快速切换") &nbsp;&nbsp; 
+                <a href="javascript:void(0)" class="rpt-sub-preaccount" style="position:relative; top:2px" title="@HtmlLang.Write(LangModule.Report, "PreAccount", "上一个科目")">&nbsp;</a>
+              <input class="easyui-combotree" id="cbxFastSwitch" style="width:300px;"/>
+                <a href="javascript:void(0)" class="rpt-sub-nextaccount" style="position:relative; top:2px" title="@HtmlLang.Write(LangModule.Report, "NextAccount", "下一个科目")">&nbsp;</a>
+            </span>
+        </div>
+    </div>
+</div>
+@Html.Partial("~/Areas/Report/Views/RptUC/GL/GLReportFilter.cshtml")
+
+<input type="hidden" id="hideAccountID" value="" />
+<script src="@ServerHelper.ScriptServer/scripts/Report/RptUC/GL/SubsidiaryLedger.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.Report)
+@HtmlLang.WriteScript(LangModule.Acct)
+<script>
+    $(document).ready(function () {
+        GLReportBase.init();
+        SubsidiaryLedger.init();
+    });
+</script>
+

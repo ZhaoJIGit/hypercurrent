@@ -1,0 +1,42 @@
+﻿
+
+@using JieNor.Megi.Common.Utility
+@using JieNor.Megi.EntityModel.MultiLanguage
+@using JieNor.Megi.Identity.HtmlHelper
+
+
+<!--页面头-->
+<div class="m-extend-tabs fa-main-tabs">
+    <div class="iv-tab-links">
+        <ul class="tab-links">
+            <li class="current">
+                <div class="statistics">@HtmlLang.Write(LangModule.Common, "All", "全部")</div>
+                <div class="title fa-all-count" statuscount="0,1,2"></div>
+            </li>
+            <li>
+                <div class="statistics">@HtmlLang.Write(LangModule.FA, "FixAssetsActived", "正常使用")</div>
+                <div class="title fa-actived-count" statuscount="0"></div>
+            </li>
+            <li>
+                <div class="statistics">@HtmlLang.Write(LangModule.FA, "FixAssetsUnActived", "已处置")</div>
+                <div class="title fa-unactived-count" statuscount="1,2"></div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<!--各种分布视图-->
+<div class="fa-partial">
+    <!--全部-->
+    <div class="fa-partial-0" status="-1" index="0" style="display:none;">
+        @Html.Partial("FAPartial/FAFixAssetsDemoPartial")
+    </div>
+    <!--正常使用-->
+    <div class="fa-partial-1" status="0" index="1" style="display:none;">
+        @Html.Partial("FAPartial/FAFixAssetsDemoPartial")
+    </div>
+    <!--已处置-->
+    <div class="fa-partial-2" status="1" index="2" style="display:none;">
+        @Html.Partial("FAPartial/FAFixAssetsDemoPartial")
+    </div>
+</div>

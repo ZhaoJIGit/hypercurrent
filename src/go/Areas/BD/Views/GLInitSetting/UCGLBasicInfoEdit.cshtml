@@ -1,0 +1,33 @@
+﻿@{
+    bool isCurrencyEnabled = Convert.ToBoolean(ViewData["IsCurrencyEnabled"]);
+}
+<div id="divFinancial" class="m-form m-form-nopadding">
+    <div class="row">
+        <span class="lbl">@HtmlLang.Write(LangModule.GL, "AccountingStandards", "Accounting Standards")</span>
+        <span class="content">
+            <select id="selAcctStandard" class="easyui-combobox mg-data easyui-validatebox" name="MAccountingStandard" style="width:290px; height:28px" panelheight="66" data-options="required:true">
+                <option value="1">@HtmlLang.Write(LangModule.GL, "ChinaEnterpriseAcctStandard", "China enterprise accounting standards")</option>
+                <option value="2">@HtmlLang.Write(LangModule.GL, "ChinaSmallBuzAcctStandard", "China accounting standards for small business")</option>
+            </select>
+        </span>
+    </div>
+    <div class="row">
+        <span class="lbl">@HtmlLang.Write(LangModule.GL, "ConversionDate", "Conversion Month")</span>
+        <div class="content">
+            <select id="selMonth" class="easyui-combobox" name="MConversionMonth" style="width: 100px; height: 26px;">
+                @HtmlMonth.SelectOptions(ViewBag.Lang)
+            </select>
+            <select id="selYear" class="easyui-combobox" name="MConversionYear" style="width: 100px; height: 26px;">
+                @HtmlYear.SelectOptions()
+            </select>
+            <div style="width: 338px; word-break: break-word;">
+                <p>@HtmlLang.Write(LangModule.GL, "InTheNextStepAsked", "In the next step you will be asked to provide account balances as at"): <label id="lblConversionDate"></label>.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="hidLastDayLastMonth" value="@ViewBag.LastDayLastMonth" />
+<input type="hidden" class="mg-data m-form-key" name="MItemID" />
+<input type="hidden" class="mg-data" name="MOrgID" value="@ViewBag.OrgCode" />
+<script src="@ServerHelper.ScriptServer/Scripts/BD/GLInitSetting/GLBasicInfoEdit.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.Acct)

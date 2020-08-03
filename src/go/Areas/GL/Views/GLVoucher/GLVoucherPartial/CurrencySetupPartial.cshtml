@@ -1,0 +1,22 @@
+﻿@using JieNor.Megi.Identity.HtmlHelper
+@using JieNor.Megi.EntityModel.MultiLanguage
+
+
+<table class="tb-currency-setup-table">
+    <tr class="tb-currency-select-tr">
+        <td class="tb-currency-span tb-currency-title">@HtmlLang.Write(LangKey.Currency):</td>
+        <td class="tb-currency-select"><input class="tb-currency-id tb-currency-value" data-values="@HtmlBDCurrency.DataOptions()" /></td>
+    </tr>
+    <tr class="tb-currency-rate-tr">
+        <td class="tb-currency-span tb-currency-title">@HtmlLang.Write(LangModule.BD, "ExchangeRate", "汇率"):</td>
+        <td class=""><input class="tb-currency-rate tb-currency-input tb-currency-value" /></td>
+    </tr>
+    <tr class="tb-currency-amount-for-tr">
+        <td class="tb-currency-span tb-currency-title">@HtmlLang.Write(LangModule.GL, "ForAmount", "原币"):</td>
+        <td class=""><input class="tb-currency-amount-for tb-currency-input tb-currency-value" /></td>
+    </tr>
+    <tr class="tb-currency-amount-tr">
+        <td class="tb-currency-span tb-currency-title">@HtmlLang.Write(LangModule.GL, "BaseAmount", "本位币"):</td>
+        <td class=""><input class="tb-currency-amount tb-currency-input tb-currency-value" title="@HtmlLang.Write(LangModule.GL, "BaseAmountModifyTips", "手动修改本位币后汇率不会自动进行计算，请手动进行更改!")"/></td>
+    </tr>
+</table>

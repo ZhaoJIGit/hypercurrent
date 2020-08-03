@@ -1,0 +1,48 @@
+﻿@{
+    Layout = "~/Areas/Report/Views/Shared/_LayoutReport.cshtml";
+    DateTime now = DateTime.Now;
+    DateTime curMonthFirstDay = now.AddDays(1 - now.Day);//当月第一天的时间
+    DateTime curMonthLastDay = curMonthFirstDay.AddMonths(1).AddDays(-1);//当月最后一天的时间
+}
+@using JieNor.Megi.Common.Utility
+<div class="m-form-vtcl margin m-form-min">
+    <div class="m-form-vtcl-content">
+        <div class="m-form-section section-type">
+            <div class="m-form-item">
+                <ul>
+                    <li class="m-bold">@HtmlLang.Write(LangKey.Accounts)</li>
+                    <li><select id="selAccount" class="easyui-combobox mg-data easyui-load-valid" data-options="required:true,onLoadSuccess:MyReport.setLoadValid, @HtmlBDAccount.BankDataOptions()" style="width:180px; height:22px;" name="MBankAccountID"></select>
+                    </li>
+                </ul>
+            </div>
+            <div class="m-form-item">
+                <ul>
+                    <li class="m-bold">@HtmlLang.Write(LangKey.From)</li>
+                    <li>
+                        <input id="selFromDate" type="text" value="@HtmlLang.ToLangDate(curMonthFirstDay)" class="easyui-datebox mg-data" name="MFromDate" />
+                    </li>
+                </ul>
+            </div>
+            <div class="m-form-item">
+                <ul>
+                    <li class="m-bold">@HtmlLang.Write(LangKey.To)</li>
+                    <li>
+                        <input id="selToDate" type="text" value="@HtmlLang.ToLangDate(curMonthLastDay)" class="easyui-datebox mg-data" name="MToDate" />
+                    </li>
+                </ul>
+            </div>
+            <div class="m-form-item">
+                <ul>
+                    <li><a href="javascript:void(0)" class="m-btn l-btn" id="aReportUpdate">@HtmlLang.Write(LangModule.Report, "Update", "Update")</a></li>
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<script src="@ServerHelper.ScriptServer/scripts/Report/RptUC/RptBankRecSummary.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.Report)

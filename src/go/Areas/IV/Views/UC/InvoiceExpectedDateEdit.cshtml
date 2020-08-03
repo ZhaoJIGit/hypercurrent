@@ -1,0 +1,27 @@
+﻿@using JieNor.Megi.Common.Utility;
+<div class="m-expected-date">
+    <div class="item">
+        <p><a id="aContactName" ></a></p>
+        <p>
+            <ul>
+                <li>@HtmlLang.Write(LangModule.IV, "ContactPerson", "Contact Person") : <span id="spContactPerson"></span></li>
+                <li>Phone : <span id="spPhone"></span></li>
+                <li>Mobile: <span id="spMobile"></span></li>
+            </ul>
+        </p>
+    </div>
+    <div class="item">
+        <p>@HtmlLang.Write(LangModule.IV, "Notes", "Notes")</p>
+        <p><textarea class="mg-data" name="MDesc" id="txtNote"></textarea></p>
+    </div>
+    <div class="item">
+        <p>@HtmlLang.Write(LangModule.IV, "ExpectedPaymentDate", "Expected Payment Date")</p>
+        <p><input id="txtDueDate" type="text" class="easyui-datebox mg-data" style="width:130px;" name="MExpectedDate" /></p>
+    </div>
+    <div class="item-btn">
+        <a href="javascript:void(0)" class="mg-btn-min mg-btn-blue" id="aSaveInvoiceExpectedDate">@HtmlLang.Write(LangKey.Save)</a><span>@HtmlLang.Write(LangKey.Or)</span>
+        <a href="javascript:void(0)" id="aCancelEditInvoiceExpectedDate">@HtmlLang.Write(LangKey.Cancel)</a>
+    </div>
+    <div class="clear"></div>
+</div>   
+<script src="@ServerHelper.ScriptServer/Scripts/IV/UC/InvoiceExpectedDateEdit.js?@ServerHelper.JSVersion"></script>

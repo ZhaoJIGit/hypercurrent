@@ -1,0 +1,113 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    var isSmartVersion = JieNor.Megi.Common.Context.ContextHelper.MContext.MOrgVersionID == JieNor.Megi.EntityModel.Enum.OrgVersionEnum.Smart;
+    var model = ViewBag.PTVoucherModel as JieNor.Megi.DataModel.PT.PTVoucherModel;
+}
+@using JieNor.Megi.Common.Utility;
+<style type="text/css">
+    .pt-voucher-edit .pt-offset-title {
+        width: 24px;
+        display: inline-table;
+    }
+</style>
+<div class="m-imain">
+    <div class="m-imain-content pt-voucher-edit">
+        <div id="fsLeft" style="float:left; width: 530px;">
+            <div class="field long" style="padding-top:0px;">
+                <label class="title" for="MName">@HtmlLang.Write(LangModule.Common, "TemplateName", "模板名称")</label>
+                <input class="easyui-validatebox mg-data textbox m-lang required-field" data-options="required:true" name="MName" id="MName" maxlength="100" style="width:300px;" />
+                <div style="padding-left:138px;" class="field checkbox">
+                    <input type="checkbox" class="radio" id="MIsDefault" name="MIsDefault" />
+                    <label for="MIsDefault">@HtmlLang.Write(LangModule.IV, "SetDefaultTemplate", "设为默认凭证打印模板")</label>
+                </div>
+            </div>
+            <div class="field">
+                <label class="title" for="MTemplateType">@HtmlLang.Write(LangModule.Common, "TemplateType", "模板类型")</label>
+                <input class="mg-data textbox m-form-item-select easyui-combobox" id="MTemplateType" name="MTemplateType" style="width:303px;height:26px;" 
+                       data-options="required: true, valueField: 'MTag', textField: 'MValue'" />
+            </div>
+            <div class="field">
+                <label class="title" for="MPaperType">@HtmlLang.Write(LangModule.Common, "PaperType", "纸张类型")</label>
+                <select class="mg-data textbox m-form-item-select easyui-combobox" id="MPaperType" name="MPaperType" style="width: 303px; height: 26px;"
+                        data-options="required: true, valueField: 'MTag', textField: 'MValue'">
+                </select>
+            </div>
+            <div class="field">
+                <div style="float:left">
+                    <label class="title">@HtmlLang.Write(LangModule.Common, "PaperDirection", "纸张方向")</label>
+                </div>                
+                <div class="radios" id="divPaperDirection" style="float:left;padding-left:4px;">
+                    <div class="radio" style="float:left;">
+                        <input id="Vertical" type="radio" name="MPaperDirection" value="1" />
+                        <label for="Vertical"> @HtmlLang.Write(LangModule.Common, "Vertical", "纵向")</label>
+                    </div>
+                    <div class="radio" style="float:left;padding-left:10px;">
+                        <input id="Horizontal" type="radio" name="MPaperDirection" value="2" />
+                        <label for="Horizontal"> @HtmlLang.Write(LangModule.Common, "Horizontal", "横向")</label>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="field">
+                <div style="float:left">
+                    <label class="title">@HtmlLang.Write(LangModule.Common, "PrintLineAndTitle", "是否打印标题和网格线")</label>
+                </div>
+                <div class="radios" id="divIsPrintLine" style="float: left; padding-left: 4px;">
+                    <div class="radio" style="float:left;">
+                        <input id="Yes" type="radio" name="MIsPrintLine" value="1" />
+                        <label for="Yes">@HtmlLang.Write(LangModule.Common, "Yes", "是")</label>
+                    </div>
+                    <div class="radio" style="float: left; padding-left: 10px;">
+                        <input id="No" type="radio" name="MIsPrintLine" value="0" />
+                        <label for="No">@HtmlLang.Write(LangModule.Common, "No", "否")</label>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="field">
+                <div style="float:left;">
+                    <label class="title" for="MCreditNoteTitle">@HtmlLang.Write(LangModule.Common, "OverallOffset", "整体偏移").ToHtmlString()</label>
+                </div>
+                <div style="float: left; padding-left: 3px;">
+                    <div>
+                        <label for="MLeftOffset" class="pt-offset-title">@HtmlLang.Write(LangModule.Common, "ToLeft", "向左")</label>
+                        <input class="mg-data textbox easyui-numberbox" precision="2" name="MLeftOffset" id="MLeftOffset" style="width:60px;" />
+                        <span>@(HtmlLang.Write(LangModule.Common, "Millimeter", "毫米").ToHtmlString() + HtmlLang.Write(LangModule.Common, "LeftOffsetDesc", "（正数向左，负数向右）").ToHtmlString())</span>
+                    </div>
+                    <div style="padding-top:5px;">
+                        <label for="MUpOffset" class="pt-offset-title">@HtmlLang.Write(LangModule.Common, "ToUp", "向上")</label>
+                        <input class="mg-data textbox easyui-numberbox" precision="2" name="MUpOffset" id="MUpOffset" style="width:60px;" />
+                        <span>@(HtmlLang.Write(LangModule.Common, "Millimeter", "毫米").ToHtmlString() + HtmlLang.Write(LangModule.Common, "RightOffsetDesc", "（正数向上，负数向下）").ToHtmlString())</span>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div style="float:right;width:300px;text-align:center;">
+            <div>@HtmlLang.Write(LangModule.Common, "ExamplePicture", "示例图")</div>
+            <div id="divPreviewImage" style="height:260px;"></div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+
+<div class="m-toolbar-footer">
+        <div class="left">
+            <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray" id="aCancel">@HtmlLang.Write(LangKey.Cancel)</a>
+        </div>
+        <div class="right">
+            @if (HtmlSECMenu.HavePermission(BizObject.Setting, PermissionItem.Change))
+            {
+                <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aSave">@HtmlLang.Write(LangKey.Save)</a>
+            }
+        </div>
+</div>
+<input class="mg-data m-form-key" type="hidden" id="hidItemID" name="MItemID" value="@ViewBag.ItemID">
+<input class="mg-data" type="hidden" id="MLogoID" name="MLogoID">
+<input class="mg-data" type="hidden" id="MSeq" name="MSeq">
+<input type="hidden" id="hidIsSmartVersion" value="@Html.Raw(isSmartVersion)" />
+<script src="@ServerHelper.ScriptServer/scripts/PT/PTVoucher/PTVoucherEdit.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.Common)

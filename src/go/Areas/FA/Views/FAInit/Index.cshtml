@@ -1,0 +1,68 @@
+﻿@using JieNor.Megi.Common.Utility
+@using JieNor.Megi.EntityModel.MultiLanguage
+@using JieNor.Megi.Identity
+@using JieNor.Megi.Identity.HtmlHelper
+@using JieNor.Megi.Tools
+@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    var type = ViewBag.FAType;
+    var accessResponse = AccessHelper.Access();
+
+    var accessList = accessResponse.Access;
+
+    var haveChange = accessList[BizObject.FixedAsset + PermissionItem.Change];
+}
+
+<div id="divFAInit" class="m-form m-imain">
+    <div class="m-imain-content" style="text-align: left;">
+        <div class="import-banktransaction">
+            <div class="row" style="height: 50px">
+                <div class="content">
+                    <div style="float: left; line-height: 32px; width: 150px;">@HtmlLang.Write(LangModule.GL, "ConversionDate", "Conversion Month")</div>
+                    <select id="selMonth" class="easyui-combobox" name="MConversionMonth" data-options="required:true" style="width: 180px; height: 30px;">
+                        @HtmlMonth.SelectOptions(ViewBag.Lang)
+                    </select>
+                    <select id="selYear" class="easyui-combobox" name="MConversionYear" data-options="required:true" style="width: 180px; height: 30px;">
+                        @HtmlYear.SelectOptions()
+                    </select>
+                </div>
+            </div>
+            <div class="row" style="height: 50px">
+                <div class="content">
+                    <div style="float: left; line-height: 32px; width: 150px;">@HtmlLang.Write(LangModule.FA, "FANo", "资产编码规则")</div>
+                    <input type="text" id="txtPrefixName" name="MPrefixName" hint="@HtmlLang.Write(LangModule.FA, "PrefixName", "字母")" class="easyui-validatebox textbox" data-options="required:true" maxlength="10" style="width: 180px;" />
+                    <input type="text" id="txtStartNumber" name="MStartNumber" hint="@HtmlLang.Write(LangModule.FA, "StartNumber", "数字")" class="easyui-validatebox textbox" data-options="required:true,validType:'numCheck'" maxlength="10" style="width: 180px; " />
+                </div>
+            </div>
+            <div class="row">
+                <div class="content">
+                    <div style="float: left; line-height: 32px; width: 0px;">&nbsp;  </div>
+                    <span>
+                        @HtmlLang.Write(LangModule.FA, "FAInitNotice1", "如无需改动，则默认规则字母为FAN,数字为0001；修改数字后从该数字开始编码。")
+                        <br />@HtmlLang.Write(LangModule.FA, "FAInitNotice2", "资产编码样例：字母 + 0001&nbsp; &nbsp; 字母 + 0002")
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="m-toolbar-footer">
+    <div class="left">
+        <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray">@HtmlLang.Write(LangKey.Cancel)</a>
+    </div>
+    @if (haveChange || type==0)
+    {
+        <div class="right">
+            <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aSure">@HtmlLang.Write(LangKey.Save)</a>
+        </div>
+    }
+</div>
+<input type="hidden" id="FAInitType" value=@type  />
+<input type="hidden" id="HaveChangePermission" value=@haveChange/>
+
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/FA/FAInit.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.Common)
+
+<script type="text/javascript" src="@ServerHelper.StaticServer/FW/scripts/jquery.form.js?@ServerHelper.JSVersion"></script>
+
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)

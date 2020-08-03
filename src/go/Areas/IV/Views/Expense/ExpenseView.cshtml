@@ -1,0 +1,219 @@
+﻿@{
+    ViewBag.Title = "ExpenseView";
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    IVExpenseModel model = ViewData["ExpenseModel"] as IVExpenseModel;
+    string jsonModel = JieNor.Megi.Common.Utility.MText.ToJson(model);
+
+    string expectedDateDisabledAttr = (model.MTaxTotalAmtFor != 0 && model.MTaxTotalAmtFor == model.MVerificationAmt) ? " disabled=\"disabled\" " : "";
+
+    //是否有 联系人（编辑）权限
+    bool isCanContactChangePermission = HtmlSECMenu.HavePermission(BizObject.Contact, PermissionItem.Change);
+    bool IsShowVerif = model.MActionPermission.MIsCanVerification;
+}
+@using JieNor.Megi.Common.Utility
+
+<div class="m-imain">
+    <script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/IV/IVFW.js?@ServerHelper.JSVersion"></script>@*高级选项切换所用的 js 文件*@
+    <div class="m-imain-content">
+        <div class="form-invoice-toolbar">
+            <div class="left" id="divExpenseStatus"></div>
+            <div class="bank">
+                @if (model.MBankList != null && model.MBankList.Count > 0)
+                {
+                    if (model.MBankList.Count == 1)
+                    {
+                        @Html.Raw(string.Format("[{0}({1})]", MText.Encode(model.MBankList[0].MBankName), model.MBankList[0].MCyID));
+                    }
+                    else
+                    {
+                        @Html.Raw("<div class='bank-all'><ul>");
+                        int index = 1;
+                        foreach (BDBankBasicModel bankModel in model.MBankList)
+                        {
+                            @Html.Raw(string.Format("<li><span>[{0}({1})]</span>{2}</li>", MText.ToJson(bankModel.MBankName), bankModel.MCyID, index == 1 ? "<span class='arrow'>&nbsp;</span>" : ""));
+                            index += 1;
+                        }
+                        @Html.Raw("</ul></div>");
+                    }
+                }
+            </div>
+            <div class="right"></div>
+            <div class="clear"></div>
+        </div>
+        @*费用报销基本信息*@
+        <div class="m-form m-form-icon">
+            <div class="column">
+                <div class="cell">
+                    @*员工*@
+                    <span class="lbl m-icon-employee" title="@HtmlLang.Write(LangModule.IV, "Employee", "Employee")">&nbsp;</span>
+                    <input tabindex="1" id="selEmployee" hint="@HtmlLang.Write(LangModule.IV, "Employee", "Employee")" class="easyui-combobox" disabled="disabled" style="width:140px;" />
+                </div>
+                <div class="cell">
+                    <span class="lbl m-icon-experted-date" title="@HtmlLang.Write(LangModule.IV,"ExpectedPaymentDate","Expected Payment date")">&nbsp;</span>
+                    <input tabindex="6" type="text" id="txtExpectedDate" @expectedDateDisabledAttr hint="@HtmlLang.Write(LangModule.IV,"ExpectedPaymentDate","Expected Payment date")" class="easyui-datebox user-active" data-options="validType:'minDate[\'@ViewData["MaxBizDate"]\']'" style="width:140px;" />
+                </div>
+            </div>
+            <div class="column">
+                @*<div class="cell">
+                        <span class="lbl m-icon-department" title="@HtmlLang.Write(LangModule.IV, "Department", "Department")">&nbsp;</span>
+                        <input tabindex="6" id="selDepartment" hint="@HtmlLang.Write(LangModule.IV, "Department", "Department")" class="easyui-combobox" disabled="disabled" style="width:140px;" />
+                    </div>*@
+                <div class="cell">
+                    <span class="lbl m-icon-ref" title="@HtmlLang.Write(LangKey.Reference)">&nbsp;</span>
+                    <input tabindex="2" type="text" class="textbox" id="txtRef" name="MReference" disabled="disabled" style="width:132px;padding:0 3px;" />
+                </div>
+
+            </div>
+            <div class="column">
+                <div class="cell">
+                    <span class="lbl m-icon-date" title="@HtmlLang.Write(LangKey.Date)">&nbsp;</span>
+                    <input tabindex="4" id="txtDate" type="text" class="easyui-datebox " disabled="disabled" style="width:140px;" />
+                </div>
+            </div>
+            <div class="column">
+                <div class="cell">
+                    <span class="lbl m-icon-time" title="@HtmlLang.Write(LangKey.DueDate)">&nbsp;</span>
+                    <input tabindex="5" id="txtDueDate" type="text" class="easyui-datebox" disabled="disabled" style="width:140px;" />
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        @*费用报销列表项 和 高级选项*@
+        @if (Convert.ToString(ViewData["ExpenseID"]).Trim() != "" && HtmlSECMenu.HavePermission(BizObject.Expense, PermissionItem.Change))
+        {
+            <div class="m-iv-adv-switch">
+                <a href="javascript:void(0)" class="show">&nbsp;</a><span>@HtmlLang.Write(LangModule.IV, "AdvancedOptions", "Advanced Options")</span>
+            </div>
+        }
+        <div class="m-iv">
+            @Html.Partial("EntryEdit")
+            @if (model.MActionPermission.MHaveAction)
+            {
+                <div class="m-iv-adv">
+                    <div id="aa" class="easyui-accordion" style="width:260px;min-height:344px;">
+                        @*<div title="@HtmlLang.Write(LangModule.IV, "ValueAddedTaxInvoice", "Value-added Tax Invoice")" style="overflow:auto;padding:10px;">*@
+                        @*</div>*@
+                        <div title="@HtmlLang.Write(LangModule.IV, "FinancialInformation", "Financial Information")" data-options="selected:true" style="padding:10px;">
+                            <ul>
+                                @if (model.MActionPermission.MIsCanPay)
+                                {
+                                    <li><a href="javascript:void(0)" onclick="ExpenseEditBase.mergePay('@ViewData["ExpenseID"]')">@HtmlLang.Write(LangModule.IV, "MakeAPayment", "Make a payment")</a></li>
+                                }
+                                @if (model.MActionPermission.MIsCanUnApprove)
+                                {
+                                    <li><a href="javascript:void(0)" onclick='ExpenseEditBase.unAuditToDraft("@ViewData["ExpenseID"]");'>@HtmlLang.Write(LangModule.IV, "UnAuditToDraft", "UnAudit To Draft")</a></li>
+                                }
+                                @if (model.MActionPermission.MIsCanViewVoucherCreateDetail)
+                                {
+                                    <li><a href="javascript:void(0)" onclick="IVGL.open('@ViewData["ExpenseID"]','2')">@HtmlLang.Write(LangModule.GL, "VoucherCreateDetails", "Voucher Create Detail")</a></li>
+                                }
+                                @if (model.MActionPermission.MIsCanVerification)
+                                {
+                                    <li><a href="javascript:void(0)" onclick="Verification.open('@ViewData["ExpenseID"]','@BizObject.Expense',ExpenseEditBase.afterVerification)">@HtmlLang.Write(LangModule.IV, "Reconcile", "Reconcile")</a></li>
+                                }
+                                <li><a href="javascript:void(0)" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.IV, "CopyExpense", "Copy Expense")', '/IV/Expense/ExpenseEdit?cpyId=@ViewData["ExpenseID"]')">@HtmlLang.Write(LangKey.Copy)</a></li>
+                                @if (model.MActionPermission.MIsCanVoid)
+                                {
+                                    <li><a href="javascript:void(0)" onclick='ExpenseEditBase.archiveItem("@ViewData["ExpenseID"]","/IV/Expense/ExpenseList/@Request.QueryString["TabIndex"]")'>@HtmlLang.Write(LangModule.IV, "Void", "Void")</a></li>
+                                }
+                                @if (model.MActionPermission.MIsCanDelete)
+                                {
+                                    <li><a href="javascript:void(0)" onclick='ExpenseEditBase.deleteItem("@ViewData["ExpenseID"]","/IV/Expense/ExpenseList/@Request.QueryString["TabIndex"]")'>@HtmlLang.Write(LangKey.Delete)</a></li>
+                                    <li><a href="/IV/Expense/ExpenseEdit/@ViewData["InvoiceID"]">@HtmlLang.Write(LangKey.Edit)</a></li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+@*底部工具栏*@
+<div class="m-toolbar-footer">
+    <div class="left">&nbsp;</div>
+    <div class="center">
+        <div class="m-toolbar-icon" style="width:150px;">
+            @if (Convert.ToString(ViewData["ExpenseID"]).Trim() != "")
+            {
+                <a href="javascript:void(0)" id="aHistory" class="m-icon-msg" title="@HtmlLang.Write(LangModule.IV, "History", "History")">&nbsp;</a>
+                //暂时隐藏，以后再加该功能
+                if (HtmlSECMenu.HavePermission(BizObject.Expense, PermissionItem.View))
+                {
+                    <a href="javascript:void(0)" id="aPrint" class="m-icon-print" invoiceid="@ViewData["ExpenseID"]" title="@HtmlLang.Write(LangKey.PrintPDF)">&nbsp;</a>
+                }
+            }
+            @{
+                string mid = model == null ? string.Empty : model.MID;
+            }
+            @HtmlREGRelatedAttach.RelatedAttach(BizObject.Expense, mid)
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="right">
+        &nbsp;
+        @if (model.MTaxTotalAmtFor != 0 && model.MTaxTotalAmtFor > model.MVerificationAmt && HtmlSECMenu.HavePermission(BizObject.Expense, PermissionItem.Change))
+        {
+            <a href="javascript:void(0)" id="btnSave" class="easyui-linkbutton easyui-linkbutton-yellow">@HtmlLang.Write(LangKey.Save)</a>
+        }
+    </div>
+    <div class="clear"></div>
+</div>
+<input type="hidden" id="hidExpenseID" value='@ViewData["ExpenseID"]' />
+<input type="hidden" id="hidExpenseModel" value='@jsonModel' />
+<input type="hidden" id="hidIsShowVerif" value="@Html.Raw(@IsShowVerif)" />
+<input type="hidden" id="hidHaveAttachChangePermission" value="@Html.Raw(HtmlSECMenu.HavePermission(BizObject.Attachment, PermissionItem.Change))" />
+@if (HtmlSECMenu.HavePermission(BizObject.Expense, PermissionItem.Change))
+{
+    <input type="hidden" id="hidChangeAuth" value="1" />
+}
+else
+{
+    <input type="hidden" id="hidChangeAuth" value="0" />
+}
+@*是否有银行的查看权限*@
+@if (HtmlSECMenu.HavePermission(BizObject.BankAccount, PermissionItem.View))
+{
+    <input type="hidden" id="hidIsCanBankAccountViewPermission" value="1" />
+}
+else
+{
+    <input type="hidden" id="hidIsCanBankAccountViewPermission" value="0" />
+}
+@*是否有银行的编辑权限*@
+@if (HtmlSECMenu.HavePermission(BizObject.BankAccount, PermissionItem.Change))
+{
+    <input type="hidden" id="hidIsCanBankAccountChangePermission" value="1" />
+}
+else
+{
+    <input type="hidden" id="hidIsCanBankAccountChangePermission" value="0" />
+}
+@*是否有基础资料的编辑权限*@
+@if (HtmlSECMenu.HavePermission(BizObject.Setting, PermissionItem.Change))
+{
+    <input type="hidden" id="hidIsCanSettingChangePermission" value="1" />
+}
+else
+{
+    <input type="hidden" id="hidIsCanSettingChangePermission" value="0" />
+}
+@*是否有联系人的编辑权限*@
+@if (isCanContactChangePermission)
+{
+    <input type="hidden" id="hidIsCanContactChangePermission" value="1" />
+}
+else
+{
+    <input type="hidden" id="hidIsCanContactChangePermission" value="0" />
+}
+<script type="text/javascript" src="@ServerHelper.StaticServer/fw/scripts/jquery.megi.print.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/IV/IVBase.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/IV/Expense/ExpenseView.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/IV/Expense/ExpenseEditBase.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/IV/IVGL.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/IV/Verification/Verification.interface.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.IV)
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)

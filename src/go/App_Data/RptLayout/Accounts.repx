@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XtraReportsLayoutSerializer SerializerVersion="15.1.5.0" Ref="1" Name="Accounts" ControlType="DevExpress.XtraReports.UI.XtraReport, DevExpress.XtraReports.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" DataSource="#Ref-0" Font="微软雅黑, 9.75pt, charSet=0" Version="15.1" PageWidth="827" PageHeight="1169" PaperKind="A4" Margins="50, 50, 69, 115">
+  <Bands>
+    <Item1 Ref="2" Name="topMarginBand1" ControlType="TopMarginBand" HeightF="69" />
+    <Item2 Ref="3" ControlType="DetailBand" Name="detailBand1" HeightF="0" />
+    <Item3 Ref="4" Name="bottomMarginBand1" ControlType="BottomMarginBand" HeightF="115" />
+    <Item4 Ref="5" ControlType="DetailReportBand" Name="DetailReport1" DataMember="AccountRows" Level="0" DataSource="#Ref-0">
+      <Bands>
+        <Item1 Ref="6" ControlType="DetailBand" Name="Detail2" HeightF="25.41666">
+          <Controls>
+            <Item1 Ref="7" Name="xrTableData" ControlType="XRTable" SizeF="726.9998,25.41666" LocationFloat="0.000111262, 0" ForeColor="255,24,24,24" BorderColor="255,221,221,221" Borders="Bottom" TextAlignment="MiddleLeft">
+              <Rows>
+                <Item1 Ref="8" ControlType="XRTableRow" Name="xrTableRow4" Weight="1">
+                  <Cells>
+                    <Item1 Ref="9" Name="MNumber" ControlType="XRTableCell" Weight="0.4434975041504462">
+                      <DataBindings>
+                        <Item1 Ref="10" PropertyName="Text" DataMember="AccountRows.MNumber" />
+                      </DataBindings>
+                    </Item1>
+                    <Item2 Ref="11" Name="MDesc" ControlType="XRTableCell" Weight="1.0341215200711069">
+                      <DataBindings>
+                        <Item1 Ref="12" PropertyName="Text" DataMember="AccountRows.MName" />
+                      </DataBindings>
+                    </Item2>
+                    <Item3 Ref="13" Name="MPurPrice" ControlType="XRTableCell" TextAlignment="MiddleCenter" Weight="0.48508186127931452">
+                      <DataBindings>
+                        <Item1 Ref="14" PropertyName="Text" DataMember="AccountRows.MAcctTypeName" />
+                      </DataBindings>
+                      <StylePriority Ref="15" UseTextAlignment="false" />
+                    </Item3>
+                    <Item4 Ref="16" Name="MPurTaxType" ControlType="XRTableCell" Padding="6,0,0,0,100" TextAlignment="MiddleCenter" Weight="0.36222807213364783">
+                      <DataBindings>
+                        <Item1 Ref="17" PropertyName="Text" DataMember="AccountRows.MDC" />
+                      </DataBindings>
+                      <StylePriority Ref="18" UsePadding="false" UseTextAlignment="false" />
+                    </Item4>
+                    <Item5 Ref="19" Name="xrTableCell2" ControlType="XRTableCell" Padding="6,0,0,0,100" TextAlignment="MiddleCenter" Weight="0.675070436789773">
+                      <DataBindings>
+                        <Item1 Ref="20" PropertyName="Text" DataMember="AccountRows.MIsCheckForCurrency" />
+                      </DataBindings>
+                      <StylePriority Ref="21" UsePadding="false" UseTextAlignment="false" />
+                    </Item5>
+                    <Item6 Ref="22" Name="xrTableCell4" ControlType="XRTableCell" Padding="6,0,0,0,100" TextAlignment="MiddleLeft" Weight="0.675070436789773">
+                      <DataBindings>
+                        <Item1 Ref="23" PropertyName="Text" DataMember="AccountRows.MCheckGroupName" />
+                      </DataBindings>
+                      <StylePriority Ref="24" UsePadding="false" UseTextAlignment="false" />
+                    </Item6>
+                  </Cells>
+                </Item1>
+              </Rows>
+              <StylePriority Ref="25" UseForeColor="false" UseBorderColor="false" UseBorders="false" UseTextAlignment="false" />
+            </Item1>
+          </Controls>
+        </Item1>
+        <Item2 Ref="26" ControlType="GroupHeaderBand" Name="GroupHeader1" RepeatEveryPage="true" HeightF="25">
+          <Controls>
+            <Item1 Ref="27" Name="xrTable3" ControlType="XRTable" SizeF="726.9999,25" LocationFloat="0.000111262, 0" Font="微软雅黑, 10pt, style=Bold, charSet=0" BackColor="0,0,0,0" BorderColor="255,50,50,50" Borders="Bottom" BorderWidth="1" BorderDashStyle="Solid" TextAlignment="MiddleCenter">
+              <Rows>
+                <Item1 Ref="28" ControlType="XRTableRow" Name="xrTableRow3" BackColor="0,0,0,0" Weight="1">
+                  <Cells>
+                    <Item1 Ref="29" Name="xrTableCell17" ControlType="XRTableCell" Weight="0.41679020454562293">
+                      <DataBindings>
+                        <Item1 Ref="30" PropertyName="Text" DataMember="CodeTitle" />
+                      </DataBindings>
+                    </Item1>
+                    <Item2 Ref="31" Name="xrTableCell23" ControlType="XRTableCell" Weight="0.97184588556739637">
+                      <DataBindings>
+                        <Item1 Ref="32" PropertyName="Text" DataMember="NameTitle" />
+                      </DataBindings>
+                    </Item2>
+                    <Item3 Ref="33" Name="xrTableCell22" ControlType="XRTableCell" TextAlignment="MiddleCenter" Weight="0.45586970676838906">
+                      <DataBindings>
+                        <Item1 Ref="34" PropertyName="Text" DataMember="TypeTitle" />
+                      </DataBindings>
+                      <StylePriority Ref="35" UseTextAlignment="false" />
+                    </Item3>
+                    <Item4 Ref="36" Name="xrTableCell18" ControlType="XRTableCell" Padding="6,0,0,0,100" TextAlignment="MiddleCenter" Weight="0.34041392188510117">
+                      <DataBindings>
+                        <Item1 Ref="37" PropertyName="Text" DataMember="DirectionTitle" />
+                      </DataBindings>
+                      <StylePriority Ref="38" UsePadding="false" UseTextAlignment="false" />
+                    </Item4>
+                    <Item5 Ref="39" Name="xrTableCell1" ControlType="XRTableCell" Padding="6,0,0,0,100" TextAlignment="MiddleCenter" Weight="0.63441728129909447">
+                      <DataBindings>
+                        <Item1 Ref="40" PropertyName="Text" DataMember="IsCheckForCurrencyTitle" />
+                      </DataBindings>
+                      <StylePriority Ref="41" UsePadding="false" UseTextAlignment="false" />
+                    </Item5>
+                    <Item6 Ref="42" Name="xrTableCell3" ControlType="XRTableCell" Padding="6,0,0,0,100" TextAlignment="MiddleCenter" Weight="0.63441728129909447">
+                      <DataBindings>
+                        <Item1 Ref="43" PropertyName="Text" DataMember="CheckGroupTitle" />
+                      </DataBindings>
+                      <StylePriority Ref="44" UsePadding="false" UseTextAlignment="false" />
+                    </Item6>
+                  </Cells>
+                  <StylePriority Ref="45" UseBackColor="false" />
+                </Item1>
+              </Rows>
+              <StylePriority Ref="46" UseFont="false" UseBackColor="false" UseBorderColor="false" UseBorders="false" UseBorderWidth="false" UseBorderDashStyle="false" UseTextAlignment="false" />
+            </Item1>
+          </Controls>
+        </Item2>
+      </Bands>
+    </Item4>
+  </Bands>
+  <ObjectStorage>
+    <Item1 ObjectType="DevExpress.XtraReports.Serialization.ObjectStorageInfo, DevExpress.XtraReports.v15.1" Ref="0" Content="~Xtra#NULL" Type="System.Windows.Forms.BindingSource" />
+  </ObjectStorage>
+</XtraReportsLayoutSerializer>

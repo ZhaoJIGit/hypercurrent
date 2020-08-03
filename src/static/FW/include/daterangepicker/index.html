@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<head>
+    <title></title>
+    <script src="../../scripts/jquery-1.8.2.min.js"></script>
+    <link href="jquery.daterangepicker.css" rel="Stylesheet" type="text/css" />
+    <link href="jquery.daterangepicker.custom.css" rel="stylesheet" type="text/css" />
+    <script src="jquery.daterangepicker.js"></script>
+    <script src="jquery.daterangepicker.custom.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#rangeA').daterangepicker({
+                presetRanges: [
+                    { text: 'Last Week', dateStart: 'yesterday-7days', dateEnd: 'yesterday' },
+                    { text: 'Last Month', dateStart: 'yesterday-1month', dateEnd: 'yesterday' },
+                    { text: 'Last Year', dateStart: 'yesterday-1year', dateEnd: 'yesterday' }
+                ],
+                rangeStartTitle: 'Start Date',
+                rangeEndTitle: 'End Date',
+                nextLinkText: 'Next Month',
+                prevLinkText: 'Last Month',
+                doneButtonText: 'OK',
+                cancelButtonText: 'Cancel',
+                earliestDate: '',
+                latestDate: Date.parse('today'),
+                constrainDates: true,
+                rangeSplitter: '-',
+                dateFormat: 'yy-mm-dd',
+                closeOnSelect: false,
+                onSelect: function () { alert(1); },
+                onChange: function () { }
+            }
+          );
+        });
+    </script>
+</head>
+<body>
+    <input type='text' id="rangeA" />
+</body>
+
+</html>

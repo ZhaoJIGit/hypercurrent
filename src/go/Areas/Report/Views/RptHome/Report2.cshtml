@@ -1,0 +1,11 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+@using JieNor.Megi.Common.Utility
+@HtmlLang.WriteScript(LangModule.Report)
+
+
+@Html.Partial(@ViewData["Report"].ToString())
+
+<script src="@ServerHelper.ScriptServer/scripts/Report/RptHome/Report2.js?@ServerHelper.JSVersion"></script>
+

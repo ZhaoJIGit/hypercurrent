@@ -1,0 +1,64 @@
+﻿@{
+    Layout = "~/Areas/Report/Views/Shared/_LayoutReport.cshtml";
+    DateTime curMonthFirstDay = DateTime.Now.Date.AddDays(1 - DateTime.Now.Date.Day); //本月第一天 
+    DateTime nextMonthLastDay = curMonthFirstDay.AddMonths(2).AddDays(-1);
+}
+@using JieNor.Megi.Common.Utility
+<div class="m-form-vtcl m-form-min">
+    <div class="m-form-vtcl-content">
+        <div class="m-form-section section-type">
+            <div class="m-form-item">
+                <ul>
+                    <li class="m-bold">@HtmlLang.Write(LangModule.Report, "months", "month"):</li>
+                    <li>
+                        <select class="easyui-combobox mg-data easyui-date-type" name="MEndDate" data-options="required:true" style="width: 150px; height: 22px;">
+                           @HtmlDateTime.GetSelectFullYearMonthOptions()
+                        </select>
+                    </li>
+                </ul>
+            </div>
+            <div class="m-form-item">
+                <ul>
+                    <li class="m-bold">@HtmlLang.Write(LangModule.Report, "Period", "Period"):</li>
+                    <li>
+                        <select class="easyui-combobox mg-data" name="MPeriod" style="width: 150px; height: 22px;">
+                            <option value="1">@HtmlLang.Write(LangModule.Report, "1month", "1 month")</option>
+                            <option value="2">@HtmlLang.Write(LangModule.Report, "2months", "2 months")</option>
+                            <option value="3">@HtmlLang.Write(LangModule.Report, "3months", "3 months")</option>
+                            <option value="6">@HtmlLang.Write(LangModule.Report, "6months", "6 months")</option>
+                            <option value="12">@HtmlLang.Write(LangModule.Report, "12months", "12 months")</option>
+                        </select>
+                    </li>
+                </ul>
+            </div>
+            <div class="m-form-item">
+                <ul>
+                    <li class="m-bold">@HtmlLang.Write(LangModule.Report, "CompareWith", "Compare With"):</li>
+                    <li>
+                        <select class="easyui-combobox mg-data" name="MPeriodCount" style="width: 150px; height: 22px;">
+                            <option value="0">@HtmlLang.Write(LangModule.Report, "None", "None")</option>
+                            <option value="1">@HtmlLang.Write(LangModule.Report,"Previous1Periods","Previous 1 Period")</option>
+                            <option value="2">@HtmlLang.Write(LangModule.Report,"Previous2Periods","Previous 2 Periods")</option>
+                            <option value="3">@HtmlLang.Write(LangModule.Report,"Previous3Periods","Previous 3 Periods")</option>
+                            <option value="4">@HtmlLang.Write(LangModule.Report,"Previous4Periods","Previous 4 Periods")</option>
+                            <option value="5">@HtmlLang.Write(LangModule.Report,"Previous5Periods","Previous 5 Periods")</option>
+                            <option value="6">@HtmlLang.Write(LangModule.Report,"Previous6Periods","Previous 6 Periods")</option>
+                            <option value="7">@HtmlLang.Write(LangModule.Report,"Previous7Periods","Previous 7 Periods")</option>
+                            <option value="8">@HtmlLang.Write(LangModule.Report,"Previous8Periods","Previous 8 Periods")</option>
+                            <option value="9">@HtmlLang.Write(LangModule.Report,"Previous9Periods","Previous 9 Periods")</option>
+                            <option value="10">@HtmlLang.Write(LangModule.Report,"Previous10Periods","Previous 10 Periods")</option>
+                            <option value="11">@HtmlLang.Write(LangModule.Report,"Previous11Periods","Previous 11 Periods")</option>
+                        </select>
+                    </li>
+                </ul>
+            </div>
+            <div class="m-form-item">
+                <ul>
+                    <li><a href="javascript:void(0)" class="m-btn l-btn" id="aReportUpdate">@HtmlLang.Write(LangModule.Report, "Update", "Update")</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="@ServerHelper.ScriptServer/scripts/Report/RptUC/IncomeByContact.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.Report)

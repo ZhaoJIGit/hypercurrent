@@ -1,0 +1,76 @@
+﻿@using JieNor.Megi.Identity.HtmlHelper
+@using JieNor.Megi.EntityModel.MultiLanguage
+@using JieNor.Megi.Identity.Go.HtmlHelper
+@using JieNor.Megi.Core.Const
+@using JieNor.Megi.Common.Utility
+@using JieNor.Megi.Common.Context
+@using JieNor.Megi.EntityModel.Enum
+
+<!--转帐单-->
+<div class="dv-transfer-div dv-doc-div">
+    <div class="dv-table-div">
+        <table class="dv-transfer-table dv-table">
+            <thead>
+                <tr>
+                    <!--全选框-->
+                    <th class="dv-doc-check" style="width:2%;"><input type="checkbox" /></th>
+                    <!--业务日期-->
+                    <th class="dv-doc-date" style="width: 8%;">@HtmlLang.Write(LangModule.IV, "Date", "Date")</th>
+                    <!--描述-->
+                    <th class="dv-doc-reference" style="width:15%;">@HtmlLang.Write(LangModule.IV, "Reference", "Reference")</th>
+                    <!--转出账户-->
+                    <th class="dv-doc-from" style="width:10%;">@HtmlLang.Write(LangModule.IV, "FromAccount", "转出账户")</th>
+                    <!--转入账户-->
+                    <th class="dv-doc-to" style="width:10%;">@HtmlLang.Write(LangModule.IV, "ToAccount", "转入账户")</th>
+                    <!--金额-->
+                    <th class="dv-doc-amount" style="width: 8%;">@HtmlLang.Write(LangModule.IV, "Amount", "Amount")</th>
+                    <!--空列-->
+                    <th class="dv-empty" style="width:1%;">&nbsp;&nbsp;</th>
+                    <!--应收科目(贷方)-->
+                    <th class="dv-voucher-debit" style="width:10%;">@HtmlLang.Write(LangModule.GL, "Debit", "Debit")</th>
+                    <!--应收科目(贷方)-->
+                    <th class="dv-voucher-exchange-loss" style="width:10%;">@HtmlLang.Write(LangModule.GL, "ExchangeLoss", "汇兑损益")</th>
+                    <!--收入科目(借方)-->
+                    <th class="dv-voucher-credit" style="width:10%;">@HtmlLang.Write(LangModule.GL, "Credit", "Credit")</th>
+                    <!--凭证编号-->
+                    <th class="dv-voucher-number" style="width:8%;">@HtmlLang.Write(LangModule.GL, "Voucher", "Voucher")</th>
+                    <!--边距-->
+                    <th class="dv-border" style="width:1%;">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="dv-tr demo-tr" style="display:none;">
+                    <!--全选框-->
+                    <td class="dv-doc-check" style="width: 2%;"><div><input type="checkbox" /></div></td>
+                    <!--业务日期-->
+                    <td class="dv-doc-date dv-doc-td dv-td-left tleft" style="width: 8%;"><div>&nbsp;</div></td>
+                    <!--摘要-->
+                    <td class="dv-doc-reference dv-doc-td  tleft" style="width: 15%;"><div>&nbsp;</div></td>
+                    <!--转出-->
+                    <td class="dv-doc-from dv-doc-td tleft" style="width: 10%;"><div>&nbsp;</div></td>
+                    <!--转入-->
+                    <td class="dv-doc-to dv-doc-td tleft" style="width: 10%;"><div>&nbsp;</div></td>
+                    <!--金额-->
+                    <td class="dv-doc-amount dv-doc-td tright dv-td-right" style="width: 8%;"><div>&nbsp;</div></td>
+                    <!--空列-->
+                    <td class="dv-empty" style="width: 1%;"><div>&nbsp;&nbsp;</div></td>
+                    <!--应收科目(借方)-->
+                    <td class="dv-voucher-debit dv-voucher-td  dv-td-left" style="width: 10%;"><div>&nbsp;</div></td>
+                    <!--应收科目(借方)-->
+                    <td class="dv-voucher-tax dv-voucher-td" style="width: 10%;"><div>&nbsp;</div></td>
+                    <!--收入科目(贷方)-->
+                    <td class="dv-voucher-credit dv-voucher-td" style="width: 10%;"><div>&nbsp;</div></td>
+                    <!--凭证编号-->
+                    <td class="dv-voucher-number dv-voucher-td  dv-td-right tcenter" style="width: 8%;"><div>&nbsp;</div></td>
+                    <!--边距-->
+                    <td class="dv-border" style="width:1%;"><div>&nbsp;&nbsp;</div></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!--分页功能-->
+<div class="dv-pagination">
+
+</div>

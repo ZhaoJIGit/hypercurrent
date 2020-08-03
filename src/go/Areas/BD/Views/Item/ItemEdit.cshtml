@@ -1,0 +1,112 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    // ItemModel item = ViewBag.info as  ItemModel;
+}
+@using JieNor.Megi.Common.Utility;
+<style>
+    div {
+        -khtml-user-select:none;
+    }
+</style>
+<div id="divItemEdit" class="m-form m-imain m-form-hrtl m-form-hrtl-lbl100" style="padding-left:20px">
+    <div class="m-form-field">
+        <div class="m-form-setion">@HtmlLang.Write(LangModule.BD, "ItemCode", "Item Code")</div>
+        <div class="m-form-input">
+            <input class="easyui-validatebox mg-width200 mg-data" id="txtMNumber" data-options="required:true" name="MNumber" style="height: 22px;line-height: 22px;" />
+        </div>
+    </div>
+
+
+    <div class="m-form-field">
+        <div class="m-form-setion" style="position:relative;top:4px;">@HtmlLang.Write(LangModule.BD, "ItemName", "商品名称")</div>
+        <div class="m-form-input">
+            <input id="txtMDesc" class="easyui-validatebox mg-data mg-width200 m-lang" name="MDesc" />
+        </div>
+    </div>
+
+
+    <div class="m-form-field-label" style="height: 50px;">
+        <div class="m-form-setion">&nbsp;</div>
+        <div class="m-form-sub-title">
+            <span class="mg-width80" style="width: 183px;display: inline-block;">@HtmlLang.Write(LangModule.BD, "UnitPrice", "Unit Price")</span>
+            <span class="mg-width150"></span>
+            <span class="mg-width150">@HtmlLang.Write(LangModule.BD, "TaxRate", "Tax Rate")</span>
+        </div>
+        <br class="clear" />
+    </div>
+    <div class="m-form-field">
+        <div class="m-form-setion">@HtmlLang.Write(LangModule.BD, "ForPurchases", "For Purchases")</div>
+        <div class="m-form-input">
+            <input class="easyui-validatebox mg-width80 mg-data easyui-numberbox" data-options="precision:8,minPrecision:2" name="MPurPrice" style="height: 25px; line-height: 25px; " />
+            <span>@ViewBag.BaseCurrency</span>
+            @*<select name="MPurAcctID" class="easyui-combobox mg-data" style="width:150px; height:26px;" data-options="required:true,@HtmlBDAccount.DataOptions()" panelheight="100"></select>*@
+            <select name="MPurTaxTypeID" class="easyui-combobox mg-data" style="width:136px;height:25px;line-height:25px" data-options="required:false,panelHeight:120">
+                <option value="">@HtmlLang.Write(LangKey.None)</option>
+                @JieNor.Megi.Identity.Go.HtmlHelper.HtmlREGTaxRate.SelectOptions()
+            </select>
+        </div>
+    </div>
+    <div class="m-form-field">
+        <div class="m-form-setion">@HtmlLang.Write(LangModule.BD, "ForSales", "For Sales")</div>
+        <div class="m-form-input">
+            <input class="easyui-validatebox mg-width80 mg-data easyui-numberbox" data-options="precision:8,minPrecision:2" name="MSalPrice" style="height: 25px; line-height: 25px; " />
+            <span>@ViewBag.BaseCurrency</span>
+            @*<select name="MSalCostAcctID" class="easyui-combobox mg-data" style="width:150px; height:26px;" data-options="@HtmlBDAccount.DataOptions()" panelheight="100"></select>*@
+            <select name="MSalTaxTypeID" class="easyui-combobox mg-data" style="width: 136px; height: 25px; line-height: 25px" data-options="required:false,panelMaxHeight:80,panelHeight:120">
+                <option value="">@HtmlLang.Write(LangKey.None)</option>
+                @JieNor.Megi.Identity.Go.HtmlHelper.HtmlREGTaxRate.SelectOptions()
+            </select>
+        </div>
+    </div>
+    @if (ViewBag.IsEnableGL == true)
+    {
+        <div class="m-form-field-label" style="height: 10px; padding-top:10px">
+            <div class="m-form-setion mg-data">@HtmlLang.Write(LangModule.BD, "IsExpenseItem", "Expense item") &nbsp;<input type="checkbox" id="ckbExpenseItem" name="MIsExpenseItem" /></div>
+
+        </div>
+
+        <div class="m-form-field-label" style="height: 50px;">
+            <div class="m-form-setion">&nbsp;</div>
+            <div class="m-form-sub-title">
+                <span class="mg-width150" style="display:inline-block;width:150px;">@HtmlLang.Write(LangModule.BD, "IncomeAccount", "Income Account")</span>
+                <span class="mg-width80" id="lblSpecial" style="display:inline-block;width:150px;">@HtmlLang.Write(LangModule.BD, "CostAccount", "Cost Account")</span>
+                <span class="mg-width80 inventory-account" style="display:inline-block;width:150px;">@HtmlLang.Write(LangModule.BD, "InventoryAccount", "Inventory Account")</span>
+            </div>
+            <br class="clear" />
+        </div>
+        <div class="m-form-field">
+            <div class="m-form-setion"></div>
+            <div class="m-form-input">
+
+                <!--收入类对应的科目-->
+                <input class="easyui-combobox mg-data m-account-combobox" data-options="valueField:'MCode',textField:'MFullName',url:'/BD/BDAccount/GetBDAccountListByCode?IsActive'" id="cbxInA" style="width:150px; height:26px" />
+                <!--成本类对应的科目-->
+                <input class="easyui-combobox mg-data m-account-combobox" data-options="valueField:'MCode',textField:'MFullName',url:'/BD/BDAccount/GetBDAccountListByCode?IsActive'" id="cbxCA" style="width: 150px; height: 26px" />
+                <!--采购类对应的科目-->
+                <span class="inventory-account">
+                    <input class="easyui-combobox mg-data m-account-combobox" data-options="valueField:'MCode',textField:'MFullName',url:'/BD/BDAccount/GetBDAccountListByCode?IsActive'" id="cbxIA" style="width: 150px; height: 26px" />
+                </span>
+            </div>
+        </div>
+
+    }
+
+    <input class="mg-data m-form-key" type="hidden" maxlength="30" id="hidItemID" name="MItemID" value="@ViewBag.ItemID">
+</div>
+<div class="m-toolbar-footer">
+    @if (HtmlSECMenu.HavePermission(BizObject.Setting, PermissionItem.Change))
+    {
+        <div class="left">
+            <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray" id="aCancel">@HtmlLang.Write(LangKey.Cancel)</a>
+        </div>
+        <div class="right">
+            <a href="/BD/Item/ItemList" class="easyui-linkbutton easyui-linkbutton-yellow" id="aSave">@HtmlLang.Write(LangKey.Save)</a>
+        </div>
+        <br class="clear" />
+    }
+</div>
+<input type="hidden" id="hideIsEnableGL" value="@ViewBag.IsEnableGL" />
+@HtmlLang.WriteScript(LangModule.BD)
+@HtmlLang.WriteScript(LangModule.Acct)
+<script src="@ServerHelper.ScriptServer/scripts/BD/Item/ItemEdit.js?@ServerHelper.JSVersion"></script>
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)

@@ -1,0 +1,85 @@
+﻿@using JieNor.Megi.Identity.HtmlHelper
+@using JieNor.Megi.EntityModel.MultiLanguage
+@using JieNor.Megi.Identity.Go.HtmlHelper
+@using JieNor.Megi.Core.Const
+@using JieNor.Megi.Common.Context
+@using JieNor.Megi.Identity.Go.AutoManager
+@using JieNor.Megi.Common.Utility
+
+
+
+
+<div class="fp-fastcode-partial demo" style="overflow-y:hidden;display:none;">
+    <a class="fp-close fp-fastcode-close" href="javascript:void(0);">
+        &nbsp;
+    </a>
+    <div class="fp-fastcode-body" style="margin-top:20px;">
+        <input type="hidden" id="fastCodeID" />
+        <table class="fp-fastcode-table" style="width:100%;padding: 0 10px 0 20px;">
+            <tr class="fp-fastcode-tr">
+                <td class="fp-fastcode-field-name">@HtmlLang.Write(LangModule.FP, "FastCode", "快速码")</td>
+                <td class="fp-fastcode-field-value">
+                    <input class="easyui-validatebox text-input" type="text" field="MFastCode" />
+                </td>
+                <td class="fp-fastcode-field-name">@HtmlLang.Write(LangModule.FP, "Description", "描述")</td>
+                <td class="fp-fastcode-field-value">
+                    <input class="easyui-validatebox text-input" type="text" field="MDescription" />
+                </td>
+
+            </tr>
+            <tr class="fp-fastcode-tr">
+                <td class="fp-fastcode-field-name">@HtmlLang.Write(LangModule.FP, "Explanation", "摘要")</td>
+                <td class="fp-fastcode-field-value">
+                    <input class="easyui-validatebox text-input" type="text" field="MExplanation" />
+                </td>
+                <td class="fp-fastcode-field-name"></td>
+                <td class="fp-fastcode-field-value">
+                    <input class="easyui-validatebox" type="text" style="display:none;" />
+                </td>
+            </tr>
+            <tr class="fp-fastcode-tr">
+                <td class="fp-fastcode-field-name">@HtmlLang.Write(LangModule.FP, "MerItem", "商品项目")</td>
+                <td class="fp-fastcode-field-value">
+                    <input class="easyui-validatebox text-input" type="text" field="MMerItemID" />
+                </td>
+                <td class="fp-fastcode-field-name"></td>
+                <td class="fp-fastcode-field-value">
+                    <input class="easyui-validatebox" type="text" style="display:none;" />
+                </td>
+            </tr>
+            <tr class="fp-fastcode-tr">
+                <td class="fp-fastcode-field-name">@HtmlLang.Write(LangModule.FP, "DebitAccount", "借方科目")</td>
+                <td class="fp-fastcode-field-value">
+                    <input class="easyui-validatebox" type="text" field="MDebitAccount" />
+                </td>
+                <td class="fp-fastcode-field-name"></td>
+                <td class="fp-fastcode-field-value">
+                    <input class="easyui-validatebox" type="text" style="display:none;" />
+                </td>
+            </tr>
+            <tr class="fp-fastcode-tr">
+                <td class="fp-fastcode-field-name">@HtmlLang.Write(LangModule.FP, "CreditAccount", "贷方科目")</td>
+                <td class="fp-fastcode-field-value">
+                    <input class="easyui-validatebox" type="text" field="MCreditAccount" />
+                </td>
+                <td class="fp-fastcode-field-name"></td>
+                <td class="fp-fastcode-field-value">
+                    <input class="easyui-validatebox" type="text" style="display:none;" />
+                </td>
+            </tr>
+            <tr class="fp-fastcode-tr">
+                <td class="fp-fastcode-field-name">@HtmlLang.Write(LangModule.FP, "TaxAccount", "税科目")</td>
+                <td class="fp-fastcode-field-value">
+                    <input class="easyui-validatebox" type="text" field="MTaxAccount" />
+                </td>
+                <td class="fp-fastcode-field-name"></td>
+                <td class="fp-fastcode-field-value">
+                    <input class="easyui-validatebox" type="text" style="display:none;" />
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="fp-setting-bottom" style="margin-top:10px;">
+        <a class="easyui-linkbutton easyui-linkbutton-yellow fp-fastcode-save" id="btnSaveFastCode" style="float:right;margin-right:20px;">@HtmlLang.Write(LangModule.FP, "Save", "保存")</a>
+    </div>
+</div>

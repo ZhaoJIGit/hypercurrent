@@ -1,0 +1,64 @@
+﻿@using JieNor.Megi.Identity.HtmlHelper
+@using JieNor.Megi.EntityModel.MultiLanguage
+
+<div class="vc-fastcode-title">
+    @HtmlLang.Write(LangModule.GL, "ChooseElements", "请选择要操作的元素")
+</div>
+<!--灰色的遮罩层-->
+<div class="vc-fastcode-table-div">
+   
+    <!--模板凭证预览-->
+    <table class="vc-fastcode-table">
+        <!--第一行 标题-->
+        <tr class="vc-fastcode-table-th">
+            <!--用于全选用的-->
+            <th class="vc-fastcode-checkall " rowwidth="60">&nbsp;</th>
+            <!--摘要-->
+            <th class="vc-fastcode-explanation " rowwidth="160"><input type="checkbox" checked="checked" class="vc-fastcode-explanation-select" /> @HtmlLang.Write(LangModule.GL, "Explanation", "摘要")</th>
+            <!--科目-->
+            <th class="vc-fastcode-account " rowwidth="160"><input type="checkbox" checked="checked" class="vc-fastcode-account-select" /> @HtmlLang.Write(LangModule.GL, "Account", "科目")</th>
+            <!--外币核算-->
+            <th class="vc-fastcode-currency " rowwidth="160"><input type="checkbox" checked="checked" disabled="disabled" class="vc-fastcode-currency-select" /> @HtmlLang.Write(LangModule.GL, "CheckForCurrency", "外币核算")</th>
+            <!--辅助核算-->
+            <th class="vc-fastcode-checkgroup " rowwidth="160"><input type="checkbox" checked="checked" disabled="disabled" class="vc-fastcode-checkgroup-select" /> @HtmlLang.Write(LangModule.GL, "CheckGroup", "核算维度")</th>
+            <!--借方金额-->
+            <th class="vc-fastcode-debit " rowwidth="150"><input type="checkbox" checked="checked" class="vc-fastcode-debit-select" />  @HtmlLang.Write(LangModule.GL, "Debit", "Debit")</th>
+            <!--贷方金额-->
+            <th class="vc-fastcode-credit " rowwidth="150"><input type="checkbox" checked="checked" class="vc-fastcode-credit-select" />  @HtmlLang.Write(LangModule.GL, "Credit", "Credit")</th>
+        </tr>
+    </table>
+</div>
+
+<div class="vc-fastcode-input-div">
+    <!--快速码设置-->
+    <table class="tb-fastcode-input-table">
+        <tr class="tb-fastcode-input-tr">
+            <td class="tb-fastcode-input-span">
+                @HtmlLang.Write(LangModule.Common, "FastCode", "快速码"):
+            </td>
+            <td class="">
+                <!--快速码-->
+                <input class="tb-fastcode-input" nocheckchange="1" hint="@HtmlLang.Write(LangModule.Common, "FastCode", "快速码")" />
+            </td>
+            <td class="tb-fastcode-input-span">
+                @HtmlLang.Write(LangKey.Description):
+            </td>
+            <td class="tb-fastcode-input-select">
+                <!--描述-->
+                <input class="tb-description-input" nocheckchange="1" hint="@HtmlLang.Write(LangKey.Description)" />
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div class="m-toolbar-footer vc-fastcode-operation-div">
+    <div class="left">
+        <!--取消保存为模板-->
+        <a href="javascript:void(0)" id="btnModuleCancel" class="easyui-linkbutton">@HtmlLang.Write(LangKey.Cancel) [Alt+C]</a>
+    </div>
+    <div class="right">
+        <!--保存为模板-->
+        <a href="javascript:void(0)" id="btnModuleSave" class="easyui-linkbutton easyui-linkbutton-yellow">@HtmlLang.Write(LangKey.Save) [Ctrl+S]</a>
+    </div>
+</div>
+

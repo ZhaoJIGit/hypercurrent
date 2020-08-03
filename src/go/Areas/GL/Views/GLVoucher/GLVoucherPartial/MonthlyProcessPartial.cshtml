@@ -1,0 +1,545 @@
+﻿@using JieNor.Megi.Identity.HtmlHelper
+@using JieNor.Megi.EntityModel.MultiLanguage
+@using JieNor.Megi.Identity.Go.HtmlHelper
+@using JieNor.Megi.Core.Const
+@using JieNor.Megi.Common.Utility
+@using JieNor.Megi.Common.Context
+@using JieNor.Megi.EntityModel.Enum
+@using JieNor.Megi.Identity.Go.AutoManager
+
+@{
+
+    var dashBoardInfoModel = ViewData["DashboardInfo"] as JieNor.Megi.DataModel.GL.GLDashboardInfoModel;
+
+
+    var lang = dashBoardInfoModel.LangID;
+    var dateString = dashBoardInfoModel.DateString;
+    var defaultDate = dashBoardInfoModel.DefaultDate;
+
+    var faBegun = dashBoardInfoModel.ctx.MFABeginDate.Year >= dashBoardInfoModel.ctx.MGLBeginDate.Year ? "1" : "0";
+    var faYear = dashBoardInfoModel.ctx.MFABeginDate.Year;
+    var faPeriod = dashBoardInfoModel.ctx.MFABeginDate.Month;
+
+}
+
+<!--顶部是一些功能按钮和日期选择-->
+<div class="mp-top-div m-tab-toolbar">
+    <!--左边-->
+    <div class="mp-top-left left">
+        <!--最左边是一个测算金额的按钮-->
+        <a href="####" id="btnMeasure" class="easyui-linkbutton easyui-linkbutton-yellow mp-button-measure" style="width:120px;display:none">@HtmlLang.Write(LangModule.Common, "measure", "Measure")</a>
+        @if (dashBoardInfoModel.CanApprove)
+        {
+            <!--结算，反结算-->
+            <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow vl-settlement-button" id="btnSettlement" style="display:none;">@HtmlLang.Write(LangModule.GL, "Settlement", "Settlement")</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow vl-unsettlement-button" id="btnUnsettlement" style="display:none;">@HtmlLang.Write(LangModule.GL, "Unsettlement", "Unsettlement")</a>
+        }
+    </div>
+    <!--右边-->
+    <div class="mp-top-right right">
+        <!--日期-->
+        <input type="text" id="txtPeriod" class="mp-date-input Wdate left" onfocus="WdatePicker({ dateFmt: 'yyyy-MM',readOnly:true, lang: '@lang', skin:'@lang',  @dateString, isShowClear : false })" hint="@HtmlLang.Write(LangModule.Common, "Date", "Date")" value="@defaultDate" />
+        <!--查询按钮-->
+        <a id="btnSearch" class="easyui-linkbutton mp-button-search">@HtmlLang.Write(LangKey.Search)</a>
+    </div>
+</div>
+<!--底部是自动生成的凭证-->
+<div class="mp-buttom-div left">
+    <!--结转销售成本-->
+    <div class="mp-transfer-demo-div-0" style="display:none;">
+        <!--匹配状态-->
+        <p>
+            <div class="mp-create-status">
+                <!--已经完成凭证-->
+                <span class="create-ico create vc-hide" style="display:none;"></span>
+                <!--未已经完成凭证-->
+                <span class="uncreate-ico uncreate"></span>
+                <!--已经测算-->
+                <span class="calculated-ico calculated" style="display:none;"></span>
+                <!--文字 已生成-->
+                <span class="create-text create vc-hide" style="display:none;">@HtmlLang.Write(LangModule.Common, "Created", "Created")</span>
+                <!--文字 未生成-->
+                <span class="uncreate-text uncreate">@HtmlLang.Write(LangModule.Common, "Uncreated", "Uncreated")</span>
+                <!--文字，已测算-->
+                <span class="calculated-text calculated  vc-hide">@HtmlLang.Write(LangModule.Common, "calculated", "已测算")</span>
+            </div>
+        </p>
+        <!--匹配内容-->
+        <p>
+            <!--整个凭证表单-->
+            <div class="mp-transfer-record">
+                <!--中间的内容用一个表格来展示-->
+                <table class="mp-transfer-table">
+                    <!--第一行展示凭证名称-->
+                    <tr>
+                        <!--凭证名称-->
+                        <td class="mp-left-td"><span class="mp-transfer-name"></span></td>
+                        <!--显示金额-->
+                        <td class="mp-center-td" rowspan="2">@HtmlLang.Write(LangModule.Common, "Amount", "Amount"):<span class="mp-transfer-amount"></span></td>
+                        <!--转结详情-->
+                        <td class="mp-transfer-detail mp-right-td" rowspan="2">&nbsp;</td>
+                    </tr>
+                    <!--第二行展示凭证号-->
+                    <tr>
+                        <!--凭证编号，针对已经生成凭证的项-->
+                        <td class="mp-vocher-number-td"><span class="mp-voucher-number"></span></td>
+                    </tr>
+                </table>
+            </div>
+        </p>
+    </div>
+    <!--计提工资-->
+    <div class="mp-transfer-demo-div-1" style="display:none;">
+        <!--匹配状态-->
+        <p>
+            <div class="mp-create-status">
+                <!--已经完成凭证-->
+                <span class="create-ico create vc-hide" style="display:none;"></span>
+                <!--未已经完成凭证-->
+                <span class="uncreate-ico uncreate"></span>
+                <!--已经测算-->
+                <span class="calculated-ico calculated" style="display:none;"></span>
+                <!--文字 已生成-->
+                <span class="create-text create vc-hide" style="display:none;">@HtmlLang.Write(LangModule.GL, "Created", "Created")</span>
+                <!--文字 未生成-->
+                <span class="uncreate-text uncreate">@HtmlLang.Write(LangModule.GL, "Uncreated", "Uncreated")</span>
+                <!--文字，已测算-->
+                <span class="calculated-text calculated  vc-hide">@HtmlLang.Write(LangModule.Common, "calculated", "已测算")</span>
+            </div>
+        </p>
+        <!--匹配内容-->
+        <p>
+            <!--整个凭证表单-->
+            <div class="mp-transfer-record">
+                <!--中间的内容用一个表格来展示-->
+                <table class="mp-transfer-table">
+                    <!--第一行展示凭证名称-->
+                    <tr>
+                        <!--凭证名称-->
+                        <td class="mp-left-td"><span class="mp-transfer-name"></span></td>
+                        <!--显示金额-->
+                        <td class="mp-center-td" rowspan="2">@HtmlLang.Write(LangModule.Common, "Amount", "Amount"):<span class="mp-transfer-amount"></span></td>
+                        <!--转结详情-->
+                        <td class="mp-transfer-detail mp-right-td" rowspan="2">&nbsp;</td>
+                    </tr>
+                    <!--第二行展示凭证号-->
+                    <tr>
+                        <!--凭证编号，针对已经生成凭证的项-->
+                        <td class="mp-vocher-number-td"><span class="mp-voucher-number"></span></td>
+                    </tr>
+                </table>
+            </div>
+        </p>
+    </div>
+    <!--计提折旧-->
+    <div class="mp-transfer-demo-div-2" style="display:none;">
+        <!--匹配状态-->
+        <p>
+            <div class="mp-create-status">
+                <!--已经完成凭证-->
+                <span class="create-ico create vc-hide" style="display:none;"></span>
+                <!--未已经完成凭证-->
+                <span class="uncreate-ico uncreate"></span>
+                <!--已经测算-->
+                <span class="calculated-ico calculated" style="display:none;"></span>
+                <!--文字 已生成-->
+                <span class="create-text create vc-hide" style="display:none;">@HtmlLang.Write(LangModule.GL, "Created", "Created")</span>
+                <!--文字 未生成-->
+                <span class="uncreate-text uncreate">@HtmlLang.Write(LangModule.GL, "Uncreated", "Uncreated")</span>
+                <!--文字，已测算-->
+                <span class="calculated-text calculated  vc-hide">@HtmlLang.Write(LangModule.Common, "calculated", "已测算")</span>
+            </div>
+        </p>
+        <!--匹配内容-->
+        <p>
+            <!--整个凭证表单-->
+            <div class="mp-transfer-record">
+                <!--中间的内容用一个表格来展示-->
+                <table class="mp-transfer-table">
+                    <!--第一行展示凭证名称-->
+                    <tr>
+                        <!--凭证名称-->
+                        <td class="mp-left-td"><span class="mp-transfer-name"></span></td>
+                        <!--显示金额-->
+                        <td class="mp-center-td" rowspan="2">@HtmlLang.Write(LangModule.Common, "Amount", "Amount"):<span class="mp-transfer-amount"></span></td>
+                        <!--转结详情-->
+                        <td class="mp-transfer-detail mp-right-td" rowspan="2">&nbsp;</td>
+                    </tr>
+                    <!--第二行展示凭证号-->
+                    <tr>
+                        <!--凭证编号，针对已经生成凭证的项-->
+                        <td class="mp-vocher-number-td"><span class="mp-voucher-number"></span></td>
+                    </tr>
+                </table>
+            </div>
+        </p>
+    </div>
+    <!--摊销待摊费用-->
+    <div class="mp-transfer-demo-div-3" style="display:none;">
+        <!--匹配状态-->
+        <p>
+            <div class="mp-create-status">
+                <!--已经完成凭证-->
+                <span class="create-ico create vc-hide" style="display:none;"></span>
+                <!--未已经完成凭证-->
+                <span class="uncreate-ico uncreate"></span>
+                <!--已经测算-->
+                <span class="calculated-ico calculated" style="display:none;"></span>
+                <!--文字 已生成-->
+                <span class="create-text create vc-hide" style="display:none;">@HtmlLang.Write(LangModule.Common, "Created", "Created")</span>
+                <!--文字 未生成-->
+                <span class="uncreate-text uncreate">@HtmlLang.Write(LangModule.Common, "Uncreated", "Uncreated")</span>
+                <!--文字，已测算-->
+                <span class="calculated-text calculated  vc-hide">@HtmlLang.Write(LangModule.Common, "calculated", "已测算")</span>
+            </div>
+        </p>
+        <!--匹配内容-->
+        <p>
+            <!--整个凭证表单-->
+            <div class="mp-transfer-record">
+                <!--中间的内容用一个表格来展示-->
+                <table class="mp-transfer-table">
+                    <!--第一行展示凭证名称-->
+                    <tr>
+                        <!--凭证名称-->
+                        <td class="mp-left-td"><span class="mp-transfer-name"></span></td>
+                        <!--显示金额-->
+                        <td class="mp-center-td" rowspan="2">@HtmlLang.Write(LangModule.Common, "Amount", "Amount"):<span class="mp-transfer-amount"></span></td>
+                        <!--转结详情-->
+                        <td class="mp-transfer-detail mp-right-td" rowspan="2">&nbsp;</td>
+                    </tr>
+                    <!--第二行展示凭证号-->
+                    <tr>
+                        <!--凭证编号，针对已经生成凭证的项-->
+                        <td class="mp-vocher-number-td"><span class="mp-voucher-number"></span></td>
+                    </tr>
+                </table>
+            </div>
+        </p>
+    </div>
+    <!--计提税金-->
+    <div class="mp-transfer-demo-div-4" style="display:none;">
+        <!--匹配状态-->
+        <p>
+            <div class="mp-create-status">
+                <!--已经完成凭证-->
+                <span class="create-ico create vc-hide" style="display:none;"></span>
+                <!--未已经完成凭证-->
+                <span class="uncreate-ico uncreate"></span>
+                <!--已经测算-->
+                <span class="calculated-ico calculated" style="display:none;"></span>
+                <!--文字 已生成-->
+                <span class="create-text create vc-hide" style="display:none;">@HtmlLang.Write(LangModule.Common, "Created", "Created")</span>
+                <!--文字 未生成-->
+                <span class="uncreate-text uncreate">@HtmlLang.Write(LangModule.Common, "Uncreated", "Uncreated")</span>
+                <!--文字，已测算-->
+                <span class="calculated-text calculated  vc-hide">@HtmlLang.Write(LangModule.Common, "calculated", "已测算")</span>
+            </div>
+        </p>
+        <!--匹配内容-->
+        <p>
+            <!--整个凭证表单-->
+            <div class="mp-transfer-record">
+                <!--中间的内容用一个表格来展示-->
+                <table class="mp-transfer-table">
+                    <!--第一行展示凭证名称-->
+                    <tr>
+                        <!--凭证名称-->
+                        <td class="mp-left-td"><span class="mp-transfer-name"></span></td>
+                        <!--显示金额-->
+                        <td class="mp-center-td" rowspan="2">@HtmlLang.Write(LangModule.Common, "Amount", "Amount"):<span class="mp-transfer-amount"></span></td>
+                        <!--转结详情-->
+                        <td class="mp-transfer-detail mp-right-td" rowspan="2">&nbsp;</td>
+                    </tr>
+                    <!--第二行展示凭证号-->
+                    <tr>
+                        <!--凭证编号，针对已经生成凭证的项-->
+                        <td class="mp-vocher-number-td"><span class="mp-voucher-number"></span></td>
+                    </tr>
+                </table>
+            </div>
+        </p>
+    </div>
+    <!--结转未交增值税-->
+    <div class="mp-transfer-demo-div-5" style="display:none;">
+        <!--匹配状态-->
+        <p>
+            <div class="mp-create-status">
+                <!--已经完成凭证-->
+                <span class="create-ico create vc-hide" style="display:none;"></span>
+                <!--未已经完成凭证-->
+                <span class="uncreate-ico uncreate"></span>
+                <!--已经测算-->
+                <span class="calculated-ico calculated" style="display:none;"></span>
+                <!--文字 已生成-->
+                <span class="create-text create vc-hide" style="display:none;">@HtmlLang.Write(LangModule.Common, "Created", "Created")</span>
+                <!--文字 未生成-->
+                <span class="uncreate-text uncreate">@HtmlLang.Write(LangModule.Common, "Uncreated", "Uncreated")</span>
+                <!--文字，已测算-->
+                <span class="calculated-text calculated  vc-hide">@HtmlLang.Write(LangModule.Common, "calculated", "已测算")</span>
+            </div>
+        </p>
+        <!--匹配内容-->
+        <p>
+            <!--整个凭证表单-->
+            <div class="mp-transfer-record">
+                <!--中间的内容用一个表格来展示-->
+                <table class="mp-transfer-table">
+                    <!--第一行展示凭证名称-->
+                    <tr>
+                        <!--凭证名称-->
+                        <td class="mp-left-td"><span class="mp-transfer-name"></span></td>
+                        <!--显示金额-->
+                        <td class="mp-center-td" rowspan="2">@HtmlLang.Write(LangModule.Common, "Amount", "Amount"):<span class="mp-transfer-amount"></span></td>
+                        <!--转结详情-->
+                        <td class="mp-transfer-detail mp-right-td" rowspan="2">&nbsp;</td>
+                    </tr>
+                    <!--第二行展示凭证号-->
+                    <tr>
+                        <!--凭证编号，针对已经生成凭证的项-->
+                        <td class="mp-vocher-number-td"><span class="mp-voucher-number"></span></td>
+                    </tr>
+                </table>
+            </div>
+        </p>
+    </div>
+    <!--期末调汇-->
+    <div class="mp-transfer-demo-div-9" style="display:none;">
+        <!--匹配状态-->
+        <p>
+            <div class="mp-create-status">
+                <!--已经完成凭证-->
+                <span class="create-ico create vc-hide" style="display:none;"></span>
+                <!--未已经完成凭证-->
+                <span class="uncreate-ico uncreate"></span>
+                <!--已经测算-->
+                <span class="calculated-ico calculated" style="display:none;"></span>
+                <!--文字 已生成-->
+                <span class="create-text create vc-hide" style="display:none;">@HtmlLang.Write(LangModule.Common, "Created", "Created")</span>
+                <!--文字 未生成-->
+                <span class="uncreate-text uncreate">@HtmlLang.Write(LangModule.Common, "Uncreated", "Uncreated")</span>
+                <!--文字，已测算-->
+                <span class="calculated-text calculated  vc-hide">@HtmlLang.Write(LangModule.Common, "calculated", "已测算")</span>
+            </div>
+        </p>
+        <!--匹配内容-->
+        <p>
+            <!--整个凭证表单-->
+            <div class="mp-transfer-record">
+                <!--中间的内容用一个表格来展示-->
+                <table class="mp-transfer-table">
+                    <!--第一行展示凭证名称-->
+                    <tr>
+                        <!--凭证名称-->
+                        <td class="mp-left-td"><span class="mp-transfer-name"></span></td>
+                        <!--显示金额-->
+                        <td class="mp-center-td" rowspan="2">@HtmlLang.Write(LangModule.Common, "Amount", "Amount"):<span class="mp-transfer-amount"></span></td>
+                        <!--转结详情-->
+                        <td class="mp-transfer-detail mp-right-td" rowspan="2">&nbsp;</td>
+                    </tr>
+                    <!--第二行展示凭证号-->
+                    <tr>
+                        <!--凭证编号，针对已经生成凭证的项-->
+                        <td class="mp-vocher-number-td"><span class="mp-voucher-number"></span></td>
+                    </tr>
+                </table>
+            </div>
+        </p>
+    </div>
+    <!--计提所得税-->
+    <div class="mp-transfer-demo-div-6" style="display:none;">
+        <!--匹配状态-->
+        <p>
+            <div class="mp-create-status">
+                <!--已经完成凭证-->
+                <span class="create-ico create vc-hide" style="display:none;"></span>
+                <!--未已经完成凭证-->
+                <span class="uncreate-ico uncreate"></span>
+                <!--已经测算-->
+                <span class="calculated-ico calculated" style="display:none;"></span>
+                <!--文字 已生成-->
+                <span class="create-text create vc-hide" style="display:none;">@HtmlLang.Write(LangModule.Common, "Created", "Created")</span>
+                <!--文字 未生成-->
+                <span class="uncreate-text uncreate">@HtmlLang.Write(LangModule.Common, "Uncreated", "Uncreated")</span>
+                <!--文字，已测算-->
+                <span class="calculated-text calculated  vc-hide">@HtmlLang.Write(LangModule.Common, "calculated", "已测算")</span>
+            </div>
+        </p>
+        <!--匹配内容-->
+        <p>
+            <!--整个凭证表单-->
+            <div class="mp-transfer-record">
+                <!--中间的内容用一个表格来展示-->
+                <table class="mp-transfer-table">
+                    <!--第一行展示凭证名称-->
+                    <tr>
+                        <!--凭证名称-->
+                        <td class="mp-left-td"><span class="mp-transfer-name"></span></td>
+                        <!--显示金额-->
+                        <td class="mp-center-td" rowspan="2">@HtmlLang.Write(LangModule.Common, "Amount", "Amount"):<span class="mp-transfer-amount"></span></td>
+                        <!--转结详情-->
+                        <td class="mp-transfer-detail mp-right-td" rowspan="2">&nbsp;</td>
+                    </tr>
+                    <!--第二行展示凭证号-->
+                    <tr>
+                        <!--凭证编号，针对已经生成凭证的项-->
+                        <td class="mp-vocher-number-td"><span class="mp-voucher-number"></span></td>
+                    </tr>
+                </table>
+            </div>
+        </p>
+    </div>
+    <!--结转损益-->
+    <div class="mp-transfer-demo-div-7" style="display:none;">
+        <!--匹配状态-->
+        <p>
+            <div class="mp-create-status">
+                <!--已经完成凭证-->
+                <span class="create-ico create vc-hide" style="display:none;"></span>
+                <!--未已经完成凭证-->
+                <span class="uncreate-ico uncreate"></span>
+                <!--已经测算-->
+                <span class="calculated-ico calculated" style="display:none;"></span>
+                <!--文字 已生成-->
+                <span class="create-text create vc-hide" style="display:none;">@HtmlLang.Write(LangModule.Common, "Created", "Created")</span>
+                <!--文字 未生成-->
+                <span class="uncreate-text uncreate">@HtmlLang.Write(LangModule.Common, "Uncreated", "Uncreated")</span>
+                <!--文字，已测算-->
+                <span class="calculated-text calculated  vc-hide">@HtmlLang.Write(LangModule.Common, "calculated", "已测算")</span>
+            </div>
+        </p>
+        <!--匹配内容-->
+        <p>
+            <!--整个凭证表单-->
+            <div class="mp-transfer-record">
+                <!--中间的内容用一个表格来展示-->
+                <table class="mp-transfer-table">
+                    <!--第一行展示凭证名称-->
+                    <tr>
+                        <!--凭证名称-->
+                        <td class="mp-left-td"><span class="mp-transfer-name"></span></td>
+                        <!--显示金额-->
+                        <td class="mp-center-td" rowspan="2">@HtmlLang.Write(LangModule.Common, "Amount", "Amount"):<span class="mp-transfer-amount"></span></td>
+                        <!--转结详情-->
+                        <td class="mp-transfer-detail mp-right-td" rowspan="2">&nbsp;</td>
+                    </tr>
+                    <!--第二行展示凭证号-->
+                    <tr>
+                        <!--凭证编号，针对已经生成凭证的项-->
+                        <td class="mp-vocher-number-td"><span class="mp-voucher-number"></span></td>
+                    </tr>
+                </table>
+            </div>
+        </p>
+    </div>
+    <!--结转未分配利润-->
+    <div class="mp-transfer-demo-div-8" style="display:none;">
+        <!--匹配状态-->
+        <p>
+            <div class="mp-create-status">
+                <!--已经完成凭证-->
+                <span class="create-ico create vc-hide" style="display:none;"></span>
+                <!--未已经完成凭证-->
+                <span class="uncreate-ico uncreate"></span>
+                <!--已经测算-->
+                <span class="calculated-ico calculated" style="display:none;"></span>
+                <!--文字 已生成-->
+                <span class="create-text create vc-hide" style="display:none;">@HtmlLang.Write(LangModule.Common, "Created", "Created")</span>
+                <!--文字 未生成-->
+                <span class="uncreate-text uncreate">@HtmlLang.Write(LangModule.Common, "Uncreated", "Uncreated")</span>
+                <!--文字，已测算-->
+                <span class="calculated-text calculated  vc-hide">@HtmlLang.Write(LangModule.Common, "calculated", "已测算")</span>
+            </div>
+        </p>
+        <!--匹配内容-->
+        <p>
+            <!--整个凭证表单-->
+            <div class="mp-transfer-record">
+                <!--中间的内容用一个表格来展示-->
+                <table class="mp-transfer-table">
+                    <!--第一行展示凭证名称-->
+                    <tr>
+                        <!--凭证名称-->
+                        <td class="mp-left-td"><span class="mp-transfer-name"></span></td>
+                        <!--显示金额-->
+                        <td class="mp-center-td" rowspan="2">@HtmlLang.Write(LangModule.Common, "Amount", "Amount"):<span class="mp-transfer-amount"></span></td>
+                        <!--转结详情-->
+                        <td class="mp-transfer-detail mp-right-td" rowspan="2">&nbsp;</td>
+                    </tr>
+                    <!--第二行展示凭证号-->
+                    <tr>
+                        <!--凭证编号，针对已经生成凭证的项-->
+                        <td class="mp-vocher-number-td"><span class="mp-voucher-number"></span></td>
+                    </tr>
+                </table>
+            </div>
+        </p>
+    </div>
+</div>
+<input type="hidden" id="faBegun" value="@faBegun" />
+<input type="hidden" id="faBegunYear" value="@faYear" />
+<input type="hidden" id="faBegunPeriod" value="@faPeriod" />
+
+<!--悬浮的编辑层-->
+<div class="mp-function-layer" style="display:none" title="@HtmlLang.Write(LangModule.Common, "HideWithDoubleClick", "双击隐藏")">
+    <!--用来控制居中-->
+    <div class="mp-function-button">
+        @if (dashBoardInfoModel.CanEdit)
+        {
+            if (dashBoardInfoModel.CanApprove)
+            {
+                <!--审核-->
+                <span class="mp-function-approve mp-function-ico">
+                    @HtmlLang.Write(LangKey.Approve)
+                </span>
+                <!--反审核-->
+                <span class="mp-function-unapprove  mp-function-ico">
+                    @HtmlLang.Write(LangModule.Common, "Reverse", "反审核")
+                </span>
+            }
+            <!--编辑按钮-->
+            <span class="mp-function-edit mp-function-ico">
+                @HtmlLang.Write(LangKey.Edit)
+            </span>
+            <!--删除按钮-->
+            <span class="mp-function-delete mp-function-ico">
+                @HtmlLang.Write(LangKey.Delete)
+            </span>
+        }
+        <!--查看按钮-->
+        <span class="mp-function-view mp-function-ico">
+            @HtmlLang.Write(LangModule.Common, "View", "View")
+        </span>
+        @if (dashBoardInfoModel.CanEdit)
+        {
+            <!--创建凭证-->
+            <span class="mp-function-create mp-function-ico">
+                @HtmlLang.Write(LangModule.Common, "create", "Create")
+            </span>
+        }
+        <!--打印按钮-->
+        <span class="mp-function-print mp-function-ico">
+            @HtmlLang.Write(LangKey.Print)
+        </span>
+        <!--重新测算按钮-->
+        <span class="mp-function-calculate mp-function-ico">
+            @HtmlLang.Write(LangModule.Common, "measure", "Measure")
+        </span>
+    </div>
+</div>
+<!--期末调汇汇率调节-->
+@Html.Partial("GLVoucherPartial/GLMonthlyProcessPartial/MonthlyCurrencyRateSetupPartial")
+
+<!--中间显示一个进度条-->
+<div class="mp-barline-top">
+    <!--显示百分数-->
+    <div class="mp-barline-percent">0/0</div>
+    <!--进度-->
+    <div class="mp-barline-process"></div>
+</div>
+@HtmlLang.WriteScript(LangModule.Acct)
+@HtmlLang.WriteScript(LangModule.GL)
+@HtmlLang.WriteScript(LangModule.BD)
+
+<script src="~/Scripts/GL/GLVoucherHome.js?@ServerHelper.JSVersion"></script>
+<script src="~/Scripts/GL/GLMonthlyProcess.js?@ServerHelper.JSVersion"></script>

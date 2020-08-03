@@ -1,0 +1,90 @@
+﻿@using JieNor.Megi.DataModel.BAS;
+@using JieNor.Megi.EntityModel.Enum;
+@{
+    Layout = null;
+    var progress = (BASOrgScheduleTypeEnum)System.Enum.Parse(typeof(BASOrgScheduleTypeEnum), Convert.ToString(ViewBag.SetupProgress));
+    var progressVal = (int)progress;
+    var module = (ModuleEnum)System.Enum.Parse(typeof(ModuleEnum), Convert.ToString(ViewBag.Module));
+    var version = Convert.ToInt32(ViewBag.Version);
+    var isSmartVersion = version == OrgVersionEnum.Smart;
+    var isSmartFinish = isSmartVersion && progress == BASOrgScheduleTypeEnum.GLFinish;
+}
+@using JieNor.Megi.Common.Utility;
+<link type="text/css" rel="stylesheet" href="@ServerHelper.StaticServer/fw/min/jquery.megi.min.css?@ServerHelper.JSVersion" />
+<link type="text/css" rel="stylesheet" href="@ServerHelper.StaticServer/fw/themes/@LangIndentity.CurrentLangID/css.css?@ServerHelper.JSVersion" />
+
+<script type="text/javascript">
+    @Html.Raw(string.Format("document.domain ='{0}';", ServerHelper.Domain))
+</script>
+@HtmlLang.WriteScript(LangModule.Common)
+<script type="text/javascript" src="@ServerHelper.StaticServer/FW/min/jquery.megi.min.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.StaticServer/FW/include/loadmask/jquery.loadmask.js?@ServerHelper.JSVersion"></script>
+<script>
+    $(document).ready(function () {
+        var browserTabSwitch = new BrowserTabSwitch();
+        browserTabSwitch.bindSwitchEvent();
+    });
+</script>
+<div class="m-imain" style="overflow:hidden;">
+    <div class="m-setup">
+        <div class="setup-progress" style="display:@(isSmartVersion ? "none" : "block")">
+            @HtmlLang.Write(LangModule.My, "CurrentSetupProgress", "当前进度：第{0}步（共{1}步）")
+        </div>
+        <div class="setup-step">
+            <ul>
+                <li class="current"><span>@HtmlLang.Write(LangModule.My, "OrganizationSettings", "Organization Settings")</span></li>
+                <li><span>@HtmlLang.Write(LangModule.My, "FinancialSettings", "Financial Settings")</span></li>
+                <li><span>@HtmlLang.Write(LangKey.TaxRate)</span></li>
+                <li><span>@HtmlLang.Write(LangModule.My, "ChartOfAccount", "Chart of Account")</span></li>
+                <li><span>@HtmlLang.Write(LangModule.My, "OpeningBalance", "Opening Balance")</span></li>
+                <li><span>@HtmlLang.Write(LangModule.My, "Done", "Done")</span></li>
+            </ul>
+        </div>
+        <div class="setup-content">
+            <div class="m-imain-title"></div>
+            <div class="setup-body">
+                @RenderBody()
+                <div class="clear"></div>
+            </div>
+            <div class="m-toolbar-footer">
+                <div class="left">
+                    @*<a href="javascript:void(0)" onclick="$.mDialog.remove();" class="easyui-linkbutton easyui-linkbutton-gray" id="aSaveAndQuit">@HtmlLang.Write(LangKey.SaveAndQuit)</a>*@
+                </div>
+                <div class="right">
+                    <a href="javascript:void(0);" class="easyui-linkbutton easyui-linkbutton-yellow" id="aNext">
+                        @if (progress == BASOrgScheduleTypeEnum.GLFinish)
+                        {
+                            @HtmlLang.Write(LangModule.BD, "Finish", "Finish")
+                        }
+                        else
+                        {
+                            @HtmlLang.Write(LangKey.Next)
+                        }
+                    </a>
+                    <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-gray" id="aPrevious" style="display:none;">@HtmlLang.Write(LangModule.Common, "PreviousStep", "Previous step")</a>
+                    @if (progress == BASOrgScheduleTypeEnum.TaxRateSetting)
+                    {
+                        <a href="javascript:void(0)" style="padding-right:50px;" id="aSkip">@HtmlLang.Write(LangModule.My, "SkipThisStep", "Skip this step")</a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="hidIsSetup" value="true" />
+<input type="hidden" value="@ViewBag.SetupProgress" id="hidProgress" />
+<input type="hidden" value="@progressVal" id="hidProgressVal" />
+<input type="hidden" value="@ViewBag.ModuleId" id="hidModuleId" />
+<input type="hidden" value="@ServerHelper.GoServer" id="hidGoServer" />
+<input type="hidden" value="@ServerHelper.MyServer" id="hidMyServer" />
+<input type="hidden" class="mg-data m-form-key" name="MOrgID" id="hidOrgCode" value="@ViewBag.OrgCode" />
+<input type="hidden" class="mg-data" value="@ViewBag.Version" name="MVersionID" id="hidVersion" />
+<script type="text/javascript" src="@ServerHelper.GoServer/Scripts/BD/Setup/SetupBase.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.GoServer/Scripts/BD/Setup/SetupSmart.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.GoServer/Scripts/BD/Setup/SetupFW.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.StaticServer/FW/scripts/jquery.megi.bottom.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.StaticServer/FW/scripts/jquery.megi.window.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.StaticServer/FW/include/hiAlert/jquery.alert.js?@ServerHelper.JSVersion"></script>
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)
+

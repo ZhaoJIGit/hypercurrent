@@ -1,0 +1,80 @@
+﻿
+@using JieNor.Megi.Common.Utility
+@using JieNor.Megi.EntityModel.MultiLanguage
+@using JieNor.Megi.Identity.HtmlHelper
+@using JieNor.Megi.Tools
+@using JieNor.Megi.Core.Const
+@using JieNor.Megi.Common.Context;
+@using JieNor.Megi.EntityModel.Enum;
+
+@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+
+
+    var accessResponse = AccessHelper.Access();
+
+    var accessList = accessResponse.Access;
+
+    var change = accessList[BizObject.FixedAsset + PermissionItem.Change];
+    var view = accessList[BizObject.FixedAsset + PermissionItem.View];
+    var approve = accessList[BizObject.FixedAsset + PermissionItem.Approve];
+
+    var smart = ContextHelper.MContext.MOrgVersionID == (int)OrgVersionEnum.Smart ? "1" : "0";
+
+}
+
+<link type="text/css" rel="stylesheet" href="~/Scripts/FA/fa.css?@ServerHelper.JSVersion" />
+
+<div class="m-toolbar">
+    @if (change)
+    {
+    <!--帐户管理-->
+        <a href="javascript:void(0)" id="divNewFixAssets" class="easyui-linkbutton easyui-linkbutton-yellow  easyui-linkbutton-base">@HtmlLang.Write(LangModule.FA, "NewCard", "新增卡片")</a>
+        <a href="#" class="easyui-linkbutton" id="btnImport">@HtmlLang.Write(LangKey.Import)</a>
+    }
+    
+    @if (HtmlSECMenu.HavePermission(BizObject.FixedAsset, PermissionItem.Export))
+    {
+    <a href="#" class="easyui-linkbutton" id="aExport">@HtmlLang.Write(LangKey.Export)</a>
+    }
+
+    <div class="action" style="float:right;">
+        <div class="m-select-group">
+            <a href="###" class="fa-cards-btn current" mtarget=".fa-cards-div">@HtmlLang.Write(LangModule.FA, "CardsList", "卡片列表")</a>
+
+            <a href="###" class="fa-depreciation-btn" mtarget=".fa-depreciation-div">@HtmlLang.Write(LangModule.FA, "DepreciationRecords", "折旧汇总")</a>
+
+        </div>
+    </div>
+</div>
+@*主体内容*@
+<div class="m-imain fa-imain">
+    <div class="m-imain-content m-imain-content-min ">
+        <div class="fa-cards-div" style="display:block;">
+            @Html.Partial("FAPartial/FACardsListPartial")
+        </div>
+        <div class="fa-depreciation-div" style="display:none;">
+            @Html.Partial("FAPartial/FADepreciationPartial")
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="~/Scripts/GL/GLCheckType.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="~/Scripts/GL/GLVoucherHome.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="~/Scripts/FA/entity/FAEnums.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="~/Scripts/FA/FAHome.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="~/Scripts/FA/FAFixAssetsHome.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.StaticServer/FW/include/My97Datepicker/WdatePicker.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.GoServer/Scripts/BD/Import/ImportBase.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.GL)
+@HtmlLang.WriteScript(LangModule.FA)
+@HtmlLang.WriteScript(LangModule.BD)
+
+
+<input type="hidden" id="smartVersion" value="@smart" />
+<script type="text/javascript">
+    $(function () {
+        new FAFixAssetsHome().init();
+    });
+</script>
+

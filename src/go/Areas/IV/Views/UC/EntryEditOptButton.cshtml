@@ -1,0 +1,28 @@
+﻿
+@using JieNor.Megi.Common.Utility;
+<div class="form-button form-invoice-button">
+    <a href="javascript:void(0)" id="btnSave" class="easyui-splitbutton m-f-left"
+       data-options="menu:'#divSaveInvoice',plain:true">@HtmlLang.Write(LangKey.Save)</a>
+    <div id="divSaveInvoice" style="width:180px;">
+        <div id="divSaveAsDraft"><a href="javascript:void(0)" id="btnSaveAsDraft">@HtmlLang.Write(LangKey.SaveAsDraft)</a></div>
+        <div><a href="javascript:void(0)" id="btnSaveAndContinue">@HtmlLang.Write(LangKey.SaveContinueEditing)</a></div>
+        <div id="divSaveAndSubmitForApproval"><a href="javascript:void(0)" id="btnSaveAndSubmitForApproval">@HtmlLang.Write(LangKey.SaveSubmitForApproval)</a></div>
+        <div><a href="javascript:void(0)" id="btnSaveAndAddAnother">@HtmlLang.Write(LangKey.SaveAddAnother)</a></div>
+    </div>
+
+    <a href="javascript:void(0)" class="easyui-linkbutton m-f-right" id="btnCancel">@HtmlLang.Write(LangKey.Cancel)</a>
+    @if(HtmlSECMenu.HavePermission(BizObject.Invoice,PermissionItem.Approve))
+    { 
+    <a href="javascript:void(0)" id="aApproveInvoice" class="easyui-splitbutton m-f-right"
+       data-options="menu:'#divApproveInvoice',plain:'true',menuAlign:'left'">@HtmlLang.Write(LangKey.Approve)</a>
+    <div id="divApproveInvoice" style="width:180px;">
+        <div><a href="javascript:void(0)" id="aApproveAndAddAnother">@HtmlLang.Write(LangKey.ApproveAddAnother)</a></div>
+        <div><a href="javascript:void(0)" id="aApproveAndViewNext">@HtmlLang.Write(LangKey.ApproveViewNext)</a></div>
+        <div><a href="javascript:void(0)" id="aApproveAndPrint">@HtmlLang.Write(LangKey.ApprovePrint)</a></div>
+    </div>
+    }
+    <div class="clear"></div>
+</div>
+
+<script src="@ServerHelper.ScriptServer/Scripts/IV/IVEditOptBase.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.IV)

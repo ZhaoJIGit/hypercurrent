@@ -1,0 +1,153 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+
+    List<BDContactItem> contactList = ViewData["ContactList"] as List<BDContactItem>;
+    System.Web.Script.Serialization.JavaScriptSerializer jss = new System.Web.Script.Serialization.JavaScriptSerializer();
+    string jsonModel = jss.Serialize(contactList);
+    string jsonTaxRate = jss.Serialize(HtmlREGTaxRate.GetOrgTaxRateList());
+}
+@using JieNor.Megi.Common.Utility;
+
+<style>
+    .m-form-setion {
+        max-width: 150px !important;
+        word-wrap: break-word;
+    }
+</style>
+
+<div class="m-form m-imain" style="padding-left:20px">
+    <div>
+        <div class="m-form-field" style="display: inline-block">
+            <div class="m-form-setion">@HtmlLang.Write(LangModule.Common, "FastCode", "Fast code")</div>
+            <div class="m-form-input">
+                <input class="easyui-validatebox mg-width150 mg-data" data-options="required:true" id="txtMCode" name="MCode" />
+            </div>
+        </div>
+        <div class="m-form-field" style="display: inline-block; padding-left: 20px">
+            <div class="m-form-setion">@HtmlLang.Write(LangModule.Common, "Name", "Name")</div>
+            <div class="m-form-input">
+                <input class="easyui-validatebox mg-width150 mg-data" id="txtMName" name="MName" />
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="m-form-field" style="display: inline-block">
+            <div class="m-form-setion">@HtmlLang.Write(LangModule.Common, "Reference", "Reference")</div>
+            <div class="m-form-input">
+                <input class="easyui-validatebox mg-width150 mg-data" id="txtMRef" name="MRef" />
+            </div>
+        </div>
+        <div class="m-form-field" style="display: inline-block ;padding-left: 20px">
+            <div class="m-form-setion">@HtmlLang.Write(LangModule.Common, "Description", "Description")</div>
+            <div class="m-form-input">
+                <input class="easyui-validatebox mg-width150 mg-data" id="txtMDesc" name="MDesc" />
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="m-form-field" style="display: inline-block">
+            <div class="m-form-setion">@HtmlLang.Write(LangModule.Common, "Contact", "Contact") </div>
+            <div class="m-form-input">
+                <select id="seleContact" class="easyui-combobox mg-data" name="MContactID"
+                        data-options="valueField:'MItemID',textField:'MName',groupField:'MGroupName',mode:'local'"
+                        style="width:150px; height: 26px;"></select>
+            </div>
+        </div>
+        <div class="m-form-field" style="display: inline-block; padding-left: 20px">
+            <div class="m-form-setion">@HtmlLang.Write(LangModule.Common, "TaxRate", "TaxRate") </div>
+            <div class="m-form-input">
+                <select id="seleTaxRate" class="easyui-combobox mg-data" name="MTaxID"
+                        data-options="valueField:'MItemID',textField:'MName',mode:'local'"
+                        style="width: 150px; height: 26px;"></select>
+            </div>
+        </div>
+
+    </div>
+
+    <div>
+        @if (HtmlSECMenu.HavePermission(BizObject.General_Ledger, PermissionItem.Change))
+        {
+            <div class="m-form-field" style="display: inline-block; ">
+                <div class="m-form-setion">@HtmlLang.Write(LangModule.Common, "Account", "Account") </div>
+                <div class="m-form-input">
+                    <select id="seleAccount" class="easyui-combobox mg-data" name="MAccountID"
+                            data-options="valueField:'MItemID',textField:'MFullName',mode:'local',hideItemKey:'MIsActive',hideItemValue:false "
+                            style=" width:150px; height:26px;"></select>
+                </div>
+            </div>
+
+        }
+
+        <div class="m-form-field m-track1" style="display: none; padding-left: 20px">
+            <div class="m-form-setion m-track-title1">@HtmlLang.Write(LangModule.Common, "Tracking", "Tracking")1 </div>
+            <div class="m-form-input">
+                <select id="seleTrack1" class="easyui-combobox mg-data" name="MTrackItem1"
+                        data-options="valueField:'MValue',textField:'MName',mode:'local',hideItemKey:'MIsActive',hideItemValue:false"
+                        style="width: 150px; height: 26px;"></select>
+            </div>
+        </div>
+
+    </div>
+
+    <div>
+        <div class="m-form-field m-track2" style="display: none">
+            <div class="m-form-setion m-track-title2">@HtmlLang.Write(LangModule.Common, "Tracking", "Tracking")2 </div>
+            <div class="m-form-input">
+                <select id="seleTrack2" class="easyui-combobox mg-data" name="MTrackItem2"
+                        data-options="valueField:'MValue',textField:'MName',mode:'local',hideItemKey:'MIsActive',hideItemValue:false"
+                        style="width: 150px; height: 26px;"></select>
+            </div>
+        </div>
+        <div class="m-form-field m-track3" style="display: none; padding-left: 20px; ">
+            <div class="m-form-setion m-track-title3">@HtmlLang.Write(LangModule.Common, "Tracking", "Tracking")3 </div>
+            <div class="m-form-input">
+                <select id="seleTrack3" class="easyui-combobox mg-data" name="MTrackItem3"
+                        data-options="valueField:'MValue',textField:'MName',mode:'local',hideItemKey:'MIsActive',hideItemValue:false"
+                        style="width: 150px; height: 26px;"></select>
+            </div>
+        </div>
+
+    </div>
+
+    <div>
+        <div class="m-form-field m-track4" style="display: none">
+            <div class="m-form-setion m-track-title4">@HtmlLang.Write(LangModule.Common, "Tracking", "Tracking")4 </div>
+            <div class="m-form-input">
+                <select id="seleTrack4" class="easyui-combobox mg-data" name="MTrackItem4"
+                        data-options="valueField:'MValue',textField:'MName',mode:'local',hideItemKey:'MIsActive',hideItemValue:false"
+                        style="width: 150px; height: 26px;"></select>
+            </div>
+        </div>
+        <div class="m-form-field m-track5" style="display: none; padding-left: 20px">
+            <div class="m-form-setion m-track-title5">@HtmlLang.Write(LangModule.Common, "Tracking", "Tracking")5 </div>
+            <div class="m-form-input">
+                <select id="seleTrack5" class="easyui-combobox mg-data" name="MTrackItem5"
+                        data-options="valueField:'MValue',textField:'MName',mode:'local',hideItemKey:'MIsActive',hideItemValue:false"
+                        style="width: 150px; height: 26px;"></select>
+            </div>
+        </div>
+    </div>
+
+    <input type="hidden" class="mg-data m-form-key" name="MID" id="hidMID" value="@ViewData["MID"]" />
+
+</div>
+<div class="m-toolbar-footer">
+    @*@if (HtmlSECMenu.HavePermission(BizObject.BankAccount, PermissionItem.Change))
+        {*@
+    <div class="left">
+        <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray">@HtmlLang.Write(LangKey.Cancel)</a>
+    </div>
+    <div class="right">
+        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aSave">@HtmlLang.Write(LangKey.Save)</a>
+    </div>
+    @*  }*@
+</div>
+<input type="hidden" value="@jsonModel" id="hidContacts" />
+<input type="hidden" value="@jsonTaxRate" id="hidOrgTaxRateList" />
+<input type="hidden" value=@HtmlSECMenu.HavePermission(BizObject.General_Ledger, PermissionItem.Change) id="haveGLPermission" />
+
+><!--多语言-->
+@HtmlLang.WriteScript(LangModule.Common)
+<script src="/Scripts/FC/FCCashCodingEdit.js?@ServerHelper.JSVersion"></script>

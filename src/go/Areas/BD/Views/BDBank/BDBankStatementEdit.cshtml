@@ -1,0 +1,74 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+@using JieNor.Megi.Common.Utility;
+<style type="text/css">
+    .mark {
+        font-weight: bold;
+    }
+
+        .mark.Check {
+            color: #47b101;
+        }
+
+        .mark.UnCheck {
+            color: #fa8100;
+        }
+
+        .mark.Deleted {
+            color: #a8a8a8;
+        }
+</style>
+<div class="m-imain">
+    <div class="form-invoice" style="padding-left:20px;">
+        <div class="form-invoice-head">
+
+            <div class="form-invoice-head-item">
+                <p>@HtmlLang.Write(LangModule.Bank, "ImportDate", "Import Date")</p>
+                <p><input type="text" class="easyui-datebox mg-data" disabled="disabled" name="MImportDate" /></p>
+            </div>
+            <div class="form-invoice-head-item">
+                <p>@HtmlLang.Write(LangModule.Bank, "StartDate", "Start Date")</p>
+                <p><input type="text" class="easyui-datebox mg-data" disabled="disabled" name="MStartDate" /></p>
+            </div>
+            <div class="form-invoice-head-item">
+                <p>@HtmlLang.Write(LangModule.Bank, "EndDate", "End Date")</p>
+                <p><input type="text" class="easyui-datebox mg-data" disabled="disabled" name="MEndDate" /></p>
+            </div>
+            <div class="form-invoice-head-item">
+                <p>@HtmlLang.Write(LangModule.Bank, "StartBalance", "Start Balance")</p>
+                <p><input type="text" class="easyui-numberbox mg-data" disabled="disabled" data-options="min:0,precision:2" name="MStartBalance" /></p>
+            </div>
+            <div class="form-invoice-head-item">
+                <p>@HtmlLang.Write(LangModule.Bank, "EndBalance", "End Balance")</p>
+                <p><input type="text" class="easyui-numberbox mg-data" disabled="disabled" data-options="min:0,precision:2" name="MEndBalance" /></p>
+            </div>
+            <div class="form-invoice-head-item">
+                <p>@HtmlLang.Write(LangModule.Bank, "Status", "Status")</p>
+                <p><input type="text" class="textbox mg-data" disabled="disabled" name="MStatus" /></p>
+            </div>
+            <div class="clear"></div>
+        </div>
+
+        <div class="form-invoice-line">
+            <div id="tbStatementDetail" fitcolumns="true"></div>
+        </div>
+    </div>
+</div>
+
+<div class="m-toolbar-footer">
+    @if (HtmlSECMenu.HavePermission(BizObject.BankAccount, PermissionItem.Change))
+    {
+    <div class="" style="float:left">
+        <a href="javascript:void(0)" id="aCancel" class="easyui-linkbutton">@HtmlLang.Write(LangKey.Cancel)</a>
+    </div>
+    <div class="" style="float:right">
+        <a href="javascript:void(0)" id="aSave" class="easyui-linkbutton easyui-linkbutton-yellow">@HtmlLang.Write(LangKey.Save)</a>
+    </div>
+    }
+</div>
+
+<input type="hidden" value="@ViewData["MID"]" id="statementId" class="mg-data m-form-key" name="MID" />
+@HtmlLang.WriteScript(LangModule.Bank)
+<script src="@ServerHelper.ScriptServer/Scripts/BD/BDBank/BDBankStatementEdit.js?@ServerHelper.JSVersion"></script>
+

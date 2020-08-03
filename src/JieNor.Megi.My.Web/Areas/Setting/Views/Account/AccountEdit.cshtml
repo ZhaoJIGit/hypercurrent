@@ -1,0 +1,183 @@
+﻿@{
+
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    JieNor.Megi.DataModel.SEC.SECUserModel user = ViewData["secUserModel"] as JieNor.Megi.DataModel.SEC.SECUserModel;
+}
+@using JieNor.Megi.Common.Utility
+<div class="account-settings m-wrapper">
+    <div id="divMessage" style="width: 900px;"></div>
+    <div class="mg-my-panels">
+        <!--邮箱-->
+        @if (user != null && user.MIsChangeEmail != null && user.MIsChangeEmail)
+        {
+            <!-- 当正在更改登陆邮箱时的操作 -->
+            <div id="edit1" class="mg-my-panel collapsed" style="height:70px">
+                <div class="x-position x-panel-title">
+                    @HtmlLang.Write(LangKey.Email)
+                </div>
+                <div class="x-position emailAddr">
+                    @HtmlLang.Write(LangModule.My, "ChangeLoginEmail", "Pending Confirmation,a confirmation email has been sented.</br> In the meantime you can still login to Megi using") <b id="bEmail">@user.MEmailAddress</b>
+                </div>
+                <div class="x-position x-right">
+                    <a href="javascript:void(0)">
+                        &nbsp;
+                    </a>
+                </div>
+                <div class="clear"></div>
+            </div>
+        }
+        else
+        {
+            <!-- 默认显示 -->
+            <div id="edit1" class="mg-my-panel collapsed" onclick='AccountEdit.EditOrClose("edit1")'>
+                <div class="x-position x-panel-title">
+                    @HtmlLang.Write(LangKey.Email)
+                </div>
+                <div class="x-position emailAddr">
+                    @HtmlLang.Write(LangModule.My, "YourCurrentEmailAddress", "Your current email address is") <b id="bEmail">@user.MEmailAddress</b>
+                </div>
+                <div class="x-position x-right">
+                    <a href="javascript:void(0)" onclick='AccountEdit.EditOrClose("edit1")' id="aEdit1">
+                        @HtmlLang.Write(LangKey.Edit)
+                    </a>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <!-- 展开显示 -->
+            <div id="close1" class="mg-my-panel" style="display: none;">
+                <div class="x-toolbar">
+                    <div class="x-position x-panel-title">
+                        @HtmlLang.Write(LangKey.Email)
+                    </div>
+
+                </div>
+                <div class="x-content" id="divEmailModify">
+                    <div class="x-position widthper100">
+                        @HtmlLang.Write(LangModule.My, "YourEmailIsLogin", "Your email address is also your login username. To authorise this change you need to verify your password even though you are already logged in.")
+                    </div>
+                    <div class="x-position widthper100">
+                        <label for="Email" class="x-label">@HtmlLang.Write(LangModule.My, "EmailAddress", "Email Address")</label>
+                        <input id="Email" class="easyui-validatebox mg-data" data-options="required:true" type="text" style="width: 208px;" name="MEmailAddress" value="@user.MEmailAddress" />
+                    </div>
+                    <div class="x-position widthper100">
+                        <label for="Password" class="x-label">@HtmlLang.Write(LangModule.My, "Password", "Password")</label>
+                        <input id="Password" type="password" class="mg-data" name="MPassWord" style="width:208px;" />
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="m-toolbar-footer">
+
+                    <a href="javascript:void(0);" class="easyui-linkbutton" id="btnCancelEmail">@HtmlLang.Write(LangKey.Cancel)</a>
+
+                    <a href="javascript:void(0);" class="easyui-linkbutton easyui-linkbutton-yellow" id="btnUpdateEmail" style="  float: right">@HtmlLang.Write(LangModule.My, "ChangeEmail", "Change Email")</a>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        }
+
+
+        <!--密码-->
+        <!-- 默认显示 -->
+        <div id="edit2" class="mg-my-panel collapsed" onclick='AccountEdit.EditOrClose("edit2")'>
+            <div class="x-position x-panel-title">
+                @HtmlLang.Write(LangModule.My, "Password", "Password")
+            </div>
+            <div class="x-position x-right">
+                <a href="javascript:void(0)" onclick='AccountEdit.EditOrClose("edit2")' id="aEdit2">
+                    @HtmlLang.Write(LangKey.Edit)
+                </a>
+            </div>
+        </div>
+        <!-- 展开显示 -->
+        <div id="close2" class="mg-my-panel" style="display: none;">
+            <div class="x-toolbar">
+                <div class="x-position x-panel-title">
+                    @HtmlLang.Write(LangModule.My, "Password", "Password")
+                </div>
+
+            </div>
+            <div id="divPassModify" class="x-content">
+                <div class="x-position widthper100">
+                    <label for="CurPass" class="x-label">@HtmlLang.Write(LangModule.My, "CurrentPassword", "Current Password")</label>
+                    <input id="CurPass" type="password" class="easyui-validatebox mg-data" data-options="required:true,validType:'minLength[8]'" name="MCurPassWord" style="width:208px;" />
+                </div>
+                <div class="x-position widthper100">
+                    <label for="NewPass" class="x-label">@HtmlLang.Write(LangModule.My, "NewPassword", "New Password")</label>
+                    <input id="NewPass" class="easyui-validatebox mg-data" data-options="required:true,validType:'minLength[8]'" type="password" style="width:208px;" name="MPassWord" />
+                    <label id="pwd_tips" style="color:red;display:none;padding-left:179px">@HtmlLang.Write(LangModule.Login, "PasswordIsSimple", "密码至少为8位，需包含字母、数字和特殊字符。")</label>
+
+                </div>
+                <div class="x-position widthper100">
+                    <label for="ConfNewPass" class="x-label">@HtmlLang.Write(LangModule.My, "ConfirmNewPassword", "Confirm New Password")</label>
+                    <input id="ConfNewPass" type="password" class="easyui-validatebox mg-data" data-options="required:true,validType:'minLength[8]'" style="width:208px;" />
+                    <label id="rpwd_tips" style="color:red;display:none;padding-left:179px">@HtmlLang.Write(LangModule.Login, "PasswordIsSimple", "密码需要包括数字，大写字母，小写字母和特殊符号")</label>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="m-toolbar-footer">
+                <a href="javascript:void(0);" class="easyui-linkbutton" id="CancelPass">@HtmlLang.Write(LangKey.Cancel)</a>
+                <a href="javascript:void(0);" class="easyui-linkbutton easyui-linkbutton-yellow" id="OKPass" style="  float: right">@HtmlLang.Write(LangModule.My, "ChangePassword", "Change Password")</a>
+            </div>
+        </div>
+        <!--跳转地址-->
+        <!-- 不展开显示 -->
+        <div id="edit3" class="mg-my-panel collapsed" style="display:none;" onclick='AccountEdit.EditOrClose("edit3")'>
+            <div class="x-position x-panel-title">
+                @HtmlLang.Write(LangKey.Settings)
+            </div>
+            <div class="x-position x-right">
+                <a href="javascript:void(0)" onclick='AccountEdit.EditOrClose("edit3")' id="aEdit3">
+                    @HtmlLang.Write(LangKey.Edit)
+                </a>
+            </div>
+        </div>
+        <!-- 默认显示 -->
+        <div id="close3" class="mg-my-panel">
+            <div class="x-toolbar">
+                <div class="x-position x-panel-title">
+                    @HtmlLang.Write(LangKey.Settings)
+                </div>
+
+            </div>
+            <div id="divOtherModify" class="x-content">
+                <div class="x-position widthper100">
+                    <div class="x-label">
+                        @HtmlLang.Write(LangModule.My, "WhenILoIn", "When I log in")
+                    </div>
+                    <div style="float: left;">
+                        @{
+                            if (user.MAppID != "2")
+                            {
+                                <input id="radio1" type="radio" class="mg-data" name="MAppID" value="1" checked="checked" />@HtmlLang.Write(LangModule.My, "GoToMyMegi", "Go to My Megi")
+                                <input id="radio2" type="radio" class="mg-data" name="MAppID" value="2" style="margin-left: 20px" />@HtmlLang.Write(LangModule.My, "GoToTheOrganisation", "Go to the organisation I was last in")
+                            }
+                            else
+                            {
+                                <input id="radio1" type="radio" class="mg-data" name="MAppID" value="1" />@HtmlLang.Write(LangModule.My, "GoToMyMegi", "Go to My Megi")
+                                <input id="radio2" type="radio" class="mg-data" name="MAppID" value="2" checked="checked" style="margin-left: 20px" />@HtmlLang.Write(LangModule.My, "GoToTheOrganisation", "Go to the organisation I was last in")
+                            }
+                        }
+
+                    </div>
+                </div>
+
+                <div class="clear"></div>
+            </div>
+            <div class="m-toolbar-footer">
+
+                <a href="javascript:void(0);" class="easyui-linkbutton" id="CancelOther">@HtmlLang.Write(LangKey.Cancel)</a>
+                <!--保存位置-->
+                <a href="javascript:void(0);" class="easyui-linkbutton easyui-linkbutton-yellow" id="OKOther" style="  float: right">@HtmlLang.Write(LangModule.My, "ChangeSetting", "更改设置")</a>
+
+
+            </div>
+        </div>
+    </div>
+    <input type="hidden" id="aMyServer" value="@ServerHelper.MyServer" />
+    @HtmlLang.WriteScript(LangModule.My)
+    <script src="@ServerHelper.StaticServer/FW/scripts/jquery.megi.password.js?@ServerHelper.JSVersion"></script>
+    <script src="@ServerHelper.ScriptServer/scripts/Setting/Account/AccountEdit.js?@ServerHelper.JSVersion"></script>
+
+    @JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)
+    <div class="clear"></div>
+</div>

@@ -1,0 +1,55 @@
+﻿@{
+    Layout = "~/Areas/Report/Views/Shared/_LayoutReport.cshtml";
+}
+@using JieNor.Megi.Common.Utility
+<div class="m-form-vtcl margin m-form-min">
+    <div class="m-form-vtcl-content">
+        <div class="m-form-section section-type">
+            <div class="m-form-item">
+                <ul>
+                    <li class="m-mg-data">@HtmlLang.Write(LangKey.Accounts)</li>
+                    <li>
+                        <select id="selAccount" class="easyui-combobox m-data" data-options="@HtmlBDAccount.BankDataOptions()" style="width:120px; height:22px;" name="MBankAccountID"></select>
+                    </li>
+                </ul>
+            </div>
+            <div class="m-form-item">
+                <ul>
+                    <li class="m-mg-data">@HtmlLang.Write(LangKey.From)</li>
+                    <li>
+                        <input id="txtFromDate"  type="text" class="easyui-datebox m-data" name="MFromDate" />
+                    </li>
+                </ul>
+            </div>
+            <div class="m-form-item">
+                <ul>
+                    <li class="m-mg-data">@HtmlLang.Write(LangKey.To)</li>
+                    <li>
+                        <input id="txtToDate" type="text" class="easyui-datebox m-data" name="MEndDate" value="@HtmlLang.DateNowString()" />
+                    </li>
+                </ul>
+            </div>
+
+            <div class="m-form-item">
+                <ul>
+                    <li class="m-mg-data">@HtmlLang.Write(LangModule.Report, "ReconciledOnly", "Reconciled Only")</li>
+                    <li>
+                        <input type="checkbox" class="m-data" name="MIsReconciled" />
+                    </li>
+                </ul>
+            </div>
+            <div class="m-form-item">
+                <ul>
+                    <li><a href="javascript:void(0)" class="m-btn l-btn" id="aReportUpdate">@HtmlLang.Write(LangModule.Report, "Update", "Update")</a></li>
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<script src="@ServerHelper.ScriptServer/scripts/Report/RptUC/BankStatement.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.Report)

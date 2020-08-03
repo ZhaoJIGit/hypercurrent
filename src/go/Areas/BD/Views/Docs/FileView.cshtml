@@ -1,0 +1,43 @@
+﻿@using System.Web.UI.WebControls
+@using JieNor.Megi.Common.ImportAndExport
+@{
+    List<BDAttachmentListModel> attachList = ViewBag.AttachmentList as List<BDAttachmentListModel>;
+    BDAttachmentListModel attachModel = @ViewBag.CurrentAttachment;
+
+    ViewBag.Title = attachModel.MName;
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+@using JieNor.Megi.Common.Utility;
+<div class="m-imain m-form-file-view">
+    <div class="m-imain-content file-info">
+        @{
+            string[] arrImg = new string[] { "GIF", "JPG", "JPEG", "PNG", "BMP" };
+        }
+        <div style="min-height: 160px;">
+            @if (arrImg.Contains(attachModel.MName.Substring(attachModel.MName.LastIndexOf('.') + 1).ToUpper()))
+            {
+                @HtmlImage.Show(attachModel.MItemID, "style='max-width: 96%; max-height: 96%;'")
+            }
+        </div>
+        <div><b class="file-name">@(attachModel.MName)</b><p class="file-size">@Html.Raw(@attachModel.MSizeFormated)</p></div>
+        <div><a id="aDownloadFile" data-id="@attachModel.MItemID" class="download-file" href="#">@HtmlLang.Write(LangModule.Docs, "Download", "Download")</a></div>
+    </div>
+</div>
+@if (ViewBag.EnablePaging) { 
+    <div class='m-toolbar-footer'>
+        <div class='left' style="width:33%;">
+            @string.Format(HtmlLang.Write(LangModule.Docs, "Previewingof", "Previewing {0} of {1}").ToString(), ViewBag.PageIndex, attachList.Count)
+            <input id="hidCurFileId" type="hidden" value="@attachModel.MItemID" />
+            <input id="hidFileIds" type="hidden" value="@string.Join(",", attachList.Select(f => f.MItemID).ToList())" />
+        </div>
+        <div class='right' style="width:66%;">
+            <a id='aNext' class='easyui-linkbutton easyui-linkbutton-gray'>></a>
+            <a id='aPrev' class='easyui-linkbutton easyui-linkbutton-gray'><</a>
+        </div>
+    </div>
+}
+<input id="hidAttachName" type="hidden" value="@attachModel.MName.ToEllipsisString(30, false)"/>
+<input type="hidden" value="@ViewBag.IsSetup" id="hidIsSetup" />
+<input type="hidden" value="@ServerHelper.Domain" id="hidDomain" />
+@HtmlLang.WriteScript(LangModule.Docs)
+<script src="@ServerHelper.GoServer/scripts/BD/Docs/FileView.js?@ServerHelper.JSVersion"></script>

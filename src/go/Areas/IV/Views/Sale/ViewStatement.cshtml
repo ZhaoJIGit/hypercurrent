@@ -1,0 +1,339 @@
+﻿@{
+    ViewBag.Title = "ViewStatement";
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    List<IVViewStatementModel> viewDataList = ViewData["viewStateData"] as List<IVViewStatementModel>;
+    List<IVViewStatementModel> viewPreDataList = ViewData["viewPreData"] as List<IVViewStatementModel>;
+    JieNor.Megi.DataModel.BD.BDContactsInfoModel contModel = ViewData["contactModel"] as JieNor.Megi.DataModel.BD.BDContactsInfoModel;
+}
+@using JieNor.Megi.Common.Utility;
+<style type="text/css">
+    div.mg-statement-to div {
+        margin-right: 20px;
+    }
+        div.mg-statement-to div label {
+            color: #000;
+            font-weight: bold;
+        }
+        div.mg-statement-to div a {
+            clear: both;
+        }
+        div.mg-statement-to div em {
+            clear: both;
+            color: #333;
+            margin-bottom: 3px;
+            font-style: normal;
+        }
+    .mg-statement-tax {
+        border-top: 1px solid #e1e1e1;
+        margin-top: 15px;
+        padding: 10px 0;
+    }
+    .mg-statement-currline {
+        float: left;
+        font: bold 14px Helvetica,Arial,sans-serif;
+        padding-bottom: 5px;
+        width: 100%;
+    }
+    table.mg-statement-standard {
+        width: 100%;
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+    table.mg-statement-standard tr td {
+        border-bottom: 1px solid #ddd;
+        padding: 5px;
+        vertical-align: middle;
+    }
+        table.mg-statement-standard thead tr td {
+            color: #000;
+            font-weight: bold;
+            border-bottom: 1px solid #b7c0c7;
+        }
+            table.mg-statement-standard thead tr td.textright, table.mg-statement-standard tbody tr td.textright {
+                text-align: right;
+            }
+        table.mg-statement-standard tbody tr td {
+            border-bottom-color: #b7c0c7;
+            color: #333;
+            padding: 3px 5px;
+        }
+</style>
+
+<div class="m-imain">
+
+    <div class="m-form-vtcl margin m-form-min" style="box-shadow: 1px 1px 3px #ddd;">
+    <div class="m-form-vtcl-content">
+        <div class="m-form-section section-type">
+            <div class="m-form-item">
+                <ul>
+                    <li class="mg-bold">@HtmlLang.Write(LangModule.IV, "StatementType", "Statement Type")</li>
+                    <li><select class="easyui-combobox" style="width:120px; height:22px;" id="StateType" data-options="onSelect:ViewStatement.InitFilter">
+                        <option value="Outstanding">@HtmlLang.Write(LangModule.IV, "Outstanding", "Outstanding")</option>
+                        <option value="Activity">@HtmlLang.Write(LangModule.IV, "Activity", "Activity")</option>
+                        </select> 
+                    </li>
+                </ul>
+            </div>
+            <div class="m-form-item" id="dateBetweenDiv">
+                <ul>
+                    <li class="mg-bold">@HtmlLang.Write(LangModule.IV, "between", "between")</li>
+                    <li>
+                        <input type="text" class="easyui-datebox" required="required"  id="dateBetweenInput"/>
+                    </li>
+                </ul>
+            </div>
+            <div class="m-form-item">
+                <ul>
+                    <li class="mg-bold"><span id="dateEndSpan">@HtmlLang.Write(LangModule.IV, "AsAt", "as at")</span></li>
+                    <li>
+                        <input type="text" class="easyui-datebox" required="required" id="dateEndInput"/>
+                    </li>
+                </ul>
+            </div>
+            <div class="m-form-item">
+                <ul>
+                    <li><a href="javascript:void(0)" class="mg-btn mg-btn-blue" id="aUpdate">@HtmlLang.Write(LangModule.IV, "Update", "Update")</a></li>
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
+    <div class="m-form-vtcl" style="margin: 10px;background-color:#fff;">
+        <div style="background-color: #f8f8f8; padding: 2px 10px; border-bottom: dotted; border-width: 1px; border-color: #c1c1c1;height: 28px;">
+            <div class="right">
+                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-print'">@HtmlLang.Write(LangKey.PrintPDF)</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-email'">@HtmlLang.Write(LangKey.Email)</a>
+            </div>
+        </div>
+        <div class="m-form-vtcl-content">
+            <div class="mg-statement-to left">
+                <div class="left">
+                    <label class="left">@HtmlLang.Write(LangKey.To)</label>
+                    <a href="/Contacts/ContactView/@contModel.MItemID" class="left">@contModel.MName</a>
+                    
+                    <em id="contactAddress" class="left no-margin">
+                        @{
+                            bool haveAddr=false;
+                            if (!string.IsNullOrWhiteSpace(contModel.MPAttention))
+	                        {
+		                       <span>@HtmlLang.Write(LangModule.Contact, "Contactobject", "收件人") @contModel.MPAttention</span><br />
+                                haveAddr = true;
+	                        }
+                            if (!string.IsNullOrWhiteSpace(contModel.MPStreet))
+	                        {
+		                        <span>@contModel.MPStreet</span><br />
+                                haveAddr = true;
+	                        }
+                            if (!string.IsNullOrWhiteSpace(contModel.MPCityID))
+	                        {
+		                        <span>@contModel.MPCityID</span>
+                                haveAddr = true;
+	                        }
+                            if (!string.IsNullOrWhiteSpace(contModel.MPRegion))
+	                        {
+		                        <span>@contModel.MPRegion</span>
+                                haveAddr = true;
+	                        }
+                            if (!string.IsNullOrWhiteSpace(contModel.MPPostalNo))
+	                        {
+		                        <span>@contModel.MPPostalNo</span>
+                                haveAddr = true;
+	                        }
+                            if (!string.IsNullOrWhiteSpace(contModel.MPCityID)
+                               || !string.IsNullOrWhiteSpace(contModel.MPRegion)
+                               || !string.IsNullOrWhiteSpace(contModel.MPPostalNo))
+                            {
+                                <br />
+                            }
+                            if (!string.IsNullOrWhiteSpace(contModel.MPCountryName))
+	                        {
+		                        <span>@contModel.MPCountryName</span><br />
+                                haveAddr = true;
+	                        }
+                            @*if (!haveAddr)
+                            {
+                                <span>@HtmlLang.Write(LangModule.IV, "NoAddress", "No address")</span><br />
+                                <span><a href="#" id="AddAddress">@HtmlLang.Write(LangModule.IV, "AddAddress", "Add address")</a></span>
+                            }
+                            else
+                            {
+                                <span><a href="#" id="EditAddress">@HtmlLang.Write(LangModule.IV, "EditAddress", "Edit address")</a></span>
+                            }*@
+                        }
+                    </em>
+                </div>
+                <div class="left">
+                    <label class="left">@HtmlLang.Write(LangModule.IV, "StatementDate", "Statement Date")</label>
+                    <em class="left" id="statementDate"></em>
+                </div>
+            </div>
+            <br class="clear" />
+            <div class="mg-statement-tax">
+            </div>
+
+            @{
+                if (ViewData["statementType"].ToString() == "Outstanding") 
+                {
+                    var groupItems = viewDataList.GroupBy(e => e.MCurrencyID);
+                    foreach (var item in groupItems)
+                    {
+                        if(groupItems.ToList().Count>1) //多币别需要加上下面一条
+                        {
+                            <h2 class="mg-statement-currline">@HtmlLang.Write(LangModule.IV, "BalanceDueIn", "Balance due in") @item.ToList()[0].MCurrencyName </h2>
+                        }
+                        <table class="mg-statement-standard">
+                            <thead>
+                                <tr>
+                                    <td class="date">@HtmlLang.Write(LangKey.Date)</td>
+                                    <td>@HtmlLang.Write(LangModule.IV, "Activity", "Activity")</td>
+                                    <td>@HtmlLang.Write(LangKey.Reference)</td>
+                                    <td>@HtmlLang.Write(LangKey.DueDate)</td>
+                                    <td class="textright">@HtmlLang.Write(LangModule.IV, "InvoiceAmount", "Invoice Amount")</td>
+                                    <td class="textright">@HtmlLang.Write(LangModule.IV, "Payments", "Payments")</td>
+                                    <td class="textright">@HtmlLang.Write(LangModule.IV, "Balance", "Balance")<span> @item.ToList()[0].MCurrencyID</span></td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                decimal MBalanceSum = item.ToList().Sum(s => s.MBalance);
+                                for (int i = 0; i < item.ToList().Count; i++)
+                                {
+                                    IVViewStatementModel viewData = item.ToList()[i];
+                                    string linkActive = "/IV/Invoice/InvoiceView/" + viewData.MID;
+                                    if (viewData.MActivity.Contains("Credit Note"))
+                                    {
+                                        linkActive = "/IV/Invoice/CreditNoteView/" + viewData.MID;
+                                    }
+                                    <tr>
+                                        <td>@item.ToList()[i].MDate</td>
+                                        <td><a href="@linkActive">@viewData.MActivity</a></td>
+                                        <td>@viewData.MReference</td>
+                                        <td>@viewData.MDueDate</td>
+                                        <td class="textright">@viewData.MInvoiceAmount</td>
+                                        <td class="textright">@viewData.MPayments</td>
+                                        <td class="textright">@viewData.MBalance</td>
+                                    </tr>
+                                }
+                                } 
+                            </tbody>
+                        </table>
+                    
+                        <div class="form-invoice-total" style="margin-right: 6px; width: 30%;">
+                            <div class="total" style="border-top: 0; margin-bottom: 10px;">
+                                <span class="mg-total-text">@HtmlLang.Write(LangModule.IV, "BALANCEDUE", "BALANCE DUE")</span>
+                                <span  class="mg-total-value" style="width: 40%;">@MBalanceSum</span>
+                                <span  class="mg-total-currency"></span>
+                            </div>
+                        </div>
+                    }
+                }
+                else if (ViewData["statementType"].ToString() == "Activity") //需要特殊处理
+                {
+                    List<IVViewStatementModel> viewDataAll = new List<IVViewStatementModel>();
+                    viewDataAll.AddRange(viewPreDataList);
+                    viewDataAll.AddRange(viewDataList);
+                    List<string> currencyListAll = viewDataAll.Select(s => s.MCurrencyID).Distinct().ToList(); //结合两类数据的币别
+                    foreach (string currencyItem in currencyListAll) //按币别循环分组
+                    {
+                        if (currencyListAll.Count > 1) //多币别需要加上下面一条
+                        {
+                            <h2 class="mg-statement-currline">@HtmlLang.Write(LangModule.IV, "BalanceDueIn", "Balance due in") @viewDataAll.Where(wh=>wh.MCurrencyID==currencyItem).Select(se=>se.MCurrencyName).FirstOrDefault() </h2>
+                        }
+                        <table class="mg-statement-standard">
+                            <thead>
+                                <tr>
+                                    <td class="date">@HtmlLang.Write(LangKey.Date)</td>
+                                    <td>@HtmlLang.Write(LangModule.IV, "Activity", "Activity")</td>
+                                    <td>@HtmlLang.Write(LangKey.Reference)</td>
+                                    <td>@HtmlLang.Write(LangKey.DueDate)</td>
+                                    <td class="textright">@HtmlLang.Write(LangModule.IV, "InvoiceAmount", "Invoice Amount")</td>
+                                    <td class="textright">@HtmlLang.Write(LangModule.IV, "Payments", "Payments")</td>
+                                    <td class="textright">@HtmlLang.Write(LangModule.IV, "Balance", "Balance")<span> @currencyItem</span></td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+  
+                                List<IVViewStatementModel> viewDatas = viewDataList.Where(w => w.MCurrencyID == currencyItem).ToList(); //过滤出本组币别数据
+                                decimal preSumBalance = viewPreDataList.Where(w => w.MCurrencyID == currencyItem).Sum(s => s.MBalance);
+                                decimal MBalanceSum = preSumBalance;
+                                string startDate = Convert.ToDateTime(ViewData["startDate"]).ToString("MM/dd/yyyy");
+                                <tr>
+                                    <td>@startDate</td>
+                                    <td>@HtmlLang.Write(LangModule.IV, "OpeningBalance", "Opening Balance")</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="textright"></td>
+                                    <td class="textright"></td>
+                                    <td class="textright">@preSumBalance</td>
+                                </tr>
+                                for (int i = 0; i < viewDatas.Count; i++)
+                                {
+                                    IVViewStatementModel viewData = viewDatas[i];
+                                    string linkActive = "/IV/Invoice/InvoiceView/" + viewData.MID;
+                                    if (viewData.MActivity.Contains("Credit Note"))
+                                    {
+                                        linkActive = "/IV/Invoice/CreditNoteView/" + viewData.MID;
+                                    }
+                                    if (viewData.MActivity.Contains("Payment on Invoice") ||
+                                        viewData.MActivity.Contains("Prepayment")|| 
+                                        viewData.MActivity.Contains("Cash Refund on Credit Note"))
+                                    {
+                                        linkActive = "/IV/Receipt/ReceiptEdit/" + viewData.MID;
+                                    }
+                                    <tr>
+                                    <td>@viewData.MDate</td>
+                                    <td><a href="@linkActive">@viewData.MActivity</a></td>
+                                    <td>@viewData.MReference</td>
+                                    <td>@viewData.MDueDate</td>
+                                    @{
+                                        string tdInvoice = viewData.MInvoiceAmount == 0 ? "" : Convert.ToString(viewData.MInvoiceAmount);
+                                        string tdPayment = viewData.MPayments == 0 ? "" : Convert.ToString(viewData.MPayments);
+                                        <td class="textright">@tdInvoice</td>
+                                        <td class="textright">@tdPayment</td>
+                                        if (i == 0) //第一条
+                                        {
+                                            viewData.MBalance = preSumBalance + viewData.MInvoiceAmount - viewData.MPayments;
+                                        }
+                                        else
+                                        {
+                                            viewData.MBalance = viewDatas[i - 1].MBalance + viewData.MInvoiceAmount - viewData.MPayments;
+                                        }
+                                        if (i == viewDatas.Count - 1) //最后一条，需要记录最后总金额
+                                        {
+                                            MBalanceSum = viewData.MBalance;
+                                        }
+                                    <td class="textright">@viewData.MBalance</td>
+                                    }
+                                </tr>    
+                                }
+                                }
+                            </tbody>
+                        </table>
+                        <div class="form-invoice-total" style="margin-right: 6px; width: 30%;">
+                            <div class="total" style="border-top: 0; margin-bottom: 10px;">
+                                <span class="mg-total-text">@HtmlLang.Write(LangModule.IV, "BALANCEDUE", "BALANCE DUE")</span>
+                                <span id="spTotal" class="mg-total-value" style="width: 40%;">@MBalanceSum</span>
+                                <span id="spTotalCurrency" class="mg-total-currency"></span>
+                            </div>
+                        </div>
+                        
+                   }
+                } 
+            }
+            <div class="clear" />
+        </div>
+    </div>
+
+    <input type="hidden" id="statementType"  value="@ViewData["statementType"]"/>
+    <input type="hidden" id="startDate"  value="@ViewData["startDate"]"/>
+    <input type="hidden" id="endDate"  value="@ViewData["endDate"]"/>
+    <input type="hidden" id="statementContactID"  value="@ViewData["statementContactID"]"/>
+    <div id="StatementsData" fitcolumns="true" style="margin:10px;">
+    </div> 
+    <div class="clear" />
+</div>
+<script src="@ServerHelper.ScriptServer/Scripts/IV/Sale/ViewStatement.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.IV)
+@HtmlLang.WriteScript(LangModule.BD)

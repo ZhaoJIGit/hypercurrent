@@ -1,0 +1,109 @@
+﻿@using JieNor.Megi.Identity.HtmlHelper
+@using JieNor.Megi.EntityModel.MultiLanguage
+@using JieNor.Megi.Identity.Go.HtmlHelper
+@using JieNor.Megi.Core.Const
+@using JieNor.Megi.Common.Context
+@using JieNor.Megi.Identity.Go.AutoManager
+@using JieNor.Megi.Common.Utility
+@{
+    ViewBag.Title = "GLVoucher";
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    //是否有编辑凭证模板权限
+    bool isCanEditVoucherPermission = HtmlSECMenu.HavePermission(BizObject.General_Ledger, PermissionItem.Change);
+    //是否有Bank_Reconciliation权限
+    bool isBankReconciliationPermission = HtmlSECMenu.HavePermission(BizObject.Bank_Reconciliation, PermissionItem.Change);
+
+    bool isFapiaoCodingPermission = HtmlSECMenu.HavePermission(BizObject.Sales_Fapiao, PermissionItem.Change) || HtmlSECMenu.HavePermission(BizObject.Purchases_Fapiao, PermissionItem.Change);
+
+    var bankClass = isCanEditVoucherPermission ? "" : "current";
+
+    var ctx = ContextHelper.MContext;
+
+    bool isSmartVersion = ctx.MOrgVersionID == (int)JieNor.Megi.EntityModel.Enum.OrgVersionEnum.Smart;
+}
+
+<link type="text/css" rel="stylesheet" href="~/Scripts/GL/fc.css?@ServerHelper.JSVersion" />
+<link type="text/css" rel="stylesheet" href="~/Scripts/GL/fp.css?@ServerHelper.JSVersion" />
+<link type="text/css" rel="stylesheet" href="~/Scripts/GL/css.css?@ServerHelper.JSVersion" />
+
+
+
+<script type="text/javascript" src="~/Scripts/GL/GLVoucherHome.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="~/Scripts/GL/GLCheckType.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="~/Scripts/FC/FCHome.js?@ServerHelper.JSVersion"></script>
+
+@*主体内容*@
+<div class="m-imain">
+    <div class="m-imain-content m-imain-content-min ">
+        <!--页面头-->
+        <div class="m-extend-tabs fc-main-tabs">
+            <div class="iv-tab-links">
+                <ul class="tab-links">
+                    @if (isCanEditVoucherPermission)
+                    {
+                        <li class="current" index="0">
+                            <div class="statistics">@HtmlLang.Write(LangModule.Common, "VoucherModule", "凭证模板")</div>
+                            <div class="title voucher-module-count"></div>
+                        </li>
+                    }
+                    @if (isBankReconciliationPermission)
+                    {
+                        <li class="@bankClass" index="1">
+                            <div class="statistics">@HtmlLang.Write(LangModule.Common, "CashCodingModule", "资金模板")</div>
+                            <div class="title cashcoding-module-count"></div>
+                        </li>
+                    }
+
+                    @if (isFapiaoCodingPermission && isSmartVersion)
+                    {
+                        <li index="2">
+                            <div class="statistics">@HtmlLang.Write(LangModule.Common, "FapiaoModule", "发票模板")</div>
+                            <div class="title fapiao-module-count"></div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+
+        <!--各种分布视图-->
+        <div class="fc-partial">
+            <div class="mp-mask-div">
+
+            </div>
+            @if (isCanEditVoucherPermission)
+            {
+            <!--voucher-->
+                <div class="fc-partial-0">
+                    @Html.Partial("FCPartial/VoucherModulePartial")
+                </div>
+            }
+            <!--cash coding-->
+            @if (isBankReconciliationPermission)
+            {
+                <div class="fc-partial-1" style="display:none;">
+                    @Html.Partial("FCPartial/CashCodingModulePartial")
+                </div>
+            }
+            <!--cash coding-->
+            @if (isFapiaoCodingPermission && isSmartVersion)
+            {
+                <div class="fc-partial-2" style="display:none;">
+                    @Html.Partial("FCPartial/FapiaoModulePartial")
+                </div>
+            }
+        </div>
+        <input type="hidden" value="@isCanEditVoucherPermission" id="isCanEditVoucherPermission" />
+        <input type="hidden" value="@isBankReconciliationPermission" id="isBankReconciliationPermission" />
+        <input type="hidden" value="@isFapiaoCodingPermission" id="isFapiaoCodingPermission" />
+
+    </div>
+</div>
+@HtmlLang.WriteScript(LangModule.GL)
+@HtmlLang.WriteScript(LangModule.FP)
+@HtmlLang.WriteScript(LangModule.BD)
+<script type="text/javascript">
+    $(function () {
+        var home = new FCHome();
+        home.init('@ViewData["Index"]', '@ViewData["SubIndex"]');
+    })
+</script>

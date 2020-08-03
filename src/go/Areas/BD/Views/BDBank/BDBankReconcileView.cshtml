@@ -1,0 +1,79 @@
+﻿@using JieNor.Megi.DataModel.IV;
+@using JieNor.Megi.Core.Const;
+@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    //银行对账单明细模型
+    IVBankBillEntryModel model = ViewData["IVBankBillEntryModel"] as IVBankBillEntryModel;
+}
+@using JieNor.Megi.Common.Utility;
+<div class="m-form m-rec-view m-imain">
+    <div class="item">
+        <div class="bankinfo" style="width:100%">
+            <div class="rule" style="text-align:left;"><strong> @HtmlLang.Write(LangModule.Bank, "ThisStatementLine", "This statement line...")</strong></div>
+            <div class="info">
+                <div class="detail">
+                    <span><label>@HtmlLang.ToLangDate(@model.MDate)</label><label class="type">@(model.MTransType)</label></span>
+                    <span class="textLent-TransAcctName" title="@(model.MTransAcctName)">@(model.MTransAcctName)</span>
+                    <span class="textLent-TransAcctName" title="@(model.MDesc)">@(model.MDesc)</span>
+                    <span><a href="javascript:void(0)" class="more-info" id="aMore">@HtmlLang.Write(LangModule.Common, "More", "更多")</a></span>
+                </div>
+                <div class="receive">@(model.MReceivedAmt == 0 ? " " : model.MReceivedAmt.ToMoneyFormat())</div>
+                <div class="spent">@(model.MSpentAmt == 0 ? " " : model.MSpentAmt.ToMoneyFormat())</div>
+                <div class="clear"></div>
+                <div class="statement-detail" id="divMoreContent">
+                    <div class="box-title">@HtmlLang.Write(LangModule.Bank, "StatementDetails", "Statement Details") <a href="javascript:void(0)" class="m-icon-close">&nbsp;</a></div>
+                    <div>
+                        <ul>
+                            <li><span>@HtmlLang.Write(LangModule.Bank, "TransactionDate", "交易日期")</span>@HtmlLang.ToLangDate(@model.MDate)</li>
+
+
+                            <li class="textLeng-curtail" title="@(model.MTransAcctName)"><span>@HtmlLang.Write(LangModule.Bank, "Payee", "Payee")</span>@(model.MTransAcctName)</li>
+                            @*参考号*@
+                            <li class="textLeng-curtail" title="@(model.MRef)"><span>@HtmlLang.Write(LangModule.Bank, "Reference", "Reference")</span>@(model.MRef)</li>
+                            @*摘要*@
+                            <li class="textLeng-curtail" title="@(model.MDesc)"><span>@HtmlLang.Write(LangModule.Bank, "Description", "Description")</span>@(model.MDesc)</li>
+
+                            <li><span>@HtmlLang.Write(LangModule.Bank, "TransactionAmount", "Transaction Amount")</span>@Html.Raw(@model.MSpentAmt > 0 ? @model.MSpentAmt.ToMoneyFormat() : @model.MReceivedAmt.ToMoneyFormat())</li>
+                            <li><span>@HtmlLang.Write(LangModule.Bank, "TransactionType", "交易类型")</span>@Html.Raw(model.MTransType)</li>
+                            @*<li><span>@HtmlLang.Write(LangModule.Bank, "ChequeNumber", "支票号码")</span></li>
+                                <li><span>@HtmlLang.Write(LangModule.Bank, "AnalysisCode", "Analysis Code")</span></li>*@
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="space"></div>
+        <div class="space"></div>
+        <div style="width:100%; float:left;">
+            @if (Convert.ToString(ViewData["BillType"]) == BizObject.Payment)
+            {
+                <div><strong> @HtmlLang.Write(LangModule.Bank, "HasBeenReconciledWithTheFollowingPayment", "Has been reconciled with the following payments...")</strong></div>
+            }
+            @if (Convert.ToString(ViewData["BillType"]) == BizObject.Receive)
+            {
+                <div><strong>@HtmlLang.Write(LangModule.Bank, "HasBeenReconciledWithTheFollowingReceive", "Has been reconciled with the following receives...")</strong></div>
+            }
+            @if (Convert.ToString(ViewData["BillType"]) == BizObject.Transfer)
+            {
+                <div><strong>@HtmlLang.Write(LangModule.Bank, "HasBeenReconciledWithTheFollowingTransfer", "Has been reconciled with the following transfers...")</strong></div>
+            }
+            <div class="mg-tab-content">
+                <div id="tbBankBillReconcileList" fitcolumns="true"></div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+@*底部工具栏*@
+<div class="m-toolbar-footer">
+    <div class="left">
+        <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray">@HtmlLang.Write(LangKey.Cancel)</a>@*取消*@
+    </div>
+    <div class="right">
+        &nbsp;
+    </div>
+</div>
+@*隐藏域*@
+<input type="hidden" id="hidIVBankBillReconcileEntryModelList" value="@ViewData["IVBankBillReconcileEntryModelList"]" />@*银行勾对明细模型列表*@
+@HtmlLang.WriteScript(LangModule.Bank)
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/BD/BDBank/BDBankReconcileView.js?@ServerHelper.JSVersion"></script>

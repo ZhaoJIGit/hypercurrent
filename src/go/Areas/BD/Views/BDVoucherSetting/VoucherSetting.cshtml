@@ -1,0 +1,117 @@
+﻿@{
+
+    ViewBag.Title = "GLVoucher";
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    bool isCanEditPermission = HtmlSECMenu.HavePermission(BizObject.General_Ledger, PermissionItem.Change);
+}
+
+
+@using JieNor.Megi.Identity.HtmlHelper
+@using JieNor.Megi.EntityModel.MultiLanguage
+@using JieNor.Megi.Core.Const
+@using JieNor.Megi.Identity.Go.HtmlHelper
+@using JieNor.Megi.Common.Utility
+@using JieNor.Megi.Identity
+
+<link type="text/css" rel="stylesheet" href="~/Scripts/GL/vs.css?@ServerHelper.JSVersion" />
+
+
+<div class="vs-action">
+    <span class="vs-advance-setting-button">
+        &nbsp;
+    </span>
+</div>
+
+
+@*主体内容*@
+<div class="m-imain vs-imain">
+
+    <div class="main-header" style="margin-left:10px;margin-top:20px">
+        <div index="0" title="@HtmlLang.Write(LangModule.BD, "VoucherCreateSetting", "凭证生成设置")">
+
+        </div>
+        <div index="1" title="@HtmlLang.Write(LangModule.BD, "VoucherNumberSetting", "凭证编号设置")">
+
+        </div>
+    </div>
+    <div class="main-bottom">
+        <div class="vs-create-div" index="0">
+            <div class="vs-setting-grid">
+                <table class="vs-setting-table"></table>
+            </div>
+        </div>
+        <div class="vs-number-div" index="1" style="display:none;">
+            <table class="vs-number-table" style="border-collapse:collapse">
+                <tr>
+                    <td>@HtmlLang.Write(LangModule.BD, "VoucherNumberMaxLength", "凭证最大位数")</td>
+                    <td>
+                        <input class="vs-number-count" style="width:50px" value="3" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>@HtmlLang.Write(LangModule.BD, "VoucherNumberFilledWith0", "编号空位补'0'")</td>
+                    <td>
+                        <input class="vs-number-filledwithchar" type="checkbox" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @HtmlLang.Write(LangModule.BD, "SettingExample", "设置后的凭证区间为")
+                    </td>
+                    <td class="vs-number-example">
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="m-toolbar-footer">
+    @if (HtmlSECMenu.HavePermission(BizObject.General_Ledger, PermissionItem.Approve))
+            {
+        <div class="right">
+            <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow vs-save-button ">@HtmlLang.Write(LangModule.GL, "Save", "保存")</a>
+        </div>
+    }
+</div>
+
+
+<div class="vs-advance-setting" id="advanceSetting" style="display:none;">
+    <p style="margin: 5px 0px 5px 20px;font-weight: bold;">@HtmlLang.Write(LangModule.BD, "Show", "显示")</p>
+    <ul class="vs-advance-ul">
+        <li class="vs-advance-item">
+            <input type="checkbox" checked="checked" settingid="0" disabled="disabled" /> @HtmlLang.Write(LangModule.BD, "EntryMergeSet", "分录合并设置")
+        </li>
+        <li class="vs-advance-item">
+            <input type="checkbox" settingid="1" /> @HtmlLang.Write(LangModule.BD, "ExplanationSet", "摘要设置")
+        </li>
+    </ul>
+    <div class="vs-advance-confirm">
+        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow vs-confirm-button l-btn l-btn-small">@HtmlLang.Write(LangModule.BD, "Confirm", "确认")</a>
+    </div>
+</div>
+
+<div class="vs-setting-div vs-demo">
+
+    <ul class="vs-setting-ul vs-demo">
+        <li class="vs-setting-item vs-demo">
+            <input type="checkbox" />
+            <span></span>
+        </li>
+    </ul>
+
+</div>
+
+@HtmlLang.WriteScript(LangModule.GL)
+@HtmlLang.WriteScript(LangModule.IV)
+@HtmlLang.WriteScript(LangModule.BD)
+@HtmlLang.WriteScript(LangModule.FP)
+@HtmlLang.WriteScript(LangModule.Report)
+<script src="~/Scripts/GL/entity/GLEnum.js?@ServerHelper.JSVersion"></script>
+<script src="~/Scripts/BD/PrefixSetting/BDPrefixSetting.js?@ServerHelper.JSVersion"></script>
+<script src="~/Scripts/GL/BDVoucherSetting.js?@ServerHelper.JSVersion"></script>
+
+
+<script type="text/javascript">
+    new BDVoucherSetting().init();
+</script>

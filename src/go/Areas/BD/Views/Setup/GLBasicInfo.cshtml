@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "Financial Settings";
+    Layout = "~/Areas/BD/Views/Shared/_SetupLayout.cshtml";
+}
+<div class="m-setup-content setup-form-wrapper">
+    <div id="divFinancial" class="m-form m-form-nopadding">
+        @Html.Partial("../InitSetting/UCGLBasicInfoEdit")
+    </div>
+</div>
+<input type="hidden" id="hidLastDayLastMonth" value="@ViewBag.LastDayLastMonth" />
+<input type="hidden" class="mg-data m-form-key" name="MItemID" />
+<input type="hidden" class="mg-data" name="MOrgID" value="@ViewBag.OrgCode" />
+<input type="hidden" id="hidBeginDate" value="@ViewData["BeginDate"]" />
+@HtmlLang.WriteScript(LangModule.Acct)
+@HtmlLang.WriteScript(LangModule.BD)
+<script src="@ServerHelper.ScriptServer/Scripts/BD/InitSetting/GLBasicInfoEdit.js?@ServerHelper.JSVersion"></script>

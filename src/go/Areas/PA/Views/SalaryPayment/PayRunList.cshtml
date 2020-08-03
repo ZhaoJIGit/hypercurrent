@@ -1,0 +1,189 @@
+﻿@using JieNor.Megi.Common.Context
+@using JieNor.Megi.Core.DataModel
+@using JieNor.Megi.EntityModel.Enum
+@using JieNor.Megi.Common.Utility
+@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    //是否有编辑权限
+    bool haveChangePermission = HtmlSECMenu.HavePermission(BizObject.PayRun, PermissionItem.Change);
+    bool haveExportPermission = HtmlSECMenu.HavePermission(BizObject.PayRun, PermissionItem.Export);
+    var langID = ContextHelper.MContext.MLCID;
+    var lang = langID == LangCodeEnum.EN_US ? "en" : (langID == LangCodeEnum.ZH_CN ? "zh-cn" : "zh-tw");
+    List<ChartPie2DModel> pieList = ViewBag.PieList as List<ChartPie2DModel>;
+    var summary = ViewBag.SalaryPaymentSummary as PASalaryPaymentSummaryModel;
+}
+@if (haveChangePermission || haveExportPermission) { 
+<div class="m-toolbar">
+    @*编辑权限*@
+    @if (haveChangePermission)
+    {
+        @*创建工资*@
+        <a data-options="menu:'#divCreateBy'" href="javascript:void(0)" id="aCreateBy" class="easyui-splitbutton easyui-linkbutton-yellow">@HtmlLang.Write(LangModule.PA, "Create", "Create")</a>
+        <div id="divCreateBy" style="width: 220px; height: 60px; display: none;">
+            <div id="divNew">
+                <a href="javascript:void(0)">@HtmlLang.Write(LangKey.New)</a>
+            </div>
+            <div id="divCopy">
+                <a href="javascript:void(0)">@HtmlLang.Write(LangModule.PA, "CopyFromPrevious", "Copy from previous")</a>
+            </div>
+        </div>
+        <a href="#" class="easyui-linkbutton" id="aImport">@HtmlLang.Write(LangKey.Import)</a>
+    }
+    @*导出权限*@
+    @*@if (haveExportPermission)
+    {
+        <a href="javascript:void(0)" class="easyui-linkbutton" id="aExport">@HtmlLang.Write(LangKey.Export)</a>
+    }*@
+</div>
+}
+    
+@*主体内容*@
+<div class="m-imain">
+    <div class="m-imain-content m-imain-content-min ">
+        @*列表分类Tab*@
+        @{var lblItems = HtmlLang.GetText(LangModule.Common, "items", "items");}
+        <div class="m-extend-tabs">
+            <div class="iv2-tab-links">
+                <ul class="tab-links">
+                    <li class="current">
+                        &nbsp;
+                        <div class="tab-home">&nbsp;</div>
+                    </li>
+                    <li>
+                        <div class="title">@HtmlLang.Write(LangModule.IV, "All", "All")</div>
+                        <div class="sub-title">(@summary.AllCount.ShowCountUnit(lblItems))</div>
+                        <div class="statistics">@summary.AllAmount.ToMoneyFormat()</div>
+                    </li>
+                    <li>
+                        <div class="title">@HtmlLang.Write(LangModule.IV, "Draft", "Draft")</div>
+                        <div class="sub-title">(@summary.DraftCount.ShowCountUnit(lblItems))</div>
+                        <div class="statistics">@summary.DraftAmount.ToMoneyFormat()</div>
+                    </li>
+                    <li>
+                        <div class="title">@HtmlLang.Write(LangModule.IV, "Approved", "Approved")</div>
+                        <div class="sub-title">(@summary.WaitingPaymentCount.ShowCountUnit(lblItems))</div>
+                        <div class="statistics">@summary.WaitingPaymentAmount.ToMoneyFormat()</div>
+                    </li>
+                    <li>
+                        <div class="title">@HtmlLang.Write(LangModule.IV, "Paid", "Paid")</div>
+                        <div class="sub-title">(@summary.PaidCount.ShowCountUnit(lblItems))</div>
+                        <div class="statistics">@summary.PaidAmount.ToMoneyFormat()</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        @*内页工具栏*@
+        <div class="m-tab-toolbar">
+            <div class="right" style="display: none; width: 465px;" id="divSearch">
+                <span style="margin-left:10px;">@HtmlLang.Write(LangKey.StartDate) </span>     
+                <span>
+                    <input type="text" id="txtStartDate" class="ym-date-input Wdate" onfocus="WdatePicker({ dateFmt: 'yyyy-MM', lang: '@lang', skin:'@lang' })" hint="@HtmlLang.Write(LangModule.Common, "Date", "Date")" style="width: 100px;" />
+                </span>
+                <span style="margin-left:10px;">@HtmlLang.Write(LangKey.EndDate)</span>
+                <span>
+                    <input type="text" id="txtEndDate" class="ym-date-input Wdate" onfocus="WdatePicker({ dateFmt: 'yyyy-MM', lang: '@lang', skin:'@lang' })" hint="@HtmlLang.Write(LangModule.Common, "Date", "Date")" style="width: 100px;" />
+                </span>
+                <a href="javascript:void(0)" id="aSearch" class="m-btn-s easyui-linkbutton m-adv-search-btn" style="float: right;margin-left:10px;">@HtmlLang.Write(LangKey.Search)</a>
+            </div>
+        </div>
+
+        @*搜索栏
+    <div class="m-adv-search m-adv-search-invoice" id="SearchBar">
+        <div class="m-adv-search-close"><a href="javascript:void(0)">&nbsp;</a></div>
+        <div class="m-adv-search-param">
+            <div class="item">
+                <p>@HtmlLang.Write(LangKey.StartDate) </p>
+                <p><input id="txtStartDate" name="MStartDate" type="text" class="easyui-datebox mg-data" style="width:100px;" /></p>
+            </div>
+            <div class="item">
+                <p>@HtmlLang.Write(LangKey.EndDate)</p>
+                <p><input id="txtEndDate" name="MEndDate" type="text" class="easyui-datebox mg-data" style="width:100px;" /></p>
+            </div>
+            <div class="m-search-bar">
+                <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aSearchInvoice">@HtmlLang.Write(LangKey.Search)</a>
+            </div>
+            <br class="clear" />
+        </div>
+    </div>*@
+
+        @*首页*@
+        <div id="divHome" class="tab-content">
+            @*柱状图表*@
+            <div class="m-chart-container m-top m-f-left m-invoice-l">
+                <div class="m-container-title">@HtmlLang.Write(LangModule.PA, "SalaryPastSixMonths", "Salary in the past 6 months")</div>
+                <div class="m-chart m-container-content" id="payRunChart"></div>
+            </div>
+            @*饼状图表*@
+            <div class="m-container m-top m-f-right m-invoice-r">
+                <div class="m-container-title">
+                    <span>
+                        @HtmlLang.Write(LangModule.PA, "SalaryAmountPastSixMonths", "Salary Amount in the past 6 months")
+                    </span>
+                    <span style="float: right; text-align: right; ">
+                        <a href="javascript:void(0)" onclick="PayRunList.initTab(1)">@HtmlLang.Write(LangModule.Common, "All", "All")</a>
+                    </span>
+                </div>
+                <div class="m-chart m-container-content" id="divCustomerMostList">
+                    @{if (pieList != null && pieList.Count > 0)
+                        {
+                            <table class="m-skinny-table" id="MostListTable">
+                                <tbody>
+                                    @{ foreach (ChartPie2DModel item in pieList)
+                                     {
+                                        <tr>
+                                            <td>
+                                                <a href="javascript:void(0)"  class="debtor"><span style="background: none repeat scroll 0 0 @item.color;"> </span>@item.name</a>
+                                            </td>
+                                            <td class="amt">
+                                                <a href="javascript:void(0)" onclick="PayRunList.editPayRun('@item.MContactID','@item.name');" class="amount">@item.value.ToMoneyFormat()</a>
+                                            </td>
+                                        </tr>
+                                     }}
+                                </tbody>
+                            </table>
+                        }}
+                </div>
+            </div>
+        </div>
+        @*工资汇总列表*@
+        <div id="divPAList">
+            <div id="payRunList" fitcolumns="true"></div>
+        </div>
+
+        <div id="divSelect" style="display:none;">
+            <div style="height:223px;">
+                <div class="m-imain-content">
+                    <script src="@ServerHelper.StaticServer/FW/include/My97Datepicker/WdatePicker.js?@ServerHelper.JSVersion"></script>
+                    <div style="font-weight:bold; padding-bottom:5px;">@HtmlLang.Write(LangModule.PA, "SelectSalaryMonth", "Select Salary Month")</div>
+                    <input type="text" id="txtPeriod" class="ym-date-input Wdate" onfocus="WdatePicker({ dateFmt: 'yyyy-MM', lang: '@lang', skin:'@lang' })" hint="@HtmlLang.Write(LangModule.Common, "Date", "Date")" style="width: 100px;" />
+
+                    <input id="hidCurDate" type="hidden" value="@ViewBag.CurrentDate" />
+                    <input id="hidFrom" type="hidden" />
+                    @HtmlLang.WriteScript(LangModule.PA)
+                </div>
+            </div>
+            @*底部工具栏*@
+            <div class="m-toolbar-footer">
+                <div class="left">
+                    <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray" id="aCancel">@HtmlLang.Write(LangKey.Cancel)</a>
+                </div>
+                <div class="right">
+                    @if (haveChangePermission)
+                    {
+                        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aStart">@HtmlLang.Write(LangModule.PA, "Start", "Start")</a>
+                    }
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+</div>
+@HtmlLang.WriteScript(LangModule.PA)
+@HtmlLang.WriteScript(LangModule.IV)
+<script type="text/javascript" src="@ServerHelper.StaticServer/fw/include/ichartjs/ichart.1.2.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.ScriptServer/Scripts/BD/Import/ImportBase.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/PA/SalaryPayment/PayRunBase.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/PA/SalaryPayment/PayRunList.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.ScriptServer/Scripts/PA/SalaryPayment/SalaryMonthSelect.js?@ServerHelper.JSVersion"></script>
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)

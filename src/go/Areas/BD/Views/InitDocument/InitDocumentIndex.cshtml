@@ -1,0 +1,312 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    //上下文
+    var context = JieNor.Megi.Common.Context.ContextHelper.MContext;
+    var isInitOver = context.MInitBalanceOver;
+    //是否是1月份启用总账的，如果是，则没有本年累计贷方和借方
+    var isGLBeginInJan = context.MGLBeginDate.Month == 1;
+    //
+}
+<style>
+    .datagrid .datagrid-view1 {
+    border-right: 1px solid rgb(211,218,227);
+}
+</style>
+@using JieNor.Megi.Common.Utility;
+<script src="@ServerHelper.GoServer/Scripts/BD/Import/ImportBase.js?@ServerHelper.JSVersion"></script>
+
+@if (HtmlSECMenu.HavePermission(BizObject.Setting, PermissionItem.Change))
+{
+    <div class="m-toolbar">
+
+        <a href="javascript:void(0)" id="btnNewTop" class="easyui-splitbutton easyui-splitbutton-base left vl-approve-button"
+           data-options="menu:'#divNew'">@HtmlLang.Write(LangModule.BD, "New", "新建")</a>
+        <div id="divNew" style="width:180px;display:none;">
+            <div><a href="javascript:void(0)" id="btnNewContact" class="id-newcontact-button">@HtmlLang.Write(LangModule.BD, "NewContact", "新建联系人")</a></div>
+            <div><a href="javascript:void(0)" id="btnNewEmployee" class="id-newemployee-button">@HtmlLang.Write(LangModule.BD, "NewEmployee", "新建员工")</a></div>
+        </div>
+
+        <a href="javascript:void(0)" id="btnImportTop" class="easyui-splitbutton easyui-splitbutton-base left vl-approve-button"
+           data-options="menu:'#divImport'">@HtmlLang.Write(LangModule.BD, "Import", "导入")</a>
+        <div id="divImport" style="width:180px;display:none;">
+            <div><a href="javascript:void(0)" id="btnImportContact" class="id-importcontact-button">@HtmlLang.Write(LangModule.BD, "ImportContact", "导入联系人")</a></div>
+            <div><a href="javascript:void(0)" id="btnImportEmployee" class="id-importemployee-button">@HtmlLang.Write(LangModule.BD, "ImportEmployee", "导入员工")</a></div>
+        </div>
+    </div>
+}
+<link type="text/css" rel="stylesheet" href="~/Scripts/GL/css.css?@ServerHelper.JSVersion" />
+<!--子科目选择框-->
+<div class="id-sub-account-select demo" style="display:none;">
+    <!--摆一个ul-->
+    <ul class="id-sub-account-ul">
+        <!--demo-->
+        <li class="id-sub-account-item demo"></li>
+    </ul>
+</div>
+
+<div class="m-imain" style="overflow: hidden">
+    <div class="m-imain-content m-imain-content-min id-home-div">
+        <div class="m-extend-tabs">
+            <div class="iv-tab-links">
+                <!--针对于联系人的-->
+                <ul class="tab-links id-account-ul">
+                    <li class="id-billtype-main">
+                        <div class="id-main-title id-type-title">@HtmlLang.Write(LangModule.BD, "AccountItem", "会计科目")</div>
+                        <div class="id-sub-title">@HtmlLang.Write(LangModule.BD, "DocumentTypes", "单据类型")</div>
+                        <div class="id-type-change">&nbsp;</div>
+                    </li>
+                    <li class="current" mcode="1122">
+                        <div class="statistics tab-links-sub-title" etitle="">@HtmlLang.Write(LangModule.Common, "AccountReceivable", "应收账款")</div>
+                        <span class="id-account-arrow-span"><span class="combo-arrow id-account-arrow" style="height: 20px;"></span></span>
+                        <div class="title">0.00</div>
+                    </li>
+                    <li mcode="2203">
+                        <div class="statistics tab-links-sub-title" etitle="">@HtmlLang.Write(LangModule.Common, "ReceiveInAdvance", "预收账款")</div>
+                        <span class="id-account-arrow-span"><span class="combo-arrow id-account-arrow" style="height: 20px;"></span></span>
+                        <div class="title">0.00</div>
+                    </li>
+                    <li mcode="1221">
+                        <div class="statistics tab-links-sub-title" etitle="">@HtmlLang.Write(LangModule.Common, "OtherReceivable", "其他应收")</div>
+                        <span class="id-account-arrow-span"><span class="combo-arrow id-account-arrow" style="height: 20px;"></span></span>
+                        <div class="title">0.00</div>
+                    </li>
+                    <li mcode="2202">
+                        <div class="statistics tab-links-sub-title" etitle="">@HtmlLang.Write(LangModule.Common, "AccountPayable", "应付账款")</div>
+                        <span class="id-account-arrow-span"><span class="combo-arrow id-account-arrow" style="height: 20px;"></span></span>
+                        <div class="title">0.00</div>
+                    </li>
+                    <li mcode="1123">
+                        <div class="statistics tab-links-sub-title" etitle="">@HtmlLang.Write(LangModule.Common, "Prepayment", "预付账款")</div>
+                        <span class="id-account-arrow-span"><span class="combo-arrow id-account-arrow" style="height: 20px;"></span></span>
+                        <div class="title">0.00</div>
+                    </li>
+                    <li mcode="2241">
+                        <div class="statistics tab-links-sub-title">@HtmlLang.Write(LangModule.Common, "OtherPayable", "其他应付")</div>
+                        <span class="id-account-arrow-span"><span class="combo-arrow id-account-arrow" style="height: 20px;"></span></span>
+                        <div class="title">0.00</div>
+                    </li>
+                </ul>
+                <!--针对于科目的-->
+                <ul class="tab-links id-billtype-ul" style="display: none;">
+                    <li class="id-account-main">
+                        <div class="id-main-title id-type-title" style="float: left; padding-top: 10px">@HtmlLang.Write(LangModule.BD, "AccountItem", "会计科目")</div>
+                        <div class="id-sub-title">@HtmlLang.Write(LangModule.BD, "DocumentTypes", "单据类型")</div>
+                        <div class="id-type-change">&nbsp;</div>
+                    </li>
+
+                    <li class="current" mtype="0">
+                        <div class="statistics">@HtmlLang.Write(LangModule.IV, "Invoice_Sale", "销售")</div>
+                        <div class="title">0.00</div>
+                    </li>
+                    <li mtype="1">
+                        <div class="statistics">@HtmlLang.Write(LangModule.IV, "Invoice_Purchase", "采购")</div>
+                        <div class="title">0.00</div>
+                    </li>
+                    <li mtype="2">
+                        <div class="statistics">@HtmlLang.Write(LangModule.IV, "Receive", "收款")</div>
+                        <div class="title">0.00</div>
+                    </li>
+                    <li mtype="3">
+                        <div class="statistics">@HtmlLang.Write(LangModule.IV, "Payment", "付款")</div>
+                        <div class="title">0.00</div>
+                    </li>
+
+                    <li mtype="4">
+                        <div class="statistics">@HtmlLang.Write(LangModule.IV, "ExpenseClaims", "费用报销")</div>
+                        <div class="title">0.00</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="id-content-main">
+            <!--左侧联系人搜索款-->
+            <div class="id-content-left left">
+                <!--搜索框-->
+                <div class="id-checktype-search-div">
+                    <!--搜索输入框-->
+                    <input class="id-checktype-search-input-demo" style="display:none;">
+                    <!--点击进行搜索-->
+                    <a class="easyui-linkbutton-yellow easyui-linkbutton l-btn id-checktype-data-search" data-options="width:40">@HtmlLang.Write(LangModule.BD, "Refresh", "刷新")</a>
+                    <!--搜索内容框-->
+                    <div class="id-checktype-div-demo" id="checkTypeDiv" style="display: none;">
+                        <!--全部-->
+                        <div class="id-all-type" ntype="-1">
+                            @HtmlLang.Write(LangModule.Common, "AllType", "全部类型")
+                        </div>
+                        <!--客户-->
+                        <div class="id-contact-type" ntype="0">
+                        </div>
+                        <!--供应商-->
+                        <div class="id-employee-type" ntype="1">
+                        </div>
+                        <!--员工-->
+                        <div class="id-meritem-type" ntype="2">
+                        </div>
+                        <!--员工-->
+                        <div class="id-expitem-type" ntype="3">
+                        </div>
+                        <!--员工-->
+                        <div class="id-paitem-type" ntype="4">
+                        </div>
+                        <!--员工-->
+                        <div class="id-trackitem1-type" ntype="5">
+
+                        </div>
+                        <div class="id-trackitem2-type" ntype="6">
+
+                        </div>
+                        <div class="id-trackitem3-type" ntype="7">
+
+                        </div>
+                        <div class="id-trackitem4-type" ntype="8">
+
+                        </div>
+                        <div class="id-trackitem5-type" ntype="9">
+
+                        </div>
+                    </div>
+                </div>
+                <!--核算维度列表-->
+                <div class="id-checktype-list-demo" style="display:none;">
+                    <div class="id-contact-list" column="MContactID" ltype="0" title="@HtmlLang.Write(LangModule.BD, "Contact", "Contact" )"></div>
+                    <div class="id-employee-list" column="MEmployeeID" ltype="1" title="@HtmlLang.Write(LangModule.BD, "Employee", "Employee" )"></div>
+                    <div class="id-meritem-list" column="MMerItemID" ltype="2" title="@HtmlLang.Write(LangModule.BD, "MerItem", "商品项目" )"></div>
+                    <div class="id-expitem-list" column="MExpItemID" ltype="3" title="@HtmlLang.Write(LangModule.BD, "ExpItem", "费用项目" )"></div>
+                    <div class="id-paitem-list" column="MPaItemID" ltype="4" title="@HtmlLang.Write(LangModule.BD, "PaItem", "工资项目" )"></div>
+                    <div class="id-trakcitem1-list" column="MTrackItem1" ltype="5" title=""></div>
+                    <div class="id-trakcitem2-list" column="MTrackItem2" ltype="6" title=""></div>
+                    <div class="id-trakcitem3-list" column="MTrackItem3" ltype="7" title=""></div>
+                    <div class="id-trakcitem4-list" column="MTrackItem4" ltype="8" title=""></div>
+                    <div class="id-trakcitem5-list" column="MTrackItem5" ltype="9" title=""></div>
+                </div>
+            </div>
+            <div class="m-menu-shrink m-menu-shrink-open">
+            </div>
+            <!--右侧单据输入框-->
+            <div class="id-content-right">
+                <div class="id-content-top">
+                    <div class="id-balance-info">
+                        <label>@HtmlLang.Write(LangModule.BD, "InitBalanceBase", "期初余额(综合本位币)")</label><input class="easyui-numberbox id-init-balance-base" readonly="readonly" data-options="precision: 2,width: 90 " />
+                    </div>
+                    <div class="id-statistic-info">
+                        <label>@HtmlLang.Write(LangModule.Common, "Total", "总额")</label><input class="id-total-amount" readonly="readonly" />
+                        <label class="id-difference-label id-equal-value">@HtmlLang.Write(LangModule.Common, "Difference", "差额")</label><input class="id-difference-amount id-equal-value" readonly="readonly" />
+                    </div>
+                </div>
+                <div class="id-content-bottom">
+                    <!--中间数据的绑定-->
+                    <div class="id-gridtable-div">
+                        <table id="gridTable" class="id-table-body"></table>
+                    </div>
+                    <!--下面的统计，需要设置最大高度-->
+                    <div class="id-total-div">
+                        <!--表格统计-->
+                        <div class="id-for-div">
+                            <div class="id-total-span">@HtmlLang.Write(LangModule.Common, "BillTotal", "业务单据合计")</div>
+                            <table class="id-balance-info-table">
+                                <tr class="demo id-account-balance-info-tr" style="display: none">
+                                    <td style="text-align: center; width: 50px;">
+                                        <div class="id-for-li-currency"></div>
+                                    </td>
+                                    <td class="td-bold td-title">
+                                        @HtmlLang.Write(LangModule.BD, "InitBalance", "期初余额(本位币）"):
+                                    </td>
+                                    <td class="td-money">
+                                        <span class="id-init-balance-span" />
+                                    </td>
+                                    <td class="td-bold td-title">
+                                        @HtmlLang.Write(LangModule.BD, "InitBalanceFor", "期初余额(原币）"):
+                                    </td>
+                                    <td class="td-money">
+                                        <span class="id-init-balance-for-span" />
+                                    </td>
+                                </tr>
+                                <tr class="demo id-doc-total-info-tr" style="display: none">
+                                    <td style="text-align: center; width: 50px;">
+                                        <div class="id-for-li-currency"></div>
+                                    </td>
+                                    <td class="td-bold td-title id-doc-total">
+                                        @HtmlLang.Write(LangModule.BD, "BaseCurrency", "(本位币）"):
+                                    </td>
+                                    <td class="td-money">
+                                        <span class="id-doc-span" />
+                                    </td>
+                                    <td class="td-bold td-title id-doc-total">
+                                        @HtmlLang.Write(LangModule.BD, "ForCurrency", "(原币）"):
+                                    </td>
+                                    <td class="td-money">
+                                        <span class="id-doc-for-span" />
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <!--科目原始期初余额-->
+                        <div class="id-original-div">
+                            <div class="id-total-span">@HtmlLang.Write(LangModule.Common, "AccounOriginalInitBalance", "科目期初余额")</div>
+                            <table class="id-original-balance-info-table">
+                                <tr class="demo id-account-balance-info-tr" style="display: none">
+                                    <td style="text-align: center; width: 50px;">
+                                        <div class="id-for-li-currency"></div>
+                                    </td>
+                                    <td class="td-bold td-title">
+                                        @HtmlLang.Write(LangModule.BD, "InitBalance", "期初余额(本位币）"):
+                                    </td>
+                                    <td class="td-money">
+                                        <span class="id-init-balance-span" />
+                                    </td>
+                                    <td class="td-bold td-title">
+                                        @HtmlLang.Write(LangModule.BD, "InitBalanceFor", "期初余额(原币）"):
+                                    </td>
+                                    <td class="td-money">
+                                        <span class="id-init-balance-for-span" />
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="m-toolbar-footer">
+
+    <div class="right" style="width:100%;">
+        <!--如果已经完成初始化了，就不能再保存了-->
+        @if (!isInitOver)
+        {
+            <!--保存科目初始化余额-->
+            <a href="javascript:void(0)" id="btnSave" class="easyui-linkbutton easyui-linkbutton-yellow">@HtmlLang.Write(LangModule.Common, "SaveBill", "保存单据")</a>
+                <!--保存单据-->
+        }
+        else
+        {
+            <div style="float:right;color:green;font-weight: bold;">
+                @HtmlLang.Write(LangModule.Common, "TipsOfBalanceInitFinishedEditAfterReinit", "提示: 科目初始化余额已完成;如需修改，请先反初始化!")
+            </div>
+        }
+    </div>
+    <div class="clear"></div>
+</div>
+<input type="hidden" id="hideBeginDate" value="@ViewData["BeginDate"]" />
+<input type="hidden" id="hideGLBeginDate" value="@ViewData["GLBeginDate"]" />
+<script type="text/javascript">
+    //本用户的国际化信息，包括时区以及日期格式等等
+    window.MegiGlobal = (function (global) {
+        return $.parseJSON(global.replace(/&quot;/g, '"'));
+    })('@JieNor.Megi.Identity.HtmlHelper.HtmlLang.GlobalInfo()');
+</script>
+@HtmlLang.WriteScript(LangModule.IV)
+@HtmlLang.WriteScript(LangModule.BD)
+@HtmlLang.WriteScript(LangModule.Contact)
+<script src="@ServerHelper.ScriptServer/Scripts/GL/GLCheckType.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.ScriptServer/Scripts/BD/InitDocument/InitDocument.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript">
+    $(function () {
+
+        var home = new InitDocument();
+        //
+        home.init('@isInitOver', '@ViewData["accountCode"]');
+    });
+</script>
+

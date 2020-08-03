@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "BusLogList";
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    //是否有 销售发票（编辑）权限
+    bool isCanInvoiceSalesChangePermission = HtmlSECMenu.HavePermission(BizObject.Invoice_Sales, PermissionItem.Change);
+    //是否有 采购发票（编辑）权限
+    bool isCanInvoicePurchasesChangePermission = HtmlSECMenu.HavePermission(BizObject.Invoice_Purchases, PermissionItem.Change);
+    //是否有 费用报销（编辑）权限
+    bool isCanExpenseChangePermission = HtmlSECMenu.HavePermission(BizObject.Expense, PermissionItem.Change);
+    //是否存在总账权限
+
+    var accessResponse = AccessHelper.Access();
+
+    var accessList = accessResponse.Access;
+
+    bool isCanGeneralLedgerViewPermission = accessList[BizObject.General_Ledger + PermissionItem.View];
+
+    bool isCanGeneralLedgerChangePermission = accessList[BizObject.General_Ledger + PermissionItem.Change];  
+}
+@using JieNor.Megi.Tools;
+@using JieNor.Megi.Common.Utility;
+@using JieNor.Megi.Core.Const;
+@*主体内容*@
+<div class="m-imain">
+    <div class="m-imain-content">
+        @*操作日志列表*@
+        <div id="gridBusLog" fitcolumns="true"></div>
+        @if ((isCanInvoiceSalesChangePermission || isCanInvoicePurchasesChangePermission || isCanExpenseChangePermission) || (isCanGeneralLedgerViewPermission  && isCanGeneralLedgerChangePermission))
+        {
+        <div id="divNotes" style="padding-bottom:20px;padding-top:10px;position:absolute;bottom:2px;">
+            <label>@HtmlLang.Write(LangModule.IV, "AddNotes", "Add Notes")：</label>
+            <textarea id="txtNote" rows="3" cols="60" class="easyui-validatebox" hint="@HtmlLang.Write(LangModule.IV, "AddYourNotes", "Add your notes...")" 
+                style="min-width:575px;width:575px;max-width:575px;height:50px;min-height:50px;max-height:50px;padding:8px;margin-right:10px;"></textarea>
+            <a href="javascript:void(0);" class="easyui-linkbutton easyui-linkbutton-yellow easyui-linkbutton-s-s btnCredit" id="aSave">@HtmlLang.Write(LangModule.IV, "Save", "Save")</a>@*保存*@
+        </div>
+        }
+    </div>
+</div>
+<input type="hidden" id="hidInvoiceId" value="@ViewData["InvoiceId"]">@*发票ID*@
+<input type="hidden" id="hidBillType" value="@ViewData["BillType"]">@*发票类型*@
+@*所用到的 js 文件*@
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/Log/BusLogList.js?@ServerHelper.JSVersion"></script>
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)

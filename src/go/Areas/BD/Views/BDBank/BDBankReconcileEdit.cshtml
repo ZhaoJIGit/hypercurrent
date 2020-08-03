@@ -1,0 +1,232 @@
+﻿@using JieNor.Megi.EntityModel.MultiLanguage;
+@using JieNor.Megi.Common.Utility
+@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    var model = ViewData["BankBillEntry"] as JieNor.Megi.DataModel.IV.IVBankBillEntryModel;
+    string bizOjbect = model.MSpentAmt > 0 ? BizObject.Payment : BizObject.Receive;
+    string a = null;
+    string jsonModel = MText.ToJson(model);
+
+    bool isbankAccountEdit = HtmlSECMenu.HavePermission(BizObject.BankAccount, PermissionItem.Change);
+
+}
+@using JieNor.Megi.Common.Utility;
+<div class="m-form m-rec m-imain">
+
+    <div class="m-rec">
+        <div class="item">
+            <div class="bankinfo">
+                <div class="info">
+                    <div class="detail">
+                        <input type="hidden" value="@HtmlLang.ToLangDate(@model.MDate)" id="hidBankBillDate" />
+                        <input type="hidden" value="@Html.Raw(model.MContactID)" id="hidContactID" />
+                        <span><label>@HtmlLang.ToLangDate(@model.MDate)</label><label class="type">@Html.Raw(model.MTransType)</label></span>
+                    </div>
+                    <div class="desc">
+                        <span class="m-ellipsis">@Html.Raw(model.MTransAcctName)</span>
+                        @if (string.IsNullOrEmpty(model.MDesc))
+                        {
+                            <input type="hidden" id="hidRecDesc" value="@Html.Raw(model.MTransAcctName)" />
+                        }
+                        else
+                        {
+                            <input type="hidden" id="hidRecDesc" value="@Html.Raw(model.MDesc)" />
+                        }
+                        <a href="javascript:void(0)" class="more-info" id="aMore">@HtmlLang.Write(LangKey.More)</a>
+                    </div>
+                    <div class="amount">@Html.Raw(@model.MReceivedAmt == 0 ? @model.MSpentAmt.ToMoneyFormat() : @model.MReceivedAmt.ToMoneyFormat())</div>
+                    <div class="clear"></div>
+                    <div class="statement-detail" id="adivMoreContent" width="130px">
+                        <div class="box-title">@HtmlLang.Write(LangModule.Bank, "StatementDetails", "Statement Details")<a href="javascript:void(0)" class="m-icon-close">&nbsp;</a></div>
+                        <div>
+                            <ul>
+                                <li><span>@HtmlLang.Write(LangModule.Bank, "TransactionDate", "Transaction Date")</span>@HtmlLang.ToLangDate(@model.MDate)</li>
+                                <li><span>@HtmlLang.Write(LangModule.Bank, "Payee", "Payee")</span>@Html.Raw(model.MTransAcctName.ToEllipsisString(26))</li>
+                                <li><span>@HtmlLang.Write(LangModule.Bank, "Reference", "Reference")</span>@Html.Raw(model.MRef.ToEllipsisString(26))</li>
+                                <li><span>@HtmlLang.Write(LangModule.Bank, "TransactionAmount", "Transaction Amount")</span>@Html.Raw(@model.MSpentAmt > 0 ? @model.MSpentAmt.ToMoneyFormat() : @model.MReceivedAmt.ToMoneyFormat())</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="mginfo m-match-tab">
+                <div class="m-match-tab-content">
+                    <div class="content match-tip" id="divMathInfo">
+                    </div>
+                    <div class="statement-detail" id="bdivMoreContent" width="130px">
+                        <div class="box-title">@HtmlLang.Write(LangModule.Bank, "TransactionDetail", "交易明细")<a href="javascript:void(0)" class="m-icon-close">&nbsp;</a></div>
+                        <div>
+                            <ul>
+                                <li><span>@HtmlLang.Write(LangModule.Bank, "TransactionDate", "Transaction Date")</span><div class="statement-MDate"></div></li>
+                                <li><span>@HtmlLang.Write(LangModule.Bank, "Payee", "Payee")</span><div class="statement-MTransAcctName m-ellipsis"></div></li>
+                                <li><span>@HtmlLang.Write(LangModule.Bank, "Reference", "Reference")</span><div class="statement-MDesc m-ellipsis"></div></li>
+                                <li><span>@HtmlLang.Write(LangModule.Bank, "TransactionAmount", "Transaction Amount")</span><div class="statement-Amt"></div></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+
+    <div class="m-form-field">
+        <div class="m-form-setion">
+            <div class="m-form-setion-text">@HtmlLang.Write(LangModule.Bank, "BankRecStep1", "1. Find & select matching transactions")</div>
+            <div class="m-form-setion-search">
+                <div class="search-block">
+                    <div class="search-input"><input class="textbox" hint="@HtmlLang.Write(LangModule.Bank, "SearchByNameOrRefOrNum", "Search by name or ref/num")" id="txtKeyword" /></div>
+                </div>
+                <div class="search-block">
+                    <div class="search-input"><input class="easyui-numberbox" style="height:26px;" hint="@HtmlLang.Write(LangModule.Bank, "SearchByAmount", "Search by amount")" id="txtAmount" data-options="min:0,max:99999999,precision:2" value="@ViewData["Amt"]" /></div>
+                </div>
+                <!--搜索-->
+                <div class="search-block search-opt">
+                    <a class="easyui-linkbutton easyui-linkbutton-yellow easyui-linkbutton-s-s" href="javascript:void(0)" id="aSearch">@HtmlLang.Write(LangKey.Search)</a>
+                    <span>@HtmlLang.Write(LangKey.Or)</span>
+                    <a href="javascript:void(0)" id="aClear">@HtmlLang.Write(LangModule.GL, "ResetDocVoucher", "重置")</a>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="space"></div>
+        <div>
+            <div id="tbTranList" fitcolumns="true"></div>
+
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="space"></div>
+    <div class="m-form-field">
+        <div class="m-form-setion">
+            <div class="m-form-setion-text">@HtmlLang.Write(LangModule.Bank, "BankRecStep2", "2. View your selected transactions. Add new transactions, as needed.")</div>
+            <div class="m-form-setion-opt">
+                @if (@isbankAccountEdit && model.MIsGLOpen)
+                {
+                    <a href="javascript:void(0)" id="aInvoiceOptions" class="easyui-splitbutton"
+                       data-options="menu:'#divNewTransOptions'">@HtmlLang.Write(LangKey.New)</a>
+
+                    <div id="divNewTransOptions" style="width:120px;">
+                        @if (@model.MSpentAmt > 0)
+                        {
+                            <div><a href="javascript:void(0)" id="aNewSpendMoney">@HtmlLang.Write(LangModule.Bank, "SpendMoney", "Spend Money")</a></div>
+                        }
+                        @if (@model.MReceivedAmt > 0)
+                        {
+                            <div><a href="javascript:void(0)" id="aNewReceiveMoney">@HtmlLang.Write(LangModule.Bank, "ReceiveMoney", "Receive Money")</a></div>
+                        }
+                        <div><a href="javascript:void(0)" id="aNewTransferMoney">@HtmlLang.Write(LangModule.Bank, "TransferMoney", "Transfer Money")</a></div>
+
+                    </div>
+                }
+            </div>
+            <div class="clear"></div>
+        </div>
+
+        <div class="space"></div>
+        <div id="tbSelectedTranList" fitcolumns="true"></div>
+    </div>
+
+    <div class="space"></div>
+    <div class="m-form-field">
+        <div class="m-form-setion">
+            <div class="m-form-setion-text">@HtmlLang.Write(LangModule.Bank, "BankRecStep3", "3. The sum of your selected transactions must match the money spent. Make adjustments, as needed.")</div>
+            @if (@isbankAccountEdit && model.MIsGLOpen)
+            {
+                <div class="m-form-setion-opt">
+                    <a href="javascript:void(0)" id="aAjustments" class="easyui-splitbutton"
+                       data-options="menu:'#divAdjustments'">@HtmlLang.Write(LangModule.Bank, "Adjustments", "Adjustments")</a>
+
+                    <div id="divAdjustments" style="width:120px;">
+                        <div><a href="javascript:void(0)" id="aBankFee">@HtmlLang.Write(LangModule.Bank, "BankFees", "Bank Fees")</a></div>
+                        @if (@model.MReceivedAmt > 0)
+                        {
+                            <div><a href="javascript:void(0)" id="aInterest">@HtmlLang.Write(LangModule.Bank, "Interest", "Interest")</a></div>
+                        }
+                        <div><a href="javascript:void(0)" id="aMinorAdjustment">@HtmlLang.Write(LangModule.Bank, "MinorAdjustment", "Minor Adjustment")</a></div>
+                    </div>
+
+                </div>
+            }
+        </div>
+
+        <div class="space"></div>
+
+        <div class="sub-total">
+            <span class="left">@HtmlLang.Write(LangModule.Bank, "Subtotal", "Subtotal")</span>
+            <span class="right" id="spTotal">0.00</span>
+        </div>
+        @if (@model.MSpentAmt > 0)
+        {
+            <div class="bankfee" id="divBankFee">
+                <span class="left">@HtmlLang.Write(LangModule.Bank, "BankFees", "Bank Fees")</span>
+                <input type="text" id="txtBankFeeDesc" style="width:260px;" class="easyui-validatebox" value="@HtmlLang.Write(LangModule.Bank, "BankFees", "Bank Fees")" hint="@HtmlLang.Write(LangKey.Description)" />
+                <div class="right"><input class="easyui-numberbox" id="txtBankFeeAmount" style="height:26px;" hint="@HtmlLang.Write(LangModule.Bank, "BankFees", "BankFees")" data-options="min:0,max:99999999,precision:2,tipPosition:'left'" /><a class="m-icon-close" href="javascript:void(0)" id="aHidBankFee">&nbsp;</a></div>
+            </div>
+        }
+        else
+        {
+            <div class="bankfee" id="divBankFee">
+                <span class="left">@HtmlLang.Write(LangModule.Bank, "BankFees", "Bank Fees")</span>
+                <input type="text" id="txtBankFeeDesc" style="width:260px;" class="easyui-validatebox" value="@HtmlLang.Write(LangModule.Bank, "BankFees", "Bank Fees")" hint="@HtmlLang.Write(LangKey.Description)" />
+                <div class="right"><input class="easyui-numberbox" id="txtBankFeeAmount" style="height:26px;" hint="@HtmlLang.Write(LangModule.Bank, "BankFees", "BankFees")" data-options="min:-999999,max:99999999,precision:2,tipPosition:'left'" /><a class="m-icon-close" href="javascript:void(0)" id="aHidBankFee">&nbsp;</a></div>
+            </div>
+        }
+    <div class="interest" id="divInterest">
+        <span class="left">@HtmlLang.Write(LangModule.Bank, "Interest", "bank interest")</span>
+        <input type="text" id="txtInterestDesc" style="width:260px;" value="@HtmlLang.Write(LangModule.Bank, "Interest", "bank interest")" class="easyui-validatebox" hint="@HtmlLang.Write(LangKey.Description)" />
+        <div class="right"><input class="easyui-numberbox" id="txtInterestAmount" style="height:26px;" hint="@HtmlLang.Write(LangModule.Bank, "Interest", "Interest")" data-options="min:0,max:99999999,precision:2,tipPosition:'left'" /><a class="m-icon-close" href="javascript:void(0)" id="aHidInterest">&nbsp;</a></div>
+    </div>
+        <div class="adjustment" id="divAdjustment">
+            <span class="left">@HtmlLang.Write(LangModule.Bank, "Adjustment", "Adjustment")</span>
+            <input type="text" id="txtAdjustmentDesc" style="width:260px;" value="@HtmlLang.Write(LangModule.Bank, "Adjustment", "Adjustment")" class="easyui-validatebox" hint="@HtmlLang.Write(LangKey.Description)" />
+            <span class="right"><input class="easyui-numberbox" id="txtAdjustment" hint="@HtmlLang.Write(LangModule.Bank, "Adjustment", "Adjustment")" style="height:26px;" data-options="min:-999999,max:99999999,precision:2,tipPosition:'left'" /><a class="m-icon-close" href="javascript:void(0)" id="hidAdjustment">&nbsp;</a></span>
+            <div class="clear"></div>
+        </div>
+        <div class="total">
+            @if (@model.MSpentAmt > 0)
+            {
+                <span class="left">
+                    @HtmlLang.Write(LangModule.Bank, "MustMatchMoneySpent", "Must match: Money Spent")
+                    <span class="correct" id="spActualTotal">@Html.Raw(@model.MSpentAmt.ToMoneyFormat())</span>
+                </span>
+            }
+            @if (@model.MReceivedAmt > 0)
+            {
+                <span class="left">
+                    @HtmlLang.Write(LangModule.Bank, "MustMatchMoneyReceive", "Must match: Money Receive")
+                    <span class="correct" id="spActualTotal">@Html.Raw(@model.MReceivedAmt.ToMoneyFormat())</span>
+                </span>
+            }
+            <span class="right" id="spRecTotal">0.00</span>
+        </div>
+
+        <div class="adjust-amt"><div id="divAdjustAmt">@HtmlLang.Write(LangModule.Bank, "TotalIsOutBy", "Total is out by"):<span id="spAdjustAmt"></span></div> </div>
+        <div class="clear"></div>
+    </div>
+
+
+</div>
+<div class="m-toolbar-footer">
+    @if (HtmlSECMenu.HavePermission(BizObject.Bank_Reconciliation, PermissionItem.Change))
+    {
+        <div class="left">
+            <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray">@HtmlLang.Write(LangKey.Cancel)</a>
+        </div>
+        <div class="right">
+            <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-gray" id="aReconcile">@HtmlLang.Write(LangModule.Bank, "ToReconcile", "Reconcile")</a>
+        </div>
+    }
+</div>
+<input type="hidden" value="@ViewData["BankBillEntryID"]" id="hidBankBillEntryID" />
+<input type="hidden" value="@bizOjbect" id="hidBizOjbect" />
+<input type="hidden" value="@jsonModel" id="hidRecModel" />
+<input type="hidden" value="@(model.MRef)" id="hidBankRef" />
+<input type="hidden" value="@(model.MDesc)" id="hidBankDesc" />
+@HtmlLang.WriteScript(LangModule.Bank)
+@HtmlLang.WriteScript(LangModule.IV)
+<script src="@ServerHelper.ScriptServer/Scripts/BD/BDBank/BDBankReconcileEdit.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.ScriptServer/Scripts/IV/BillUrlHelper.js?@ServerHelper.JSVersion"></script>
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)

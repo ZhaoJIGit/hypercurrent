@@ -1,0 +1,63 @@
+﻿@using JieNor.Megi.Core.Context
+@using JieNor.Megi.DataModel.IV
+@{
+    List<BankBillImportSolutionModel> list = ViewBag.BankStaImpSolList as List<BankBillImportSolutionModel>;
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Import Bank Transactions";
+}
+@using JieNor.Megi.Common.Utility;
+<div class="m-imain">
+    <div id="divConnectToBank" class="auto-bank-feeds">
+        <div class="bank-name">@ViewBag.BankTypeName</div>
+        <div id="divLogin" class="login-info">
+            <div class="title">@HtmlLang.Write(LangModule.Bank, "EnterBankLoginInfo", "Please type in your banks loging information:")</div>
+            <table cellpadding="0" cellspacing="5" class="field">
+                <tr>
+                    <td>@HtmlLang.Write(LangModule.Bank, "CustomerID", "Customer ID")</td>
+                    <td class="ctrl">
+                        <input autocomplete="off" type="text" id="UserId" name="UserId" class="easyui-validatebox mg-data" data-options=" required:true" maxlength="40" size="21" style="height:21px;">
+                    </td>
+                </tr>
+                <tr>
+                    <td>@HtmlLang.Write(LangModule.Bank, "Password", "Password")</td>
+                    <td class="ctrl">
+                        <input autocomplete="off" type="password" id="Password" name="Password" class="easyui-validatebox textbox password password-password" data-options=" required:true" maxlength="40" size="21" style="height:22px;">
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="divDatePeriod" class="date-range">
+            <div class="title">@HtmlLang.Write(LangModule.Bank, "SelectDateRange", "Please select date range below:")</div>
+            <table cellpadding="0" cellspacing="5" class="field">
+                <tr>
+                    <td>@HtmlLang.Write(LangModule.Bank, "StartDate", "Start Date")</td>
+                    <td class="ctrl">
+                        <input autocomplete="off" type="text" id="StartDate" class="easyui-datebox" data-options=" required:true" maxlength="40" size="21" style="height:23px;">
+                    </td>
+                </tr>
+                <tr>
+                    <td>@HtmlLang.Write(LangModule.Bank, "EndDate", "End Date")</td>
+                    <td class="ctrl">
+                        <input autocomplete="off" type="text" id="EndDate" class="easyui-datebox" data-options=" required:true" maxlength="40" size="21" style="height:23px;">
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="m-toolbar-footer">
+    @if (HtmlSECMenu.HavePermission(BizObject.BankAccount, PermissionItem.Change))
+    {
+    <div class="left">
+        <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray">@HtmlLang.Write(LangKey.Cancel)</a>
+    </div>
+    <div class="right">
+        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aImport"></a>
+    </div>
+    }
+</div>
+<input type="hidden" id="hidBankTypeId" value="@Html.Raw(@ViewBag.BankTypeId)" />
+<input type="hidden" id="hidBankId" value="@ViewBag.BankId" />
+@HtmlLang.WriteScript(LangModule.Docs)
+@HtmlLang.WriteScript(LangModule.Bank)
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/BD/BDBank/ImportByBankFeeds.js?@ServerHelper.JSVersion"></script>

@@ -1,0 +1,138 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+<div class="m-form m-imain">
+    @if (ViewData["ParentName"] != null && ViewData["ParentName"] != "")
+    {
+        <div class="m-form-field">
+            <div class="m-form-setion">@HtmlLang.Write(LangModule.Acct, "TheSuperiorAccount", "The Superior Account")</div>
+            <div class="m-form-input">
+                <input id="tbxParentName" class="textbox" style="width:200px;" disabled value="@ViewData["ParentName"]" />
+            </div>
+        </div>
+    }
+    else if (ViewData["isCombox"] != null && (bool)ViewData["isCombox"] == true)
+    {
+        <div class="m-form-field">
+            <div class="m-form-setion">@HtmlLang.Write(LangModule.Acct, "TheSuperiorAccount", "The Superior Account")</div>
+            <div class="m-form-input">
+                <input id="tbxParentName" class="easyui-combotree textbox" data-options="multiple: false,url:'/BD/BDAccount/GetAccountList?IsActive=true'" style="width:200px; height:26px" />
+            </div>
+        </div>
+    }
+     <div class="m-form-field">
+        <div class="m-form-setion">@HtmlLang.Write(LangModule.Acct, "AccountType", "Account Type")</div>
+        <div class="m-form-input">
+            @if (ViewData["isCombox"]!=null && (bool)ViewData["isCombox"] == true)
+{
+    <select id="sltAccountType" class="easyui-combobox mg-data" name="MAccountTypeID" data-options="@HtmlBDAccount.DataOptions()" disabled style="width:200px; height:26px;"></select>
+}
+else
+{
+                 <select id="sltAccountType" class="easyui-combobox mg-data" name="MAccountTypeID" data-options="@HtmlBDAccount.DataOptions()" disabled style="width:200px; height:26px;">
+               
+                 </select>
+            }
+           
+        </div>
+    </div>
+    <div class="m-form-field">
+        <div class="m-form-setion">@HtmlLang.Write(LangKey.Code)</div>
+        <div class="m-form-input">
+            <div class="easyui-validatebox" style="height:26px;line-height:26px;width:200px">
+                <div  id="lblParentId" style="display: inline-block; float: left"></div>
+                <input class="easyui-validatebox mg-width200 mg-data" style="border: 0px; position: relative; top: -2px;" data-options="required:true,filterChar:' '" id="tbxNumber" />
+            </div>
+            <input type="hidden" id="hideNumber" name="MNumber" />
+        </div>
+        @*<div class="m-form-tip">@HtmlLang.Write(LangModule.Acct, "UniqueCodeOrNumber", "A unique code/number for this account (limited to 10 characters)")</div>*@
+    </div>
+    <div class="m-form-field">
+        <div class="m-form-setion">@HtmlLang.Write(LangKey.Name)</div>
+        <div class="m-form-input">
+            <input class="easyui-validatebox textbox mg-width200 mg-data m-lang" data-options="required:true" id="txtName" name="MName" />
+        </div>
+        @*<div class="m-form-tip">@HtmlLang.Write(LangModule.Acct, "AccountTitleLimited", "A short title for this account (limited to 150 characters)")</div>*@
+    </div>
+
+   
+  
+    <!--借贷方向-->
+    <div class="m-form-field">
+        <div class="m-form-setion">@HtmlLang.Write(LangModule.Acct, "Direction", "Direction")</div>
+        <div class="m-form-input">
+            <!--借-->
+            <input id="rdoDeit" name="MDC" type="radio" value="1" disabled />@HtmlLang.Write(LangModule.Acct, "Debit", "Debit")
+            <!--贷-->
+            <input id="rdoCreit" name="MDC" type="radio" value="-1" disabled />@HtmlLang.Write(LangModule.Acct, "Credit", "Credit")
+           
+        </div>
+        
+    </div>
+
+    @*<div class="m-form-field">
+        <div class="m-form-setion">@HtmlLang.Write(LangModule.Acct, "Tax", "Tax")</div>
+        <div class="m-form-input">
+            <select id="selTaxRateID" class="easyui-combobox mg-data" name="MTaxTypeID" style="width:200px; height:26px;">
+                @HtmlREGTaxRate.SelectOptions()
+            </select>
+        </div>
+        
+    </div>*@
+
+    <div class="m-form-field">
+        <div class="m-form-setion">@HtmlLang.Write(LangModule.Acct, "CurrencyAccountingWay", "Currency accounting way")</div>
+        <div class="m-form-input">
+            <select id="selIsCheckForCurrency" class="easyui-combobox mg-data" name="MIsCheckForCurrency" style="width:200px; height:26px;">
+                <option value="false" selected>@HtmlLang.Write(LangModule.Acct, "NoAccountForeignCurrency", "No account foreign currency")</option>
+                <option value="true">@HtmlLang.Write(LangModule.Acct, "AccountForeignCurrency", "Account foreign currency")</option>
+            </select>
+        </div>
+
+    </div>
+
+    @*<div id="divFieldCy" class="m-form-field" style="display:none">
+        <div class="m-form-setion">@HtmlLang.Write(LangModule.Acct, "Currency", "Currency")</div>
+        <div id="divCy" class="m-form-input">
+            
+        </div>
+
+    </div>*@
+
+    <div class="m-form-field">
+        @*<div class="m-form-input">
+            <p><input type="checkbox" class="mg-data" name="MIsShowInHome" />@HtmlLang.Write(LangModule.Acct, "ShowOnDashboardWatchlist", "Show on Dashboard Watchlist") </p>
+            <p><input type="checkbox" class="mg-data" name="MIsExpItem" />@HtmlLang.Write(LangModule.Acct, "ShowInExpenseClaims", "Show in Expense Claims")</p>
+            <p><input type="checkbox" class="mg-data" name="MIsPay" />@HtmlLang.Write(LangModule.Acct, "EnablePayments", "Enable payments to this account")</p>
+        </div>*@
+    </div>
+
+
+    <input type="hidden" class="mg-data" name="MIsActive" value="true" />
+    <input type="hidden" class="mg-data" name="MIsSys" value="" />
+    <input type="hidden" class="mg-data" name="MAccountGroupID" value="" />
+    <input type="hidden" class="mg-data" name="MAccountTableID" value="" />
+    <input type="hidden" class="mg-data" id="hidAccountID" name="MItemID" value="@ViewData["AccountID"]" />
+    <input type="hidden" class="mg-data" id="hideIsCanRelateContact" name="IsCanRelateContact" value="@ViewData["IsCanRelateContact"]" />
+    <input type="hidden" id="hidParentID" name="MParentID" value="@ViewData["ParentID"]" />
+    <input type="hidden" id="hideMDC" name="MDC" value="@ViewData["MDC"]" />
+    <input type="hidden" id="isLeaf" value="@ViewData["IsLeaf"]"/>
+    <input type="hidden" id="isCombox" value="@ViewData["isCombox"]" />
+    <input type="hidden" name="MCode" class="mg-data" />
+    <input type="hidden" id="hideAllEidt" value="@ViewData["AllowEdit"]" />
+</div>
+<div class="m-toolbar-footer">
+    <div class="left">
+        <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray">@HtmlLang.Write(LangKey.Cancel)</a>
+    </div>
+    <div class="right">
+        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aStartTrial">@HtmlLang.Write(LangKey.Save)</a>
+    </div>
+    <br class="clear" />
+</div>
+
+@HtmlLang.WriteScript(LangModule.Acct)
+@HtmlLang.WriteScript(LangModule.Bank)
+<script src="@ServerHelper.GoServer/scripts/BD/BDAccount/AccountEdit.js?@ServerHelper.JSVersion"></script>
+
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)

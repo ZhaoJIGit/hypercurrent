@@ -1,0 +1,63 @@
+using System.Runtime.Serialization;
+
+namespace JieNor.Megi.DataModel.IO
+{
+	[DataContract]
+	public enum IOValidationTypeEnum
+	{
+		[EnumMember]
+		DueDate = 1,
+		[EnumMember]
+		ExpectedDate,
+		[EnumMember]
+		BizDate,
+		[EnumMember]
+		InvoiceNumber,
+		[EnumMember]
+		Contact,
+		[EnumMember]
+		Employee,
+		[EnumMember]
+		Currency,
+		[EnumMember]
+		TaxType,
+		[EnumMember]
+		InventoryItem,
+		[EnumMember]
+		ExpenseItem,
+		[EnumMember]
+		BankAccount,
+		[EnumMember]
+		TaxRate,
+		[EnumMember]
+		TrackCategory,
+		[EnumMember]
+		TrackOption,
+		[EnumMember]
+		Account,
+		[EnumMember]
+		PaidAmount,
+		[EnumMember]
+		PaymentDate,
+		[EnumMember]
+		CheckGroup,
+		[EnumMember]
+		SalaryItem,
+		[EnumMember]
+		Quantity,
+		[EnumMember]
+		Country,
+		[EnumMember]
+		TaxThreshold,
+		[EnumMember]
+		Receive,
+		[EnumMember]
+		Payment,
+		[EnumMember]
+		Discount,
+		[EnumMember]
+		TotalAmount,
+		[EnumMember]
+		Price
+	}
+}

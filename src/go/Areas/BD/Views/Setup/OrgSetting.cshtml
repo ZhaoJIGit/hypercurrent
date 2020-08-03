@@ -1,0 +1,13 @@
+﻿@{
+    ViewBag.Title = "Enter your organization";
+    Layout = "~/Areas/BD/Views/Shared/_SetupLayout.cshtml";
+}
+<div class="setup-form">
+    <div class="m-setup-content setup-form-wrapper">
+        @Html.Partial("../Organisation/UCOrganisationEdit")
+    </div>
+    <div class="m-help-bar">
+        <span>@HtmlLang.Write(LangModule.BD, "SetupOrgHelp", "While you're setting up your organisation in Megi, enter your organisation's details including its legal/trading name, type of organisation, address, and language setting. You can get to this information outside of the setup process as well so that you can complete or update it at any time.")</span>
+    </div>
+    <div class="clear"></div>
+</div>

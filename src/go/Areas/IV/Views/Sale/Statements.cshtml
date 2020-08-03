@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.Title = "Statements";
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+@using JieNor.Megi.Common.Utility;
+<div class="m-imain">
+    <div class="margin"></div>
+    <div class="m-form-vtcl m-form-min" style="box-shadow: 1px 1px 3px #ddd;">
+    <div class="m-form-vtcl-content">
+        <div class="m-form-section section-type">
+            <div class="m-form-item">
+                <ul>
+                    <li class="mg-bold">@HtmlLang.Write(LangModule.IV, "StatementType", "Statement Type")</li>
+                    <li><select class="easyui-combobox" style="width:120px; height:22px;" id="StatementType" data-options="onSelect:Statements.InitFilter">
+                        <option value="Outstanding">@HtmlLang.Write(LangModule.IV, "Outstanding", "Outstanding")</option>
+                        <option value="Activity">@HtmlLang.Write(LangModule.IV, "Activity", "Activity")</option>
+                        </select> 
+                    </li>
+                </ul>
+            </div>
+            <div class="m-form-item" id="dateBetweenDiv">
+                <ul>
+                    <li class="mg-bold">@HtmlLang.Write(LangModule.IV, "between", "between")</li>
+                    <li>
+                        <input type="text" class="easyui-datebox" required="required"  id="dateBetweenInput"/>
+                    </li>
+                </ul>
+            </div>
+            <div class="m-form-item">
+                <ul>
+                    <li class="mg-bold"><span id="dateEndSpan">@HtmlLang.Write(LangModule.IV, "as at", "as at")</span></li>
+                    <li>
+                        <input type="text" class="easyui-datebox" required="required" id="dateEndInput"/>
+                    </li>
+                </ul>
+            </div>
+            <div class="m-form-item">
+                <ul>
+                    <li class="mg-bold">@HtmlLang.Write(LangModule.IV, "FilterBy", "Filter by")</li>
+                    <li>
+                        <input type="text" class="textbox" data-label="Contact, email or postal address" style="width:210px;" id="searchText"/>
+                    </li>
+                </ul>
+            </div>
+            <div class="m-form-item">
+                <ul>
+                    <li><a href="javascript:void(0)" class="mg-btn mg-btn-blue" id="aUpdate">@HtmlLang.Write(LangModule.IV, "Update", "Update")</a></li>
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
+    <div class="margin"></div>
+    <div class="tab-tool-bar" style="padding:2px;background: linear-gradient(#fefefe, #efefef) repeat scroll 0 0 rgba(0, 0, 0, 0); border:1px solid #d9d9d9;border-bottom:none; " >
+        <a href="#" class="easyui-linkbutton m-tool-bar-btn" data-options="iconCls:'icon-print'">@HtmlLang.Write(LangKey.Print)</a>
+        <a href="#" class="easyui-linkbutton m-tool-bar-btn" data-options="iconCls:'icon-email'">@HtmlLang.Write(LangKey.Email)</a>
+    </div>  
+    <div id="StatementsData" fitcolumns="true" style="margin:10px;">
+    </div> 
+    <input type="hidden" id="FirstDayOfMonth" value="@ViewData["FirstDayOfMonth"]" / />
+    <input type="hidden" id="LastDayOfMonth" value="@ViewData["LastDayOfMonth"]" / />
+    <div class="clear" />
+</div>
+<script src="@ServerHelper.ScriptServer/Scripts/IV/Sale/Statements.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.IV)

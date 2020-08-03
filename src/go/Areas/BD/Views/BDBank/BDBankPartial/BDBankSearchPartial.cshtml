@@ -1,0 +1,18 @@
+﻿@using JieNor.Megi.Identity.Go.HtmlHelper
+@using JieNor.Megi.Core.Const
+
+<div class="m-adv-search-close"><a href="javascript:void(0)">&nbsp;</a></div>
+<div class="m-adv-search-param">
+    <input type="text" class="easyui-datebox search-date" hint="@HtmlLang.Write(LangModule.Common, "Date", "日期")" style="width:110px;" />
+    <input type="text" class="textbox search-payer" style="width:110px;" maxlength="200" />
+    <input type="text" class="textbox search-ref" hint="@HtmlLang.Write(LangModule.Common, "Reference", "备注")" style="width:110px;" maxlength="500" />
+    <!--收/支-->
+    <input type="text" class="easyui-combobox search-from" hint="@HtmlLang.Write(LangModule.Bank, "MoneyInOut", "收或支")" />
+    <input type="checkbox" class="search-exact" />
+    <span>@HtmlLang.Write(LangModule.Bank, "ExactAmount", "精确金额")</span>
+    <input type="text" class="easyui-numberbox search-amount-from" hint="@HtmlLang.Write(LangModule.Common, "MinAmount", "最小金额")" data-options="min:-99999999,max:99999999,precision:2" style="width:110px;" />
+    <span class="search-toflag">@HtmlLang.Write(LangModule.Common, "To", "到")</span>
+    <input type="text" class="easyui-numberbox search-amount-to" hint="@HtmlLang.Write(LangModule.Common, "MaxAmount", "最大金额")" data-options="min:-99999999,max:99999999,precision:2" style="width:110px;" />
+    <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow search-do">@HtmlLang.Write(LangKey.Search)</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton search-reset">@HtmlLang.Write(LangModule.GL, "ResetDocVoucher", "重置")</a>
+</div>

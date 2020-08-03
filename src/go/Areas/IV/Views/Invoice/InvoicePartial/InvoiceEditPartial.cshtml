@@ -1,0 +1,226 @@
+﻿@using JieNor.Megi.DataModel.IV;
+@using JieNor.Megi.Core.DataModel;
+@{
+    bool showAdvance = string.IsNullOrEmpty(Request["showAdvance"]) ? true : false;
+    IVInvoiceModel model = ViewData["InvoiceModel"] as IVInvoiceModel;
+    //业务单据日期，用于获取汇率
+    ViewData["BillBizDate"] = string.IsNullOrEmpty(model.MID) ? Convert.ToDateTime(ViewData["DefaultBizDate"]) : model.MBizDate;
+    string jsonModel = JieNor.Megi.Common.Utility.MText.ToJson(model);
+    string bizDateValidType = ViewData["BizDateValidType"] == null ? "minDate" : "maxDate";
+    //是否可以编辑
+
+    bool isEdit = (ViewData["IsInit"] == "true" ? model.MActionPermission.MIsInitCanEdit : model.MActionPermission.MIsCanEdit) && Convert.ToBoolean(ViewData["isEdit"]) == true;
+
+    string disabledAttr = isEdit ? " " : " disabled=\"disabled\" ";
+
+    //判断是否是复制的发票，如果是复制的发票，则允许修改付款日期
+    string expectedDateDisabledAttr = (model.MTaxTotalAmtFor != 0 && model.MTaxTotalAmtFor == model.MVerificationAmt) ? " disabled=\"disabled\" " : "";
+    if (Convert.ToString(ViewData["InvCopyID"]).Trim() != "")
+    {
+        expectedDateDisabledAttr = "";
+    }
+
+    //是否有 联系人（编辑）权限
+    bool isCanContactChangePermission = HtmlSECMenu.HavePermission(BizObject.Contact, PermissionItem.Change);
+
+    //发票审核后是否需要弹窗提示核销
+    bool IsShowVerif = model.MActionPermission.MIsCanVerification;
+    string defaultBizDate = string.IsNullOrEmpty(model.MID) ? ViewData["DefaultBizDate"].ToString() : HtmlLang.ToLangDate(model.MBizDate);
+}
+@using JieNor.Megi.Common.Utility;
+<div class="m-imain">
+    <script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/IV/IVFW.js?@ServerHelper.JSVersion"></script>
+    <div class="m-imain-content">
+        <div id="divMessage"></div>
+        <div class="m-form m-form-icon">
+            <div class="column">
+                <div class="cell">
+                    @*客户*@
+                    <div class="">
+                        <span class="lbl m-icon-customer" title="@HtmlLang.Write(LangModule.IV, "IVTo", "IVTo")">&nbsp;</span>
+                        <input tabindex="1" @disabledAttr hint="@HtmlLang.Write(LangModule.IV, "IVTo", "IVTo")"
+                               id="selContact"
+                               name='ContactID' style="width:140px;" />
+                    </div>
+                </div>
+                <div class="cell">
+                    <span class="lbl m-icon-time" title="@HtmlLang.Write(LangKey.DueDate)">&nbsp;</span>
+                    <input id="txtDueDate" @disabledAttr tabindex="5" hint="@HtmlLang.Write(LangKey.DueDate)" type="text" class="easyui-datebox user-active" data-options="required:true" style="width:140px;" />
+                </div>
+            </div>
+            <div class="column">
+                <div class="cell">
+                    <span class="lbl m-icon-text" title="@HtmlLang.Write(LangModule.IV, "Invoice", "Invoice #")">&nbsp;</span>
+                    <input id="txtInvoiceNo" @disabledAttr hint="@HtmlLang.Write(LangModule.IV, "Invoice", "Invoice #")" tabindex="2" maxlength="50" type="text" class="easyui-validatebox textbox" data-options="required:true" style="width:132px;padding:0 3px;" />
+                </div>
+                <div class="cell">
+                    <span class="lbl m-icon-experted-date" title="@HtmlLang.Write(LangModule.IV, "InvoiceExpectedPaymentDate", "Expected Payment date")">&nbsp;</span>
+                    <input id="txtExpectedDate" @expectedDateDisabledAttr hint="@HtmlLang.Write(LangModule.IV, "InvoiceExpectedPaymentDate", "Expected Payment date")" tabindex="6" type="text" class="easyui-datebox user-active" style="width:140px;" />
+                </div>
+            </div>
+            <div class="column">
+                <div class="cell">
+                    <span class="lbl m-icon-ref" title="@HtmlLang.Write(LangKey.Reference)">&nbsp;</span>
+                    <input type="text" tabindex="3" @disabledAttr hint="@HtmlLang.Write(LangKey.Reference)" class="textbox" id="txtRef" name="MReference" style="width:132px;padding:0 3px;" maxlength="80" />
+                </div>
+                <div class="cell">
+
+                </div>
+                <div class="cell" style="display:none;">
+                    <span class="lbl m-icon-branding" title="@HtmlLang.Write(LangModule.IV, "Branding", "Branding")">&nbsp;</span>
+                    <select id="selBranding" tabindex="7" @disabledAttr class="easyui-combobox" name="MBranding" data-options="editable:false" style="width:140px;">
+                        @HtmlDataDict.SelectOptions(DataDictionaryType.INVOICE_BRANDING)
+                    </select>
+                </div>
+                <div class="cell" style="display:none;">
+                    <span class="lbl m-icon-status" title="@HtmlLang.Write(LangModule.IV, "Status", "Status")">&nbsp;</span>
+                    <input type="text" tabindex="8" @disabledAttr class="textbox" id="txtInvoiceStatus" value="@HtmlLang.Write(LangModule.IV, "Draf", "Draf")" disabled="disabled" style="width:140px;" />
+                </div>
+            </div>
+            <div class="column">
+                <div class="cell">
+                    <span class="lbl m-icon-date" title="@HtmlLang.Write(LangKey.Date)">&nbsp;</span>
+                    <input id="txtDate" @disabledAttr tabindex="4" hint="@HtmlLang.Write(LangKey.Date)"
+                           value="@defaultBizDate" type="text" class="gl-easyui-datebox user-active"
+                           data-options="required:true,validType:'@bizDateValidType [\'@ViewData["MaxBizDate"]\']'" style="width:140px;" />
+                </div>
+                <div class="cell"></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+
+        @*发票列表项 和 高级选项*@
+        @if (showAdvance == true && Convert.ToString(ViewData["InvoiceID"]).Trim() != "" && HtmlSECMenu.HavePermission(BizObject.Invoice_Sales, PermissionItem.Change))
+        {
+            <div class="m-iv-adv-switch">
+                <a href="javascript:void(0)" class="show">&nbsp;</a><span>@HtmlLang.Write(LangModule.IV, "AdvancedOptions", "Advanced Options")</span>
+            </div>
+        }
+        <div class="m-iv">
+            @Html.Partial("../UC/EntryEdit")
+            @if (showAdvance == true && model.MActionPermission.MHaveAction && !string.IsNullOrEmpty(model.MID))
+            {
+                <div class="m-iv-adv">
+                    <div id="aa" class="easyui-accordion" style="width:260px;min-height:344px;">
+                        <div id="divFapiao" title="@HtmlLang.Write(LangModule.IV, "ValueAddedTaxInvoice", "Value-added Tax Invoice")" style="overflow:auto;padding:10px;">
+                            @Html.Partial("../UC/IssueFapiaoInfo")
+                        </div>
+                        <div title="@HtmlLang.Write(LangModule.IV, "FinancialInformation", "Financial Information")" data-options="selected:true" style="padding:10px;">
+                            <ul>
+                                @if (model.MActionPermission.MIsCanPay)
+                                {
+                                    string paymentTitle = Convert.ToString(HtmlLang.Write(LangModule.IV, "ReceiveAPayment", "Receive a payment"));
+                                    <li><a href="javascript:void(0)" onclick="MakePayment.open('@ViewData["InvoiceID"]','@paymentTitle',InvoiceEditBase.afterVerification)">@paymentTitle</a></li>
+                                }
+                                @if (model.MActionPermission.MIsCanVerification)
+                                {
+                                    <li><a href="javascript:void(0)" onclick="Verification.open('@ViewData["InvoiceID"]','@BizObject.Invoice',InvoiceEditBase.afterVerification)">@HtmlLang.Write(LangModule.IV, "Reconcile", "Reconcile")</a></li>
+                                }
+                                @if (model.MActionPermission.MIsCanUnApprove)
+                                {
+                                    <li id="liUnApprove"><a href="javascript:void(0)" onclick='IVBase.unAuditToDraft("@ViewData["InvoiceID"]",IVBase.InvoiceType.Sale)'>@HtmlLang.Write(LangModule.IV, "UnAuditToDraft", "UnAudit To Draft")</a></li>
+                                }
+                                @if (model.MActionPermission.MIsCanViewVoucherCreateDetail)
+                                {
+                                    <li><a href="javascript:void(0)" onclick="IVGL.open('@ViewData["InvoiceID"]','0')">@HtmlLang.Write(LangModule.GL, "VoucherCreateDetails", "Voucher Create Detail")</a></li>
+                                }
+                                @if (model.MActionPermission.MIsCanCopy)
+                                {
+                                <li><a href="javascript:void(0)" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.IV, "CopyInvoice", "Copy Invoice")', '/IV/Invoice/InvoiceEdit?cpyId=@ViewData["InvoiceID"]')">@HtmlLang.Write(LangKey.Copy)</a></li>
+                                }
+                                @if (model.MActionPermission.MIsCanVoid)
+                                {
+                                    <li><a href="javascript:void(0)" onclick='IVBase.archiveItem("@ViewData["InvoiceID"]","/IV/Invoice/InvoiceList/@Request.QueryString["TabIndex"]")'>@HtmlLang.Write(LangModule.IV, "Void", "Void")</a></li>
+                                }
+                                @if (model.MActionPermission.MIsCanDelete)
+                                {
+                                    <li><a href="javascript:void(0)" onclick='IVBase.deleteItem("@ViewData["InvoiceID"]","/IV/Invoice/InvoiceList/@Request.QueryString["TabIndex"]")'>@HtmlLang.Write(LangKey.Delete)</a></li>
+                                }
+                                @if (model.MActionPermission.MIsCanCreateCreditNote)
+                                {
+                                    <li><a href="javascript:void(0)" id="btnCopyCredit">@HtmlLang.Write(LangModule.IV, "AddCreditNote", "Add Credit Note")</a></li>
+                                }
+                                @if (model.MActionPermission.MIsCanCopy)
+                                {
+                                <li><a href="javascript:void(0)" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.IV, "NewRepeatingInvoice", "New Repeating Invoice")', '/IV/Invoice/RepeatInvoiceEdit?copyInvoiceId=@ViewData["InvoiceID"]',true);">@HtmlLang.Write(LangModule.IV, "Repeating", "Repeating")</a></li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+
+<input type="hidden" id="hidInvoiceID" value="@ViewData["InvoiceID"]" />
+<input type="hidden" id="hidInvoiceModel" value='@jsonModel' />
+<input type="hidden" id="hidDefaultBizDate" value="@ViewData["DefaultBizDate"]" />
+<input type="hidden" id="hidIsEdit" value="@Html.Raw(@isEdit)">
+<input type="hidden" id="hidHaveAttachChangePermission" value="@Html.Raw(HtmlSECMenu.HavePermission(BizObject.Attachment, PermissionItem.Change))" />
+<input type="hidden" id="hidIsShowVerif" value="@Html.Raw(@IsShowVerif)" />
+<input type="hidden" id="hidCurrencyId" value="@JieNor.Megi.Common.Context.ContextHelper.MContext.MBasCurrencyID" />
+@*是否有销售发票的编辑权限*@
+@if (HtmlSECMenu.HavePermission(BizObject.Invoice_Sales, PermissionItem.Change))
+{
+    <input type="hidden" id="hidChangeAuth" value="1" />
+}
+else
+{
+    <input type="hidden" id="hidChangeAuth" value="0" />
+}
+@*是否有银行的查看权限*@
+@if (HtmlSECMenu.HavePermission(BizObject.BankAccount, PermissionItem.View))
+{
+    <input type="hidden" id="hidIsCanBankAccountViewPermission" value="1" />
+}
+else
+{
+    <input type="hidden" id="hidIsCanBankAccountViewPermission" value="0" />
+}
+@*是否有银行的编辑权限*@
+@if (HtmlSECMenu.HavePermission(BizObject.BankAccount, PermissionItem.Change))
+{
+    <input type="hidden" id="hidIsCanBankAccountChangePermission" value="1" />
+}
+else
+{
+    <input type="hidden" id="hidIsCanBankAccountChangePermission" value="0" />
+}
+@*是否有基础资料的编辑权限*@
+@if (HtmlSECMenu.HavePermission(BizObject.Setting, PermissionItem.Change))
+{
+    <input type="hidden" id="hidIsCanSettingChangePermission" value="1" />
+}
+else
+{
+    <input type="hidden" id="hidIsCanSettingChangePermission" value="0" />
+}
+@*是否有联系人的编辑权限*@
+@if (isCanContactChangePermission)
+{
+    <input type="hidden" id="hidIsCanContactChangePermission" value="1" />
+}
+else
+{
+    <input type="hidden" id="hidIsCanContactChangePermission" value="0" />
+}
+@HtmlLang.WriteScript(LangModule.Common)
+@HtmlLang.WriteScript(LangModule.GL)
+@HtmlLang.WriteScript(LangModule.IV)
+@HtmlLang.WriteScript(LangModule.FP)
+@HtmlLang.WriteScript(LangModule.Contact)
+@HtmlLang.WriteScript(JieNor.Megi.EntityModel.MultiLanguage.LangModule.BD)
+<script type="text/javascript" src="@ServerHelper.StaticServer/fw/scripts/jquery.megi.print.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/IV/BillUrlHelper.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/IV/IVBase.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/IV/IVEditBase.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/IV/Invoice/InvoiceEditBase.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/IV/UC/MakePayment.interface.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/IV/Verification/Verification.interface.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/FP/IssueFapiao.interface.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/IV/IVGL.js?@ServerHelper.JSVersion"></script>
+
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)

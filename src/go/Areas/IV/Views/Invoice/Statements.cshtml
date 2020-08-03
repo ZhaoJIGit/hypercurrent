@@ -1,0 +1,77 @@
+﻿@{
+    ViewBag.Title = "Statements";
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+@using JieNor.Megi.Common.Utility;
+<div class="m-imain">
+    <div class="m-imain-content">
+        <div class="m-form-vtcl m-form-min">
+            <div class="m-form-vtcl-content">
+                <div class="m-form-section section-type">
+                    <div class="m-form-item">
+                        <ul>
+                            <li class="mg-bold">@HtmlLang.Write(LangModule.IV, "StatementType", "Statement Type")</li>
+                            <li>
+                                <select class="easyui-combobox" style="width:120px;" id="StatementType" data-options="onSelect:Statements.InitFilter" panelHeight="66px">
+                                    <option value="Outstanding">@HtmlLang.Write(LangModule.IV, "Outstanding", "Outstanding")</option>
+                                    <option value="Activity">@HtmlLang.Write(LangModule.IV, "Activity", "Activity")</option>
+                                </select>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="m-form-item" id="dateBetweenDiv">
+                        <ul>
+                            <li class="mg-bold">@HtmlLang.Write(LangModule.IV, "between", "between")</li>
+                            <li>
+                                <input type="text" class="easyui-datebox" required="required" id="dateBetweenInput" />
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="m-form-item">
+                        <ul>
+                            <li class="mg-bold"><span id="dateEndSpan">@HtmlLang.Write(LangModule.IV, "AsAt", "as at")</span></li>
+                            <li>
+                                <input type="text" class="easyui-datebox" required="required" id="dateEndInput" />
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="m-form-item">
+                        <ul>
+                            <li class="mg-bold">@HtmlLang.Write(LangModule.IV, "FilterBy", "Filter by")</li>
+                            <li>
+                                <input type="text" class="textbox" data-label="Contact, email or postal address" style="width:210px;" id="searchText" />
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="m-form-item" style="padding-top:23px;">
+                        <ul>
+                            <li><a href="javascript:void(0)" class="easyui-linkbutton" id="aUpdate">@HtmlLang.Write(LangModule.IV, "Update", "Update")</a></li>
+                        </ul>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+        <div class="m-tab-toolbar">
+            @if (HtmlSECMenu.HavePermission(BizObject.Invoice_Sales, PermissionItem.View))
+            {
+                <a href="javascript:void(0)" class="easyui-linkbutton m-tool-bar-btn" id="aPrint">@HtmlLang.Write(LangKey.Print)</a>
+            }
+            @if (HtmlSECMenu.HavePermission(BizObject.Invoice_Sales, PermissionItem.Change))
+            {
+                <a href="javascript:void(0)" class="easyui-linkbutton m-tool-bar-btn" id="btnEmail">@HtmlLang.Write(LangKey.Email)</a>
+            }
+        </div>
+        <div id="StatementsData" fitcolumns="true" style="margin:10px;">
+        </div>
+        <input type="hidden" id="FirstDayOfMonth" value="@ViewData["FirstDayOfMonth"]" />
+        <input type="hidden" id="LastDayOfMonth" value="@ViewData["LastDayOfMonth"]" />
+        <div class="clear" />
+    </div>
+</div>
+@HtmlLang.WriteScript(LangModule.IV)
+@HtmlLang.WriteScript(LangModule.Bank)
+@HtmlLang.WriteScript(LangModule.BD)
+<script type="text/javascript" src="@ServerHelper.StaticServer/fw/scripts/jquery.megi.print.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.ScriptServer/Scripts/IV/Invoice/Statements.js?@ServerHelper.JSVersion"></script>
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)

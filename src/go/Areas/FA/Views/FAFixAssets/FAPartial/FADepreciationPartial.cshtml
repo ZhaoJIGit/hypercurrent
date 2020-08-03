@@ -1,0 +1,46 @@
+﻿
+
+@using JieNor.Megi.Common.Utility
+@using JieNor.Megi.EntityModel.MultiLanguage
+@using JieNor.Megi.Identity.HtmlHelper
+
+@{
+    var dashBoardInfoModel = ViewData["DashboardInfo"] as JieNor.Megi.DataModel.GL.GLDashboardInfoModel;
+    var dateString = dashBoardInfoModel.FixAssetsDateString;
+    var defaultDate = dashBoardInfoModel.FixAssetsDefaultDate;
+    var lang = dashBoardInfoModel.LangID;
+}
+
+
+<div class="fa-tp-toolbar m-tab-toolbar" style="margin: 10px 0px 10px 0px;">
+    <!--批量查看-->
+    <a href="javascript:void(0)" id="aBatchSetup" class="easyui-linkbutton" style="margin-left:0px;">@HtmlLang.Write(LangModule.FA, "BatchSetup", "批量设置")</a>
+    <!--计提-->
+    <a href="javascript:void(0)" id="aDepreciate" class="easyui-linkbutton" style="margin-left:10px;">@HtmlLang.Write(LangModule.FA, "Depreciate", "计提折旧")</a>
+
+    <div class="fa-toolbar-right" style="float:right;">
+
+        <!--编号-->
+        <input class="fa-dep-number-input" style="margin-top:3px;" hint="@HtmlLang.Write(LangKey.Number)" />
+        <!--关键字-->
+        <input class="fa-dep-keyword-input" style="margin-top:3px;" hint="@HtmlLang.Write(LangKey.Keywords)" />
+
+        <!--日期-->
+        <input type="text" style="margin-top:3px;" class="fa-period-input Wdate" onfocus="WdatePicker({ dateFmt: 'yyyy-MM',readOnly:true, lang: '@lang', skin:'@lang',  @dateString })" hint="@HtmlLang.Write(LangModule.Common, "Date", "Date")" value="@defaultDate" />
+
+        <a href="javascript:void(0)" id="aSearchDepreciation" class="easyui-linkbutton" style="float:right;margin-left:10px;">@HtmlLang.Write(LangKey.Search)</a>
+    </div>
+</div>
+
+<!--删除操作栏-->
+<div class="fa-depreciate-gridDiv">
+
+    <!--表格div-->
+    <div class="fa-depreciate-grid">
+
+    </div>
+
+    <div class="fa-depreciation-pager">
+
+    </div>
+</div>

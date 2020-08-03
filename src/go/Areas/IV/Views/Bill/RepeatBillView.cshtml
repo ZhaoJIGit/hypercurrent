@@ -1,0 +1,31 @@
+﻿@using JieNor.Megi.DataModel.IV;
+@using JieNor.Megi.Core.DataModel;
+@using JieNor.Megi.Common.Utility;
+@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    IVRepeatInvoiceModel model = ViewData["RepeatInvoiceModel"] as IVRepeatInvoiceModel;
+}
+@Html.Partial("BillPartial/RepeatBillEditPartial")
+@*底部工具栏*@
+<div class="m-toolbar-footer">
+    <div class="left">&nbsp;</div>
+    <div class="center">
+        <div class="m-toolbar-icon" style="width:150px;">
+            @if (Convert.ToString(ViewData["InvoiceID"]).Trim() != "")
+            {
+                <a href="javascript:void(0)" id="aHistory" class="m-icon-msg" title='@HtmlLang.Write(LangModule.IV, "History", "History")'>&nbsp;</a>
+            }
+            @{
+                string mid = model == null ? string.Empty : model.MID;
+            }
+            @HtmlREGRelatedAttach.RelatedAttach(BizObject.Bill, mid)
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="right">&nbsp;
+        @*<a href="javascript:void(0);" id="aPreviewPlaceholders" class="preview-placeholders-tagter">@HtmlLang.Write(LangModule.IV, "PreviewPlaceholders", "Preview placeholders")</a>*@
+    </div>
+    <div class="clear"></div>
+</div>
+<script src="@ServerHelper.ScriptServer/Scripts/IV/Bill/RepeatBillView.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.IV)

@@ -1,0 +1,35 @@
+﻿@{
+    DateTime? bizDate = ViewData["BillBizDate"] as DateTime?;
+}
+<div class="line line-tint"></div>
+<div class="m-form m-form-icon">
+    <div class="column" style="width:50%;">
+        <div class="cell m-iv-entry-cy">
+            @*货币类型*@
+        <span class="lbl m-icon-currency" title="@HtmlLang.Write(LangKey.Currency)">&nbsp;</span>
+        <input id="selCurrency" name="MCyID" class="easyui-combobox mg-data" data-options="@HtmlBDCurrency.DataOptions(bizDate),editable:false,onSelect:ExpenseEditBase.changeCurrency" style="width:140px;" />
+        <span class="mg-prompt" id="spExchangeInfo"></span>
+            <span id="spEditExchangeRate"> </span>
+    </div>
+    </div>
+    <div class="clear"></div>
+</div>
+<div class="clear"></div>
+<div class="line"></div>
+<div class="space"></div>
+<div class="space"></div>
+<div class="m-iv-entry">
+    <div class="form-invoice-line">@*费用报销单明细列表*@
+        <div id="tbInvoiceDetail" fitcolumns="true"></div>
+    </div>
+    <div class="form-invoice-total">@*汇总*@
+        <div class="sub-total"><span class="mg-total-text">@HtmlLang.Write(LangKey.Subtotal) <lable>@HtmlLang.Write(LangModule.IV, "TaxInclude", "（含税）")</lable></span><span class="mg-total-value" id="spSubTotal">0.00</span></div>
+        <div id="divTax">
+        </div>
+        <div class="total"><span class="mg-total-text">@HtmlLang.Write(LangKey.Total)</span><span class="mg-total-value" id="spTotal">0.00</span><span class="mg-total-currency" id="spTotalCurrency" style="display:none;"></span></div>
+        <div id="divCredit"></div>
+    </div>
+</div>
+@HtmlLang.WriteScript(JieNor.Megi.EntityModel.MultiLanguage.LangModule.BD)
+@*<input type="hidden" id="hidTrack" value='@ViewData["Track"]' />*@
+@*@HtmlREGTaxRate.OrgTaxRate()*@

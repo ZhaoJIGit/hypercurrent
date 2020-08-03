@@ -1,0 +1,135 @@
+﻿@using JieNor.Megi.Identity.HtmlHelper
+@using JieNor.Megi.EntityModel.MultiLanguage
+@using JieNor.Megi.Identity.Go.HtmlHelper
+@using JieNor.Megi.Core.Const
+@using JieNor.Megi.Common.Utility
+@using JieNor.Megi.Common.Context
+@using JieNor.Megi.EntityModel.Enum
+<!--最上头是一些功能操作按钮 vl 表示voucher List-->
+<div class="fcf-operate-top">
+    <!--左边的操作按钮-->
+    <div class="fcf-operate-left m-tab-toolbar left">
+        @if (HtmlSECMenu.HavePermission(BizObject.Sales_Fapiao, PermissionItem.Change) || HtmlSECMenu.HavePermission(BizObject.Purchases_Fapiao, PermissionItem.Change))
+        {
+        <!--打新建-->
+            <a href="#" id="btnNew" class="easyui-linkbutton  easyui-linkbutton-yellow fcf-new-button">@HtmlLang.Write(LangKey.New)</a>
+        }
+        @if (HtmlSECMenu.HavePermission(BizObject.Sales_Fapiao, PermissionItem.Change) || HtmlSECMenu.HavePermission(BizObject.Purchases_Fapiao, PermissionItem.Change))
+        {
+        <!--删除-->
+            <a href="####" id="btnDelete" class="easyui-linkbutton fcf-delete-button">@HtmlLang.Write(LangModule.Common, "Delete", "Delete")</a>
+        }
+    </div>
+    <!--右边的过滤查询-->
+    <div class="fcf-operate-right m-tab-toolbar right">
+        <!--关键字-->
+        <input type="text" id="txtKeyword" class="fcf-keyword-input" hint="@HtmlLang.Write(LangModule.Common, "Keywords", "keywords")" />
+        <!--编号-->
+        <input type="text" id="txtCode" class="fcf-code-input" hint="@HtmlLang.Write(LangModule.Common, "FastCode", "快速码")" />
+        <!--查询按钮-->
+        <a id="btnSearch" class="easyui-linkbutton fcf-search-button" style="float:none">@HtmlLang.Write(LangKey.Search)</a>
+        <!--查询按钮-->
+        <a id="btnClear" class="fcf-clear-button">@HtmlLang.Write(LangModule.GL, "ResetDocVoucher", "重置")</a>
+    </div>
+</div>
+
+
+
+<!--中间是All勾选框，以及所有的凭证 内部的结构是 ul + table ，最外层是ul ul里面的li对应一个一个的table-->
+<div class="fcf-fapiao-list">
+    <!--第二个是一个div，显示表头或者其他的-->
+    <div class="fcf-entry-div" style="overflow-y:auto">
+        <!--放入一个表格，里面是凭证分录的列头-->
+        <table class="fcf-fapiao-table">
+            <!--只有一行-->
+            <thead class="fcf-fapiao-table-header">
+                <tr>
+                    <!--勾选-->
+                    <th class="" style="width: 30px;">
+                        <!--第一个是一个checkbox-->
+                        <input type="checkbox" class="fcf-checkall-input" id="btnCheckall" />
+                    </th>
+                    <!--快速码-->
+                    <th class="fcf-fastcode-header">@HtmlLang.Write(LangModule.FP, "FastCode", "快速码")</th>
+                    <!--描述-->
+                    <th class="fcf-description-header">@HtmlLang.Write(LangModule.GL, "Description", "描述")</th>
+                    <!--摘要-->
+                    <th class="fcf-explanation-header">@HtmlLang.Write(LangModule.GL, "Explanation", "摘要")</th>
+                    <!--摘要-->
+                    <th class="fcf-meritem-header">@HtmlLang.Write(LangModule.GL, "MerItem", "商品项目")</th>
+
+                    <th class="fcf-track-header1" style="display: none; word-wrap: break-word;">@HtmlLang.Write(LangModule.GL, "Tracking", "跟踪项")1</th>
+                    <th class="fcf-track-header2" style="display: none; word-wrap: break-word;">@HtmlLang.Write(LangModule.GL, "Tracking", "跟踪项")2</th>
+                    <th class="fcf-track-header3" style="display: none; word-wrap: break-word;">@HtmlLang.Write(LangModule.GL, "Tracking", "跟踪项")3</th>
+                    <th class="fcf-track-header4" style="display: none; word-wrap: break-word;">@HtmlLang.Write(LangModule.GL, "Tracking", "跟踪项")4</th>
+                    <th class="fcf-track-header5" style="display: none; word-wrap: break-word;">@HtmlLang.Write(LangModule.GL, "Tracking", "跟踪项")5</th>
+
+
+                    <!--Debit-->
+                    <th class="fcf-debit-header">@HtmlLang.Write(LangModule.GL, "DebitAccount", "借方科目")</th>
+                    <!--Credit-->
+                    <th class="fcf-credit-header">@HtmlLang.Write(LangModule.GL, "CreditAccount", "贷方科目")</th>
+                    <!--Credit-->
+                    <th class="fcf-tax-header">@HtmlLang.Write(LangModule.GL, "TaxAccount", "税科目")</th>
+                    <!--Credit-->
+                    <th class="fcf-operation-header" style="max-width: 100px;">@HtmlLang.Write(LangModule.Common, "Operation", "操作")</th>
+                </tr>
+            </thead>
+
+            <!--一条用来复制的li-->
+            <tbody>
+                <!--后面的每一列都是凭证的分录-->
+                <tr class="fcf-fapiao-entry-demo  fcf-hide">
+                    <!--勾选-->
+                    <td class="fcf-entry-select">
+                        <!--第1个是一个checkbox-->
+                        <input type="checkbox" class="fcf-check-input" />
+                    </td>
+                    <!--第1列 快速码-->
+                    <td class="fcf-entry-fastcode"></td>
+                    <!--第2列 模板描述-->
+                    <td class="fcf-entry-description"></td>
+                    <!--第3列 分录摘要-->
+                    <td class="fcf-entry-explanation"></td>
+                    <!--第6列 跟踪项-->
+                    <td class="fcf-entry-meritem"></td>
+
+                    <!--第8-12列 跟踪项-->
+                    <td class="fcf-entry-track1" style="display: none"></td>
+                    <td class="fcf-entry-track2" style="display: none"></td>
+                    <td class="fcf-entry-track3" style="display: none"></td>
+                    <td class="fcf-entry-track4" style="display: none"></td>
+                    <td class="fcf-entry-track5" style="display: none"></td>
+
+
+                    <!--第7列 debit-->
+                    <td class="fcf-entry-debitaccount"></td>
+                    <!--第8列 debit-->
+                    <td class="fcf-entry-creditaccount"></td>
+                    <!--第8列 debit-->
+                    <td class="fcf-entry-taxaccount"></td>
+                    <!--第9列 操作-->
+                    <td class="fcf-entry-operation">
+                        <div class="fcf-fapiao-operation">
+                            @if (HtmlSECMenu.HavePermission(BizObject.Sales_Fapiao, PermissionItem.Change) || HtmlSECMenu.HavePermission(BizObject.Purchases_Fapiao, PermissionItem.Change))
+                            {
+                            <!--编辑-->
+                                <a class="fcf-fapiao-edit list-item-edit" title="@HtmlLang.Write(LangKey.Edit)">&nbsp;</a>
+                            <!--编辑-->
+                                <a class="fcf-fapiao-delete list-item-del" title="@HtmlLang.Write(LangKey.Delete)">&nbsp;</a>
+                            }
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!--底部是分页的控件-->
+<div class="easyui-pagination fcf-pagenation-div">
+
+</div>
+
+@Html.Partial("FCPartial/FCFapiaoEditPartial")
+<script src="~/Scripts/FC/FCFapiaoModuleList.js?@ServerHelper.JSVersion"></script>

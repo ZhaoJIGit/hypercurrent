@@ -1,0 +1,30 @@
+﻿@using JieNor.Megi.Tools
+@using JieNor.Megi.Core.Const
+@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+
+    var accessResponse = AccessHelper.Access();
+    var accessList = accessResponse.Access;
+    //是否有纳税申报查看权限
+    bool canViewTaxFiling = accessList[BizObject.Tax_Filing + PermissionItem.View];
+}
+
+<div class="m-toolbar">
+    @if (canViewTaxFiling)
+    {
+    <a href="#" id="aGetReport" class="easyui-linkbutton easyui-linkbutton-yellow">获取待申报报表列表</a>
+    }
+</div>
+
+<div class="m-imain">
+    <div class="m-imain-content">
+        <div id="tbTaxFilingList"></div>
+    </div>
+    <div class="clear"></div>
+</div>
+
+<script src="@ServerHelper.ScriptServer/Scripts/Report/eTax/TaxFilingBase.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.ScriptServer/Scripts/Report/eTax/TaxFilingList.js?@ServerHelper.JSVersion"></script>
+
+
+

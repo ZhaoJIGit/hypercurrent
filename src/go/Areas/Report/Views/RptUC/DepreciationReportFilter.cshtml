@@ -1,0 +1,24 @@
+﻿<!--高级条件-->
+@using JieNor.Megi.Common.Utility
+<div class="gl-rpt-search menu" style="position: absolute; top: 43px; left: 293px; width: 380px; display: none; z-index: 999">
+
+    <div class="m-form-item gl-rpt-searchitem">
+        <span>
+            <input type="checkbox" class="mg-data" name="IncludeCheckType" id="ckbIncludeChecktype" />
+        </span>
+        <span class="m-bold">@HtmlLang.Write(LangModule.Report, "DisplayChecktype", "显示核算维度")</span>
+        <span style="padding-left: 5px"><a href="javascript:void(0)" id="btnCheckTypeDetail" style="display: none">@HtmlLang.Write(LangModule.Report, "ViewCheckTypeDetail", "查看维度条件")</a></span>
+    </div>
+
+    <div class="m-form-item gl-rpt-searchitem gl-rpt-btn">
+        <span style="float: right; padding: 10px 2px">
+            <a href="javascript:void(0);" id="btnUpdate" class="l-btn easyui-linkbutton-yellow" style="width: 48px">@HtmlLang.Write(LangModule.Report, "Update", "更新")</a>
+        </span>
+        <span style="float: right; padding: 10px 2px">
+            <a href="javascript:void(0);" id="btnReset" class="l-btn easyui-linkbutton-gray" style="width: 48px">@HtmlLang.Write(LangModule.Report, "Reset", "重置")</a>
+        </span>
+
+    </div>
+</div>
+
+<script src="@ServerHelper.ScriptServer/scripts/Report/RptUC/DepreciationReportBase.js?@ServerHelper.JSVersion"></script>

@@ -1,0 +1,108 @@
+﻿@{
+    bool isCurrencyEnabled = Convert.ToBoolean(ViewData["IsCurrencyEnabled"]);
+    var versionId = JieNor.Megi.Common.Context.ContextHelper.MContext.MOrgVersionID;
+    var isSmartVersion = versionId == JieNor.Megi.EntityModel.Enum.OrgVersionEnum.Smart;
+}
+@using JieNor.Megi.Common.Utility;
+
+<div id="divFinancial" class="m-form m-form-nopadding">
+    <div class="row">
+        <span class="lbl">@HtmlLang.Write(LangKey.Currency)</span>
+        <span class="content">
+            <input id="selCurrencyCode" type="text" name="MCurrencyID" class="easyui-combobox mg-data easyui-validatebox" style="width: 300px; height: 26px;" data-options="required:true" />
+        </span>
+    </div>
+    @Html.Partial("../InitSetting/UCGLBasicInfoEdit")
+    <div class="row">
+        <span class="lbl">@HtmlLang.Write(LangModule.Bank, "TaxPayer", "TaxPayer")</span>
+        <span class="content">
+            <select id="selMTaxPayer" class="easyui-combobox mg-data easyui-validatebox" data name="MTaxPayer" style="width:205px; height:28px" panelheight="66" data-options="required:true">
+                <option value="1">@HtmlLang.Write(LangModule.Bank, "generalTaxPayer", "General taxpayer")</option>
+                <option value="2">@HtmlLang.Write(LangModule.Bank, "smallScaleTaxPayer", "Small-scale taxpayer")</option>
+            </select>
+        </span>
+    </div>
+    <div class="row">
+        <span class="lbl">@HtmlLang.Write(LangModule.Bank, "TaxIDNumber", "Tax ID Number")</span>
+        <span class="content"><input class="easyui-validatebox  mg-data" data-options="validType:'numchseng'" id="IdMTaxNo" name="MTaxNo" style="width:205px;height:26px;" /></span>
+    </div>
+    @using (Ajax.BeginForm("UploadFinancialCert", "Financial", new AjaxOptions { HttpMethod = "POST" }, new { ID = "fileFinancialCert", enctype = "multipart/form-data" }))
+    {
+        <div class="row m-financial-attach-row">
+            <span class="lbl">@HtmlLang.Write(LangModule.Bank, "TaxRegistrationCertificateCopy", "Copy of your national tax registration certificate")</span>
+            <div class="content">
+                <div class="select">
+                    <label class="upload-image">&nbsp;</label>
+                    <input type="file" id="fileTaxRegCertCopy" class="import-file-input" name="fileTaxRegCertCopy" />
+                    <a href="javascript:void(0)" class="upload-label non-alert">@HtmlLang.Write(LangModule.Common, "UploadLabel", "Browse...")</a>
+                </div>
+                <div class="uploaded">
+                    <a id="aTaxRegCert" href="javascript:void(0);"></a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row m-financial-attach-row">
+            <span class="lbl">@HtmlLang.Write(LangModule.Bank, "LocalTaxRegistrationCertificateCopy", "Copy of your local tax registration certificate")</span>
+            <div class="content">
+                <div class="select">
+                    <label class="upload-image">&nbsp;</label>
+                    <input type="file" id="fileLocalTaxRegCertCopy" class="import-file-input" name="fileLocalTaxRegCertCopy" />
+                    <a href="javascript:void(0)" class="upload-label non-alert">@HtmlLang.Write(LangModule.Common, "UploadLabel", "Browse...")</a>
+                </div>
+                <div class="uploaded">
+                    <a id="aLocalTaxRegCert" href="javascript:void(0);"></a>
+                </div>
+            </div>
+
+            <input type="hidden" id="hidTaxRegCertAttachId" />
+            <input type="hidden" id="hidLocalTaxRegCertAttachId" />
+        </div>
+    }
+</div>
+
+<div class="update-tax-panel" id="panel-tax-update" style="display:none">
+    <div style="padding-top:20px;padding-left:20px">
+        <span style="font-size: 18px; font-weight: bold">@HtmlLang.Write(LangModule.BD, "TaxRateUpgrade", "税率升级")</span><span class='search-combobox-close-box mCloseBox'>&nbsp;&nbsp;</span>
+    </div>
+    <div style="padding-top:20px;padding-left:20px">
+        <span>@HtmlLang.Write(LangModule.BD, "TaxRateUpgradeTips", "因为纳税人类型修改，系统会新增以下税率，请确认是否继续？")</span>
+    </div>
+    <div style="height:60%;width:94%;background-color:#EEEEEE;margin:20px">
+        <!--已存在的税率-->
+        <div style="width:45%;float:left;margin:10px;border-right:1px solid gray;height:245px; overflow-y: auto">
+            <span class="ico-taxrate-exist" style="display:inline-block;width:20px;position: relative;top: 5px;">&nbsp;</span><span>@HtmlLang.Write(LangModule.BD, "TaxRateExist", "已存在税率：")</span>
+            <table id="tbExistRate" width="100%">
+                
+            </table>
+        </div>
+        <!--需要新增的税率-->
+        <div style="width:48%;float:left;margin:10px;height:245px; overflow-y: auto">
+            <span class="ico-taxrate-add" style="display:inline-block;width:20px;position: relative;top: 5px;">&nbsp;</span><span>@HtmlLang.Write(LangModule.BD, "TaxRateNeedUpdate", "系统中将要新增的税率：")</span>
+            <table id="tbAddRate" width="100%"></table>
+        </div>
+    </div>
+    <div style="margin:20px">
+        <div class="left">
+            <a href="javascript:void(0);" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray" id="btnCancel"><span class="l-btn-left"><span class="l-btn-text">@HtmlLang.Write(LangKey.Cancel)</span></span></a>
+        </div>
+        <div class="right">
+            <a href="javascript:void(0);" class="easyui-linkbutton easyui-linkbutton-yellow" id="btnUpdateTax">@HtmlLang.Write(LangKey.Sure)</a>
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="hidLastDayLastMonth" value="@ViewBag.LastDayLastMonth" />
+@*@if (isSmartVersion) {*@ 
+<input type="hidden" value="@versionId" id="hidVersion" />
+<input type="hidden" value="@Html.Raw(isCurrencyEnabled)" id="hidIsCurrencyEnabled" />
+@*}*@
+<script type="text/javascript" src="@ServerHelper.StaticServer/fw/scripts/jquery.form.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.GoServer/scripts/BD/Docs/FileBase.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.GoServer/Scripts/BD/Import/ImportBase.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.ScriptServer/Scripts/BD/Financial/FinancialEdit.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.Bank)
+@HtmlLang.WriteScript(LangModule.Org)
+@HtmlLang.WriteScript(LangModule.Docs)
+@HtmlLang.WriteScript(LangModule.Acct)

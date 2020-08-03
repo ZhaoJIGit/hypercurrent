@@ -1,0 +1,110 @@
+﻿@using JieNor.Megi.Identity.HtmlHelper
+@using JieNor.Megi.EntityModel.MultiLanguage
+@using JieNor.Megi.Identity.Go.HtmlHelper
+@using JieNor.Megi.Core.Const
+@using JieNor.Megi.Common.Context
+@using JieNor.Megi.Identity.Go.AutoManager
+@using JieNor.Megi.Common.Utility
+@using JieNor.Megi.EntityModel.Enum
+
+@{
+    var smartVersion = ContextHelper.MContext.MOrgVersionID == 1;
+
+    string fapiaoType = int.Parse(ViewData["Type"].ToString()) == 0 ? BizObject.Sales_Fapiao : BizObject.Purchases_Fapiao;
+
+    var rCanReconcileFapiao = HtmlSECMenu.HavePermission(fapiaoType, PermissionItem.Change);
+
+    var isCanExportPermission = HtmlSECMenu.HavePermission(fapiaoType, PermissionItem.Export);
+
+    var isCanDeletePermission = HtmlSECMenu.HavePermission(fapiaoType, PermissionItem.Change);
+
+    var langID = ContextHelper.MContext.MLCID;
+    var lang = langID == LangCodeEnum.EN_US ? "en" : (langID == LangCodeEnum.ZH_CN ? "zh-cn" : "zh-tw");
+}
+
+<div class="fp-transaction-partial" style="overflow-y:hidden;">
+
+    <div class="fp-transaction-toolbar" style="height: 40px; width: 100%;">
+        @if (rCanReconcileFapiao && !smartVersion)
+        {
+            <a data-options="menu:'#divMark'" href="javascript:void(0)" id="aMarkAsRec"  class="easyui-splitbutton easyui-splitbutton-m easyui-splitbutton-base">@HtmlLang.Write(LangModule.FP, "Mark", "标记...")</a>
+            <div id="divMark" style="width: 140px; display: none;">
+                <div class="fp-transaction-mark" status="0">@HtmlLang.Write(LangModule.FP, "CancelMark", "取消标记")</div>
+                <div class="fp-transaction-mark" status="2">@HtmlLang.Write(LangModule.FP, "NoReconcile", "无需勾兑")</div>
+            </div>
+
+
+        }
+
+        @if (rCanReconcileFapiao && smartVersion)
+        {
+            <a data-options="menu:'#divCodingMark'" href="javascript:void(0)" id="aCodingMarkAsRec"  class="easyui-splitbutton easyui-splitbutton-m easyui-splitbutton-base">@HtmlLang.Write(LangModule.FP, "Mark", "标记...")</a>
+            <div id="divCodingMark" style="width: 140px; display: none;">
+                <div class="fp-coding-mark" status="0">@HtmlLang.Write(LangModule.FP, "CancelMark", "取消标记")</div>
+                <div class="fp-coding-mark" status="2">@HtmlLang.Write(LangModule.FP, "UnnecessaryCreateVoucher", "无需生成凭证")</div>
+            </div>
+        }
+
+        @if (isCanDeletePermission)
+        {
+            <a data-options="menu:'#divFpStatus'" href="javascript:void(0)" id="btnChangeFpStatus" class="easyui-splitbutton easyui-splitbutton-m easyui-splitbutton-base">@HtmlLang.Write(LangModule.FP, "ButtonsModifyFPStatue", "修改发票状态为")</a>
+            <div id="divFpStatus" style="width: 140px; display: none;">
+                <div class="fp-status-mark" status="1">@HtmlLang.Write(LangModule.FP, "Normal", "正常")</div>
+                <div class="fp-status-mark" status="0">@HtmlLang.Write(LangModule.FP, "Obsolete", "作废")</div>
+                <div class="fp-status-mark" status="4">@HtmlLang.Write(LangModule.FP, "RedFlush", "红冲")</div>
+                <div class="fp-status-mark" status="2">@HtmlLang.Write(LangModule.FP, "OutOfControl", "失控")</div>
+                <div class="fp-status-mark" status="3">@HtmlLang.Write(LangModule.FP, "Abnormal", "异常")</div> 
+            </div>
+            if (int.Parse(ViewData["Type"].ToString()) == 1)
+            {
+                <a href="javascript:void(0)" class="easyui-linkbutton" style="width: 140px;" id="btnChangeVerifyStatus">@HtmlLang.Write(LangModule.FP, "ButtonsModifyFPRZStatus", "修改认证状态")</a>
+            }
+
+        }
+
+        @if (isCanExportPermission)
+        {
+            <a href="#" class="easyui-linkbutton" style="width: 120px" id="btnExport">@HtmlLang.Write(LangKey.Export)</a>
+        }
+        @if (isCanDeletePermission)
+        {
+            <a href="javascript:void(0)" class="easyui-linkbutton" style="width: 125px" id="btnDeleteFP">@HtmlLang.Write(LangKey.Delete)</a>
+        }
+
+        <div style="float: right;">
+            <a class="easyui-linkbutton" id="bthShowSearchDiv" style="margin-left: 10px;">@HtmlLang.Write(LangModule.FP, "Search", "搜索")</a>
+        </div>
+    </div>
+    <div class="fp-transaction-query" style="display: none; background-color: #e8f1ff;padding:10px;height:80px;margin-top:10px;margin-bottom:15px;border: 1px solid #ccc;border-radius: 5px;    box-shadow: 1px 1px 3px #ddd">
+        <input class="easyui-combobox fp-transation-status" style="width:100px;height:29px;margin-top:5px;margin-left:10px;float:right;" hint="@HtmlLang.Write(LangModule.FP, "FapiaoStatus", "发票状态")"/>
+        @if (!smartVersion)
+        {
+
+            <input class="easyui-combobox fp-transation-reconcile" style="width:100px;height:29px;margin-top:5px;margin-left:10px;float:right;" hint="@HtmlLang.Write(LangModule.FP, "ReconcileStatus", "Reconcile status")" />
+        }
+        else
+        {
+            <input class="easyui-combobox fp-transation-coding" style="width:100px;height:29px;margin-top:5px;margin-left:10px;float:right;" hint="@HtmlLang.Write(LangModule.FP, "CodingStatus", "凭证状态")" />
+        }
+
+        @if (fapiaoType == BizObject.Purchases_Fapiao)
+        {
+            <input class="easyui-combotree fp-transation-certstatus" style="width:120px;height:29px;margin-left:10px;margin-top:15px;float:right;" hint="@HtmlLang.Write(LangModule.FP, "FapiaoCertificationStatus", "认证状态")" />
+            <input type="text" id="txtPeriod" class="fp-transation-certperiod Wdate" onfocus="WdatePicker({ dateFmt: 'yyyy-MM', lang: '@lang', skin: '@lang' })" hint="@HtmlLang.Write(LangModule.FP, "FapiaoCertificationPeriod", "认证期间")"
+                    style="width:100px;height:25px; margin-top: 25px;margin-left:10px;" />
+        }
+        <input type="text" class="easyui-validatebox fp-transaction-keyword" style="width:150px;height:25px;margin-top:25px;margin-left:10px;" hint="@HtmlLang.Write(LangModule.Common, "Keywords", "keywords")" />
+        <a class="easyui-linkbutton easyui-linkbutton-yellow" id="bthSearchTransaction" style="margin-left:10px;margin-top:25px;">@HtmlLang.Write(LangModule.FP, "Search", "搜索")</a>
+        <a id="btnClear" class="vl-clear-button" style="position: relative;top:15px;margin-left:10px;">@HtmlLang.Write(LangModule.GL, "ResetDocVoucher", "重置")</a>
+        <div class="m-adv-search-close"><a id="aTransactionQueryClose">&nbsp;</a></div>
+    </div>
+
+
+    <div class="fp-transaction-body" style="width:100%;">
+
+        <table class="fp-transaction-table"></table>
+    </div>
+
+    <!--翻页控件-->
+    <div class="fp-transaction-partial-pager"></div>
+</div>

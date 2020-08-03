@@ -1,0 +1,36 @@
+﻿@{
+    var ctx = JieNor.Megi.Common.Context.ContextHelper.MContext;
+    var isSmartVersion = ctx.MOrgVersionID == JieNor.Megi.EntityModel.Enum.OrgVersionEnum.Smart;
+    var lblCls = "lbl"; //isSmartVersion ? "lbl" : "lbl-auto";
+}
+<div class="row">
+    <span class="@lblCls">@HtmlLang.Write(LangModule.GL, "AccountingStandards", "Accounting Standards")</span>
+    <span class="content">
+        <select id="selAcctStandard" class="mg-data easyui-validatebox" name="MAccountingStandard" style="width:300px; height:26px;" panelheight="100" data-options="required:true">
+            <option value="1">@HtmlLang.Write(LangModule.GL, "ChinaEnterpriseAcctStandard", "China enterprise accounting standards")</option>
+            <option value="2">@HtmlLang.Write(LangModule.GL, "ChinaSmallBuzAcctStandard", "China accounting standards for small business")</option>
+            @if (ctx.MRegProgress == (int)JieNor.Megi.DataModel.BAS.BASOrgScheduleTypeEnum.GLSuccess && ctx.MAccountTableID == JieNor.Megi.EntityModel.Enum.AccountTableEnum.UCAS)
+            {
+                <option value="3">@HtmlLang.Write(LangModule.GL, "CustomAccountingStandard", "自定义会计准则")</option>
+            }
+        </select>
+    </span>
+</div>
+<div class="row">   
+    <span class="@lblCls">@HtmlLang.Write(LangModule.GL, "ConversionDate", "Conversion Month")</span>
+    <div class="content">
+        <select id="selMonth" class="easyui-combobox" name="MConversionMonth" data-options="required:true" style="width: 100px; height: 26px;">
+            @HtmlMonth.SelectOptions(ViewBag.Lang)
+        </select>
+        <select id="selYear" class="easyui-combobox" name="MConversionYear" data-options="required:true" style="width: 100px; height: 26px;">
+            @HtmlYear.SelectOptions()
+        </select>
+        <div>
+            <div style="width: 338px; word-break: break-word;">
+                <p>@HtmlLang.Write(LangModule.BD, "EnterConDate", "Enter the date that you intend to begin processing all your transactions in Megi.")</p>
+                <p>@HtmlLang.WriteFormat(LangModule.BD, "InTheNextStepAsked", "In the next step, you will be asked to provide account balances as of {0}", "<label id=\"lblConversionDate\"></label>")</p>
+                <p>@HtmlLang.Write(LangModule.BD, "UnchangeConDateTips", "Once you confirmed the conversion date you can't change it in the future.")</p>
+            </div>
+        </div>
+    </div>
+</div>

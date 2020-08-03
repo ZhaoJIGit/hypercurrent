@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Templates>
+  <!--中国会计准则-->
+  <Template tableid="1">
+    <!--各个单据 销售发票 invoice 0-->
+    <doctype typeid="0">
+      <!--分录借方-->
+      <type dir="-1" code="1122" exp="应收账款">AccountsReceivable%Accounts Receivable#应收账款#应收账款</type>
+      <type dir="-1" code="22210105" exp="应交税金-应交增值税-销项税">TaxOnSales%Tax on Sales#销售税额#销售税额</type>
+      <!--分录贷方-->
+      <type dir="1" code="6001" exp="主营业务收入">MainBusinessRevenue%Main Business Revenue#主营业务收入#主营业务收入</type>
+    </doctype>
+
+    <!--各个单据 采购bill 1-->
+    <doctype typeid="1">
+      <!--分录借方-->
+      <type dir="-1" code="1403" exp="原材料">PurchaseCost%Purchase Cost#采购成本#采购成本</type>
+      <type dir="-1" code="22210101" exp="应交税金-应交增值税-进项税">TaxOnProcurement%Tax on Procurement#采购税额#采购税额</type>
+      <!--分录贷方-->
+      <type dir="1" code="2202" exp="应付账款">PayableAccount%Payable Account#应付账款#应付账款</type>
+    </doctype>
+
+    <!--各个单据 收款单 销售发票收款 sale receive 2-->
+    <doctype typeid="2">
+      <!--分录借方-->
+      <type dir="-1" code="1002" exp="银行存款">FundsAccount%Funds Account#资金科目#资金科目</type>
+      <!--分录贷方-->
+      <type dir="1" code="1122" exp="应收账款">CurrentAccount%Current Account#往来科目#往来科目</type>
+    </doctype>
+
+    <!--各个单据 收款单 直接收款款 direct receive 3-->
+    <doctype typeid="3">
+      <!--分录借方-->
+      <type dir="-1" code="1221" exp="其他应收款">StaffCurrentAccount%Staff current account#员工往来科目#员工往来科目</type>
+      <!--分录贷方-->
+      <type dir="1" code="6051" exp="其他业务收入">DirectPayementSales%Direct Payement Sales#直接收款的销售#直接收款的销售</type>
+    </doctype>
+
+    <!--各个单据 付款单 采购付款 bill payment 4-->
+    <doctype typeid="4">
+      <!--分录借方-->
+      <type dir="-1" code="1002" exp="银行存款">FundsAccount%Funds Account#资金科目#资金科目</type>
+      <!--分录贷方-->
+      <type dir="1" code="1122" exp="应付账款">CurrentAccount%Current Account#往来科目#往来科目</type>
+    </doctype>
+
+    <!--各个单据 付款单 直接付款 direct payment 5-->
+    <doctype typeid="5">
+      <!--分录借方-->
+      <type dir="-1" code="1221" exp="其他应收款">StaffCurrentAccount%Staff current account#员工往来科目#员工往来科目</type>
+      <!--分录贷方-->
+      <type dir="1" code="6602" exp="管理费用">DirectPayementPurchaseOrExpense%Direct Payement Purchase or Expense#直接付款的采购或费用#直接付款的采购或费用</type>
+    </doctype>
+
+    <!--各个单据 付款单 支付工资 salary payment 6-->
+    <doctype typeid="6">
+      <!--分录借方-->
+      <type dir="-1" code="2211" exp="其他应收款">SalaryPayableAccount%Salary Payable Account#应付薪酬科目#应付薪酬科目</type>
+      <!--分录贷方-->
+      <type dir="1" code="" exp="">%##</type>
+    </doctype>
+
+    <!--费用报销  expense 7-->
+    <doctype typeid="7">
+      <!--分录借方-->
+      <type dir="-1" code="6602" exp="管理费用">ExpenseAccount%Expense Account#费用科目#费用科目</type>
+      <!--分录贷方-->
+      <type dir="1" code="1122" exp="往来科目">CurrentAccount%Current Account#往来科目#往来科目</type>
+    </doctype>
+
+    <!--工资单  salary 8-->
+    <doctype typeid="8">
+      <!--分录借方-->
+      <type dir="-1" code="6602" exp="管理费用">SalaryExpenseAccount%Salary expense account#工资费用科目#工资费用科目</type>
+      <!--分录贷方-->
+      <type dir="1" code="2211" exp="应付职工薪酬">SalaryPayableAccount%Salary Payable Account#应付薪酬科目#应付薪酬科目</type>
+    </doctype>
+
+    <!--工资单  salary 8-->
+    <doctype typeid="9">
+      <!--分录借方-->
+      <type dir="-1" code="" exp="">%##</type>
+      <!--分录贷方-->
+      <type dir="1" code="" exp="">##</type>
+    </doctype>
+
+  </Template>
+  <!--小企业会计准则-->
+  <Template>
+
+  </Template>
+</Templates>

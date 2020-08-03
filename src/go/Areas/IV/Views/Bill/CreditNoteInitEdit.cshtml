@@ -1,0 +1,25 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    IVInvoiceModel model = ViewData["InvoiceModel"] as IVInvoiceModel;
+
+    bool isEdit = (ViewData["IsInit"] == "true" ? model.MActionPermission.MIsInitCanEdit : model.MActionPermission.MIsCanEdit) && Convert.ToBoolean(ViewData["isEdit"]) == true;
+
+}
+@using JieNor.Megi.Common.Utility;
+@Html.Partial("BillPartial/CreditNoteEditPartial")
+@*底部工具栏*@
+<div class="m-toolbar-footer">
+    <div class="left">
+        <a href="javascript:void(0)" onclick="$.mDialog.close()" class="easyui-linkbutton easyui-linkbutton-gray">@HtmlLang.Write(LangKey.Cancel)</a>
+    </div>
+
+    <div class="right" style="width:380px;">
+        @if (isEdit)
+        {
+        <a href="javascript:void(0)" id="btnSave" class="easyui-linkbutton easyui-linkbutton-yellow">@HtmlLang.Write(LangKey.Save)</a>
+        }
+    </div>
+    <div class="clear"></div>
+</div>
+
+<script src="@ServerHelper.ScriptServer/Scripts/IV/Bill/CreditNoteInitEdit.js?@ServerHelper.JSVersion"></script>

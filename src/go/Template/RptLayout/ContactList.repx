@@ -1,0 +1,609 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XtraReportsLayoutSerializer SerializerVersion="15.1.5.0" Ref="1" Name="ContactList" ControlType="DevExpress.XtraReports.UI.XtraReport, DevExpress.XtraReports.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" DataSource="#Ref-0" Font="微软雅黑, 9.75pt" Version="15.1" PageWidth="850" PageHeight="1100" Margins="0, 0, 100, 100">
+  <Bands>
+    <Item1 Ref="2" ControlType="DetailBand" Name="Detail" TextAlignment="TopLeft" Font="微软雅黑, 9.75pt" Padding="0,0,0,0,100" HeightF="25">
+      <Controls>
+        <Item1 Ref="3" Name="xrTable1" ControlType="XRTable" SizeF="837.7747,25" LocationFloat="0, 0" Font="微软雅黑, 11pt" BorderColor="255,218,220,221" Borders="All" TextAlignment="MiddleLeft">
+          <Rows>
+            <Item1 Ref="4" ControlType="XRTableRow" Name="xrTableRow1" Weight="1">
+              <Cells>
+                <Item1 Ref="5" Name="xrTableCell1" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.22779887490795026">
+                  <DataBindings>
+                    <Item1 Ref="6" PropertyName="Text" DataMember="ContactNameTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="7" UseTextAlignment="false" />
+                </Item1>
+                <Item2 Ref="8" Name="xrTableCell90" ControlType="XRTableCell" Weight="0.22779887490795026">
+                  <DataBindings>
+                    <Item1 Ref="9" PropertyName="Text" DataMember="ContactTypeTitle" />
+                  </DataBindings>
+                </Item2>
+                <Item3 Ref="10" Name="xrTableCell7" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.19665456100689346">
+                  <DataBindings>
+                    <Item1 Ref="11" PropertyName="Text" DataMember="FirstNameTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="12" UseTextAlignment="false" />
+                </Item3>
+                <Item4 Ref="13" Name="xrTableCell4" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.17483774094884078">
+                  <DataBindings>
+                    <Item1 Ref="14" PropertyName="Text" DataMember="LastNameTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="15" UseTextAlignment="false" />
+                </Item4>
+                <Item5 Ref="16" Name="xrTableCell8" ControlType="XRTableCell" TextAlignment="MiddleLeft" Multiline="true" Weight="0.17942034377142507">
+                  <DataBindings>
+                    <Item1 Ref="17" PropertyName="Text" DataMember="EmailTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="18" UseTextAlignment="false" />
+                </Item5>
+                <Item6 Ref="19" Name="xrTableCell99" ControlType="XRTableCell" Weight="0.17235441005174021">
+                  <DataBindings>
+                    <Item1 Ref="20" PropertyName="Text" DataMember="CustomerCurrentAccountTitle" />
+                  </DataBindings>
+                </Item6>
+                <Item7 Ref="21" Name="xrTableCell89" ControlType="XRTableCell" TextAlignment="MiddleRight" Weight="0.13271687120830628">
+                  <DataBindings>
+                    <Item1 Ref="22" PropertyName="Text" DataMember="BillDueAmtTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="23" UseTextAlignment="false" />
+                </Item7>
+                <Item8 Ref="24" Name="xrTableCell91" ControlType="XRTableCell" TextAlignment="MiddleRight" Weight="0.18065759158814426">
+                  <DataBindings>
+                    <Item1 Ref="25" PropertyName="Text" DataMember="BillOverDueAmtTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="26" UseTextAlignment="false" />
+                </Item8>
+                <Item9 Ref="27" Name="xrTableCell93" ControlType="XRTableCell" TextAlignment="MiddleRight" Weight="0.17239324930708877">
+                  <DataBindings>
+                    <Item1 Ref="28" PropertyName="Text" DataMember="SaleDueAmtTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="29" UseTextAlignment="false" />
+                </Item9>
+                <Item10 Ref="30" Name="xrTableCell96" ControlType="XRTableCell" TextAlignment="MiddleRight" Weight="0.16208488827148154">
+                  <DataBindings>
+                    <Item1 Ref="31" PropertyName="Text" DataMember="SaleOverDueAmtTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="32" UseTextAlignment="false" />
+                </Item10>
+                <Item11 Ref="33" Name="xrTableCell15" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.13299045786202063">
+                  <DataBindings>
+                    <Item1 Ref="34" PropertyName="Text" DataMember="POAttentionTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="35" UseTextAlignment="false" />
+                </Item11>
+                <Item12 Ref="36" Name="xrTableCell5" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.10828532680413451">
+                  <DataBindings>
+                    <Item1 Ref="37" PropertyName="Text" DataMember="POAddressTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="38" UseTextAlignment="false" />
+                </Item12>
+                <Item13 Ref="39" Name="xrTableCell14" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.16225157680273572">
+                  <DataBindings>
+                    <Item1 Ref="40" PropertyName="Text" DataMember="POCityTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="41" UseTextAlignment="false" />
+                </Item13>
+                <Item14 Ref="42" Name="xrTableCell9" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.14446435144900968">
+                  <DataBindings>
+                    <Item1 Ref="43" PropertyName="Text" DataMember="POProvinceTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="44" UseTextAlignment="false" />
+                </Item14>
+                <Item15 Ref="45" Name="xrTableCell13" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.26691126013144234">
+                  <DataBindings>
+                    <Item1 Ref="46" PropertyName="Text" DataMember="POPostalCodeTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="47" UseTextAlignment="false" />
+                </Item15>
+                <Item16 Ref="48" Name="xrTableCell16" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.27083351196136274">
+                  <DataBindings>
+                    <Item1 Ref="49" PropertyName="Text" DataMember="POCountryTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="50" UseTextAlignment="false" />
+                </Item16>
+                <Item17 Ref="51" Name="xrTableCell17" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.3086881301282966">
+                  <DataBindings>
+                    <Item1 Ref="52" PropertyName="Text" DataMember="RealAttentionTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="53" UseTextAlignment="false" />
+                </Item17>
+                <Item18 Ref="54" Name="xrTableCell6" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.33331692297884119">
+                  <DataBindings>
+                    <Item1 Ref="55" PropertyName="Text" DataMember="RealAddressTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="56" UseTextAlignment="false" />
+                </Item18>
+                <Item19 Ref="57" Name="xrTableCell3" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.31753417794915734">
+                  <DataBindings>
+                    <Item1 Ref="58" PropertyName="Text" DataMember="RealCityTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="59" UseTextAlignment="false" />
+                </Item19>
+                <Item20 Ref="60" Name="xrTableCell10" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.38282815350321509">
+                  <DataBindings>
+                    <Item1 Ref="61" PropertyName="Text" DataMember="RealProvinceTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="62" UseTextAlignment="false" />
+                </Item20>
+                <Item21 Ref="63" Name="xrTableCell2" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.38855751778807257">
+                  <DataBindings>
+                    <Item1 Ref="64" PropertyName="Text" DataMember="RealPostalCodeTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="65" UseTextAlignment="false" />
+                </Item21>
+                <Item22 Ref="66" Name="xrTableCell12" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.35683460297004876">
+                  <DataBindings>
+                    <Item1 Ref="67" PropertyName="Text" DataMember="RealCountryTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="68" UseTextAlignment="false" />
+                </Item22>
+                <Item23 Ref="69" Name="xrTableCell11" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.37743142900372195">
+                  <DataBindings>
+                    <Item1 Ref="70" PropertyName="Text" DataMember="TelephoneTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="71" UseTextAlignment="false" />
+                </Item23>
+                <Item24 Ref="72" Name="xrTableCell18" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.33867210558876226">
+                  <DataBindings>
+                    <Item1 Ref="73" PropertyName="Text" DataMember="FaxTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="74" UseTextAlignment="false" />
+                </Item24>
+                <Item25 Ref="75" Name="xrTableCell19" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.30566402435302731">
+                  <DataBindings>
+                    <Item1 Ref="76" PropertyName="Text" DataMember="MobileTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="77" UseTextAlignment="false" />
+                </Item25>
+                <Item26 Ref="78" Name="xrTableCell20" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.16429187969319484">
+                  <DataBindings>
+                    <Item1 Ref="79" PropertyName="Text" DataMember="DirectDialTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="80" UseTextAlignment="false" />
+                </Item26>
+                <Item27 Ref="81" Name="xrTableCell41" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.29976188379205682">
+                  <DataBindings>
+                    <Item1 Ref="82" PropertyName="Text" DataMember="SkypeTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="83" UseTextAlignment="false" />
+                </Item27>
+                <Item28 Ref="84" Name="xrTableCell43" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.311221751308738">
+                  <DataBindings>
+                    <Item1 Ref="85" PropertyName="Text" DataMember="WebsiteTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="86" UseTextAlignment="false" />
+                </Item28>
+                <Item29 Ref="87" Name="xrTableCell42" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.311221751308738">
+                  <DataBindings>
+                    <Item1 Ref="88" PropertyName="Text" DataMember="TrackItem1Name" />
+                  </DataBindings>
+                  <StylePriority Ref="89" UseTextAlignment="false" />
+                </Item29>
+                <Item30 Ref="90" Name="xrTableCell44" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.39717725719691865">
+                  <DataBindings>
+                    <Item1 Ref="91" PropertyName="Text" DataMember="TrackItem2Name" />
+                  </DataBindings>
+                  <StylePriority Ref="92" UseTextAlignment="false" />
+                </Item30>
+                <Item31 Ref="93" Name="xrTableCell52" ControlType="XRTableCell" Weight="0.19858862859845933">
+                  <DataBindings>
+                    <Item1 Ref="94" PropertyName="Text" DataMember="TrackItem3Name" />
+                  </DataBindings>
+                </Item31>
+                <Item32 Ref="95" Name="xrTableCell78" ControlType="XRTableCell" Weight="0.19858862859845933">
+                  <DataBindings>
+                    <Item1 Ref="96" PropertyName="Text" DataMember="TrackItem4Name" />
+                  </DataBindings>
+                </Item32>
+                <Item33 Ref="97" Name="xrTableCell46" ControlType="XRTableCell" TextAlignment="MiddleRight" Weight="0.19858862859845933">
+                  <DataBindings>
+                    <Item1 Ref="98" PropertyName="Text" DataMember="TrackItem5Name" />
+                  </DataBindings>
+                  <StylePriority Ref="99" UseTextAlignment="false" />
+                </Item33>
+                <Item34 Ref="100" Name="xrTableCell77" ControlType="XRTableCell" Weight="0.19858862859845933">
+                  <DataBindings>
+                    <Item1 Ref="101" PropertyName="Text" DataMember="TrackItem1Name" />
+                  </DataBindings>
+                </Item34>
+                <Item35 Ref="102" Name="xrTableCell53" ControlType="XRTableCell" Weight="0.19858862859845933">
+                  <DataBindings>
+                    <Item1 Ref="103" PropertyName="Text" DataMember="TrackItem2Name" />
+                  </DataBindings>
+                </Item35>
+                <Item36 Ref="104" Name="xrTableCell76" ControlType="XRTableCell" Weight="0.19858862859845933">
+                  <DataBindings>
+                    <Item1 Ref="105" PropertyName="Text" DataMember="TrackItem3Name" />
+                  </DataBindings>
+                </Item36>
+                <Item37 Ref="106" Name="xrTableCell45" ControlType="XRTableCell" Weight="0.19858862859845933">
+                  <DataBindings>
+                    <Item1 Ref="107" PropertyName="Text" DataMember="TrackItem4Name" />
+                  </DataBindings>
+                </Item37>
+                <Item38 Ref="108" Name="xrTableCell75" ControlType="XRTableCell" Weight="0.19858862859845933">
+                  <DataBindings>
+                    <Item1 Ref="109" PropertyName="Text" DataMember="TrackItem5Name" />
+                  </DataBindings>
+                </Item38>
+                <Item39 Ref="110" Name="xrTableCell54" ControlType="XRTableCell" Weight="0.19858862859845933">
+                  <DataBindings>
+                    <Item1 Ref="111" PropertyName="Text" DataMember="TaxIDNumberTitle" />
+                  </DataBindings>
+                </Item39>
+                <Item40 Ref="112" Name="xrTableCell74" ControlType="XRTableCell" Weight="0.19858862859845933">
+                  <DataBindings>
+                    <Item1 Ref="113" PropertyName="Text" DataMember="SalesTaxTitle" />
+                  </DataBindings>
+                </Item40>
+                <Item41 Ref="114" Name="xrTableCell47" ControlType="XRTableCell" Weight="0.19858862859845933">
+                  <DataBindings>
+                    <Item1 Ref="115" PropertyName="Text" DataMember="PurchasesTaxTitle" />
+                  </DataBindings>
+                </Item41>
+                <Item42 Ref="116" Name="xrTableCell73" ControlType="XRTableCell" TextAlignment="MiddleRight" Weight="0.19858862859845933">
+                  <DataBindings>
+                    <Item1 Ref="117" PropertyName="Text" DataMember="DiscountTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="118" UseTextAlignment="false" />
+                </Item42>
+                <Item43 Ref="119" Name="xrTableCell55" ControlType="XRTableCell" Weight="0.19858729192094682">
+                  <DataBindings>
+                    <Item1 Ref="120" PropertyName="Text" DataMember="DefaultCurrencyTitle" />
+                  </DataBindings>
+                </Item43>
+                <Item44 Ref="121" Name="xrTableCell72" ControlType="XRTableCell" Weight="0.19858729192094682">
+                  <DataBindings>
+                    <Item1 Ref="122" PropertyName="Text" DataMember="BankAccountNumberTitle" />
+                  </DataBindings>
+                </Item44>
+                <Item45 Ref="123" Name="xrTableCell64" ControlType="XRTableCell" Weight="0.24995635931298951">
+                  <DataBindings>
+                    <Item1 Ref="124" PropertyName="Text" DataMember="AccountNameTitle" />
+                  </DataBindings>
+                </Item45>
+                <Item46 Ref="125" Name="xrTableCell71" ControlType="XRTableCell" Weight="0.24995635931298951">
+                  <DataBindings>
+                    <Item1 Ref="126" PropertyName="Text" DataMember="DetailsTitle" />
+                  </DataBindings>
+                </Item46>
+                <Item47 Ref="127" Name="xrTableCell63" ControlType="XRTableCell" TextAlignment="MiddleRight" Weight="0.24351419884543446">
+                  <DataBindings>
+                    <Item1 Ref="128" PropertyName="Text" DataMember="DueTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="129" UseTextAlignment="false" />
+                </Item47>
+                <Item48 Ref="130" Name="xrTableCell70" ControlType="XRTableCell" Weight="0.24351419884543446">
+                  <DataBindings>
+                    <Item1 Ref="131" PropertyName="Text" DataMember="BillsDefaultDueDateTitle" />
+                  </DataBindings>
+                </Item48>
+                <Item49 Ref="132" Name="xrTableCell65" ControlType="XRTableCell" TextAlignment="MiddleRight" Weight="0.26911180824535275">
+                  <DataBindings>
+                    <Item1 Ref="133" PropertyName="Text" DataMember="DueTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="134" UseTextAlignment="false" />
+                </Item49>
+                <Item50 Ref="135" Name="xrTableCell69" ControlType="XRTableCell" Weight="0.26911180824535275">
+                  <DataBindings>
+                    <Item1 Ref="136" PropertyName="Text" DataMember="SalesInvDefDueDateTitle" />
+                  </DataBindings>
+                </Item50>
+              </Cells>
+            </Item1>
+          </Rows>
+          <StylePriority Ref="137" UseFont="false" UseBorderColor="false" UseBorders="false" UseTextAlignment="false" />
+        </Item1>
+      </Controls>
+      <StylePriority Ref="138" UseFont="false" />
+    </Item1>
+    <Item2 Ref="139" Name="TopMargin" ControlType="TopMarginBand" TextAlignment="TopLeft" Font="微软雅黑, 9.75pt" Padding="0,0,0,0,100" HeightF="100">
+      <StylePriority Ref="140" UseFont="false" />
+    </Item2>
+    <Item3 Ref="141" Name="BottomMargin" ControlType="BottomMarginBand" TextAlignment="TopLeft" Font="微软雅黑, 9.75pt" Padding="0,0,0,0,100" HeightF="100">
+      <StylePriority Ref="142" UseFont="false" />
+    </Item3>
+    <Item4 Ref="143" ControlType="DetailReportBand" Name="DetailReport1" Font="微软雅黑, 9.75pt" DataMember="ContactListRows" Level="0" DataSource="#Ref-0">
+      <Bands>
+        <Item1 Ref="144" ControlType="DetailBand" Name="Detail2" HeightF="25">
+          <Controls>
+            <Item1 Ref="145" Name="xrTable2" ControlType="XRTable" SizeF="837.7747,25" LocationFloat="0, 0" Font="微软雅黑, 10pt" BorderColor="255,218,220,221" Borders="All" TextAlignment="MiddleLeft">
+              <Rows>
+                <Item1 Ref="146" ControlType="XRTableRow" Name="xrTableRow2" Weight="1">
+                  <Cells>
+                    <Item1 Ref="147" Name="xrTableCell21" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.24675294009833942">
+                      <DataBindings>
+                        <Item1 Ref="148" PropertyName="Text" DataMember="ContactListRows.MName" />
+                      </DataBindings>
+                      <StylePriority Ref="149" UseTextAlignment="false" />
+                    </Item1>
+                    <Item2 Ref="150" Name="xrTableCell98" ControlType="XRTableCell" Weight="0.24675294009833942">
+                      <DataBindings>
+                        <Item1 Ref="151" PropertyName="Text" DataMember="ContactListRows.ContactType" />
+                      </DataBindings>
+                    </Item2>
+                    <Item3 Ref="152" Name="xrTableCell22" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.21301708512087261">
+                      <DataBindings>
+                        <Item1 Ref="153" PropertyName="Text" DataMember="ContactListRows.MFirstName" />
+                      </DataBindings>
+                      <StylePriority Ref="154" UseTextAlignment="false" />
+                    </Item3>
+                    <Item4 Ref="155" Name="xrTableCell23" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.18938516699614247">
+                      <DataBindings>
+                        <Item1 Ref="156" PropertyName="Text" DataMember="ContactListRows.MLastName" />
+                      </DataBindings>
+                      <StylePriority Ref="157" UseTextAlignment="false" />
+                    </Item4>
+                    <Item5 Ref="158" Name="xrTableCell24" ControlType="XRTableCell" TextAlignment="MiddleLeft" Multiline="true" Weight="0.19434901352592812">
+                      <DataBindings>
+                        <Item1 Ref="159" PropertyName="Text" DataMember="ContactListRows.MEmail" />
+                      </DataBindings>
+                      <StylePriority Ref="160" UseTextAlignment="false" />
+                    </Item5>
+                    <Item6 Ref="161" Name="xrTableCell100" ControlType="XRTableCell" Weight="0.1866950987471469">
+                      <DataBindings>
+                        <Item1 Ref="162" PropertyName="Text" DataMember="ContactListRows.MCCurrentAccountCode" />
+                      </DataBindings>
+                    </Item6>
+                    <Item7 Ref="163" Name="xrTableCell92" ControlType="XRTableCell" TextAlignment="MiddleRight" Weight="0.14375971825613676">
+                      <DataBindings>
+                        <Item1 Ref="164" FormatString="{0:n}" PropertyName="Text" DataMember="ContactListRows.MBillDueAmt" />
+                      </DataBindings>
+                      <StylePriority Ref="165" UseTextAlignment="false" />
+                    </Item7>
+                    <Item8 Ref="166" Name="xrTableCell94" ControlType="XRTableCell" ForeColor="Red" TextAlignment="MiddleRight" Weight="0.19568921149387752">
+                      <DataBindings>
+                        <Item1 Ref="167" FormatString="{0:n}" PropertyName="Text" DataMember="ContactListRows.MBillOverDueAmt" />
+                      </DataBindings>
+                      <StylePriority Ref="168" UseForeColor="false" UseTextAlignment="false" />
+                    </Item8>
+                    <Item9 Ref="169" Name="xrTableCell97" ControlType="XRTableCell" TextAlignment="MiddleRight" Weight="0.18673710312029934">
+                      <DataBindings>
+                        <Item1 Ref="170" FormatString="{0:n}" PropertyName="Text" DataMember="ContactListRows.MSaleDueAmt" />
+                      </DataBindings>
+                      <StylePriority Ref="171" UseTextAlignment="false" />
+                    </Item9>
+                    <Item10 Ref="172" Name="xrTableCell95" ControlType="XRTableCell" ForeColor="Red" TextAlignment="MiddleRight" Weight="0.17557146651372904">
+                      <DataBindings>
+                        <Item1 Ref="173" FormatString="{0:n}" PropertyName="Text" DataMember="ContactListRows.MSaleOverDueAmt" />
+                      </DataBindings>
+                      <StylePriority Ref="174" UseForeColor="false" UseTextAlignment="false" />
+                    </Item10>
+                    <Item11 Ref="175" Name="xrTableCell25" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.14405568783914963">
+                      <DataBindings>
+                        <Item1 Ref="176" PropertyName="Text" DataMember="ContactListRows.MPAttention" />
+                      </DataBindings>
+                      <StylePriority Ref="177" UseTextAlignment="false" />
+                    </Item11>
+                    <Item12 Ref="178" Name="xrTableCell26" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.11729521032852375">
+                      <DataBindings>
+                        <Item1 Ref="179" PropertyName="Text" DataMember="ContactListRows.MPStreet" />
+                      </DataBindings>
+                      <StylePriority Ref="180" UseTextAlignment="false" />
+                    </Item12>
+                    <Item13 Ref="181" Name="xrTableCell27" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.17575194252767512">
+                      <DataBindings>
+                        <Item1 Ref="182" PropertyName="Text" DataMember="ContactListRows.MPCityID" />
+                      </DataBindings>
+                      <StylePriority Ref="183" UseTextAlignment="false" />
+                    </Item13>
+                    <Item14 Ref="184" Name="xrTableCell28" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.1564842829311931">
+                      <DataBindings>
+                        <Item1 Ref="185" PropertyName="Text" DataMember="ContactListRows.MPRegion" />
+                      </DataBindings>
+                      <StylePriority Ref="186" UseTextAlignment="false" />
+                    </Item14>
+                    <Item15 Ref="187" Name="xrTableCell29" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.28911963392864221">
+                      <DataBindings>
+                        <Item1 Ref="188" PropertyName="Text" DataMember="ContactListRows.MPPostalNo" />
+                      </DataBindings>
+                      <StylePriority Ref="189" UseTextAlignment="false" />
+                    </Item15>
+                    <Item16 Ref="190" Name="xrTableCell30" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.29336821825084869">
+                      <DataBindings>
+                        <Item1 Ref="191" PropertyName="Text" DataMember="ContactListRows.MPCountryID" />
+                      </DataBindings>
+                      <StylePriority Ref="192" UseTextAlignment="false" />
+                    </Item16>
+                    <Item17 Ref="193" Name="xrTableCell31" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.33437253759472063">
+                      <DataBindings>
+                        <Item1 Ref="194" PropertyName="Text" DataMember="ContactListRows.MRealAttention" />
+                      </DataBindings>
+                      <StylePriority Ref="195" UseTextAlignment="false" />
+                    </Item17>
+                    <Item18 Ref="196" Name="xrTableCell32" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.36105056720574008">
+                      <DataBindings>
+                        <Item1 Ref="197" PropertyName="Text" DataMember="ContactListRows.MRealStreet" />
+                      </DataBindings>
+                      <StylePriority Ref="198" UseTextAlignment="false" />
+                    </Item18>
+                    <Item19 Ref="199" Name="xrTableCell33" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.3439546619425588">
+                      <DataBindings>
+                        <Item1 Ref="200" PropertyName="Text" DataMember="ContactListRows.MRealCityID" />
+                      </DataBindings>
+                      <StylePriority Ref="201" UseTextAlignment="false" />
+                    </Item19>
+                    <Item20 Ref="202" Name="xrTableCell34" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.414680922555286">
+                      <DataBindings>
+                        <Item1 Ref="203" PropertyName="Text" DataMember="ContactListRows.MPRegion" />
+                      </DataBindings>
+                      <StylePriority Ref="204" UseTextAlignment="false" />
+                    </Item20>
+                    <Item21 Ref="205" Name="xrTableCell35" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.42088787725035509">
+                      <DataBindings>
+                        <Item1 Ref="206" PropertyName="Text" DataMember="ContactListRows.MRealPostalNo" />
+                      </DataBindings>
+                      <StylePriority Ref="207" UseTextAlignment="false" />
+                    </Item21>
+                    <Item22 Ref="208" Name="xrTableCell36" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.38652503300539015">
+                      <DataBindings>
+                        <Item1 Ref="209" PropertyName="Text" DataMember="ContactListRows.MRealCountryID" />
+                      </DataBindings>
+                      <StylePriority Ref="210" UseTextAlignment="false" />
+                    </Item22>
+                    <Item23 Ref="211" Name="xrTableCell37" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.40883751523604961">
+                      <DataBindings>
+                        <Item1 Ref="212" PropertyName="Text" DataMember="ContactListRows.MPhone" />
+                      </DataBindings>
+                      <StylePriority Ref="213" UseTextAlignment="false" />
+                    </Item23>
+                    <Item24 Ref="214" Name="xrTableCell38" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.36685055720003446">
+                      <DataBindings>
+                        <Item1 Ref="215" PropertyName="Text" DataMember="ContactListRows.MFax" />
+                      </DataBindings>
+                      <StylePriority Ref="216" UseTextAlignment="false" />
+                    </Item24>
+                    <Item25 Ref="217" Name="xrTableCell39" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.33109720559268824">
+                      <DataBindings>
+                        <Item1 Ref="218" PropertyName="Text" DataMember="ContactListRows.MMobile" />
+                      </DataBindings>
+                      <StylePriority Ref="219" UseTextAlignment="false" />
+                    </Item25>
+                    <Item26 Ref="220" Name="xrTableCell40" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.17796124159419452">
+                      <DataBindings>
+                        <Item1 Ref="221" PropertyName="Text" DataMember="ContactListRows.MDirectPhone" />
+                      </DataBindings>
+                      <StylePriority Ref="222" UseTextAlignment="false" />
+                    </Item26>
+                    <Item27 Ref="223" Name="xrTableCell48" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.32470371045819457">
+                      <DataBindings>
+                        <Item1 Ref="224" PropertyName="Text" DataMember="ContactListRows.MSkypeName" />
+                      </DataBindings>
+                      <StylePriority Ref="225" UseTextAlignment="false" />
+                    </Item27>
+                    <Item28 Ref="226" Name="xrTableCell50" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.33711693222003059">
+                      <DataBindings>
+                        <Item1 Ref="227" PropertyName="Text" DataMember="ContactListRows.MWebsite" />
+                      </DataBindings>
+                      <StylePriority Ref="228" UseTextAlignment="false" />
+                    </Item28>
+                    <Item29 Ref="229" Name="xrTableCell49" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.33711645158859849">
+                      <DataBindings>
+                        <Item1 Ref="230" PropertyName="Text" DataMember="ContactListRows.MSalTrackEntry1" />
+                      </DataBindings>
+                      <StylePriority Ref="231" UseTextAlignment="false" />
+                    </Item29>
+                    <Item30 Ref="232" Name="xrTableCell51" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.43022438846378053">
+                      <DataBindings>
+                        <Item1 Ref="233" PropertyName="Text" DataMember="ContactListRows.MSalTrackEntry2" />
+                      </DataBindings>
+                      <StylePriority Ref="234" UseTextAlignment="false" />
+                    </Item30>
+                    <Item31 Ref="235" Name="xrTableCell58" ControlType="XRTableCell" Weight="0.21511219423189026">
+                      <DataBindings>
+                        <Item1 Ref="236" PropertyName="Text" DataMember="ContactListRows.MSalTrackEntry3" />
+                      </DataBindings>
+                    </Item31>
+                    <Item32 Ref="237" Name="xrTableCell88" ControlType="XRTableCell" Weight="0.21511219423189026">
+                      <DataBindings>
+                        <Item1 Ref="238" PropertyName="Text" DataMember="ContactListRows.MSalTrackEntry4" />
+                      </DataBindings>
+                    </Item32>
+                    <Item33 Ref="239" Name="xrTableCell57" ControlType="XRTableCell" TextAlignment="MiddleRight" Weight="0.21511219423189026">
+                      <DataBindings>
+                        <Item1 Ref="240" PropertyName="Text" DataMember="ContactListRows.MSalTrackEntry5" />
+                      </DataBindings>
+                      <StylePriority Ref="241" UseTextAlignment="false" />
+                    </Item33>
+                    <Item34 Ref="242" Name="xrTableCell87" ControlType="XRTableCell" Weight="0.21511219423189026">
+                      <DataBindings>
+                        <Item1 Ref="243" PropertyName="Text" DataMember="ContactListRows.MPurTrackEntry1" />
+                      </DataBindings>
+                    </Item34>
+                    <Item35 Ref="244" Name="xrTableCell59" ControlType="XRTableCell" Weight="0.21511219423189026">
+                      <DataBindings>
+                        <Item1 Ref="245" PropertyName="Text" DataMember="ContactListRows.MPurTrackEntry2" />
+                      </DataBindings>
+                    </Item35>
+                    <Item36 Ref="246" Name="xrTableCell86" ControlType="XRTableCell" Weight="0.21511219423189026">
+                      <DataBindings>
+                        <Item1 Ref="247" PropertyName="Text" DataMember="ContactListRows.MPurTrackEntry3" />
+                      </DataBindings>
+                    </Item36>
+                    <Item37 Ref="248" Name="xrTableCell56" ControlType="XRTableCell" Weight="0.21511219423189026">
+                      <DataBindings>
+                        <Item1 Ref="249" PropertyName="Text" DataMember="ContactListRows.MPurTrackEntry4" />
+                      </DataBindings>
+                    </Item37>
+                    <Item38 Ref="250" Name="xrTableCell85" ControlType="XRTableCell" Weight="0.21511219423189026">
+                      <DataBindings>
+                        <Item1 Ref="251" PropertyName="Text" DataMember="ContactListRows.MPurTrackEntry5" />
+                      </DataBindings>
+                    </Item38>
+                    <Item39 Ref="252" Name="xrTableCell61" ControlType="XRTableCell" Weight="0.21511219423189026">
+                      <DataBindings>
+                        <Item1 Ref="253" PropertyName="Text" DataMember="ContactListRows.MTaxNo" />
+                      </DataBindings>
+                    </Item39>
+                    <Item40 Ref="254" Name="xrTableCell84" ControlType="XRTableCell" Weight="0.21511219423189026">
+                      <DataBindings>
+                        <Item1 Ref="255" PropertyName="Text" DataMember="ContactListRows.MSalTaxTypeID" />
+                      </DataBindings>
+                    </Item40>
+                    <Item41 Ref="256" Name="xrTableCell60" ControlType="XRTableCell" Weight="0.21511219423189026">
+                      <DataBindings>
+                        <Item1 Ref="257" PropertyName="Text" DataMember="ContactListRows.MPurTaxTypeID" />
+                      </DataBindings>
+                    </Item41>
+                    <Item42 Ref="258" Name="xrTableCell83" ControlType="XRTableCell" TextAlignment="MiddleRight" Weight="0.21511219423189026">
+                      <DataBindings>
+                        <Item1 Ref="259" PropertyName="Text" DataMember="ContactListRows.MDiscount" />
+                      </DataBindings>
+                      <StylePriority Ref="260" UseTextAlignment="false" />
+                    </Item42>
+                    <Item43 Ref="261" Name="xrTableCell62" ControlType="XRTableCell" Weight="0.21511035051724486">
+                      <DataBindings>
+                        <Item1 Ref="262" PropertyName="Text" DataMember="ContactListRows.MDefaultCyID" />
+                      </DataBindings>
+                    </Item43>
+                    <Item44 Ref="263" Name="xrTableCell82" ControlType="XRTableCell" Weight="0.21511035051724486">
+                      <DataBindings>
+                        <Item1 Ref="264" PropertyName="Text" DataMember="ContactListRows.MBankAcctNo" />
+                      </DataBindings>
+                    </Item44>
+                    <Item45 Ref="265" Name="xrTableCell67" ControlType="XRTableCell" Weight="0.27075399133537509">
+                      <DataBindings>
+                        <Item1 Ref="266" PropertyName="Text" DataMember="ContactListRows.MBankAccName" />
+                      </DataBindings>
+                    </Item45>
+                    <Item46 Ref="267" Name="xrTableCell81" ControlType="XRTableCell" Weight="0.27075399133537509">
+                      <DataBindings>
+                        <Item1 Ref="268" PropertyName="Text" DataMember="ContactListRows.MBankName" />
+                      </DataBindings>
+                    </Item46>
+                    <Item47 Ref="269" Name="xrTableCell66" ControlType="XRTableCell" TextAlignment="MiddleRight" Weight="0.26377581047361415">
+                      <DataBindings>
+                        <Item1 Ref="270" PropertyName="Text" DataMember="ContactListRows.MPurDueDate" />
+                      </DataBindings>
+                      <StylePriority Ref="271" UseTextAlignment="false" />
+                    </Item47>
+                    <Item48 Ref="272" Name="xrTableCell80" ControlType="XRTableCell" Weight="0.26377581047361415">
+                      <DataBindings>
+                        <Item1 Ref="273" PropertyName="Text" DataMember="ContactListRows.MPurDueCondition" />
+                      </DataBindings>
+                    </Item48>
+                    <Item49 Ref="274" Name="xrTableCell68" ControlType="XRTableCell" TextAlignment="MiddleRight" Weight="0.29150367740718425">
+                      <DataBindings>
+                        <Item1 Ref="275" PropertyName="Text" DataMember="ContactListRows.MSalDueDate" />
+                      </DataBindings>
+                      <StylePriority Ref="276" UseTextAlignment="false" />
+                    </Item49>
+                    <Item50 Ref="277" Name="xrTableCell79" ControlType="XRTableCell" Weight="0.29150367740718425">
+                      <DataBindings>
+                        <Item1 Ref="278" PropertyName="Text" DataMember="ContactListRows.MSalDueCondition" />
+                      </DataBindings>
+                    </Item50>
+                  </Cells>
+                </Item1>
+              </Rows>
+              <StylePriority Ref="279" UseFont="false" UseBorderColor="false" UseBorders="false" UseTextAlignment="false" />
+            </Item1>
+          </Controls>
+        </Item1>
+      </Bands>
+    </Item4>
+  </Bands>
+  <ObjectStorage>
+    <Item1 ObjectType="DevExpress.XtraReports.Serialization.ObjectStorageInfo, DevExpress.XtraReports.v15.1" Ref="0" Content="~Xtra#NULL" Type="System.Windows.Forms.BindingSource" />
+  </ObjectStorage>
+</XtraReportsLayoutSerializer>

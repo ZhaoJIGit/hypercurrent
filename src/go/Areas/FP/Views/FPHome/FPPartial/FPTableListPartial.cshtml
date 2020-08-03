@@ -1,0 +1,45 @@
+﻿@using JieNor.Megi.Identity.HtmlHelper
+@using JieNor.Megi.EntityModel.MultiLanguage
+@using JieNor.Megi.Identity.Go.HtmlHelper
+@using JieNor.Megi.Core.Const
+@using JieNor.Megi.Common.Utility
+@using JieNor.Megi.Common.Context
+@using JieNor.Megi.EntityModel.Enum
+
+@{
+    var mContext = ContextHelper.MContext;
+    var isCanEdit = HtmlSECMenu.HavePermission(BizObject.General_Ledger, PermissionItem.Change);
+    var langID = mContext.MLCID;
+    var lang = langID == LangCodeEnum.EN_US ? "en" : (langID == LangCodeEnum.ZH_CN ? "zh-cn" : "zh-tw");
+    var dateString = "minDate:'" + mContext.MBeginDate.ToDateString() + "'," + "maxDate:'" + mContext.DateNow.ToDateString() + "'";
+    var defaultDate = mContext.DateNow.ToDateString();
+}
+
+<!--最顶部的-->
+<div class="fp-list-div">
+    <div class="fp-list-top-div">
+        <div class="fp-operate-div m-tab-toolbar" style="float:left;">
+            <!--批量生成凭证-->
+            <a href="####" class="easyui-linkbutton fp-delete-button " style="display:block;">@HtmlLang.Write(LangModule.FP, "Delete", "删除")</a>
+        </div>
+        <div class="fp-search-div m-tab-toolbar" style="float:right;">
+            <!--编号-->
+            <input type="text" class="dv-number-input" hint="@HtmlLang.Write(LangModule.FP, "NOAmount", "NO. # Amount")" />
+            <!--关键字-->
+            <input type="text" class="dv-keyword-input" hint="@HtmlLang.Write(LangModule.Common, "Keywords", "keywords")" />
+            <!--是否生成凭证-->
+            <input type="text" class="dv-type-input" hint="@HtmlLang.Write(LangModule.FP, "FapiaoType", "发票类型")" />
+            <!--日期-->
+            <input type="text" class="dv-date-input Wdate" onfocus="WdatePicker({ dateFmt: 'yyyy-MM', lang: '@lang', skin:'@lang', @dateString })" hint="@HtmlLang.Write(LangModule.Common, "Date", "Date")" style="width: 100px;" />
+
+            <!--查询按钮-->
+            <a id="btnSearch" class="easyui-linkbutton fp-search-button" style="float:none">@HtmlLang.Write(LangKey.Search)</a>
+            <!--clear按钮-->
+            <a id="btnClear" class="dv-clear-button" style="float:none">@HtmlLang.Write(LangModule.GL, "ResetDocVoucher", "重置")</a>
+        </div>
+    </div>
+    <div class="fp-datagrid-div">
+        <div class="fp-datagrid-body"></div>
+        <div class="fp-pager-div"></div>
+    </div>
+</div>

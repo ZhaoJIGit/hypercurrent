@@ -1,0 +1,627 @@
+﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3F77947A-C7DC-4103-9AA5-AC89CEE9F962}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>JieNor.Megi.Service.Web</RootNamespace>
+    <AssemblyName>JieNor.Megi.Service.Web</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <WcfConfigValidationEnabled>True</WcfConfigValidationEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="StackExchange.Redis">
+      <HintPath>..\libs\StackExchange.Redis.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\GLDoc2Voucher.xml" />
+    <Content Include="BAS\BASAccountGroupService.svc" />
+    <Content Include="BAS\BASAccountTableService.svc" />
+    <Content Include="BAS\BASAccountTypeService.svc" />
+    <Content Include="BAS\BASAppUIService.svc" />
+    <Content Include="BAS\BASCountryRegionService.svc" />
+    <Content Include="BAS\BASCountryService.svc" />
+    <Content Include="BAS\BASCurrencyService.svc" />
+    <Content Include="BAS\BASDataDictionaryService.svc" />
+    <Content Include="BAS\BASExchangeRateService.svc" />
+    <Content Include="BAS\BASLangService.svc" />
+    <Content Include="BAS\BASMegiLanguageService.svc" />
+    <Content Include="BAS\BASMenuService.svc" />
+    <Content Include="BAS\BASModuleService.svc" />
+    <Content Include="BAS\BASMyHomeService.svc" />
+    <Content Include="BAS\BASNationalLanguageService.svc" />
+    <Content Include="BAS\BASNumberFormattingService.svc" />
+    <Content Include="BAS\BASOrgAddressService.svc" />
+    <Content Include="BAS\BASOrganisationService.svc" />
+    <Content Include="BAS\BASOrgContactService.svc" />
+    <Content Include="BAS\BASOrgInitSettingService.svc" />
+    <Content Include="BAS\BASOrgPrefixSettingService.svc" />
+    <Content Include="BAS\BASPushMessageService.svc" />
+    <Content Include="BAS\BASSearchService.svc" />
+    <Content Include="BAS\BASTimezoneService.svc" />
+    <Content Include="BAS\BASTimezonesService.svc" />
+    <Content Include="BAS\BASVoucherGroupService.svc" />
+    <Content Include="BAS\OptLogListService.svc" />
+    <Content Include="BD\BDAccountMatchLogService.svc" />
+    <Content Include="BD\BDAccountService.svc" />
+    <Content Include="BD\BDAcctPolicyService.svc" />
+    <Content Include="BD\BDAcctPolicyTypeService.svc" />
+    <Content Include="BD\BDAcctTypeService.svc" />
+    <Content Include="BD\BDAttachmentService.svc" />
+    <Content Include="BD\BDBankAccountService.svc" />
+    <Content Include="BD\BDBankRuleService.svc" />
+    <Content Include="BD\BDBankTypeService.svc" />
+    <Content Include="BD\BDContactslService.svc" />
+    <Content Include="BD\BDContactsService.svc" />
+    <Content Include="BD\BDContactsTypeLinkService.svc" />
+    <Content Include="BD\BDContactsTypeLService.svc" />
+    <Content Include="BD\BDContactsTypeService.svc" />
+    <Content Include="BD\BDDepartmentService.svc" />
+    <Content Include="BD\BDEmailTemplateService.svc" />
+    <Content Include="BD\BDEmployeesService.svc" />
+    <Content Include="BD\BDExchangeRateService.svc" />
+    <Content Include="BD\BDExpenseItemService.svc" />
+    <Content Include="BD\BDInitDocumentService.svc" />
+    <Content Include="BD\BDItemLinkerLService.svc" />
+    <Content Include="BD\BDItemService.svc" />
+    <Content Include="BD\BDOrganisationService.svc" />
+    <Content Include="BD\BDTrackEntryLService.svc" />
+    <Content Include="BD\BDTrackEntryService.svc" />
+    <Content Include="BD\BDTrackLService.svc" />
+    <Content Include="BD\BDTrackService.svc" />
+    <Content Include="BD\BDVoucherSettingService.svc" />
+    <Content Include="COM\COMAccessService.svc" />
+    <Content Include="COM\COMMultiLangService.svc" />
+    <Content Include="COM\COMTableInfoService.svc" />
+    <Content Include="FA\FADepreciationService.svc" />
+    <Content Include="FA\FADepreciationTypeService.svc" />
+    <Content Include="FA\FAFixAssetsChangeService.svc" />
+    <Content Include="FA\FAFixAssetsService.svc" />
+    <Content Include="FA\FAFixAssetsTypeService.svc" />
+    <Content Include="FC\FCCashCodingModuleService.svc" />
+    <Content Include="FC\FCFapiaoModuleService.svc" />
+    <Content Include="FC\FCVoucherModuleEntryService.svc" />
+    <Content Include="FC\FCVoucherModuleService.svc" />
+    <Content Include="FP\FPFapiaoService.svc" />
+    <Content Include="FP\FPSettingService.svc" />
+    <Content Include="FP\FPTableService.svc" />
+    <Content Include="Global.asax" />
+    <Content Include="GL\GLBalanceProfitService.svc" />
+    <Content Include="GL\GLBalanceQtyService.svc" />
+    <Content Include="GL\GLBalanceService.svc" />
+    <Content Include="GL\GLCheckGroupService.svc" />
+    <Content Include="GL\GLCheckGroupValueService.svc" />
+    <Content Include="GL\GLCheckTypeService.svc" />
+    <Content Include="GL\GLDocVoucherService.svc" />
+    <Content Include="GL\GLExcelService.svc" />
+    <Content Include="GL\GLInitBalanceService.svc" />
+    <Content Include="GL\GLPeriodTransferService.svc" />
+    <Content Include="GL\GLSettlementService.svc" />
+    <Content Include="GL\GLVoucherEntryService.svc" />
+    <Content Include="GL\GLVoucherReferenceService.svc" />
+    <Content Include="GL\GLVoucherService.svc" />
+    <Content Include="IO\IOImportService.svc" />
+    <Content Include="IO\IOSolutionService.svc" />
+    <Content Include="IV\IVBankApiService.svc" />
+    <Content Include="IV\IVBankBillService.svc" />
+    <Content Include="IV\IVExpenseService.svc" />
+    <Content Include="IV\IVInvoiceService.svc" />
+    <Content Include="IV\IVPaymentService.svc" />
+    <Content Include="IV\IVReceiveService.svc" />
+    <Content Include="IV\IVTransactionsService.svc" />
+    <Content Include="IV\IVTransferService.svc" />
+    <Content Include="IV\IVVerificationService.svc" />
+    <Content Include="MSG\MSGMessageService.svc" />
+    <Content Include="PA\PAPayrollBasicService.svc" />
+    <Content Include="PA\PASalaryPaymentService.svc" />
+    <Content Include="PT\PTBizService.svc" />
+    <Content Include="PT\PTSalaryListService.svc" />
+    <Content Include="PT\PTVoucherService.svc" />
+    <Content Include="REG\REGCurrencyService.svc" />
+    <Content Include="REG\REGFinancialService.svc" />
+    <Content Include="REG\REGGlobalizationService.svc" />
+    <Content Include="REG\REGTaxRateEntryService.svc" />
+    <Content Include="REG\REGTaxRateService.svc" />
+    <Content Include="RI\RIInspectService.svc" />
+    <Content Include="RPT\RPTAccountBalanceService.svc" />
+    <Content Include="RPT\RptAccountDimensionSummaryService.svc" />
+    <Content Include="RPT\RPTAgedInvoiceService.svc" />
+    <Content Include="RPT\RPTAgedPayableService.svc" />
+    <Content Include="RPT\RPTAgedReceivableService.svc" />
+    <Content Include="RPT\RPTAssetChangeService.svc" />
+    <Content Include="RPT\RPTAssetDepreciationService.svc" />
+    <Content Include="RPT\RPTBalanceSheetService.svc" />
+    <Content Include="RPT\RPTBankAndCashSummaryService.svc" />
+    <Content Include="RPT\RPTBankBillRecSummaryService.svc" />
+    <Content Include="RPT\RPTBankStatementService.svc" />
+    <Content Include="RPT\RPTCashFlowStatementService.svc" />
+    <Content Include="RPT\RPTCashSummaryService.svc" />
+    <Content Include="RPT\RPTDepreciationDetailService.svc" />
+    <Content Include="RPT\RPTDepreciationSummaryService.svc" />
+    <Content Include="RPT\RPTExpenseClaimService.svc" />
+    <Content Include="RPT\RPTGeneralLedgerService.svc" />
+    <Content Include="RPT\RPTIncomeByContactService.svc" />
+    <Content Include="RPT\RPTIncomeStatementService.svc" />
+    <Content Include="RPT\RPTIncomeTransService.svc" />
+    <Content Include="RPT\RPTReportService.svc" />
+    <Content Include="RPT\RPTSalesByItemTransService.svc" />
+    <Content Include="RPT\RPTSalesTaxAuditReportService.svc" />
+    <Content Include="RPT\RPTSalesTaxReportService.svc" />
+    <Content Include="RPT\RPTSalseByItemService.svc" />
+    <Content Include="RPT\RPTSubsidiaryLedgerService.svc" />
+    <Content Include="SEC\SECAccountService.svc" />
+    <Content Include="SEC\SECObjectPermEntryService.svc" />
+    <Content Include="SEC\SECObjectPermissionService.svc" />
+    <Content Include="SEC\SECPermisionGroupService.svc" />
+    <Content Include="SEC\SECPermisionItemGrpService.svc" />
+    <Content Include="SEC\SECPermisionItemService.svc" />
+    <Content Include="SEC\SECPermissionService.svc" />
+    <Content Include="SEC\SECRelyPartyService.svc" />
+    <Content Include="SEC\SECRolePermissionService.svc" />
+    <Content Include="SEC\SECRoleService.svc" />
+    <Content Include="SEC\SECRoleUserService.svc" />
+    <Content Include="SEC\SECSendLinkInfoService.svc" />
+    <Content Include="SEC\SECUserAccountService.svc" />
+    <Content Include="SEC\SECUserLoginLogService.svc" />
+    <Content Include="SEC\SECUserService.svc" />
+    <Content Include="SYS\SYSCouponService.svc" />
+    <Content Include="SYS\SYSFeedBackService.svc" />
+    <Content Include="SYS\SYSOrgAppService.svc" />
+    <Content Include="SYS\SYSOrgAppStorageService.svc" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BAS\BASCountryRegionService.svc.cs">
+      <DependentUpon>BASCountryRegionService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="BAS\BASCountryService.svc.cs">
+      <DependentUpon>BASCountryService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="BAS\BASCurrencyService.svc.cs">
+      <DependentUpon>BASCurrencyService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="BAS\BASDataDictionaryService.svc.cs">
+      <DependentUpon>BASDataDictionaryService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="BAS\BASLangService.svc.cs">
+      <DependentUpon>BASLangService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="BAS\BASMyHomeService.svc.cs">
+      <DependentUpon>BASMyHomeService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="BAS\BASOrganisationService.svc.cs">
+      <DependentUpon>BASOrganisationService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="BAS\BASOrgInitSettingService.svc.cs">
+      <DependentUpon>BASOrgInitSettingService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="BAS\BASOrgPrefixSettingService.svc.cs">
+      <DependentUpon>BASOrgPrefixSettingService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="BAS\BASSearchService.svc.cs">
+      <DependentUpon>BASSearchService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="BAS\BASTimezoneService.svc.cs">
+      <DependentUpon>BASTimezoneService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="BAS\OptLogListService.svc.cs">
+      <DependentUpon>OptLogListService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="BD\BDAccountMatchLogService.svc.cs">
+      <DependentUpon>BDAccountMatchLogService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="BD\BDAccountService.svc.cs">
+      <DependentUpon>BDAccountService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="BD\BDAttachmentService.svc.cs">
+      <DependentUpon>BDAttachmentService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="BD\BDBankAccountService.svc.cs">
+      <DependentUpon>BDBankAccountService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="BD\BDBankRuleService.svc.cs">
+      <DependentUpon>BDBankRuleService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="BD\BDBankTypeService.svc.cs">
+      <DependentUpon>BDBankTypeService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="BD\BDContactsService.svc.cs">
+      <DependentUpon>BDContactsService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="BD\BDEmailTemplateService.svc.cs">
+      <DependentUpon>BDEmailTemplateService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="BD\BDEmployeesService.svc.cs">
+      <DependentUpon>BDEmployeesService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="BD\BDExchangeRateService.svc.cs">
+      <DependentUpon>BDExchangeRateService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="BD\BDExpenseItemService.svc.cs">
+      <DependentUpon>BDExpenseItemService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="BD\BDInitDocumentService.svc.cs">
+      <DependentUpon>BDInitDocumentService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="BD\BDItemService.svc.cs">
+      <DependentUpon>BDItemService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="BD\BDTrackEntryService.svc.cs">
+      <DependentUpon>BDTrackEntryService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="BD\BDTrackService.svc.cs">
+      <DependentUpon>BDTrackService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="BD\BDVoucherSettingService.svc.cs">
+      <DependentUpon>BDVoucherSettingService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="COM\COMAccessService.svc.cs">
+      <DependentUpon>COMAccessService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="COM\COMMultiLangService.svc.cs">
+      <DependentUpon>COMMultiLangService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="COM\COMTableInfoService.svc.cs">
+      <DependentUpon>COMTableInfoService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="FA\FADepreciationService.svc.cs">
+      <DependentUpon>FADepreciationService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="FA\FAFixAssetsChangeService.svc.cs">
+      <DependentUpon>FAFixAssetsChangeService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="FA\FAFixAssetsService.svc.cs">
+      <DependentUpon>FAFixAssetsService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="FA\FAFixAssetsTypeService.svc.cs">
+      <DependentUpon>FAFixAssetsTypeService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="FC\FCCashCodingModuleService.svc.cs">
+      <DependentUpon>FCCashCodingModuleService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="FC\FCFapiaoModuleService.svc.cs">
+      <DependentUpon>FCFapiaoModuleService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="FC\FCVoucherModuleService.svc.cs">
+      <DependentUpon>FCVoucherModuleService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="FP\FPFapiaoService.svc.cs">
+      <DependentUpon>FPFapiaoService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="FP\FPSettingService.svc.cs">
+      <DependentUpon>FPSettingService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="FP\FPTableService.svc.cs">
+      <DependentUpon>FPTableService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="GL\GLCheckTypeService.svc.cs">
+      <DependentUpon>GLCheckTypeService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="GL\GLDocVoucherService.svc.cs">
+      <DependentUpon>GLDocVoucherService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="GL\GLExcelService.svc.cs">
+      <DependentUpon>GLExcelService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="GL\GLInitBalanceService.svc.cs">
+      <DependentUpon>GLInitBalanceService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="GL\GLPeriodTransferService.svc.cs">
+      <DependentUpon>GLPeriodTransferService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="GL\GLSettlementService.svc.cs">
+      <DependentUpon>GLSettlementService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="GL\GLVoucherReferenceService.svc.cs">
+      <DependentUpon>GLVoucherReferenceService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="GL\GLVoucherService.svc.cs">
+      <DependentUpon>GLVoucherService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="IO\IOImportService.svc.cs">
+      <DependentUpon>IOImportService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="IO\IOSolutionService.svc.cs">
+      <DependentUpon>IOSolutionService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="IV\IVBankApiService.svc.cs">
+      <DependentUpon>IVBankApiService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="IV\IVBankBillService.svc.cs">
+      <DependentUpon>IVBankBillService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="IV\IVExpenseService.svc.cs">
+      <DependentUpon>IVExpenseService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="IV\IVInvoiceService.svc.cs">
+      <DependentUpon>IVInvoiceService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="IV\IVPaymentService.svc.cs">
+      <DependentUpon>IVPaymentService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="IV\IVReceiveService.svc.cs">
+      <DependentUpon>IVReceiveService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="IV\IVTransactionsService.svc.cs">
+      <DependentUpon>IVTransactionsService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="IV\IVTransferService.svc.cs">
+      <DependentUpon>IVTransferService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="IV\IVVerificationService.svc.cs">
+      <DependentUpon>IVVerificationService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="MSG\MSGMessageService.svc.cs">
+      <DependentUpon>MSGMessageService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="PA\PAPayrollBasicService.svc.cs">
+      <DependentUpon>PAPayrollBasicService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="PA\PASalaryPaymentService.svc.cs">
+      <DependentUpon>PASalaryPaymentService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PT\PTBizService.svc.cs">
+      <DependentUpon>PTBizService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="PT\PTSalaryListService.svc.cs">
+      <DependentUpon>PTSalaryListService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="PT\PTVoucherService.svc.cs">
+      <DependentUpon>PTVoucherService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="REG\REGCurrencyService.svc.cs">
+      <DependentUpon>REGCurrencyService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="REG\REGFinancialService.svc.cs">
+      <DependentUpon>REGFinancialService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="REG\REGGlobalizationService.svc.cs">
+      <DependentUpon>REGGlobalizationService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="REG\REGTaxRateService.svc.cs">
+      <DependentUpon>REGTaxRateService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="RI\RIInspectService.svc.cs">
+      <DependentUpon>RIInspectService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="RPT\RPTAccountBalanceService.svc.cs">
+      <DependentUpon>RPTAccountBalanceService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="RPT\RptAccountDimensionSummaryService.svc.cs">
+      <DependentUpon>RptAccountDimensionSummaryService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="RPT\RPTAgedInvoiceService.svc.cs">
+      <DependentUpon>RPTAgedInvoiceService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="RPT\RPTAgedPayableService.svc.cs">
+      <DependentUpon>RPTAgedPayableService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="RPT\RPTAgedReceivableService.svc.cs">
+      <DependentUpon>RPTAgedReceivableService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="RPT\RPTAssetChangeService.svc.cs">
+      <DependentUpon>RPTAssetChangeService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="RPT\RPTAssetDepreciationService.svc.cs">
+      <DependentUpon>RPTAssetDepreciationService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="RPT\RPTBalanceSheetService.svc.cs">
+      <DependentUpon>RPTBalanceSheetService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="RPT\RPTBankAndCashSummaryService.svc.cs">
+      <DependentUpon>RPTBankAndCashSummaryService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="RPT\RPTBankBillRecSummaryService.svc.cs">
+      <DependentUpon>RPTBankBillRecSummaryService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="RPT\RPTBankStatementService.svc.cs">
+      <DependentUpon>RPTBankStatementService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="RPT\RPTCashFlowStatementService.svc.cs">
+      <DependentUpon>RPTCashFlowStatementService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="RPT\RPTCashSummaryService.svc.cs">
+      <DependentUpon>RPTCashSummaryService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="RPT\RPTDepreciationDetailService.svc.cs">
+      <DependentUpon>RPTDepreciationDetailService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="RPT\RPTDepreciationSummaryService.svc.cs">
+      <DependentUpon>RPTDepreciationSummaryService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="RPT\RPTExpenseClaimService.svc.cs">
+      <DependentUpon>RPTExpenseClaimService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="RPT\RPTGeneralLedgerService.svc.cs">
+      <DependentUpon>RPTGeneralLedgerService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="RPT\RPTIncomeByContactService.svc.cs">
+      <DependentUpon>RPTIncomeByContactService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="RPT\RPTIncomeStatementService.svc.cs">
+      <DependentUpon>RPTIncomeStatementService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="RPT\RPTIncomeTransService.svc.cs">
+      <DependentUpon>RPTIncomeTransService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="RPT\RPTReportService.svc.cs">
+      <DependentUpon>RPTReportService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="RPT\RPTSalesByItemTransService.svc.cs">
+      <DependentUpon>RPTSalesByItemTransService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="RPT\RPTSalesTaxAuditReportService.svc.cs">
+      <DependentUpon>RPTSalesTaxAuditReportService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="RPT\RPTSalesTaxReportService.svc.cs">
+      <DependentUpon>RPTSalesTaxReportService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="RPT\RPTSalseByItemService.svc.cs">
+      <DependentUpon>RPTSalseByItemService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="RPT\RPTSubsidiaryLedgerService.svc.cs">
+      <DependentUpon>RPTSubsidiaryLedgerService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="SEC\SECAccountService.svc.cs">
+      <DependentUpon>SECAccountService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="SEC\SECPermissionService.svc.cs">
+      <DependentUpon>SECPermissionService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="SEC\SECSendLinkInfoService.svc.cs">
+      <DependentUpon>SECSendLinkInfoService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="SEC\SECUserAccountService.svc.cs">
+      <DependentUpon>SECUserAccountService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="SEC\SECUserLoginLogService.svc.cs">
+      <DependentUpon>SECUserLoginLogService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="SEC\SECUserService.svc.cs">
+      <DependentUpon>SECUserService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="SYS\SYSCouponService.svc.cs">
+      <DependentUpon>SYSCouponService.svc</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\Reg\Organization setup guide.pdf" />
+    <Content Include="App_Data\Reg\Organization setup guide_CN.pdf" />
+    <Content Include="App_Data\Reg\账套初始化步骤（中文）.pdf" />
+    <Content Include="Config\Behaviors.config" />
+    <Content Include="Config\Bindings.config" />
+    <Content Include="Config\Extensions.config" />
+    <Content Include="Config\ProtocolMapping.config" />
+    <Content Include="Config\Services.config" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\businesscontract\JieNor.Megi.BusinessContract.csproj">
+      <Project>{aac3fe46-af90-473b-aadc-35340cfefd18}</Project>
+      <Name>JieNor.Megi.BusinessContract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\businessservice\JieNor.Megi.BusinessService.csproj">
+      <Project>{a1a39665-a680-4d4f-b5d0-4637db8392a2}</Project>
+      <Name>JieNor.Megi.BusinessService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\common\JieNor.Megi.Common.csproj">
+      <Project>{2ae7309b-bcdb-4842-a0dd-6c9aa217f2ed}</Project>
+      <Name>JieNor.Megi.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\core\JieNor.Megi.Core.csproj">
+      <Project>{e56a4df7-e8eb-407f-aafd-5b763bffa364}</Project>
+      <Name>JieNor.Megi.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\datamodel\JieNor.Megi.DataModel.csproj">
+      <Project>{2f8cbbd3-6276-49a4-87e0-8b6c4597e3e0}</Project>
+      <Name>JieNor.Megi.DataModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\entitymodel\JieNor.Megi.EntityModel.csproj">
+      <Project>{eef2457d-0b83-44e8-96ce-d6c0cf427a8a}</Project>
+      <Name>JieNor.Megi.EntityModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\servicecontract\JieNor.Megi.ServiceContract.csproj">
+      <Project>{675ef372-9074-46cf-890b-e85f6b1d8f50}</Project>
+      <Name>JieNor.Megi.ServiceContract</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
+    </PropertyGroup>
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:25181/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

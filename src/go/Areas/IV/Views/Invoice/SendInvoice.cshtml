@@ -1,0 +1,175 @@
+﻿@using JieNor.Megi.EntityModel.Enum
+@using JieNor.Megi.Common.Utility;
+@{
+    ViewBag.Title = "SendInvoice";
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    int sendTypeValue = Convert.ToInt32(@ViewData["sendType"]);
+    EmailSendTypeEnum sendType = (EmailSendTypeEnum)sendTypeValue;
+    Dictionary<string, string> filePath = ViewData["filePath"] as Dictionary<string, string>;
+    System.Web.Script.Serialization.JavaScriptSerializer jss = new System.Web.Script.Serialization.JavaScriptSerializer();
+    string dicIdPath = jss.Serialize(filePath);
+    var tmplPlaceHolder = ViewData["EmailTmplVariableList"] as List<KeyValuePair<string, string>>;
+}
+@*主体内容*@
+<div class="m-imain">
+    <div class="m-imain-content">
+        <div class="mg-sendIv-window">
+            <div class="section">
+                <p class="label">
+                    <strong id="InvoicesToEmailText"><span id="entryCount"></span> @HtmlLang.Write(LangModule.IV,"toemail","to email")</strong>
+                    <span>@HtmlLang.Write(LangModule.IV,"SeparateMultipleEmailAddresses","Separate multiple email addresses with a comma (,) or semicolon (;)")</span>
+                </p>
+                <div id="gridInvSend" fitcolumns="true"></div>@*发票列表*@
+            </div>
+            @*@if (sendType != EmailSendTypeEnum.Payslip)
+            {*@
+            <div class="section emaildetails">
+                <div><label style="margin-right:36px;">@HtmlLang.Write(LangKey.From)</label><span>@ViewData["userName"]</span></div>
+                <div><label style="margin-right:20px;">@HtmlLang.Write(LangModule.IV,"ReplyTo","Reply to")</label><span>@ViewData["userEmail"]</span></div>
+            </div>
+            <div id="divTmpl" class="section">
+                <div class="label" style="line-height:30px;margin-right:6px;">
+                    <strong>@HtmlLang.Write(LangModule.IV,"EmailTemplate","Email template")</strong>
+                </div>
+                <div style="padding-top:3px;">
+                    <div style="float:left;">
+                        <select id="EmailTemplate_value" class="easyui-combobox" style="width: 200px;height:30px;"></select>
+                        <input type="hidden" id="hidIsSys" />
+                    </div>
+                    <div id="divTmplName" style="float:left;display: none;">
+                        <div style="float: left; margin-left: 6px;" class="required-field">
+                            <input type="text" id="txtTmplName" name="MName" class="easyui-validatebox textbox" data-options="required:true" size="36" maxlength="100" style="height:24px;" />
+                            <input type="hidden" name="MItemID" id="hideTmplId" />
+                            <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aSaveTmpl">@HtmlLang.Write(LangKey.Save)</a>
+                        </div>
+                        <div style="float: left; padding-left: 3px;">
+                            <a href="javascript:void(0)" class="m-btn-s easyui-linkbutton" id="aCancelTmpl">@HtmlLang.Write(LangKey.Cancel)</a>
+                        </div>
+                    </div>
+                    <div id="divTmplAction" style="float: left; padding-left: 3px;" class="list-item-action">
+                        <a href="javascript:void(0)" class="m-btn-s easyui-linkbutton" id="aCopy">@HtmlLang.Write(LangKey.Copy)</a>
+                        <a href="javascript:void(0)" class="m-btn-s easyui-linkbutton" id="aNew">@HtmlLang.Write(LangKey.New)</a>
+                        <a href="javascript:void(0)" class="m-btn-s easyui-linkbutton" id="aDelete">@HtmlLang.Write(LangKey.Delete)</a>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+            @*}*@
+            <div class="section">
+                <a id="aPH" class="email-tmpl-ph" href="javascript:void(0)" style="display:none;"><em></em><i class="email-tmpl-ph-del"></i></a>
+                <div class="label" style="padding-top: 5px;display: inline-table;">
+                    <div style="float: left; line-height:32px;">
+                        <strong>@HtmlLang.Write(LangModule.IV, "Subject", "Subject")</strong>
+                        <a href="javascript:void(0);" id="aInsertPlaceholder" class="email-placeholder-tagter">@HtmlLang.Write(LangModule.IV, "InsertPlaceholder", "Insert Placeholder")</a>
+                        <div class="email-placeholder" id="divInsertPlaceholder">
+                            <b class="popup-arrow popup-arrow-notch"></b>
+                            <b class="popup-arrow"></b>
+                            <div style="overflow-y: auto; height: 220px; overflow-x: hidden;">
+                                <ul id="ul-insert-placeholder">
+                                    @foreach (var item in tmplPlaceHolder)
+                                    {
+                                        <li><a href="javascript:void(0);" key="@item.Key" title="@item.Value">@item.Key</a></li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="float: left; margin-left: 10px;">
+                        <div id="divPreviewNav" style="display:none;float:left">
+                            <div style="float: left;">
+                                <a href="javascript:void(0)" class="m-btn-s easyui-linkbutton" id="aPrevious">@HtmlLang.Write(LangModule.Common, "PreviousItem", "Previous")</a>
+                            </div>
+                            <div style="float: left; padding-left: 3px;">
+                                <a href="javascript:void(0)" class="m-btn-s easyui-linkbutton" id="aNext">@HtmlLang.Write(LangModule.Common, "NextItem", "Next")</a>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div style="float: left; padding-left: 3px;">
+                            <a href="javascript:void(0)" class="m-btn-s easyui-linkbutton" id="aPreview">@HtmlLang.Write(LangModule.PA, "Preview", "Preview")</a>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+                <div id="divMsgSubject" style="display:none;"></div>
+                <div class="required-field">
+                    <input type="text" id="MsgSubject" style="width:100%;height:25px;line-height:25px;" class="easyui-validatebox" data-options="required:true" maxlength="100" disabled="disabled" />
+                </div>
+                <div id="previewMsgSubject" style="display: none; width: 100%; height: 31px; line-height:31px; border: 1px solid gray; "></div>
+            </div>
+            <div class="section" style="padding-bottom:8px;">
+                <p class="label">
+                    <strong>@HtmlLang.Write(LangModule.IV,"Message","Message")</strong>
+                    <span>@HtmlLang.Write(LangModule.IV,"thesameforallrecipients","This message will be the same for all recipients")</span>
+                </p>
+                <div id="divMsgContent" style="display:none;"></div>
+                <div class="required-field">
+                    <textarea id="MsgContent" style="height:160px;width:100%" disabled="disabled" class="easyui-validatebox" maxlength="2000" data-options="required:true"></textarea>
+                </div>
+                <div id="previewMsgContent" style="display: none; width: 100%; height: 160px; overflow-y: scroll; border: 1px solid gray;"></div>
+            </div>
+            @if (sendType == EmailSendTypeEnum.Invoice || sendType == EmailSendTypeEnum.RepeatingInvoice || sendType == EmailSendTypeEnum.Payslip)
+            {
+            <div class="section checkbox">
+                <input type="checkbox" id="includePDF" />
+                <label for="includePDF">
+                @if(sendType == EmailSendTypeEnum.Payslip){
+                    @HtmlLang.Write(LangModule.PA, "IncludePDFAttachment", "Include PDF attachment of Salary List")
+                }
+                else{
+                    @HtmlLang.Write(LangModule.IV, "IncludePDFAttachment", "Include PDF attachment of invoice")                
+                }</label>
+            </div>
+            }
+            <div class="section checkbox">
+                <input type="checkbox" id="SendMeACopy"  />
+                <label for="SendMeACopy">@HtmlLang.Write(LangModule.IV, "SendMeACopy", "Send me a copy") (@ViewData["userEmail"])</label>@*发送人的Email*@
+            </div>
+            <div class="clear"></div>
+            <div id="divHidden" style="display:none;"></div>
+        </div>
+    </div>
+</div>
+@*底部工具栏*@
+<div class="m-toolbar-footer">
+    <div class="left">
+        <a href="javascript:void(0);" class="easyui-linkbutton easyui-linkbutton-gray" id="aCancel">@HtmlLang.Write(LangKey.Cancel)</a>@*取消*@
+    </div>
+    <div class="right">
+        @if (HtmlSECMenu.HavePermission(BizObject.Invoice_Sales, PermissionItem.Change) || HtmlSECMenu.HavePermission(BizObject.Invoice_Purchases, PermissionItem.Change))
+        {
+            if (sendType == EmailSendTypeEnum.RepeatingInvoice)
+            {
+                <a href="javascript:void(0);" class="easyui-linkbutton easyui-linkbutton-yellow" id="aSave">@HtmlLang.Write(LangModule.IV, "Save", "Save")</a>@*保存*@
+            }
+            else
+            {
+                <a href="javascript:void(0);" class="easyui-linkbutton easyui-linkbutton-yellow" id="aSend">@HtmlLang.Write(LangModule.IV, "Send", "Send")</a>@*发送邀请*@
+            }
+        }
+    </div>
+</div>
+@*隐藏字段*@
+<input type="hidden" id="selIds" value="@ViewData["selIds"]" />@*发票ID串*@
+<input type="hidden" id="sendType" value="@sendType" />@*发送邮件类型*@
+<input type="hidden" id="replyEmail" value="@ViewData["userEmail"]" />@*发送人的Email*@
+<input type="hidden" id="fromUserName" value="@ViewData["userName"]" />@*发送人的Email*@
+<input type="hidden" id="hidContactId" value="@ViewData["contactId"]" />
+<input type="hidden" id="hidTotalAmount" value="@ViewData["totalAmount"]" />
+<input type="hidden" id="hidPlaceHolder" value="@ViewData["EmailTmplVariableJson"]" />
+<input type="hidden" id="dicIdPath" value="@dicIdPath" />
+@if (sendType == EmailSendTypeEnum.Invoice || sendType == EmailSendTypeEnum.RepeatingInvoice)
+{
+<input type="hidden" id="status" value="@ViewData["status"]" />@*发票状态*@
+<input type="hidden" id="hidMType" value="@ViewData["MType"]" />@*发票类别*@
+}
+else if (sendType == EmailSendTypeEnum.Statement)
+{
+<input type="hidden" id="beginDate" value="@ViewData["beginDate"]" />@*客户对账单开始日期*@
+<input type="hidden" id="endDate" value="@ViewData["endDate"]" />@*客户对账单结束日期*@ 
+}
+@HtmlLang.WriteScript(LangModule.Common)
+@HtmlLang.WriteScript(LangModule.IV)
+@HtmlLang.WriteScript(LangModule.PA)
+@*所用到的 js 文件*@
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/IV/Invoice/SendInvoice.js?@ServerHelper.JSVersion"></script>
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)

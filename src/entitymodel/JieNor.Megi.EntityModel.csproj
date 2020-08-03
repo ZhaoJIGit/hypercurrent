@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{EEF2457D-0B83-44E8-96CE-D6C0CF427A8A}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>Library</OutputType>
+    <AssemblyName>JieNor.Megi.EntityModel</AssemblyName>
+    <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.8.3.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\libs\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\libs\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <HintPath>C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System\v4.0_4.0.0.0__b77a5c561934e089\System.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization">
+      <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_MSIL\System.Runtime.Serialization\v4.0_4.0.0.0__b77a5c561934e089\System.Runtime.Serialization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core">
+      <HintPath>C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Core\v4.0_4.0.0.0__b77a5c561934e089\System.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Configuration">
+      <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_MSIL\System.Configuration\v4.0_4.0.0.0__b03f5f7f11d50a3a\System.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.0\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.1.0\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.1.0\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.0\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.0\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.0\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="JieNor.Megi.EntityModel.COM\MTableColumnModel.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Context\CustomJson.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Context\MAccessRequestModel.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Context\MAccessResponseModel.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Context\MActionException.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Context\MActionResult.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Context\MContext.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Context\MConvertException.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Context\MJsonResult.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Context\MUserLog.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\AccessRequestTypeEnum.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\AccountCodeEnum.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\AccountGroupEnum.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\AccountingStandardEnum.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\AccountTableEnum.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\AccountTypeEnum.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\AlertEnum.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\AmountType.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\AppSourceEnum.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\BankAccountTypeEnum.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\BillType.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\BusinessModuleEnum.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\CheckTypeEnum.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\CheckTypeStatusEnum.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\CommonVariableEnum.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\Consts.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\ContactType.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\ContactTypeEnum.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\DataType.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\DateMonth.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\EmailPreviewTypeEnum.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\EmailSendTypeEnum.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\EmailTemplateVariableEnum.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\GLDocTypeEnum.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\GLInitBalanceTypeEnum.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\ImportCommonEnum.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\ImportTypeEnum.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\InitWizardUrlEnum.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\InvoiceSource.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\InvoiceType.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\LangCodeEnum.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\LoginStateEnum.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\MActionResultCodeEnum.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\ModuleEnum.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\MStatusCode.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\OperateTime.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\OrgVersionEnum.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\PayrollItemEnum.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\PayrollItemExportEnum.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\PayRunSourceEnum.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\PeriodTransferTypeEnum.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\PushMessageEnum.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\RecordStatus.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\Result.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\SearchColEnum.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\ServerType.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\ServiceType.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\ShowTaxSubtotalsByEnum.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\StringCompute.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\SysMessage.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\SysModuleEnum.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\SysOperate.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\TaxPayerEnum.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\TaxTypeEnum.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\UserLoginRedirectEnum.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.Enum\UserStatusEnum.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.LOG\MLog.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.MResource\MongoCache.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.MResource\MResource.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.MultiLanguage\GlobalCurrencyModel.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.MultiLanguage\LangKey.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.MultiLanguage\LangModel.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.MultiLanguage\LangModule.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.MultiLanguage\MultiLanguageField.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.MultiLanguage\MultiLanguageFieldList.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.SEC\SECLoginModel.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.SEC\SECLoginResultModel.cs" />
+    <Compile Include="JieNor.Megi.EntityModel\DeleteParam.cs" />
+    <Compile Include="JieNor.Megi.EntityModel\ExParamBase.cs" />
+    <Compile Include="JieNor.Megi.EntityModel\ExpressionException.cs" />
+    <Compile Include="JieNor.Megi.EntityModel\GetParam.cs" />
+    <Compile Include="JieNor.Megi.EntityModel\MFetchResourceRule.cs" />
+    <Compile Include="JieNor.Megi.EntityModel\OpenIdClientModel.cs" />
+    <Compile Include="JieNor.Megi.EntityModel\PostParam.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

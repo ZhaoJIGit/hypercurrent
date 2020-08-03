@@ -1,0 +1,22 @@
+﻿@using JieNor.Megi.Tools
+@using JieNor.Megi.Core.Const
+@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+
+    var accessResponse = AccessHelper.Access();
+    var accessList = accessResponse.Access;
+    //是否有纳税申报审核权限
+    bool canApproveTaxFiling = accessList[BizObject.Tax_Filing + PermissionItem.Approve];
+}
+
+<div class="m-toolbar">
+    <input type="hidden" value="@ViewData["ReportID"]" id="hidReportID" />
+    @if (canApproveTaxFiling)
+    {
+    <a href="#" id="aPostReport" class="easyui-linkbutton easyui-linkbutton-yellow">上传</a>
+    }
+</div>
+
+
+<script src="@ServerHelper.ScriptServer/Scripts/Report/eTax/TaxFilingBase.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.ScriptServer/Scripts/Report/eTax/TaxFilingView.js?@ServerHelper.JSVersion"></script>

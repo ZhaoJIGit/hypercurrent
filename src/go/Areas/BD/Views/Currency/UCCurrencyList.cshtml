@@ -1,0 +1,12 @@
+﻿@using JieNor.Megi.Common.Utility;
+<!--表头-->
+<div class="mg-setup-sub-title">@HtmlLang.Write(LangModule.Acct, "ForeignCurrency", "Foreign Currency") </div>
+
+<!--表-->
+<div id="tbCurrency" fitcolumns="true"></div>
+
+<div class="clear"></div>
+
+<script src="@ServerHelper.ScriptServer/scripts/BD/Currency/CurrencyList.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.Acct)
+@HtmlLang.WriteScript(LangModule.BD)

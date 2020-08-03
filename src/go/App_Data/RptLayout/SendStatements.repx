@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XtraReportsLayoutSerializer SerializerVersion="14.1.4.0" Ref="1" ControlType="DevExpress.XtraReports.UI.XtraReport, DevExpress.XtraReports.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Name="SendStatements" DataSource="#Ref-0" Version="14.1" PageHeight="1100" PageWidth="850" Margins="99, 100, 100, 100">
+  <Bands>
+    <Item1 Ref="2" ControlType="DetailBand" Name="Detail" TextAlignment="TopLeft" Font="Arial Unicode MS, 9.75pt" Padding="0,0,0,0,100" HeightF="25">
+      <Controls>
+        <Item1 Ref="3" Name="xrTable1" ControlType="XRTable" LocationFloat="2.041748, 0" BorderColor="255,218,220,221" Borders="All" SizeF="648.958252,25" TextAlignment="MiddleLeft">
+          <Rows>
+            <Item1 Ref="4" ControlType="XRTableRow" Name="xrTableRow1" Weight="1">
+              <Cells>
+                <Item1 Ref="5" Name="xrTableCell1" ControlType="XRTableCell" Text="Contact Name" Weight="1.8197186177384401" />
+                <Item2 Ref="6" Name="xrTableCell2" ControlType="XRTableCell" Text="Email" Weight="1.8031697302810288" />
+                <Item3 Ref="7" Name="xrTableCell3" ControlType="XRTableCell" Text="Address" Weight="1.7911495026271065" />
+                <Item4 Ref="8" Name="xrTableCell4" ControlType="XRTableCell" TextAlignment="MiddleRight" Text="Outstanding Balance" Weight="1.722421410786799">
+                  <StylePriority Ref="9" UseTextAlignment="false" />
+                </Item4>
+                <Item5 Ref="10" Name="xrTableCell5" ControlType="XRTableCell" TextAlignment="MiddleRight" Text="Overdue" Weight="1.3635407385666254">
+                  <StylePriority Ref="11" UseTextAlignment="false" />
+                </Item5>
+              </Cells>
+            </Item1>
+          </Rows>
+          <StylePriority Ref="12" UseBorderColor="false" UseBorders="false" UseTextAlignment="false" />
+        </Item1>
+      </Controls>
+      <StylePriority Ref="13" UseFont="false" />
+    </Item1>
+    <Item2 Ref="14" ControlType="TopMarginBand" Name="TopMargin" Font="Arial Unicode MS, 9.75pt" Padding="0,0,0,0,100" TextAlignment="TopLeft" HeightF="100">
+      <Controls>
+        <Item1 Ref="15" Name="xrLabel3" ControlType="XRLabel" SizeF="104.103577,23" LocationFloat="546.8964, 63.5833435" TextAlignment="MiddleLeft" Padding="2,2,0,0,100">
+          <DataBindings>
+            <Item1 Ref="16" PropertyName="Text" DataMember="EndDate" />
+          </DataBindings>
+          <StylePriority Ref="17" UseTextAlignment="false" />
+        </Item1>
+        <Item2 Ref="18" Name="xrLabel2" ControlType="XRLabel" SizeF="104.1037,23" LocationFloat="546.8964, 40.58334" TextAlignment="MiddleLeft" Padding="2,2,0,0,100" Text="Statement Date">
+          <StylePriority Ref="19" UseTextAlignment="false" />
+        </Item2>
+        <Item3 Ref="20" Name="xrLabel1" ControlType="XRLabel" SizeF="167.7083,23" LocationFloat="0, 40.58334" TextAlignment="MiddleLeft" Font="Times New Roman, 16pt, style=Bold" Padding="2,2,0,0,100" Text="STATEMENT">
+          <StylePriority Ref="21" UseFont="false" UseTextAlignment="false" />
+        </Item3>
+      </Controls>
+      <StylePriority Ref="22" UseFont="false" />
+    </Item2>
+    <Item3 Ref="23" ControlType="BottomMarginBand" Name="BottomMargin" Padding="0,0,0,0,100" TextAlignment="TopLeft" HeightF="100" />
+    <Item4 Ref="24" ControlType="DetailReportBand" Name="DetailReport" DataMember="SendStatementRows" DataSource="#Ref-0" Level="0">
+      <Bands>
+        <Item1 Ref="25" ControlType="DetailBand" Name="Detail1" Font="Arial Unicode MS, 9.75pt" HeightF="25">
+          <Controls>
+            <Item1 Ref="26" Name="xrTable2" ControlType="XRTable" LocationFloat="2.041748, 0" BorderColor="255,218,220,221" Borders="Left, Right, Bottom" SizeF="648.9583,25" TextAlignment="MiddleLeft">
+              <Rows>
+                <Item1 Ref="27" ControlType="XRTableRow" Name="xrTableRow2" Weight="1">
+                  <Cells>
+                    <Item1 Ref="28" Name="xrTableCell6" ControlType="XRTableCell" Weight="1.8197180528098815">
+                      <DataBindings>
+                        <Item1 Ref="29" PropertyName="Text" DataMember="SendStatementRows.MName" />
+                      </DataBindings>
+                    </Item1>
+                    <Item2 Ref="30" Name="xrTableCell7" ControlType="XRTableCell" Weight="1.8031699250065083">
+                      <DataBindings>
+                        <Item1 Ref="31" PropertyName="Text" DataMember="SendStatementRows.MEmail" />
+                      </DataBindings>
+                    </Item2>
+                    <Item3 Ref="32" Name="xrTableCell8" ControlType="XRTableCell" Weight="1.79114920283969">
+                      <DataBindings>
+                        <Item1 Ref="33" PropertyName="Text" DataMember="SendStatementRows.MAddress" />
+                      </DataBindings>
+                    </Item3>
+                    <Item4 Ref="34" Name="xrTableCell9" ControlType="XRTableCell" TextAlignment="MiddleRight" Weight="1.72242278028142">
+                      <DataBindings>
+                        <Item1 Ref="35" PropertyName="Text" DataMember="SendStatementRows.MBalance" />
+                      </DataBindings>
+                      <StylePriority Ref="36" UseTextAlignment="false" />
+                    </Item4>
+                    <Item5 Ref="37" Name="xrTableCell10" ControlType="XRTableCell" TextAlignment="MiddleRight" Weight="1.3635400390624999">
+                      <DataBindings>
+                        <Item1 Ref="38" PropertyName="Text" DataMember="SendStatementRows.MOverdue" />
+                      </DataBindings>
+                      <StylePriority Ref="39" UseTextAlignment="false" />
+                    </Item5>
+                  </Cells>
+                </Item1>
+              </Rows>
+              <StylePriority Ref="40" UseBorderColor="false" UseBorders="false" UseTextAlignment="false" />
+            </Item1>
+          </Controls>
+          <StylePriority Ref="41" UseFont="false" />
+        </Item1>
+      </Bands>
+    </Item4>
+  </Bands>
+  <ObjectStorage>
+    <Item1 ObjectType="DevExpress.XtraReports.Serialization.ObjectStorageInfo, DevExpress.XtraReports.v14.1" Ref="0" Content="~Xtra#NULL" Type="System.Windows.Forms.BindingSource" />
+  </ObjectStorage>
+</XtraReportsLayoutSerializer>

@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "StatementLineDelete";
+    Layout = "~/Views/Shared/_DialogLayout.cshtml";
+}
+<link href="@ServerHelper.StaticServer/include/easyui/icon.css?@ServerHelper.JSVersion" rel="stylesheet" />
+@using JieNor.Megi.Common.Utility;
+<style type="text/css">
+    .mg-bank-dialog-content {
+        background: none repeat-y scroll 0 0 #fafbfb;
+        border-bottom: 1px solid #ddd;
+        padding:20px 15px 15px;
+    }
+</style>
+<div id="divDeleteLines">
+    <div class="mg-bank-dialog-content">
+        <p>@HtmlLang.Write(LangModule.Bank, "BankLineDelMsgOne", "Are you sure you want to delete this statement line? This will change your statement balance in Megi.")</p>
+        <p><strong>@HtmlLang.Write(LangModule.Bank, "BankLineDelMsgTwo", "Generally this is only required to remove duplicate statement lines.")</strong></p>
+        <p>@HtmlLang.Write(LangModule.Bank, "BankLineDelMsgThree", "If this is a personal expense, deleting the statement line is usually not advised")</p>
+    </div>
+    <input type="hidden" value="@ViewData["selectIds"]" id="selectIds"/>
+    <div class="m-form-action">
+        <a href="/Bank/BankStatementView/" class="mg-btn mg-btn-gray mg-btn-cancel" id="aCancel">@HtmlLang.Write(LangKey.Cancel)</a>
+        <a href="/Bank/BankStatementView/" class="mg-btn mg-btn-green mg-btn-save" id="aSave" style="width: 60px">@HtmlLang.Write(LangKey.Yes)</a>
+        <div class="clear" />
+    </div>
+</div>
+<script src="@ServerHelper.ScriptServer/Scripts/BD/BDBank/StatementLineDelete.js?@ServerHelper.JSVersion"></script>

@@ -1,0 +1,11 @@
+﻿<ul class="done" style="padding-left:2px;">
+    <li class="item">@HtmlLang.Write(LangModule.BD, "BasicSetupDone", "Basic setup：done!")</li>
+    <li class="item">@HtmlLang.Write(LangModule.BD, "AllInputInfoSaved", "All the information you input：auto saved!")</li>
+    <li>
+        <p class="item" style="font-size:15px;">@HtmlLang.Write(LangModule.Org, "InputCouponTip", "If you have a MEGI coupon, please input the coupon code below")</p>
+        <div style="padding-left:13px;">
+            <div class="coupon"><span class="coupon-lbl" style="font-size:15px;">@HtmlLang.Write(LangModule.Org, "CouponCode", "Coupon Code"):</span><input id="txtCouponCode" /><a id="aApplyCoupon" class="easyui-linkbutton easyui-linkbutton-gray">@HtmlLang.Write(LangModule.Org, "Apply", "Apply")</a></div>
+            <div class="coupon-msg"></div>
+        </div>
+    </li>
+</ul>

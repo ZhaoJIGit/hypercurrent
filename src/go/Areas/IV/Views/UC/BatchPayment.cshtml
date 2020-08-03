@@ -1,0 +1,63 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    var obj = ViewData["selectObj"].ToString();
+}
+@using JieNor.Megi.Common.Utility;
+<div class="m-imain">
+    <div class="m-imain-content">
+        <div class="m-form-vtcl">
+            <div class="m-form-section section-type4" style="height:35px">
+                <div class="m-form-item">
+                    <ul>
+                        <li class="m-bold">@HtmlLang.Write(LangModule.IV, "BankAccount", "Bank Account")</li>
+                        <li>
+                            <select class="easyui-combobox" id="payBank" data-options="required:true,editable:false,@HtmlBDAccount.BankDataOptions(Convert.ToString(ViewData["MCurrencyID"]))" style="width: 150px; "></select>
+                        </li>
+                    </ul>
+                </div>
+                <div class="m-form-item">
+                    <ul>
+                        <li class="m-bold">@((obj == "Expense" || obj == "PayRun" || obj == "Invoice_Purchases") ? @HtmlLang.Write(LangModule.IV, "PaymentDate", "Payment Date") : @HtmlLang.Write(LangModule.IV, "DateRecevied", "Date Recevied"))</li>
+                        <li>
+                            <input class="gl-easyui-datebox user-active" data-options="required:true,validType:'minDate [\'@ViewData["openDate"]\']'" 
+                                   id="payDate" type="text" value="@HtmlLang.DateNowString()"/> 
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div style="margin-bottom:30px">
+                <div id="batchGrid" fitcolumns="true"></div>
+            </div>
+            <div class="form-invoice-total" style="width:200px">
+                <div class="total">
+                    <span class="mg-total-text" style="width:35%">
+                        @HtmlLang.Write(LangModule.IV, "Total", "总计")
+                    </span>
+                    <span id="spTotal" class="mg-total-value" style="width:55%">0.00</span>
+                    <span id="spTotalCurrency" class="mg-total-currency"></span>
+                </div>
+                <div id="divCredit"></div>
+            </div>
+        </div>
+    </div>
+</div>
+@HtmlLang.WriteScript(LangModule.Common)
+@HtmlLang.WriteScript(LangModule.IV)
+@HtmlLang.WriteScript(LangModule.PA)
+@HtmlLang.WriteScript(LangModule.BD)
+<div class="m-toolbar-footer">
+    <div class="left">
+        <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray" id="aCancel">@HtmlLang.Write(LangKey.Cancel)</a>
+    </div>
+    <div class="right">
+        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aSave">@HtmlLang.Write(LangKey.Save)</a>
+    </div>
+    <br class="clear" />
+</div>
+<input type="hidden" value="@ViewData["selectIds"]" id="hidIds" />
+<input type="hidden" value="@ViewData["selectObj"]" id="hidObj" />
+<input type="hidden" value="@ViewData["isMergePay"]" id="hidIsMergePay" />
+<input type="hidden" value="@ViewData["rundId"]" id="hidrunId" />
+
+<script src="@ServerHelper.ScriptServer/Scripts/IV/UC/BatchPayment.js?@ServerHelper.JSVersion"></script>
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)

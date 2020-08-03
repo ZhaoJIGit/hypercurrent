@@ -1,0 +1,65 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    JieNor.Megi.DataModel.RPT.GL.RPTFilterSchemeModel filterScheme = ViewData["FilterScheme"] as JieNor.Megi.DataModel.RPT.GL.RPTFilterSchemeModel;
+
+    string josnData = filterScheme != null ? filterScheme.MContent : "";
+}
+@using JieNor.Megi.Common.Utility
+
+<div class="m-form m-imain" style="padding-left:20px">
+    <div class="m-form-input">
+        <div class="m-form-setion">@HtmlLang.Write(LangModule.Report, "FilterSchemeName", "方案名称")</div>
+        <div class="m-form-input">
+            <input id="tbxFilterSchemeName" class="easyui-validatebox mg-data mg-width200 m-lang" data-option="required:true" name="MName" />
+        </div>
+        
+    </div>
+
+    <div id="tt" class="easyui-tabs" style="width:500px;height:250px;padding:10px 0px">
+        <div title="@HtmlLang.Write(LangModule.Report, "ProjectPortfolio", "组合项目")" style="overflow-x:hidden">
+            <div style="float: left; border: 1px solid #c1c1c1;width:80%;height:96%;overflow-y:hidden">
+                <ul id="ulCheckTypeList" style="padding-left:5px;height:100%;overflow-y:scroll"></ul>
+            </div>
+            <div style="float:right">
+                <span>
+                    <a href="javascript:void(0)" id="btnUp" class="l-btn easyui-linkbutton-gray" style="width:48px">@HtmlLang.Write(LangModule.Report, "Up", "上")</a>
+                </span>
+                <br />
+                <span>
+                    <a href="javascript:void(0)" id="btnDown" class="l-btn easyui-linkbutton-gray" style="width:48px">@HtmlLang.Write(LangModule.Report, "Down", "下")</a>
+                </span>
+
+            </div>
+        </div>
+        <div title="@HtmlLang.Write(LangModule.Report, "Condition", "条件")" style="overflow:auto;">
+            <table id="gridCondtion" class="easyui-datagrid" style="height:200px"></table>
+        </div>
+
+    </div>
+
+
+</div>
+<div class="m-toolbar-footer">
+    @if (HtmlSECMenu.HavePermission(BizObject.General_Reports, PermissionItem.View))
+    {
+        <div class="left">
+            <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-gray" id="btnCancel">@HtmlLang.Write(LangKey.Cancel)</a>
+        </div>
+        <div class="right">
+            <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="btnSave">@HtmlLang.Write(LangKey.Save)</a>
+        </div>
+    }
+</div>
+<input type="hidden" id="hideRptType" value="@ViewData["RptType"]" />
+<input type="hidden" id="hideItemId" value="@ViewData["MItemID"]" />
+<input type="hidden" id="hideJsonData" value="@josnData" />
+@HtmlLang.WriteScript(LangModule.Report)
+<script src="@ServerHelper.ScriptServer/scripts/Report/RptUC/GL/AccountDimensionFilter.js?@ServerHelper.JSVersion"></script>
+
+<script>
+    $(document).ready(function () {
+        AccountDimensionFilter.init();
+    });
+</script>
+
+

@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "ExpensesMerge";
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+
+    //批量付款时不允许修改金额
+    string disabledAttr = Convert.ToString(ViewData["expids"]).Split(',').Length > 1 ? " disabled=\"disabled\" " : " ";
+}
+@using JieNor.Megi.Common.Utility;
+<div class="m-imain m-payment">
+    <div class="m-imain-content">
+        <div class="m-form">
+            <div class="row">@*支付金额*@
+                <span class="lbl">@HtmlLang.Write(LangModule.IV, "AmountPaid", "Amount Paid")</span>
+                <span class="content"><input type="text" id="txtAmountPaid" @disabledAttr class="easyui-numberbox mg-validate" data-options="min:0,precision:2,required:true" value="@ViewData["MTotAmount"]" style="width:240px; height:28px;"/> </span>
+            </div>
+            <div class="row">@*支付日期*@
+                <span class="lbl">@HtmlLang.Write(LangModule.IV, "DatePaid", "Date Paid")</span>
+                <span class="content"><input type="text" id="txtPaidDate" value="@ViewData["DefaultBizDate"]" class="gl-easyui-datebox" data-options="required:true" style="width:240px; height:28px;"/></span>
+            </div>
+            <div class="row">@*支付给谁*@
+                <span class="lbl">@HtmlLang.Write(LangModule.IV, "PaidFrom", "Paid From")</span>
+                <span class="content"><select id="selPaidTo" class="easyui-combobox" data-options="required:true,editable:false, @HtmlBDAccount.BankDataOptions(@ViewData["MCurrencyID"].ToString())" style="width: 240px; height: 28px;"></select></span>
+            </div>
+            <div class="row">@*备注*@
+                <span class="lbl">@HtmlLang.Write(LangKey.Reference)</span>
+                <span class="content"><input type="text" id="txtPaymentRef" class="easyui-validatebox textbox" data-options="required:true" style="width:238px;"></span>
+            </div>
+        </div>
+    </div>
+</div>
+@*底部工具栏*@
+<div class="m-toolbar-footer">
+    <div class="left">
+        <a href="javascript:void(0);" class="easyui-linkbutton easyui-linkbutton-gray" id="aCancel">@HtmlLang.Write(LangKey.Cancel)</a>@*取消*@
+    </div>
+    <div class="right">
+        @if (HtmlSECMenu.HavePermission(BizObject.BankAccount, PermissionItem.Change))
+        {
+        <a href="javascript:void(0);" class="easyui-linkbutton easyui-linkbutton-yellow" id="aSave">@HtmlLang.Write(LangKey.Save)</a>@*支付*@
+        }
+    </div>
+</div>
+@*隐藏域字段*@
+<input type="hidden" value="@ViewData["payfrom"]" id="payfrom" />@*从哪个页面跳转过来的*@
+<input type="hidden" value="@ViewData["expids"]" id="expids" />@*费用报销ID串*@
+<input type="hidden" value="@ViewData["MCurrencyID"]" id="currencyid" />@*货币ID*@
+<input type="hidden" value="@ViewData["MContactID"]" id="contactid" />@*联系人ID*@
+<input type="hidden" value="@ViewData["MDepartment"]" id="hidMDepartment" />@*部门ID*@
+<input type="hidden" value="@ViewData["MTotAmount"]" id="totamount" />@*总金额*@
+@HtmlLang.WriteScript(LangModule.IV) 
+@HtmlLang.WriteScript(LangModule.Bank) 
+@*所用到的 js 文件*@><script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/IV/Expense/ExpensesMerge.js?@ServerHelper.JSVersion"></script>
+
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)

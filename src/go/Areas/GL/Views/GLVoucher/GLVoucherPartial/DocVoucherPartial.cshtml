@@ -1,0 +1,82 @@
+﻿
+@using JieNor.Megi.Identity.HtmlHelper
+@using JieNor.Megi.EntityModel.MultiLanguage
+@using JieNor.Megi.Identity.Go.HtmlHelper
+@using JieNor.Megi.Core.Const
+@using JieNor.Megi.Common.Utility
+@using JieNor.Megi.Common.Context
+@using JieNor.Megi.EntityModel.Enum
+@{
+    var dashBoardInfoModel = ViewData["DashboardInfo"] as JieNor.Megi.DataModel.GL.GLDashboardInfoModel;
+    var faBegun = dashBoardInfoModel.ctx.MFABeginDate.Year > 2000;
+    var isCanEdit = dashBoardInfoModel.CanEdit;
+}
+
+<!--放置所有的凭证-->
+<div class="gl-dv-div">
+    <div class="" id="tabDocVoucherTab">
+        <!--销售-->
+        <div class="title" title="@HtmlLang.Write(LangModule.IV, "Sales", "Sales")"></div>
+        <!--采购-->
+        <div class="title" title="@HtmlLang.Write(LangModule.IV, "Purchase", "Purchase")"></div>
+        <!--费用报销-->
+        <div class="title" title="@HtmlLang.Write(LangModule.IV, "Expense", "Expense")"></div>
+        <!--收款-->
+        <div class="title" title="@HtmlLang.Write(LangModule.IV, "Receive", "Receipt")"></div>
+        <!--付款-->
+        <div class="title" title="@HtmlLang.Write(LangModule.IV, "Payment", "Payment")"></div>
+        <!--转账-->
+        <div class="title" title="@HtmlLang.Write(LangModule.IV, "Transfer", "Transfer")"></div>
+
+        @if (faBegun)
+        {
+        <!--支付工资-->
+            <div class="title" title="@HtmlLang.Write(LangModule.FA, "FixAssets", "固定资产")"></div>
+        }
+    </div>
+
+    <!--各种分布视图-->
+    <div class="dv-partial">
+        <!--Sale-->
+        <div class="dv-partial-0" doctype="0" style="display:none;">
+            @Html.Partial("GLVoucherPartial/GLDocVoucherPartial/DVDemoPartial")
+            @Html.Partial("GLVoucherPartial/GLDocVoucherPartial/DVSalePartial")
+        </div>
+        <!--Purchase-->
+        <div class="dv-partial-1" doctype="1" style="display:none;">
+            @Html.Partial("GLVoucherPartial/GLDocVoucherPartial/DVDemoPartial")
+            @Html.Partial("GLVoucherPartial/GLDocVoucherPartial/DVPurchasePartial")
+        </div>
+        <!--Expense-->
+        <div class="dv-partial-2" doctype="2" style="display:none;">
+            @Html.Partial("GLVoucherPartial/GLDocVoucherPartial/DVDemoPartial")
+            @Html.Partial("GLVoucherPartial/GLDocVoucherPartial/DVExpensePartial")
+        </div>
+        <!--Receive-->
+        <div class="dv-partial-3" doctype="3" style="display:none;">
+            @Html.Partial("GLVoucherPartial/GLDocVoucherPartial/DVDemoPartial")
+            @Html.Partial("GLVoucherPartial/GLDocVoucherPartial/DVReceivePartial")
+        </div>
+        <!--Payment-->
+        <div class="dv-partial-4" doctype="4" style="display:none;">
+            @Html.Partial("GLVoucherPartial/GLDocVoucherPartial/DVDemoPartial")
+            @Html.Partial("GLVoucherPartial/GLDocVoucherPartial/DVPaymentPartial")
+        </div>
+        <!--Transfer-->
+        <div class="dv-partial-5" doctype="5" style="display:none;">
+            @Html.Partial("GLVoucherPartial/GLDocVoucherPartial/DVDemoPartial")
+            @Html.Partial("GLVoucherPartial/GLDocVoucherPartial/DVTransferPartial")
+        </div>
+        @if (faBegun)
+        {
+        <!--FixAssets-->
+            <div class="dv-partial-6" doctype="6" style="display:none;">
+                @Html.Partial("GLVoucherPartial/GLDocVoucherPartial/DVFixAssetsDemoPartial")
+                @Html.Partial("GLVoucherPartial/GLDocVoucherPartial/DVFixAssetsPartial")
+            </div>
+        }
+    </div>
+</div>
+
+<script src="~/Scripts/GL/GLDocVoucher.js?@ServerHelper.JSVersion"></script>
+

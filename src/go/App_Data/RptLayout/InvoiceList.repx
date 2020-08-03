@@ -1,0 +1,432 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XtraReportsLayoutSerializer SerializerVersion="15.1.5.0" Ref="1" Name="InvoiceList" ControlType="DevExpress.XtraReports.UI.XtraReport, DevExpress.XtraReports.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" DataSource="#Ref-0" Font="微软雅黑, 9.75pt" Version="15.1" PageWidth="850" PageHeight="1100" Margins="0, 0, 100, 100">
+  <Bands>
+    <Item1 Ref="2" ControlType="DetailBand" Name="Detail" TextAlignment="TopLeft" Font="微软雅黑, 9.75pt" Padding="0,0,0,0,100" HeightF="25">
+      <Controls>
+        <Item1 Ref="3" Name="xrTable1" ControlType="XRTable" SizeF="850,25" LocationFloat="0, 0" Font="微软雅黑, 9.75pt" BorderColor="255,218,220,221" Borders="All" TextAlignment="MiddleLeft">
+          <Rows>
+            <Item1 Ref="4" ControlType="XRTableRow" Name="xrTableRow1" Weight="1">
+              <Cells>
+                <Item1 Ref="5" Name="xrTableCell1" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.25">
+                  <DataBindings>
+                    <Item1 Ref="6" PropertyName="Text" DataMember="ToTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="7" UseTextAlignment="false" />
+                </Item1>
+                <Item2 Ref="8" Name="xrTableCell7" ControlType="XRTableCell" Weight="0.33333339691162145">
+                  <DataBindings>
+                    <Item1 Ref="9" PropertyName="Text" DataMember="NumberTitle" />
+                  </DataBindings>
+                </Item2>
+                <Item3 Ref="10" Name="xrTableCell4" ControlType="XRTableCell" Weight="0.3541668319702147">
+                  <DataBindings>
+                    <Item1 Ref="11" PropertyName="Text" DataMember="RefTitle" />
+                  </DataBindings>
+                </Item3>
+                <Item4 Ref="12" Name="xrTableCell8" ControlType="XRTableCell" TextAlignment="MiddleCenter" Multiline="true" Weight="0.36458328247070337">
+                  <DataBindings>
+                    <Item1 Ref="13" PropertyName="Text" DataMember="DateTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="14" UseTextAlignment="false" />
+                </Item4>
+                <Item5 Ref="15" Name="xrTableCell15" ControlType="XRTableCell" TextAlignment="MiddleCenter" Weight="0.34375">
+                  <DataBindings>
+                    <Item1 Ref="16" PropertyName="Text" DataMember="DueDateTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="17" UseTextAlignment="false" />
+                </Item5>
+                <Item6 Ref="18" Name="xrTableCell5" ControlType="XRTableCell" TextAlignment="MiddleCenter" Weight="0.3541667175292969">
+                  <DataBindings>
+                    <Item1 Ref="19" PropertyName="Text" DataMember="ExpectedDateTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="20" UseTextAlignment="false" />
+                </Item6>
+                <Item7 Ref="21" Name="xrTableCell14" ControlType="XRTableCell" TextAlignment="MiddleRight" Weight="0.31249984741210918">
+                  <DataBindings>
+                    <Item1 Ref="22" PropertyName="Text" DataMember="TotalTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="23" UseTextAlignment="false" />
+                </Item7>
+                <Item8 Ref="24" Name="xrTableCell57" ControlType="XRTableCell" TextAlignment="MiddleRight" Weight="0.31249984741210918">
+                  <DataBindings>
+                    <Item1 Ref="25" PropertyName="Text" DataMember="OriginalCurrencyTotalTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="26" UseTextAlignment="false" />
+                </Item8>
+                <Item9 Ref="27" Name="xrTableCell9" ControlType="XRTableCell" TextAlignment="MiddleRight" Weight="0.31249999999999933">
+                  <DataBindings>
+                    <Item1 Ref="28" PropertyName="Text" DataMember="TaxTotalTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="29" UseTextAlignment="false" />
+                </Item9>
+                <Item10 Ref="30" Name="xrTableCell59" ControlType="XRTableCell" TextAlignment="MiddleRight" Weight="0.31249999999999933">
+                  <DataBindings>
+                    <Item1 Ref="31" PropertyName="Text" DataMember="OriginalCurrencyTaxTotalTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="32" UseTextAlignment="false" />
+                </Item10>
+                <Item11 Ref="33" Name="xrTableCell13" ControlType="XRTableCell" TextAlignment="MiddleRight" Weight="0.2604165649414063">
+                  <DataBindings>
+                    <Item1 Ref="34" PropertyName="Text" DataMember="PaidTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="35" UseTextAlignment="false" />
+                </Item11>
+                <Item12 Ref="36" Name="xrTableCell61" ControlType="XRTableCell" TextAlignment="MiddleRight" Weight="0.2604165649414063">
+                  <DataBindings>
+                    <Item1 Ref="37" PropertyName="Text" DataMember="OriginalCurrencyPaidTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="38" UseTextAlignment="false" />
+                </Item12>
+                <Item13 Ref="39" Name="xrTableCell16" ControlType="XRTableCell" TextAlignment="MiddleRight" Weight="0.29359313429905748">
+                  <DataBindings>
+                    <Item1 Ref="40" PropertyName="Text" DataMember="DueTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="41" UseTextAlignment="false" />
+                </Item13>
+                <Item14 Ref="42" Name="xrTableCell63" ControlType="XRTableCell" TextAlignment="MiddleRight" Weight="0.29359313429905748">
+                  <DataBindings>
+                    <Item1 Ref="43" PropertyName="Text" DataMember="OriginalCurrencyDueTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="44" UseTextAlignment="false" />
+                </Item14>
+                <Item15 Ref="45" Name="xrTableCell53" ControlType="XRTableCell" Weight="0.23153382983714485">
+                  <DataBindings>
+                    <Item1 Ref="46" PropertyName="Text" DataMember="TaxTypeTitle" />
+                  </DataBindings>
+                </Item15>
+                <Item16 Ref="47" Name="xrTableCell55" ControlType="XRTableCell" Weight="0.290890453220924">
+                  <DataBindings>
+                    <Item1 Ref="48" PropertyName="Text" DataMember="CurrencyTitle" />
+                  </DataBindings>
+                </Item16>
+                <Item17 Ref="49" Name="xrTableCell69" ControlType="XRTableCell" Weight="0.290890453220924">
+                  <DataBindings>
+                    <Item1 Ref="50" PropertyName="Text" DataMember="ExchangeRateTitle" />
+                  </DataBindings>
+                </Item17>
+                <Item18 Ref="51" Name="xrTableCell18" ControlType="XRTableCell" Weight="0.33751580369417117">
+                  <DataBindings>
+                    <Item1 Ref="52" PropertyName="Text" DataMember="TypeTitle" />
+                  </DataBindings>
+                </Item18>
+                <Item19 Ref="53" Name="xrTableCell19" ControlType="XRTableCell" Weight="0.3834262684151668">
+                  <DataBindings>
+                    <Item1 Ref="54" PropertyName="Text" DataMember="StatusTitle" />
+                  </DataBindings>
+                </Item19>
+                <Item20 Ref="55" Name="xrTableCell20" ControlType="XRTableCell" Weight="0.3834262684151668">
+                  <DataBindings>
+                    <Item1 Ref="56" PropertyName="Text" DataMember="IsSentTitle" />
+                  </DataBindings>
+                </Item20>
+                <Item21 Ref="57" Name="xrTableCell17" ControlType="XRTableCell" Weight="0.29116483808469451">
+                  <DataBindings>
+                    <Item1 Ref="58" PropertyName="Text" DataMember="ItemCodeTitle" />
+                  </DataBindings>
+                </Item21>
+                <Item22 Ref="59" Name="xrTableCell6" ControlType="XRTableCell" Weight="0.37201535794367696">
+                  <DataBindings>
+                    <Item1 Ref="60" PropertyName="Text" DataMember="DescriptionTitle" />
+                  </DataBindings>
+                </Item22>
+                <Item23 Ref="61" Name="xrTableCell3" ControlType="XRTableCell" TextAlignment="MiddleRight" Weight="0.336195763592079">
+                  <DataBindings>
+                    <Item1 Ref="62" PropertyName="Text" DataMember="QuantityTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="63" UseTextAlignment="false" />
+                </Item23>
+                <Item24 Ref="64" Name="xrTableCell10" ControlType="XRTableCell" TextAlignment="MiddleRight" Weight="0.31023435830282675">
+                  <DataBindings>
+                    <Item1 Ref="65" PropertyName="Text" DataMember="UnitPriceTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="66" UseTextAlignment="false" />
+                </Item24>
+                <Item25 Ref="67" Name="xrTableCell2" ControlType="XRTableCell" TextAlignment="MiddleRight" Weight="0.38155072577241561">
+                  <DataBindings>
+                    <Item1 Ref="68" PropertyName="Text" DataMember="DiscountTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="69" UseTextAlignment="false" />
+                </Item25>
+                <Item26 Ref="70" Name="xrTableCell12" ControlType="XRTableCell" Weight="0.35634997452690159">
+                  <DataBindings>
+                    <Item1 Ref="71" PropertyName="Text" DataMember="TaxRateTitle" />
+                  </DataBindings>
+                </Item26>
+                <Item27 Ref="72" Name="xrTableCell44" ControlType="XRTableCell" Weight="0.33635197842409709">
+                  <DataBindings>
+                    <Item1 Ref="73" PropertyName="Text" DataMember="TrackItem1Name" />
+                  </DataBindings>
+                </Item27>
+                <Item28 Ref="74" Name="xrTableCell46" ControlType="XRTableCell" Weight="0.32505345606246006">
+                  <DataBindings>
+                    <Item1 Ref="75" PropertyName="Text" DataMember="TrackItem2Name" />
+                  </DataBindings>
+                </Item28>
+                <Item29 Ref="76" Name="xrTableCell43" ControlType="XRTableCell" Weight="0.34200090494921181">
+                  <DataBindings>
+                    <Item1 Ref="77" PropertyName="Text" DataMember="TrackItem3Name" />
+                  </DataBindings>
+                </Item29>
+                <Item30 Ref="78" Name="xrTableCell47" ControlType="XRTableCell" Weight="0.40979006525879752">
+                  <DataBindings>
+                    <Item1 Ref="79" PropertyName="Text" DataMember="TrackItem4Name" />
+                  </DataBindings>
+                </Item30>
+                <Item31 Ref="80" Name="xrTableCell45" ControlType="XRTableCell" Weight="0.45803534689409131">
+                  <DataBindings>
+                    <Item1 Ref="81" PropertyName="Text" DataMember="TrackItem5Name" />
+                  </DataBindings>
+                </Item31>
+                <Item32 Ref="82" Name="xrTableCell41" ControlType="XRTableCell" TextAlignment="MiddleRight" Weight="0.24743384373233485">
+                  <DataBindings>
+                    <Item1 Ref="83" PropertyName="Text" DataMember="AmountTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="84" UseTextAlignment="false" />
+                </Item32>
+                <Item33 Ref="85" Name="xrTableCell67" ControlType="XRTableCell" TextAlignment="MiddleRight" Weight="0.24743384373233485">
+                  <DataBindings>
+                    <Item1 Ref="86" PropertyName="Text" DataMember="OriginalCurrencyAmountTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="87" UseTextAlignment="false" />
+                </Item33>
+                <Item34 Ref="88" Name="xrTableCell11" ControlType="XRTableCell" TextAlignment="MiddleRight" Weight="0.24743384373233485">
+                  <DataBindings>
+                    <Item1 Ref="89" PropertyName="Text" DataMember="TaxAmountTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="90" UseTextAlignment="false" />
+                </Item34>
+                <Item35 Ref="91" Name="xrTableCell65" ControlType="XRTableCell" TextAlignment="MiddleRight" Weight="0.24743384373233485">
+                  <DataBindings>
+                    <Item1 Ref="92" PropertyName="Text" DataMember="OriginalCurrencyTaxAmountTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="93" UseTextAlignment="false" />
+                </Item35>
+              </Cells>
+            </Item1>
+          </Rows>
+          <StylePriority Ref="94" UseFont="false" UseBorderColor="false" UseBorders="false" UseTextAlignment="false" />
+        </Item1>
+      </Controls>
+      <StylePriority Ref="95" UseFont="false" />
+    </Item1>
+    <Item2 Ref="96" Name="TopMargin" ControlType="TopMarginBand" TextAlignment="TopLeft" Font="微软雅黑, 9.75pt" Padding="0,0,0,0,100" HeightF="100">
+      <StylePriority Ref="97" UseFont="false" />
+    </Item2>
+    <Item3 Ref="98" Name="BottomMargin" ControlType="BottomMarginBand" TextAlignment="TopLeft" Font="微软雅黑, 9.75pt" Padding="0,0,0,0,100" HeightF="100">
+      <StylePriority Ref="99" UseFont="false" />
+    </Item3>
+    <Item4 Ref="100" ControlType="DetailReportBand" Name="DetailReport" Font="微软雅黑, 9.75pt" DataMember="InvoiceListRows" Level="0" DataSource="#Ref-0">
+      <Bands>
+        <Item1 Ref="101" ControlType="DetailBand" Name="Detail1" HeightF="25">
+          <Controls>
+            <Item1 Ref="102" Name="xrTable2" ControlType="XRTable" SizeF="850,25" LocationFloat="6.357829E-05, 0" Font="微软雅黑, 9.75pt" BorderColor="255,218,220,221" Borders="All" TextAlignment="MiddleLeft">
+              <Rows>
+                <Item1 Ref="103" ControlType="XRTableRow" Name="xrTableRow2" Weight="1">
+                  <Cells>
+                    <Item1 Ref="104" Name="xrTableCell21" ControlType="XRTableCell" Weight="0.25">
+                      <DataBindings>
+                        <Item1 Ref="105" PropertyName="Text" DataMember="InvoiceListRows.ContactName" />
+                      </DataBindings>
+                    </Item1>
+                    <Item2 Ref="106" Name="xrTableCell22" ControlType="XRTableCell" Weight="0.33333339691162145">
+                      <DataBindings>
+                        <Item1 Ref="107" PropertyName="Text" DataMember="InvoiceListRows.MNumber" />
+                      </DataBindings>
+                    </Item2>
+                    <Item3 Ref="108" Name="xrTableCell23" ControlType="XRTableCell" Weight="0.3541668319702147">
+                      <DataBindings>
+                        <Item1 Ref="109" PropertyName="Text" DataMember="InvoiceListRows.MReference" />
+                      </DataBindings>
+                    </Item3>
+                    <Item4 Ref="110" Name="xrTableCell24" ControlType="XRTableCell" TextAlignment="MiddleCenter" Multiline="true" Weight="0.36458328247070337">
+                      <DataBindings>
+                        <Item1 Ref="111" PropertyName="Text" DataMember="InvoiceListRows.MBizDate" />
+                      </DataBindings>
+                      <StylePriority Ref="112" UseTextAlignment="false" />
+                    </Item4>
+                    <Item5 Ref="113" Name="xrTableCell25" ControlType="XRTableCell" TextAlignment="MiddleCenter" Weight="0.34375">
+                      <DataBindings>
+                        <Item1 Ref="114" PropertyName="Text" DataMember="InvoiceListRows.MDueDate" />
+                      </DataBindings>
+                      <StylePriority Ref="115" UseTextAlignment="false" />
+                    </Item5>
+                    <Item6 Ref="116" Name="xrTableCell26" ControlType="XRTableCell" TextAlignment="MiddleCenter" Weight="0.3541667175292969">
+                      <DataBindings>
+                        <Item1 Ref="117" PropertyName="Text" DataMember="InvoiceListRows.MExpectedDate" />
+                      </DataBindings>
+                      <StylePriority Ref="118" UseTextAlignment="false" />
+                    </Item6>
+                    <Item7 Ref="119" Name="xrTableCell27" ControlType="XRTableCell" TextAlignment="MiddleRight" Weight="0.31249984741210918">
+                      <DataBindings>
+                        <Item1 Ref="120" FormatString="{0:n}" PropertyName="Text" DataMember="InvoiceListRows.Total" />
+                      </DataBindings>
+                      <StylePriority Ref="121" UseTextAlignment="false" />
+                    </Item7>
+                    <Item8 Ref="122" Name="xrTableCell58" ControlType="XRTableCell" TextAlignment="MiddleRight" Weight="0.31249984741210918">
+                      <DataBindings>
+                        <Item1 Ref="123" FormatString="{0:n}" PropertyName="Text" DataMember="InvoiceListRows.OriginalCurrencyTotal" />
+                      </DataBindings>
+                      <StylePriority Ref="124" UseTextAlignment="false" />
+                    </Item8>
+                    <Item9 Ref="125" Name="xrTableCell28" ControlType="XRTableCell" TextAlignment="MiddleRight" Weight="0.31249999999999933">
+                      <DataBindings>
+                        <Item1 Ref="126" FormatString="{0:n}" PropertyName="Text" DataMember="InvoiceListRows.TaxTotal" />
+                      </DataBindings>
+                      <StylePriority Ref="127" UseTextAlignment="false" />
+                    </Item9>
+                    <Item10 Ref="128" Name="xrTableCell60" ControlType="XRTableCell" TextAlignment="MiddleRight" Weight="0.31249999999999933">
+                      <DataBindings>
+                        <Item1 Ref="129" FormatString="{0:n}" PropertyName="Text" DataMember="InvoiceListRows.OriginalCurrencyTaxTotal" />
+                      </DataBindings>
+                      <StylePriority Ref="130" UseTextAlignment="false" />
+                    </Item10>
+                    <Item11 Ref="131" Name="xrTableCell29" ControlType="XRTableCell" TextAlignment="MiddleRight" Weight="0.2604165649414063">
+                      <DataBindings>
+                        <Item1 Ref="132" FormatString="{0:n}" PropertyName="Text" DataMember="InvoiceListRows.Paid" />
+                      </DataBindings>
+                      <StylePriority Ref="133" UseTextAlignment="false" />
+                    </Item11>
+                    <Item12 Ref="134" Name="xrTableCell62" ControlType="XRTableCell" TextAlignment="MiddleRight" Weight="0.2604165649414063">
+                      <DataBindings>
+                        <Item1 Ref="135" FormatString="{0:n}" PropertyName="Text" DataMember="InvoiceListRows.OriginalCurrencyPaid" />
+                      </DataBindings>
+                      <StylePriority Ref="136" UseTextAlignment="false" />
+                    </Item12>
+                    <Item13 Ref="137" Name="xrTableCell30" ControlType="XRTableCell" TextAlignment="MiddleRight" Weight="0.29359309309739884">
+                      <DataBindings>
+                        <Item1 Ref="138" FormatString="{0:n}" PropertyName="Text" DataMember="InvoiceListRows.Due" />
+                      </DataBindings>
+                      <StylePriority Ref="139" UseTextAlignment="false" />
+                    </Item13>
+                    <Item14 Ref="140" Name="xrTableCell64" ControlType="XRTableCell" TextAlignment="MiddleRight" Weight="0.29359309309739884">
+                      <DataBindings>
+                        <Item1 Ref="141" FormatString="{0:n}" PropertyName="Text" DataMember="InvoiceListRows.OriginalCurrencyDue" />
+                      </DataBindings>
+                      <StylePriority Ref="142" UseTextAlignment="false" />
+                    </Item14>
+                    <Item15 Ref="143" Name="xrTableCell54" ControlType="XRTableCell" Weight="0.23153364456585893">
+                      <DataBindings>
+                        <Item1 Ref="144" PropertyName="Text" DataMember="InvoiceListRows.TaxType" />
+                      </DataBindings>
+                    </Item15>
+                    <Item16 Ref="145" Name="xrTableCell56" ControlType="XRTableCell" Weight="0.29089046643344307">
+                      <DataBindings>
+                        <Item1 Ref="146" PropertyName="Text" DataMember="InvoiceListRows.Currency" />
+                      </DataBindings>
+                    </Item16>
+                    <Item17 Ref="147" Name="xrTableCell70" ControlType="XRTableCell" Weight="0.29089046643344307">
+                      <DataBindings>
+                        <Item1 Ref="148" PropertyName="Text" DataMember="InvoiceListRows.MExchangeRate" />
+                      </DataBindings>
+                    </Item17>
+                    <Item18 Ref="149" Name="xrTableCell38" ControlType="XRTableCell" Weight="0.33751616663745765">
+                      <DataBindings>
+                        <Item1 Ref="150" PropertyName="Text" DataMember="InvoiceListRows.Type" />
+                      </DataBindings>
+                    </Item18>
+                    <Item19 Ref="151" Name="xrTableCell39" ControlType="XRTableCell" Weight="0.38342606444304722">
+                      <DataBindings>
+                        <Item1 Ref="152" PropertyName="Text" DataMember="InvoiceListRows.Status" />
+                      </DataBindings>
+                    </Item19>
+                    <Item20 Ref="153" Name="xrTableCell40" ControlType="XRTableCell" Weight="0.38342606444304722">
+                      <DataBindings>
+                        <Item1 Ref="154" PropertyName="Text" DataMember="InvoiceListRows.MIsSent" />
+                      </DataBindings>
+                    </Item20>
+                    <Item21 Ref="155" Name="xrTableCell31" ControlType="XRTableCell" Weight="0.29116489269751566">
+                      <DataBindings>
+                        <Item1 Ref="156" PropertyName="Text" DataMember="InvoiceListRows.ItemCode" />
+                      </DataBindings>
+                    </Item21>
+                    <Item22 Ref="157" Name="xrTableCell32" ControlType="XRTableCell" Weight="0.37201552940661714">
+                      <DataBindings>
+                        <Item1 Ref="158" PropertyName="Text" DataMember="InvoiceListRows.MDesc" />
+                      </DataBindings>
+                    </Item22>
+                    <Item23 Ref="159" Name="xrTableCell33" ControlType="XRTableCell" TextAlignment="MiddleRight" Weight="0.33619578559615171">
+                      <DataBindings>
+                        <Item1 Ref="160" PropertyName="Text" DataMember="InvoiceListRows.MQty" />
+                      </DataBindings>
+                      <StylePriority Ref="161" UseTextAlignment="false" />
+                    </Item23>
+                    <Item24 Ref="162" Name="xrTableCell34" ControlType="XRTableCell" TextAlignment="MiddleRight" Weight="0.31023443062315087">
+                      <DataBindings>
+                        <Item1 Ref="163" PropertyName="Text" DataMember="InvoiceListRows.MPrice" />
+                      </DataBindings>
+                      <StylePriority Ref="164" UseTextAlignment="false" />
+                    </Item24>
+                    <Item25 Ref="165" Name="xrTableCell35" ControlType="XRTableCell" TextAlignment="MiddleRight" Weight="0.38155077161839623">
+                      <DataBindings>
+                        <Item1 Ref="166" PropertyName="Text" DataMember="InvoiceListRows.MDiscount" />
+                      </DataBindings>
+                      <StylePriority Ref="167" UseTextAlignment="false" />
+                    </Item25>
+                    <Item26 Ref="168" Name="xrTableCell36" ControlType="XRTableCell" Weight="0.35635134899572019">
+                      <DataBindings>
+                        <Item1 Ref="169" PropertyName="Text" DataMember="InvoiceListRows.TaxRate" />
+                      </DataBindings>
+                    </Item26>
+                    <Item27 Ref="170" Name="xrTableCell48" ControlType="XRTableCell" Weight="0.33635204590168671">
+                      <DataBindings>
+                        <Item1 Ref="171" PropertyName="Text" DataMember="InvoiceListRows.MTrackItem1" />
+                      </DataBindings>
+                    </Item27>
+                    <Item28 Ref="172" Name="xrTableCell50" ControlType="XRTableCell" Weight="0.32505286004027645">
+                      <DataBindings>
+                        <Item1 Ref="173" PropertyName="Text" DataMember="InvoiceListRows.MTrackItem2" />
+                      </DataBindings>
+                    </Item28>
+                    <Item29 Ref="174" Name="xrTableCell49" ControlType="XRTableCell" Weight="0.34200097438888866">
+                      <DataBindings>
+                        <Item1 Ref="175" PropertyName="Text" DataMember="InvoiceListRows.MTrackItem3" />
+                      </DataBindings>
+                    </Item29>
+                    <Item30 Ref="176" Name="xrTableCell51" ControlType="XRTableCell" Weight="0.40979080458106976">
+                      <DataBindings>
+                        <Item1 Ref="177" PropertyName="Text" DataMember="InvoiceListRows.MTrackItem4" />
+                      </DataBindings>
+                    </Item30>
+                    <Item31 Ref="178" Name="xrTableCell52" ControlType="XRTableCell" Weight="0.45803477128629722">
+                      <DataBindings>
+                        <Item1 Ref="179" PropertyName="Text" DataMember="InvoiceListRows.MTrackItem5" />
+                      </DataBindings>
+                    </Item31>
+                    <Item32 Ref="180" Name="xrTableCell42" ControlType="XRTableCell" TextAlignment="MiddleRight" Weight="0.24743385817164565">
+                      <DataBindings>
+                        <Item1 Ref="181" FormatString="{0:n}" PropertyName="Text" DataMember="InvoiceListRows.MAmountExcludeTax" />
+                      </DataBindings>
+                      <StylePriority Ref="182" UseTextAlignment="false" />
+                    </Item32>
+                    <Item33 Ref="183" Name="xrTableCell68" ControlType="XRTableCell" TextAlignment="MiddleRight" Weight="0.24743385817164565">
+                      <DataBindings>
+                        <Item1 Ref="184" FormatString="{0:n}" PropertyName="Text" DataMember="InvoiceListRows.MAmountForExcludeTax" />
+                      </DataBindings>
+                      <StylePriority Ref="185" UseTextAlignment="false" />
+                    </Item33>
+                    <Item34 Ref="186" Name="xrTableCell37" ControlType="XRTableCell" TextAlignment="MiddleRight" Weight="0.24743385817164565">
+                      <DataBindings>
+                        <Item1 Ref="187" FormatString="{0:n}" PropertyName="Text" DataMember="InvoiceListRows.MTaxAmt" />
+                      </DataBindings>
+                      <StylePriority Ref="188" UseTextAlignment="false" />
+                    </Item34>
+                    <Item35 Ref="189" Name="xrTableCell66" ControlType="XRTableCell" TextAlignment="MiddleRight" Weight="0.24743385817164565">
+                      <DataBindings>
+                        <Item1 Ref="190" FormatString="{0:n}" PropertyName="Text" DataMember="InvoiceListRows.MTaxAmtFor" />
+                      </DataBindings>
+                      <StylePriority Ref="191" UseTextAlignment="false" />
+                    </Item35>
+                  </Cells>
+                </Item1>
+              </Rows>
+              <StylePriority Ref="192" UseFont="false" UseBorderColor="false" UseBorders="false" UseTextAlignment="false" />
+            </Item1>
+          </Controls>
+        </Item1>
+      </Bands>
+    </Item4>
+  </Bands>
+  <ObjectStorage>
+    <Item1 ObjectType="DevExpress.XtraReports.Serialization.ObjectStorageInfo, DevExpress.XtraReports.v15.1" Ref="0" Content="~Xtra#NULL" Type="System.Windows.Forms.BindingSource" />
+  </ObjectStorage>
+</XtraReportsLayoutSerializer>

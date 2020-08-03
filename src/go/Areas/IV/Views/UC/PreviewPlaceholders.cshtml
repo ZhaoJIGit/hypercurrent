@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "PreviewPlaceholders";
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+@using JieNor.Megi.Common.Utility;
+@*主体内容*@
+<div class="m-imain">
+    <div class="m-imain-content">
+        <div class="preview-placeholder-msg">
+            @HtmlLang.Write(LangModule.IV, "PreviewPlaceholderMeg", "Shows a preview of the fields that may contain placeholders. Example info is used for placeholders, this will differ depending on when invoices are created.")
+        </div>
+        <div class="preview-placeholder-list">
+        </div>
+    </div>
+</div>
+@*底部工具栏*@
+<div class="m-toolbar-footer">
+    <div class="left">
+        &nbsp;
+    </div>
+    <div class="right">
+        <a href="javascript:void(0);" onclick="Megi.closeDialog();" class="easyui-linkbutton easyui-linkbutton-gray">@HtmlLang.Write(LangModule.IV, "Close", "Close")</a>@*关闭*@
+    </div>
+</div>
+<input type="hidden" id="hidBillType" value="@ViewData["BillType"]" />
+@HtmlLang.WriteScript(LangModule.IV)
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/IV/UC/PreviewPlaceholders.js?@ServerHelper.JSVersion"></script>

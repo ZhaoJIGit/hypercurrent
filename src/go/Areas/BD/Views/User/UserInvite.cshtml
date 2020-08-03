@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "UserInvite";
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+@using JieNor.Megi.Common.Utility;
+<div id="DivUserInvite">
+    @*主体内容*@
+    <div class="m-imain">
+        <div class="m-imain-content">
+            <div class="m-form-vtcl">
+                <div class="m-form-vtcl-content" style="padding:0px;">
+                    <div class="m-form-section section-type4" style="padding-bottom:0px;">
+                        <div class="m-form-section-title">@HtmlLang.Write(LangModule.User, "PersonInvSend", "Personalise invitation and send")</div>
+                        <div>
+                            @{
+                                <p>@string.Format(HtmlLang.Write(LangModule.User, "InOrderToGive", "In order to give {0} {1} access to {2} they need to accept an email invitation from you.").ToString(), ViewData["FirstName"], ViewData["LastName"], ViewData["OrgName"])</p>
+                                <p>@HtmlLang.Write(LangModule.User, "InvWillBeEmailed", "The invitation that will be emailed is shown here and can be changed before being sent.")</p>
+                            }
+                        <div class="field long">
+                            <div><label for="txtMessage">@HtmlLang.Write(LangModule.User, "EmailMessage", "Email message")</label></div>
+                            <textarea id="txtMessage" class="resend-invite-message">@HtmlLang.WriteFormat(LangModule.User, "HelloWouldLike", "Hello {0} {1}: {2} You have been asked to join in on the fun and collaborate with your colleagues and partners on Hypercurrent.", @ViewData["FirstName"], @ViewData["LastName"], "\r\n\r\n")</textarea>@*消息*@
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <input type="hidden" id="hidItemID" value="@ViewData["UserId"]" />@*用户ID*@
+    <input type="hidden" id="hidEmail" value="@ViewData["Email"]" />@*电子邮件*@
+    <input type="hidden" id="hidOrgId" value="@ViewData["OrgId"]" />@*组织ID*@
+    <input type="hidden" id="hidOrgName" value="@ViewData["OrgName"]" />@*组织名称*@
+    @if (Convert.ToBoolean(ViewData["IsResent"]))
+    { 
+        <input type="hidden" id="hidIsResent" value="true" />@*是否重新发送*@
+    }
+
+
+</div>
+@*底部工具栏*@
+<div class="m-toolbar-footer">
+    <div class="left">
+        <a href="javascript:void(0);" class="easyui-linkbutton easyui-linkbutton-gray" id="aCancel">@HtmlLang.Write(LangKey.Cancel)</a>@*取消*@
+    </div>
+    <div class="right">
+        @if (HtmlSECMenu.HavePermission(BizObject.User, PermissionItem.Change))
+            {
+            <a href="javascript:void(0);" class="easyui-linkbutton easyui-linkbutton-yellow" id="aSendInvite">@HtmlLang.Write(LangModule.User, "SendInvite", "Send Invite")</a>@*发送邀请*@
+
+        }
+                </div>
+            </div>
+            @*发送邀请所用到的 js 文件*@
+            <script type="text/javascript" src="@ServerHelper.ScriptServer/scripts/BD/User/UserInvite.js?@ServerHelper.JSVersion"></script>
+            @*多语言列表 json 格式*@
+            @HtmlLang.WriteScript(LangModule.User)
+            @JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)
+        </div>

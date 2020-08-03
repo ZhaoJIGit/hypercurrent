@@ -1,0 +1,71 @@
+﻿@{
+    Layout = "~/Areas/Report/Views/Shared/_LayoutReport.cshtml";
+
+    var ctx = JieNor.Megi.Common.Context.ContextHelper.MContext;
+
+    string glBeginDate = ctx.MGLBeginDate.ToString("yyyy-MM-dd 00:00:00");
+}
+@using JieNor.Megi.Common.Utility
+<div class="m-form-vtcl m-form-min">
+    <div class="m-form-vtcl-content">
+        <div class="m-form-section section-type">
+            @if (ctx.MAccountTableID == JieNor.Megi.EntityModel.Enum.AccountTableEnum.CEAS)
+            {
+                <div class="m-form-item">
+                <ul>
+                    <li class="m-bold">@HtmlLang.Write(LangModule.Report, "CompareSpan", "比较范围")</li>
+                    <li id="liMonthlyDate">
+                        <select id="selComopareSpan" class="easyui-combobox mg-data" name="MCompareSpan" style="width:120px; height:22px;">
+                            <option value="0">@HtmlLang.Write(LangModule.Report, "Nothing", "无")</option>
+                            <option value="1">@HtmlLang.Write(LangModule.Report, "LastYear", "上年数")</option>
+                        </select>
+                    </li>
+                </ul>
+            </div>
+            }
+            
+            <div class="m-form-item">
+                <ul>
+                    <li class="m-bold">@HtmlLang.Write(LangModule.Report, "ShowBy", "Show By")</li>
+                    <li>
+                        <select id="selMType" class="easyui-combobox mg-data" data-options="editable:false,onSelect:MyReport.changeType" name="MType" style="width:120px; height:22px;">
+                            <option value="Monthly" selected="selected">@HtmlLang.Write(LangModule.Report, "Monthly", "Monthly")</option>
+                            <option value="TimeInterval">@HtmlLang.Write(LangModule.Report, "TimeInterval", "Time Interval")</option>
+                        </select>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="m-form-item">
+                <ul>
+                    <li class="m-bold" id="liFrom" style="display:none;">@HtmlLang.Write(LangKey.From)</li>
+                    <li class="m-bold" id="liDate">@HtmlLang.Write(LangKey.Date)</li>
+                    <li id="liMonthlyDate">
+                        <select id="selFromMonthlyDate" class="easyui-combobox mg-data" name="MFromDateString" data-options="required:true" style="width:120px; height:22px;">
+                            @JieNor.Megi.Identity.Go.HtmlHelper.HtmlGLSettlement.FromMonth()
+                        </select>
+                    </li>
+                </ul>
+            </div>
+            <div class="m-form-item" id="divToDate" style="display:none;">
+                <ul>
+                    <li class="m-bold">@HtmlLang.Write(LangKey.To)</li>
+                    <li id="liMonthlyDate">
+                        <select id="selToMonth" class="easyui-combobox mg-data" name="MToDateString" data-options="required:true" style="width:120px; height:22px;">
+                            @HtmlGLSettlement.ToMonth()
+                        </select>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="m-form-item">
+                <ul>
+                    <li><a href="javascript:void(0)" class="m-btn l-btn" id="aReportUpdate">@HtmlLang.Write(LangModule.Report, "Update", "Update")</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="hideGLBeginDate" value="@glBeginDate"/>
+<script src="@ServerHelper.ScriptServer/scripts/Report/RptUC/IncomeStatement.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.Report)

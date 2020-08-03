@@ -1,0 +1,352 @@
+﻿@using JieNor.Megi.Common.Utility;
+@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    JieNor.Megi.DataModel.IV.IVTransferModel model = ViewData["TransferModel"] as JieNor.Megi.DataModel.IV.IVTransferModel;
+
+    bool isCanEditPermission = HtmlSECMenu.HavePermission(BizObject.BankAccount, PermissionItem.Change);
+
+}
+@using JieNor.Megi.Identity.Go.HtmlHelper
+@using JieNor.Megi.Core.Const
+@using JieNor.Megi.Common.Utility;
+
+<!--tool bar-->
+<div class="m-toolbar">
+    <span class="tool-bar-title">
+        @HtmlLang.Write(LangModule.IV, "Transfer", "Transfer")
+    </span>
+</div>
+<!--最外层-->
+<div class="m-imain transfer-top">
+    @if (model.MActionPermission.MHaveAction && !string.IsNullOrEmpty(model.MID))
+    {
+        <div class="m-iv-adv-switch">
+            <a href="javascript:void(0)" class="show">&nbsp;</a><span>@HtmlLang.Write(LangModule.IV, "AdvancedOptions", "Advanced Options")</span>
+        </div>
+        <div class="space"></div>
+    }
+    <!--content-->
+    <div class="m-imain-content">
+        <div class="m-transfer-content">
+            <!--左边部分，显示转出账户信息-->
+            <div class="from-account-wrapper">
+                <div class="from-account">
+                    <!--账户内容-->
+                    <div class="from-account-info">
+                        <!--为了对齐考虑，左右放一个table-->
+                        <table class="from-account-info-table">
+                            <tr>
+                                <td>
+                                    <span class="m-transfer-date">
+                                        @HtmlLang.Write(LangModule.IV, "TransferDate", "转账日期")
+                                    </span>
+                                </td>
+                                <td>
+                                    <!--日期选择-->
+                                    <input type="text" class="tranfer-date-select  easyui-datebox" name="MBizDate" id="BizDate" hint="Transfer Date" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">&nbsp;</td>
+                            </tr>
+                            <!--第一行，纺织几个大字，转出账户-->
+                            <tr>
+                                <td colspan="2">
+                                    <span class="account-title">
+                                        <!--转出账户选择-->
+                                        @HtmlLang.Write(LangModule.IV, "TransferOutAccount", "转出账户")
+                                    </span>
+                                </td>
+                            </tr>
+                            <!--第一行，放置账户选择-->
+                            <tr>
+                                <td class="first-title">
+                                    <!--转出账户选择-->
+                                    @HtmlLang.Write(LangModule.IV, "TransferOutAccount", "转出账户")
+                                </td>
+                                <td>
+                                    <!--转出账户选择-->
+                                    <input class="from-account-select easyui-combobox mg-data" name="MFromAcctID" data-options="required:true" />
+                                </td>
+                            </tr>
+                            <!--第二行，当前币种的余额-->
+                            <tr>
+                                <td class="first-title">
+                                    @HtmlLang.Write(LangModule.IV, "CurrentBalance", "Current Balance")
+                                </td>
+                                <td class="">
+                                    <input class="current-balance second-value td-money" readonly="readonly" id="txtroll-outMoney" style="width:200px;min-height:20px;" />
+                                    <input type="hidden" id="hdouMoney" value="0" />
+                                </td>
+                            </tr>
+                            <!--第三行显示转账后余额-->
+                            <tr class="balance-after-tr">
+                                <td class="first-title">
+                                    @HtmlLang.Write(LangModule.IV, "BalanceAfterTransfer", "Balance After Transfer")
+                                </td>
+                                <td class="">
+                                    <input class="balance-after-transfer second-value td-money" readonly="readonly" style="width:200px;min-height:20px;" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="padding:0;">&nbsp;</td>
+                            </tr>
+                            <!--第五行提供金额输入框-->
+                            <tr>
+                                <td class="empty-td" colspan="2" style="display:none;">&nbsp;</td>
+                                <td class="first-title" style="font-weight:bold;">
+                                    @HtmlLang.Write(LangModule.IV, "TransferAmountFor", "转出原币金额")
+                                </td>
+                                <td>
+                                    <!--金额输入-->
+                                    <input type="text" class="from-amount-for-input easyui-numberbox mg-data td-money" id="txtMFromTotalAmtFor" name="MFromTotalAmtFor" data-options="min:0,precision:2,required:true,width:200" />
+                                </td>
+                            </tr>
+                            <!--第五行提供金额输入框-->
+                            <tr>
+                                <td class="empty-td" colspan="2" style="display:none;">&nbsp;</td>
+                                <td class="first-title">
+                                    @HtmlLang.Write(LangModule.IV, "BeginExchangeRate", "期初汇率")
+                                </td>
+                                <td style="text-align:right;">
+                                    <span class="from-account-currency"></span>
+                                    <!--金额输入-->
+                                    <input type="text" style="margin-right: 10px;" class="begin-exchangerate-input easyui-numberbox mg-data td-money no-border-input" id="txtMBeginExchangeRate" name="MBeginExchangeRate" data-options="min:0,precision:6,required:true,width:110" />
+                                    <!---->
+                                    <span class="to-account-currency"></span>
+                                </td>
+                            </tr>
+                            <!--第五行提供金额输入框-->
+                            <tr>
+                                <td class="empty-td" colspan="2" style="display:none;">&nbsp;</td>
+                                <td class="first-title">
+                                    @HtmlLang.Write(LangModule.IV, "TransferAmount", "转出本位币金额")
+                                </td>
+                                <td>
+                                    <!--金额输入-->
+                                    <input type="text" class="from-amount-input easyui-numberbox mg-data td-money" id="txtMFromTotalAmt" name="MFromTotalAmt" data-options="min:0,precision:2,required:true,width:200" />
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!--中间部分，显示转账图标，以及相对汇率-->
+
+            <div class="transfer-ico-rate-wrapper">
+                <div class="transfer-ico-rate">
+                    <!--转账图标-->
+                    <span class="transfer-ico">
+
+                    </span>
+                </div>
+            </div>
+            <!--右边部分，显示目标账户信息-->
+
+            <div class="to-account-wrapper">
+                <div class="to-account">
+                    <!--账户内容-->
+                    <div class="to-account-info">
+                        <!--为了对齐考虑，左右放一个table-->
+                        <table class="to-account-info-table">
+                            <tr>
+                                <td>
+                                    <span class="transfer-reference-title">
+                                        @HtmlLang.Write(LangModule.IV, "TransferReference", "用途说明")
+                                    </span>
+                                </td>
+                                <td>
+                                    <!--日期选择-->
+                                    <input type="text" class="reference-input mg-data easyui-validatebox" name="MReference" data-options="required:true,width:200" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">&nbsp;</td>
+                            </tr>
+                            <!--第一行，纺织几个大字，转出账户-->
+                            <tr>
+                                <td colspan="2">
+                                    <span class="account-title">
+                                        <!--转出账户选择-->
+                                        @HtmlLang.Write(LangModule.IV, "TransferInAccount", "收款账户")
+                                    </span>
+                                </td>
+                            </tr>
+                            <!--第一行，放置账户选择-->
+                            <tr>
+                                <td class="first-title">
+                                    <!--转出账户选择-->
+                                    @HtmlLang.Write(LangModule.IV, "TransferInAccount", "收款账户")
+                                </td>
+                                <td>
+                                    <!--转出账户选择-->
+                                    <input class="to-account-select easyui-combobox mg-data" name="MToAcctID" data-options="required:true" />
+                                </td>
+                            </tr>
+                            <!--第二行，当前币种的余额-->
+                            <tr>
+                                <td class="first-title">
+                                    @HtmlLang.Write(LangModule.IV, "CurrentBalance", "Current Balance")
+                                </td>
+                                <td class="">
+                                    <input class="current-balance second-value td-money" readonly="readonly" id="txtroll-outMoney" style="width:200px;min-height:20px;" />
+                                    <input type="hidden" id="hdouMoney" value="0" />
+                                </td>
+                            </tr>
+                            <!--第三行显示转账后余额-->
+                            <tr class="balance-after-tr">
+                                <td class="first-title">
+                                    @HtmlLang.Write(LangModule.IV, "BalanceAfterTransfer", "Balance After Transfer")
+                                </td>
+                                <td class="">
+                                    <input class="balance-after-transfer second-value td-money" readonly="readonly" style="width:200px;min-height:20px;" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="padding:0;">&nbsp;</td>
+                            </tr>
+                            <!--第五行提供金额输入框-->
+                            <tr>
+                                <td class="empty-td" colspan="2" style="display:none;">&nbsp;</td>
+                                <td class="first-title" style="font-weight:bold;">
+                                    @HtmlLang.Write(LangModule.IV, "TransferInAmountFor", "转入原币金额")
+                                </td>
+                                <td>
+                                    <!--金额输入-->
+                                    <input type="text" class="to-amount-for-input easyui-numberbox mg-data td-money" id="txtMToTotalAmtFor" name="MToTotalAmtFor" data-options="min:0,precision:2,required:true,width:200" />
+                                </td>
+                            </tr>
+                            <!--第五行提供金额输入框-->
+                            <tr>
+                                <td class="empty-td" colspan="2" style="display:none;">&nbsp;</td>
+                                <td class="first-title">
+                                    @HtmlLang.Write(LangModule.IV, "CurrentExchangeRate", "当前汇率")
+                                </td>
+                                <td style="text-align:right;">
+                                    <!---->
+                                    <span class="from-account-currency"></span>
+                                    <!--金额输入-->
+                                    <input type="text" style="margin-right: 10px;" class="current-exchangerate-input easyui-numberbox mg-data td-money no-border-input" id="txtMExchangeRate" name="MExchangeRate" data-options="min:0,precision:6,required:true,width:110" />
+                                    <!---->
+                                    <span class="to-account-currency"></span>
+                                </td>
+                            </tr>
+                            <!--第五行提供金额输入框-->
+                            <tr>
+                                <td class="empty-td" colspan="2" style="display:none;">&nbsp;</td>
+                                <td class="first-title">
+                                    @HtmlLang.Write(LangModule.IV, "TransferInAmount", "转入本位币金额")
+                                </td>
+                                <td>
+                                    <!--金额输入-->
+                                    <input type="text" class="to-amount-input easyui-numberbox mg-data td-money " id="txtMToTotalAmt" name="MToTotalAmt" data-options="min:0,precision:2,width:200" readonly="readonly" />
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        @if (model.MActionPermission.MHaveAction && !string.IsNullOrEmpty(model.MID))
+        {
+            <div class="m-iv-adv" style="width:260px">
+                <div id="aa" class="easyui-accordion" style="min-height:344px;">
+                    <div title="@HtmlLang.Write(LangModule.IV, "ValueAddedTaxInvoice", "Value-added Tax Invoice")" style="overflow:auto;padding:10px;">
+                    </div>
+                    <div title="@HtmlLang.Write(LangModule.IV, "FinancialInformation", "Financial Information")" data-options="selected:true" style="padding:10px;">
+                        <ul>
+                            @if (model.MActionPermission.MIsCanViewReconcile)
+                            {
+                                <li><a href="javascript:void(0)" id="aShowBankReconcileView">@HtmlLang.Write(LangModule.Bank, "ReconcileViewRecord", "查看银行勾对记录")</a></li>
+                            }
+                            @if (model.MActionPermission.MIsCanDeleteReconcile)
+                            {
+                                <li><a href="javascript:void(0)" id="aDeleteBankReconcile">@HtmlLang.Write(LangModule.Bank, "DeleteReconcile", "Delete Reconcile")</a></li>
+                            }
+                            @if (model.MActionPermission.MIsCanViewVoucherCreateDetail)
+                            {
+                                <li><a href="javascript:void(0)" onclick="IVGL.open('@Html.Raw(model.MID)','5')">@HtmlLang.Write(LangModule.GL, "VoucherCreateDetails", "Voucher Create Detail")</a></li>
+                            }
+                            @if (model.MActionPermission.MMarkAsReconciled)
+                            {
+                                <li><a href="javascript:void(0)" class="markstatus" status="@Convert.ToInt32(JieNor.Megi.DataModel.IV.IVReconcileStatus.Marked)">@HtmlLang.Write(LangModule.Bank, "MarkAsReconciled", "Mark as reconciled")</a></li>
+                            }
+                            @if (model.MActionPermission.MMarkAsUnReconciled)
+                            {
+                                <li><a href="javascript:void(0)" class="markstatus" status="@Convert.ToInt32(JieNor.Megi.DataModel.IV.IVReconcileStatus.None)">@HtmlLang.Write(LangModule.Bank, "MarkAsUnReconciled", "Mark as unreconciled")</a></li>
+                            }
+                            @*1.删除的权限*@
+                            @if (model.MActionPermission.MIsCanDelete)
+                            {
+                                <li><a href="javascript:void(0)" id="idDelete" class="markstatus">@HtmlLang.Write(LangModule.Bank, "Delete", "删除")</a></li>
+                            }
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+
+
+
+
+</div>
+
+<input type="hidden" id="hidBillType" value="@BizObject.Transfer" />
+<input type="hidden" id="hidBillId" value="@ViewData["MID"]" />
+<input type="hidden" id="beginDate" value="@JieNor.Megi.Common.Context.ContextHelper.MContext.MBeginDate.ToString("yyyy-MM-dd")">
+<input type="hidden" id="MFromCyID" value="@ViewData["MFromCyID"]" />
+<input type="hidden" id="MToCyID" value="@ViewData["MToCyID"]" />
+<!--底部的操作按钮-->
+<div class="m-toolbar-footer">
+    <div class="left" style="display:none;">
+        <a href="javascript:void(0);" class="easyui-linkbutton cancel-transfer">@HtmlLang.Write(LangModule.Common, "Cancel", "取消")</a>
+    </div>
+    <!--显示差额-->
+    <div class="center">
+
+    </div>
+    <!--取确认按钮-->
+    <div class="right" style="width:40%">
+        <div class="exchange-loss-div" style="float:left;">
+            <!---->
+            <span class="diff-span" style="font-weight:bold;">
+                @HtmlLang.Write(LangModule.GL, "ExchangeLoss", "汇兑损失")
+            </span>
+            <input type="text" style="font-weight:bold;" class="exchange-loss-input easyui-numberbox mg-data td-money no-border-input" id="txtMExchangeLossAmount" name="MExchangeLossAmount" data-options="precision:2,width:100" readonly="readonly" />
+            <!--汇兑损失的金额-->
+            <span class="diff-currency-span" style="font-weight:bold;">
+
+            </span>
+        </div>
+        @if (HtmlSECMenu.HavePermission(BizObject.BankAccount, PermissionItem.Change))
+        {
+            if (string.IsNullOrEmpty(model.MID))
+            {
+                <a href="javascript:void(0);" class="easyui-linkbutton submit-transfer easyui-linkbutton-yellow">@HtmlLang.Write(LangModule.IV, "Transfer", "Transfer")</a>
+            }
+            else
+            {
+                <a href="javascript:void(0);" class="easyui-linkbutton submit-transfer easyui-linkbutton-yellow">@HtmlLang.Write(LangKey.Save)</a>
+            }
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var home = new IVTransferHome('@ViewData["MID"]', '@ViewData["acctId"]', '@ViewData["dialog"]');
+        home.InitAll();
+    });
+</script>
+
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/BD/BDBank/BDBankReconcileHome.Interface.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="~/Scripts/IV/IVTransfer/IVTransferHome.js?@ServerHelper.JSVersion"></script>
+<script src="/Scripts/IV/IVTransfer/IVTransferFW.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/IV/IVGL.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(JieNor.Megi.EntityModel.MultiLanguage.LangModule.Common)
+@HtmlLang.WriteScript(LangModule.IV)
+@HtmlLang.WriteScript(JieNor.Megi.EntityModel.MultiLanguage.LangModule.Bank)
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)

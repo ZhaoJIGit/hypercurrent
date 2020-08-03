@@ -1,0 +1,30 @@
+﻿
+
+@using JieNor.Megi.Common.Utility
+@using JieNor.Megi.EntityModel.MultiLanguage
+@using JieNor.Megi.Identity.HtmlHelper
+
+
+<div class="fa-checkgroupvalue-top">
+
+    <table class="fa-checkgroupvalue-table" >
+        <tr class="demo" style="display:none;">
+            <td class="fa-checkgroupvalue-name"></td>
+            <td>
+                <input type="text" class="fa-checkgroupvalue-input" />
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div class="m-toolbar-footer">
+    <div class="left">
+        <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray">@HtmlLang.Write(LangKey.Cancel)</a>
+    </div>
+
+
+    <div class="right">
+        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow fa-checkgroupvalue-save">@HtmlLang.Write(LangModule.Common, "Save", "Save")</a>
+    </div>
+
+</div>

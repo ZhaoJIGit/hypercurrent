@@ -1,0 +1,38 @@
+﻿@using JieNor.Megi.Identity.HtmlHelper
+@using JieNor.Megi.EntityModel.MultiLanguage
+@using JieNor.Megi.Identity.Go.HtmlHelper
+@using JieNor.Megi.Core.Const
+@using JieNor.Megi.Common.Context
+@using JieNor.Megi.Identity.Go.AutoManager
+@using JieNor.Megi.Common.Utility
+  <!--发票导入清单-->
+@{
+
+    string fapiaoType = int.Parse(ViewData["Type"].ToString()) == 0 ? BizObject.Sales_Fapiao : BizObject.Purchases_Fapiao;
+
+    bool isCanSaleFapiaoChangePermission = HtmlSECMenu.HavePermission(fapiaoType, PermissionItem.Change);
+    var isCanDeletePermission = HtmlSECMenu.HavePermission(fapiaoType, PermissionItem.Change);
+}
+
+<div class="fp-statement-partial" style="overflow-y:hidden;">
+    <div class="fp-transaction-toolbar" style="height:40px;width:100%;">
+        @if (isCanSaleFapiaoChangePermission && ViewData["Type"].ToString() == "0")
+        {
+            <a href="#" class="easyui-linkbutton" style="width:120px" onclick="IOImport.fpOpen(0)">@HtmlLang.Write(LangModule.FP, "ImportFapiaoTitle", "导入发票")</a>
+        }
+        @if (isCanSaleFapiaoChangePermission && ViewData["Type"].ToString() == "1")
+        {
+            <a href="#" class="easyui-linkbutton" style="width:120px" onclick="IOImport.fpOpen(1)">@HtmlLang.Write(LangModule.FP, "ImportFapiaoTitle", "导入发票")</a>
+        }
+        @if (isCanDeletePermission)
+        {
+            <a href="javascript:void(0)" class="easyui-linkbutton" style="width:120px" id="btnDeleteFPImport">@HtmlLang.Write(LangKey.Delete)</a>
+        }
+
+    </div>
+
+    <table class="fp-statement-table"></table>
+
+  <!--翻页控件-->
+    <div class="fp-statement-partial-pager"></div>
+</div>

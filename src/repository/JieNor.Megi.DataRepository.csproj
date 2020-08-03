@@ -1,0 +1,322 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{FF80992B-400A-4F45-B45A-1F96977F49A8}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>Library</OutputType>
+    <AssemblyName>JieNor.Megi.DataRepository</AssemblyName>
+    <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MySql.Data">
+      <HintPath>..\libs\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net">
+      <HintPath>..\libs\NPOI.OpenXml4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core">
+      <HintPath>C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Core\v4.0_4.0.0.0__b77a5c561934e089\System.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions">
+      <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_MSIL\System.Web.Extensions\v4.0_4.0.0.0__31bf3856ad364e35\System.Web.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <HintPath>C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System\v4.0_4.0.0.0__b77a5c561934e089\System.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml">
+      <HintPath>C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Xml\v4.0_4.0.0.0__b77a5c561934e089\System.Xml.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI">
+      <HintPath>..\libs\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>C:\Users\xyh41\Desktop\MegiIIS\service.megichina.com\bin\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Configuration">
+      <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_MSIL\System.Configuration\v4.0_4.0.0.0__b03f5f7f11d50a3a\System.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Fasterflect">
+      <HintPath>..\libs\Fasterflect.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_MSIL\System.Data.DataSetExtensions\v4.0_4.0.0.0__b77a5c561934e089\System.Data.DataSetExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OOXML">
+      <HintPath>..\libs\NPOI.OOXML.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp">
+      <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_MSIL\Microsoft.CSharp\v4.0_4.0.0.0__b03f5f7f11d50a3a\Microsoft.CSharp.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="JieNor.Megi.DataRepository.API\APIDataHelper.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.API\APIDataPool.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.API\APIDataRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.API\APILangTableHelper.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.API\APILogRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.API\APIValidator.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BAS\BASAccountGroupRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BAS\BASAccountRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BAS\BASAccountTableRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BAS\BASAccountTypeRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BAS\BASCountryRegionRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BAS\BASCountryRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BAS\BASCurrencyRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BAS\BASDataDictionary.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BAS\BASEnumMappingRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BAS\BASLangRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BAS\BASMegiLanguageRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BAS\BASModuleRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BAS\BASMyHomeRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BAS\BASNationalLanguageRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BAS\BASNumberFormattingRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BAS\BASOrgAddressRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BAS\BASOrganisationRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BAS\BASOrgContactRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BAS\BASOrgInitSettingRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BAS\BASOrgPrefixSettingRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BAS\BASPushMessageRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BAS\BASSearchRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BAS\BASSettleTypeRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BAS\BASTimezoneRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BAS\BASTimezonesRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BAS\BASVoucherGroupRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BD\BDAccountMatchLogRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BD\BDAccountRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BD\BDAcctGroupRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BD\BDAcctPolicyRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BD\BDAcctPolicyTypeRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BD\BDAcctTypeRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BD\BDAttachmentRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BD\BDBankAccountRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BD\BDBankRuleRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BD\BDBankTypeRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BD\BDContactLogRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BD\BDContactslRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BD\BDContactsRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BD\BDContactsTrackLinkRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BD\BDContactsTypeLinkRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BD\BDContactsTypeLRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BD\BDContactsTypeRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BD\BDEmailTemplateRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BD\BDEmployeesRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BD\BDEmpPayrollDetailRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BD\BDExchangeRateRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BD\BDExpenseItemRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BD\BDInitDocumentRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BD\BDInspectRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BD\BDItemLinkerLRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BD\BDItemRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BD\BDLayoutRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BD\BDOrganisationRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BD\BDRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BD\BDTrackEntryLRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BD\BDTrackEntryRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BD\BDTrackLRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BD\BDTrackRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.BD\BDVoucherSettingRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.Cache\UserPermissionCache.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.COM\COMAccess.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.COM\COMModelValidateHelper.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.COM\COMMultiLangRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.COM\COMResourceHelper.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.COM\COMTableCacheHelper.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.COM\COMTableInfoRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.COM\COMValidateHelper.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.COM\ExcelDataHelper.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.COM\FPLogRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.FA\FADepreciationRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.FA\FADepreciationTypeRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.FA\FAFixAssetsChangeRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.FA\FAFixAssetsRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.FA\FAFixAssetsTypeRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.FC\FCCashCodingModuleRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.FC\FCFapiaoModuleRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.FC\FCVoucherModuleRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.FP\ApiFPFapiaoRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.FP\FPFapiaoEntryRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.FP\FPFapiaoRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.FP\FPImportRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.FP\FPSettingRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.FP\FPTableRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.FP\FPUtility.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.GL\DataRowExtensions.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.GL\FCVoucherModuleEntryRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.GL\GLBalanceProfitRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.GL\GLBalanceQtyRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.GL\GLBalanceRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.GL\GLCheckGroupRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.GL\GLCheckGroupValueRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.GL\GLCheckInvoiceRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.GL\GLCheckOtherRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.GL\GLCheckTypeRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.GL\GLDataPool.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.GL\GLDocVoucherRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.GL\GLExcelRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.GL\GLInitBalanceRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.GL\GLInterfaceRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.GL\GLPeriodTransferRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.GL\GLSettlementRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.GL\GLUtility.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.GL\GLVoucherEntryRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.GL\GLVoucherReferenceRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.GL\GLVoucherRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.IO\IOSolutionRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.IV\IVBankAPIReqRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.IV\IVBankBillEntryRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.IV\IVBankBillReconcileEntryRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.IV\IVBaseRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.IV\IVExpenseLogRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.IV\IVExpenseMakePaymentRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.IV\IVExpenseRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.IV\IVGoldenTaxInvoiceLogRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.IV\IVInvoiceLogRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.IV\IVInvoiceMakePaymentRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.IV\IVInvoiceRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.IV\IVMakePaymentAbstractRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.IV\IVPaymentRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.IV\IVReceiveRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.IV\IVRepeatInvoiceLogRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.IV\IVSalaryMakePaymentRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.IV\IVSignOpStepRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.IV\IVTransactionsRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.IV\IVTransferRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.IV\IVVerificationRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.Log.GlLog\GlVoucherLogBase.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.Log.GlLog\GlVoucherLogHelper.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.Log.GlLog\IGLVoucherLog.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.Log.TableLog\FPTableLogBase.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.Log.TableLog\FPTableLogHelper.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.Log.TableLog\IFPTableLog.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.Log\BizLogBase.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.Log\FPFapiaoLogBase.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.Log\FPFapiaoLogHelper.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.Log\IFPFapiaoLog.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.Log\IIVInvoiceLog.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.Log\IVExpenseLogBase.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.Log\IVExpenseLogHelper.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.Log\IVInvoiceLogBase.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.Log\IVInvoiceLogFactory.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.Log\IVInvoiceLogHelper.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.Log\IVInvoicePurchaseLog.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.Log\IVInvoicePurchaseRedLog.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.Log\IVInvoiceSaleLog.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.Log\IVInvoiceSaleRedLog.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.MI\MigrateConfigRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.MI\MigrateLogRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.MSG\MSGMessageRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.PA\PAPayItemGroupRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.PA\PAPayItemRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.PA\PAPaySettingRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.PA\PAPITCalculateUtility.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.PA\PAPITRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.PA\PASalaryPaymentLogRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.PA\PASalaryPaymentRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.PT\PTBizRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.PT\PTSalaryListRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.PT\PTUtility.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.PT\PTVoucherRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.REG\REGCurrencyRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.REG\REGFinancialRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.REG\REGGlobalizationRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.REG\REGTaxRateEntryRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.REG\REGTaxRateRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.RI\RICategoryRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.RPT.Biz\RPTAssetChangeRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.RPT.Biz\RPTAssetDepreciationRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.RPT.Biz\RPTDepreciationDetailRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.RPT.Biz\RPTDepreciationSummaryRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.RPT.Biz\RPTExpenseClaimRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.RPT.Biz\RPTFilterSchemeRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.RPT\RPTAccountBalanceRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.RPT\RPTAgedInvoiceRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.RPT\RPTAgedReportRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.RPT\RPTBalanceSheetRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.RPT\RPTBankAndCashSummaryRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.RPT\RPTBankBillRecSummaryRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.RPT\RPTBankStatementRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.RPT\RPTBaseREpository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.RPT\RPTCashFlowStatementRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.RPT\RPTFABaseRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.RPT\RPTGeneralLedgerRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.RPT\RPTIncomeByContactRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.RPT\RPTIncomeStatementRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.RPT\RPTIncomeTransRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.RPT\RPTReportConfigRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.RPT\RPTReportRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.RPT\RPTSalesByItemTransRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.RPT\RPTSalesTaxAuditReportRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.RPT\RPTSalesTaxReportRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.RPT\RPTSalseByItemRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.SEC\BasProfileInfoRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.SEC\SECObjectPermEntryRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.SEC\SECObjectPermissionRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.SEC\SECOrgUserRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.SEC\SECPermisionGroupRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.SEC\SECPermisionItemGrpRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.SEC\SECPermisionItemRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.SEC\SECPermissionRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.SEC\SECRelyPartyRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.SEC\SECRolePermisionGroupRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.SEC\SECRolePermissionRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.SEC\SECRoleRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.SEC\SECRoleUserRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.SEC\SECSendLinkInfoRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.SEC\SECUserLoginLogRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.SEC\SECUserRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.SYS\SYSCouponRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.SYS\SYSCouponUserRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.SYS\SYSFeedBackRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.SYS\SYSOrgAppRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.SYS\SYSOrgAppStorageRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.SYS\SYSStorageRepository.cs" />
+    <Compile Include="JieNor.Megi.DataRepository\CommonLogHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\common\JieNor.Megi.Common.csproj">
+      <Project>{2ae7309b-bcdb-4842-a0dd-6c9aa217f2ed}</Project>
+      <Name>JieNor.Megi.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\core\JieNor.Megi.Core.csproj">
+      <Project>{e56a4df7-e8eb-407f-aafd-5b763bffa364}</Project>
+      <Name>JieNor.Megi.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\datamodel\JieNor.Megi.DataModel.csproj">
+      <Project>{2f8cbbd3-6276-49a4-87e0-8b6c4597e3e0}</Project>
+      <Name>JieNor.Megi.DataModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\entitymodel\JieNor.Megi.EntityModel.csproj">
+      <Project>{eef2457d-0b83-44e8-96ce-d6c0cf427a8a}</Project>
+      <Name>JieNor.Megi.EntityModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

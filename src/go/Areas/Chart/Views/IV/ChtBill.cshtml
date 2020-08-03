@@ -1,0 +1,43 @@
+﻿@{
+    IVInvoiceSummaryModel model = HtmlIVInvoice.GetSummaryModel(BizType.Invoice_Purchase);
+
+}
+@using JieNor.Megi.Common.Utility;
+@if(model.AllCount==0)
+{
+<div class="groupItem mg-dash-box mg-dash-bill" style="opacity: 1;">
+    <div class="itemHeader"><h3>@HtmlLang.Write(LangModule.IV, "AddABill", "Add a bill")</h3></div>
+    <div class="itemContent">
+        <div class="mg-content">@HtmlLang.Write(LangModule.IV, "NewBillChart", "See upcoming bills and planned payment dates so there are no surprises. ")</div>
+        <div class="mg-action">
+            <a href="/IV/Bill/BillEdit" class="mg-btn mg-btn-blue">@HtmlLang.Write(LangModule.IV, "NewBill", "New bill")</a>
+            <div class="clear"></div>
+        </div>
+
+        <div class="clear"></div>
+    </div>
+</div>
+}
+else
+{ 
+<div class="groupItem mg-dash-box" style="opacity: 1;">
+    <div class="itemHeader"><h3>Bills you need to pay</h3></div>
+    <div class="itemContent">
+        <div class="mg-summary">
+            <div class="mg-action"><a href="javascript:void(0)" class="easyui-linkbutton" onclick="location='/IV/Bill/BillEdit'">New bill</a></div>
+            <div class="mg-summary-detail">
+                <ul>
+                    <li><span>@Html.Raw(@model.DraftAmount.ToMoneyFormat())</span><a href="/IV/Bill/BillList/1">@HtmlLang.WriteFormat(LangModule.IV, "ChartDraftInvoice", "{0} Draft invoices", @model.DraftCount)</a></li>
+                    <li><span>@Html.Raw(@model.WaitingPaymentAmount.ToMoneyFormat())</span><a href="/IV/Bill/BillList/3">@HtmlLang.WriteFormat(LangModule.IV, "ChartAwaitingPayment", "{0} Awaiting payment", @model.WaitingApprovalCount)</a></li>
+                    <li><span>@Html.Raw(@model.DueAmount.ToMoneyFormat())</span><a href="/IV/Bill/BillList/3?filter={'MSearchWithin':'3','MEndDate':'@DateTime.Now.ToLangDate()'}">@HtmlLang.WriteFormat(LangModule.IV, "ChartOverdue", "{0} Overdue", @model.DueCount)</a></li>
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="m-chart" id="divBillDashChart">
+
+        </div>
+    </div>
+    <script src="@ServerHelper.ScriptServer/go/scripts/Areas/Chart/IV/ChtBill.js?@ServerHelper.JSVersion"></script>
+</div>
+}

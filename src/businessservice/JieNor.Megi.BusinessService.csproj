@@ -1,0 +1,261 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{A1A39665-A680-4D4F-B5D0-4637DB8392A2}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>Library</OutputType>
+    <AssemblyName>JieNor.Megi.BusinessService</AssemblyName>
+    <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MySql.Data, Version=6.8.3.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\libs\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core">
+      <HintPath>C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Core\v4.0_4.0.0.0__b77a5c561934e089\System.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <HintPath>C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System\v4.0_4.0.0.0__b77a5c561934e089\System.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions">
+      <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_MSIL\System.Web.Extensions\v4.0_4.0.0.0__31bf3856ad364e35\System.Web.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Configuration">
+      <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_MSIL\System.Configuration\v4.0_4.0.0.0__b03f5f7f11d50a3a\System.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp">
+      <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_MSIL\Microsoft.CSharp\v4.0_4.0.0.0__b03f5f7f11d50a3a\Microsoft.CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_MSIL\System.Data.DataSetExtensions\v4.0_4.0.0.0__b77a5c561934e089\System.Data.DataSetExtensions.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BAS\BASAccountTypeBusiness.cs" />
+    <Compile Include="BAS\BASCountryBusiness.cs" />
+    <Compile Include="BAS\BASCountryRegionBusiness.cs" />
+    <Compile Include="BAS\BASCurrencyBusiness.cs" />
+    <Compile Include="BAS\BASDataDictionaryBusiness.cs" />
+    <Compile Include="BAS\BASEnumMappingBusiness.cs" />
+    <Compile Include="BAS\BASLangBusiness.cs" />
+    <Compile Include="BAS\BASMyHomeBusiness.cs" />
+    <Compile Include="BAS\BASOrganisationBusiness.cs" />
+    <Compile Include="BAS\BASOrgInitSettingBusiness.cs" />
+    <Compile Include="BAS\BASOrgPrefixSettingBusiness.cs" />
+    <Compile Include="BAS\BASSearchBusiness.cs" />
+    <Compile Include="BAS\BASTimezoneBusiness.cs" />
+    <Compile Include="BAS\OptLogListBusiness.cs" />
+    <Compile Include="BD\BDAccountBusiness.cs" />
+    <Compile Include="BD\BDAccountHelper.cs" />
+    <Compile Include="BD\BDAccountMatchLogBusiness.cs" />
+    <Compile Include="BD\BDAttachmentBusiness.cs" />
+    <Compile Include="BD\BDBankAccountBusiness.cs" />
+    <Compile Include="BD\BDBankRuleBusiness.cs" />
+    <Compile Include="BD\BDBankTypeBusiness.cs" />
+    <Compile Include="BD\BDContactsBusiness.cs" />
+    <Compile Include="BD\BDContactsTypeBusiness.cs" />
+    <Compile Include="BD\BDEmailTemplateBusiness.cs" />
+    <Compile Include="BD\BDEmployeesBusiness.cs" />
+    <Compile Include="BD\BDEmpPayrollDetailBll.cs" />
+    <Compile Include="BD\BDExchangeRateBusiness.cs" />
+    <Compile Include="BD\BDExpenseItemBusiness.cs" />
+    <Compile Include="BD\BDInitDocumentBusiness.cs" />
+    <Compile Include="BD\BDInspectBusiness.cs" />
+    <Compile Include="BD\BDItemBusiness.cs" />
+    <Compile Include="BD\BDTrackBusiness.cs" />
+    <Compile Include="BD\BDTrackEntryBusiness.cs" />
+    <Compile Include="BD\BDVoucherSettingBusiness.cs" />
+    <Compile Include="BD\PAPayItemGroupBussiness.cs" />
+    <Compile Include="COM\COMMultiLangBusiness.cs" />
+    <Compile Include="COM\COMTableInfoBusiness.cs" />
+    <Compile Include="FA\FADepreciationBusiness.cs" />
+    <Compile Include="FA\FAFixAssetsBusiness.cs" />
+    <Compile Include="FA\FAFixAssetsChangeBusiness.cs" />
+    <Compile Include="FA\FAFixAssetsTypeBusiness.cs" />
+    <Compile Include="FC\FCCashCodingModuleBusiness.cs" />
+    <Compile Include="FC\FCFapiaoModuleBusiness.cs" />
+    <Compile Include="FC\FCVoucherModuleBusiness.cs" />
+    <Compile Include="FP\ApiFPFapiaoBusiness.cs" />
+    <Compile Include="FP\FPFapiaoBusiness.cs" />
+    <Compile Include="FP\FPLogBusiness.cs" />
+    <Compile Include="FP\FPSettingBusiness.cs" />
+    <Compile Include="FP\FPTableBusiness.cs" />
+    <Compile Include="GL\GLBalanceBusiness.cs" />
+    <Compile Include="GL\GLCheckGroupBusiness.cs" />
+    <Compile Include="GL\GLCheckGroupValueBusiness.cs" />
+    <Compile Include="GL\GLCheckTypeBusiness.cs" />
+    <Compile Include="GL\GLCheckTypeUtility.cs" />
+    <Compile Include="GL\GLDocVoucherBusiness.cs" />
+    <Compile Include="GL\GLExcelBusiness.cs" />
+    <Compile Include="GL\GLExcelFormulaHelper.cs" />
+    <Compile Include="GL\GLInitBalanceBusiness.cs" />
+    <Compile Include="GL\GLPeriodTransferBusiness.cs" />
+    <Compile Include="GL\GLSettlementBusiness.cs" />
+    <Compile Include="GL\GLVoucherBusiness.cs" />
+    <Compile Include="GL\GLVoucherEntryBusiness.cs" />
+    <Compile Include="GL\GLVoucherReferenceBusiness.cs" />
+    <Compile Include="IO.Biz\FaPiaoImport.cs" />
+    <Compile Include="IO.Biz\HangTianFaPiaoImport.cs" />
+    <Compile Include="IO.Biz\IFaPiaoImport.cs" />
+    <Compile Include="IO.Biz\InPutFaPiaoImport.cs" />
+    <Compile Include="IO.Biz\OutPutFaPiaoImport.cs" />
+    <Compile Include="IO.Biz\SmartOrgExpenseImport.cs" />
+    <Compile Include="IO\BasicImport.cs" />
+    <Compile Include="IO\BillImport.cs" />
+    <Compile Include="IO\BizBillImportBase.cs" />
+    <Compile Include="IO\ExpenseImport.cs" />
+    <Compile Include="IO\IImport.cs" />
+    <Compile Include="IO\ImportBase.cs" />
+    <Compile Include="IO\ImportFactory.cs" />
+    <Compile Include="IO\InvoiceImport.cs" />
+    <Compile Include="IO\IOImportBusiness.cs" />
+    <Compile Include="IO\IOSolutionBusiness.cs" />
+    <Compile Include="IO\IVImportBase.cs" />
+    <Compile Include="IO\PaymentImport.cs" />
+    <Compile Include="IO\ReceiveImport.cs" />
+    <Compile Include="IO\VoucherImport.cs" />
+    <Compile Include="IV\IVAPICreditNoteBusiness.cs" />
+    <Compile Include="IV\IVAPIInvoiceBaseBusiness.cs" />
+    <Compile Include="IV\IVAPIInvoiceBusiness.cs" />
+    <Compile Include="IV\IVBankApiBusiness.cs" />
+    <Compile Include="IV\IVBankBillBusiness.cs" />
+    <Compile Include="IV\IVExpenseBusiness.cs" />
+    <Compile Include="IV\IVInvoiceBusiness.cs" />
+    <Compile Include="IV\IVPaymentBusiness.cs" />
+    <Compile Include="IV\IVReceiveBusiness.cs" />
+    <Compile Include="IV\IVTransactionsBusiness.cs" />
+    <Compile Include="IV\IVTransferBusiness.cs" />
+    <Compile Include="IV\IVVerificationBusiness.cs" />
+    <Compile Include="MI.Biz\AccountMigrate.cs" />
+    <Compile Include="MI.Biz\BankMigrate.cs" />
+    <Compile Include="MI.Biz\BankTypeMigrate.cs" />
+    <Compile Include="MI.Biz\CurrencyMigrate.cs" />
+    <Compile Include="MI.Biz\IMigrate.cs" />
+    <Compile Include="MI.Biz\MigrateBase.cs" />
+    <Compile Include="MI.Biz\MigrateFactory.cs" />
+    <Compile Include="MI\MigrateConfigBusiness.cs" />
+    <Compile Include="MI\MigrateLogBusiness.cs" />
+    <Compile Include="MSG\MSGMessageBusiness.cs" />
+    <Compile Include="PA\PAPayItemBussiness.cs" />
+    <Compile Include="PA\PAPaySettingBussiness.cs" />
+    <Compile Include="PA\PASalaryPaymentBusiness.cs" />
+    <Compile Include="PT\PTBaseBusiness.cs" />
+    <Compile Include="PT\PTBizBusiness.cs" />
+    <Compile Include="PT\PTSalaryListBusiness.cs" />
+    <Compile Include="PT\PTVoucherBusiness.cs" />
+    <Compile Include="REG\REGCurrencyBusiness.cs" />
+    <Compile Include="REG\REGFinancialBusiness.cs" />
+    <Compile Include="REG\REGGlobalizationBusiness.cs" />
+    <Compile Include="REG\REGMICurrencyBusiness.cs" />
+    <Compile Include="REG\REGTaxRateBusiness.cs" />
+    <Compile Include="REG\REGTaxRateEntryBusiness.cs" />
+    <Compile Include="RI\RIBusinessInspector.cs" />
+    <Compile Include="RI\RICurrentInspector.cs" />
+    <Compile Include="RI\RIExpenseTaxInspector.cs" />
+    <Compile Include="RI\RIFixAssetsInspector.cs" />
+    <Compile Include="RI\RIInspectBusiness.cs" />
+    <Compile Include="RI\RIMonthlyInspector.cs" />
+    <Compile Include="RI\RIOtherInspector.cs" />
+    <Compile Include="RPT.GL\RPTFilterSchemeBussiness.cs" />
+    <Compile Include="RPT\AccountingDimensionSummaryBusiness.cs" />
+    <Compile Include="RPT\CompareResultModel.cs" />
+    <Compile Include="RPT\GLReportHelper.cs" />
+    <Compile Include="RPT\RPTAccountBalanceBusiness.cs" />
+    <Compile Include="RPT\RPTAgedInvoiceBusiness.cs" />
+    <Compile Include="RPT\RPTAgedPayableBusiness.cs" />
+    <Compile Include="RPT\RPTAgedReceivableBusiness.cs" />
+    <Compile Include="RPT\RPTAssetChangeBussiness.cs" />
+    <Compile Include="RPT\RPTAssetDepreciationBussiness.cs" />
+    <Compile Include="RPT\RPTBalanceSheetBusiness.cs" />
+    <Compile Include="RPT\RPTBankAndCashSummaryBusiness.cs" />
+    <Compile Include="RPT\RPTBankBillRecSummaryBusiness.cs" />
+    <Compile Include="RPT\RPTBankStatementBusiness.cs" />
+    <Compile Include="RPT\RPTBaseService.cs" />
+    <Compile Include="RPT\RPTCashFlowStatementBusiness.cs" />
+    <Compile Include="RPT\RPTCashSummaryBusiness.cs" />
+    <Compile Include="RPT\RPTDepreciationDetailBussiness.cs" />
+    <Compile Include="RPT\RPTDepreciationSummaryBussiness.cs" />
+    <Compile Include="RPT\RPTExpenseClaimBusiness.cs" />
+    <Compile Include="RPT\RPTGeneralLedgerBusiness.cs" />
+    <Compile Include="RPT\RPTGLBaseService.cs" />
+    <Compile Include="RPT\RPTIncomeByContactBusiness.cs" />
+    <Compile Include="RPT\RPTIncomeStatementBusiness.cs" />
+    <Compile Include="RPT\RPTIncomeTransBusiness.cs" />
+    <Compile Include="RPT\RPTReportBusiness.cs" />
+    <Compile Include="RPT\RPTSalesByItemTransBusiness.cs" />
+    <Compile Include="RPT\RPTSalesTaxAuditReportBusiness.cs" />
+    <Compile Include="RPT\RPTSalesTaxReportBusiness.cs" />
+    <Compile Include="RPT\RPTSalseByItemBusiness.cs" />
+    <Compile Include="RPT\RPTSubsidiaryLedgerBusiness.cs" />
+    <Compile Include="SEC\SECAccountBusiness.cs" />
+    <Compile Include="SEC\SECPermissionBusiness.cs" />
+    <Compile Include="SEC\SECSendLinkInfoBusiness.cs" />
+    <Compile Include="SEC\SECUserAccountBusiness.cs" />
+    <Compile Include="SEC\SECUserBusiness.cs" />
+    <Compile Include="SEC\SECUserLoginLog.cs" />
+    <Compile Include="SYS\SYSCouponBusiness.cs" />
+    <Compile Include="SYS\SYSOrgAppBusiness.cs" />
+    <Compile Include="SYS\SYSOrgAppStorageBusiness.cs" />
+    <Compile Include="SYS\SYSStorageService.cs" />
+    <Compile Include="APIBusinessBase.cs" />
+    <Compile Include="BusinessServiceBase.cs" />
+    <Compile Include="DataRepository.COM\COMAccessBusiness.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\businesscontract\JieNor.Megi.BusinessContract.csproj">
+      <Project>{aac3fe46-af90-473b-aadc-35340cfefd18}</Project>
+      <Name>JieNor.Megi.BusinessContract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\common\JieNor.Megi.Common.csproj">
+      <Project>{2ae7309b-bcdb-4842-a0dd-6c9aa217f2ed}</Project>
+      <Name>JieNor.Megi.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\core\JieNor.Megi.Core.csproj">
+      <Project>{e56a4df7-e8eb-407f-aafd-5b763bffa364}</Project>
+      <Name>JieNor.Megi.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\datamodel\JieNor.Megi.DataModel.csproj">
+      <Project>{2f8cbbd3-6276-49a4-87e0-8b6c4597e3e0}</Project>
+      <Name>JieNor.Megi.DataModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\entitymodel\JieNor.Megi.EntityModel.csproj">
+      <Project>{eef2457d-0b83-44e8-96ce-d6c0cf427a8a}</Project>
+      <Name>JieNor.Megi.EntityModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\repository\JieNor.Megi.DataRepository.csproj">
+      <Project>{ff80992b-400a-4f45-b45a-1f96977f49a8}</Project>
+      <Name>JieNor.Megi.DataRepository</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

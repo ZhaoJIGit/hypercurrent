@@ -1,0 +1,113 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Import your " + ViewBag.TypeNames;
+
+    //是否完全覆盖导入
+    bool isCover = Convert.ToBoolean(ViewBag.IsCover);
+    List<KeyValuePair<string, string>> salaryTmplList = ViewBag.SalaryTmplList as List<KeyValuePair<string, string>>;
+}
+@using JieNor.Megi.Common.Utility;
+<div class="m-form m-imain">
+    <div class="import-step-container">
+        <div class="import-step">
+            <h2 class="import-step-title">
+                @Html.Raw(string.Format(HtmlLang.Write(LangModule.IV, "ImportInvoiceStep1Title", "Step 1. Download our {0} template file").ToString(), ViewBag.TypeNames))
+            </h2>
+            <p class="import-step-content">
+                @Html.Raw(string.Format(HtmlLang.Write(LangModule.IV, "ImportInvoiceStep1Desc", "Start by downloading our {0} Xls template file. This file has the correct column headings Megi needs to import your {1} data.").ToString(), ViewBag.TypeNames, ViewBag.TypeName))
+            </p>
+            <div class="import-step-downtemplate">
+                <!--工资导入时，通过下拉按钮选择各个起征点对应工资模板-->
+                @if (ViewBag.Type == "PayRun")
+                {
+                    <span class="down-file">
+                        &nbsp;
+                    </span>
+                    <a href="javascript:void(0)" id="aSalaryTmplList" class="easyui-menubutton" style="padding-left:9px; padding-right:6px;"
+                       data-options="menu:'#divSalaryTmplList'">@HtmlLang.Write(LangModule.IV, "ImportInvoiceStep1Download", "Download template file")</a>
+                    <div id="divSalaryTmplList" style="width: 159px;">
+                        @{
+                            if (@salaryTmplList != null)
+                            {
+                                for (int i = 0; i < @salaryTmplList.Count; i++)
+                                {
+                                    var item = @salaryTmplList[i];
+                                    <div><a href="javascript:void(0)" data-id="@Html.Raw(item.Key)">@Html.Raw(item.Value)</a></div>
+                                }
+                            }
+
+                        }
+                    </div>
+                }
+                else
+                {
+                <a href="javascript:void(0);" onclick="Import.downloadTemplate();">
+                    <span class="down-file">
+                        &nbsp;
+                    </span>
+                    @HtmlLang.Write(LangModule.IV, "ImportInvoiceStep1Download", "Download template file")
+                </a>
+                }
+            </div>
+        </div>
+        <div class="import-step">
+            <h2 class="import-step-title">
+                @Html.Raw(string.Format(HtmlLang.Write(LangModule.IV, "ImportInvoiceStep2Title", "Step 2. Copy your {0} into the template").ToString(), ViewBag.TypeNames))
+            </h2>
+            <p class="import-step-content">
+                @Html.Raw(string.Format(HtmlLang.Write(LangModule.IV, "ImportInvoiceStep2Desc", "Export your {0} from your old system as a comma separated list. Using Excel or another spreadsheet editor, copy and paste your {0} from the exported file into the Megi template. Make sure the {1} data you copy matches the column headings provided in the template.").ToString(), ViewBag.TypeNames, ViewBag.TypeName))
+            </p>
+            <p class="import-step-warning">
+                @Html.Raw(ViewBag.ImportStep2Warning)
+            </p>
+        </div>
+        <div class="import-step">
+            <h2 class="import-step-title">
+                @HtmlLang.Write(LangModule.IV, "ImportInvoiceStep3Title", "Step 3. Import the updated template file")
+            </h2>
+            <label class="import-step-content">
+                @HtmlLang.Write(LangModule.IV, "ImportInvoiceStep3Desc", "Choose a file to import")
+            </label>
+            @using (Ajax.BeginForm("VerifyImportData", "Import", new { type = ViewBag.Type, isCover = ViewBag.IsCover }, new AjaxOptions { HttpMethod = "POST" }, new { ID = "fileSelectForm", enctype = "multipart/form-data" }))
+            {
+                <div class="import-step-action">
+                    <label class="upload-image">&nbsp;</label>
+                    <input type="file" id="fileInput" name="fileInput" filter="track;uploadFile" class="import-file-input" />
+                    <a href="javascript:void(0)" class="upload-label non-alert">@HtmlLang.Write(LangModule.Common, "UploadLabel", "Browse...")</a>
+                </div>
+                <div class="import-step-content">
+                    @HtmlLang.Write(LangModule.IV, "ImportInvoiceStep3limit", "The file you import must be a Xls or Xlsx file. The name of your file should end with either <em>.xls</em> or <em>.xlsx</em>.")
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div class="m-toolbar-footer">
+    <div class="left">
+        <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray">@HtmlLang.Write(LangKey.Cancel)</a>
+    </div>
+    <div class="right">
+        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aImport">@HtmlLang.Write(LangKey.Import)</a>
+    </div>
+</div>
+<input id="hidType" type="hidden" value="@ViewBag.Type" />
+<input id="hidContactType" type="hidden" value="@ViewBag.ContactType" />
+<input id="hidAccountId" type="hidden" value="@ViewBag.AccountId" />
+@if (isCover)
+{
+    <input id="hideIsCover" type="hidden" value="true" />
+}
+else
+{
+    <input id="hideIsCover" type="hidden" value="false" />
+}
+
+<script type="text/javascript" src="@ServerHelper.StaticServer/fw/scripts/jquery.form.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.GoServer/scripts/BD/Docs/FileBase.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.GoServer/Scripts/BD/Import/ImportBase.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.GoServer/Scripts/BD/Import/Import.js?@ServerHelper.JSVersion"></script>
+
+@HtmlLang.WriteScript(LangModule.Common)
+@HtmlLang.WriteScript(LangModule.BD)
+@HtmlLang.WriteScript(LangModule.Docs)

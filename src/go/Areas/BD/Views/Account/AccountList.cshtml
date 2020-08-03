@@ -1,0 +1,58 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    List<BDAccountGroupEditModel> accountGroupList = ViewBag.AccountGroup as List<BDAccountGroupEditModel>;
+}
+
+<div class="m-imain">
+    <div class="m-toolbar">
+        <a href="#" class="easyui-linkbutton easyui-linkbutton-yellow" id="aNewAccount"> @HtmlLang.Write(LangModule.Acct, "AddAccount", "Add Account")</a>
+        <a href="javascript:void(0)" id="aNewBankAccount" class="easyui-splitbutton"
+           data-options="menu:'#divNewBankAccount'">@HtmlLang.Write(LangModule.Acct, "AddBankAccount", "Add Bank Account")</a>
+        <div id="divNewBankAccount" style="width:180px;">
+            <div><a href="javascript:void(0)" id="aNewBankAccount1">@HtmlLang.Write(LangModule.Acct, "Bank Account", "Bank Account")</a></div>
+            <div><a href="javascript:void(0)" id="aNewCreditCard">@HtmlLang.Write(LangModule.Acct, "CreditCard", "Credit Card")</a></div>
+            <div><a href="javascript:void(0)" id="aNewCash">@HtmlLang.Write(LangModule.Acct, "Cash", "Cash")</a></div>
+        </div>
+
+        <a href="#" class="easyui-linkbutton">@HtmlLang.Write(LangKey.PrintPDF)</a>
+        <a href="#" class="easyui-linkbutton">@HtmlLang.Write(LangKey.Import)</a>
+        <a href="#" class="easyui-linkbutton">@HtmlLang.Write(LangKey.Export)</a>
+    </div>
+
+    <div class="m-imain-content">
+        <div class="easyui-tabs" id="tabAccount" data-options="onSelect:AccountList.changeTabItem">
+            <div title="@HtmlLang.Write(LangModule.Acct, "AllAccounts", "All Accounts")"></div>
+            @{
+            if (@accountGroupList != null && @accountGroupList.Count > 0)
+            {
+                foreach (BDAccountGroupEditModel model in @accountGroupList)
+                {
+                    @Html.Raw(string.Format("<div title=\"{0}\"></div>", model.MName))
+                }
+            }
+            }
+            <div title="@HtmlLang.Write(LangKey.Archive)"></div>
+        </div>
+
+        <div class="m-tab-toolbar">
+            <div class="tool-bar-action">
+                <a href="javascript:void(0)" class="easyui-linkbutton" id="btnDelete">@HtmlLang.Write(LangKey.Delete)</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton"  id="btnArchive">@HtmlLang.Write(LangKey.Archive)</a>
+                <a href="#" class="easyui-linkbutton">@HtmlLang.Write(LangModule.Acct, "ChangeTaxRate", "Change Tax Rate")</a>
+                <div class="tool-bar-search" style="float:right">
+                    <input type="text" class="textbox" id="txtKeyword" />
+                    <a href="#" class="easyui-linkbutton" id="btnSearch">@HtmlLang.Write(LangKey.Search)</a>
+                </div>
+            </div>
+           
+            <br class="clear" />
+        </div>
+
+        <div id="tbAll" fitcolumns="true"></div>
+
+
+        <br class="clear" />
+    </div>
+</div>
+<script src="@ServerHelper.ScriptServer/scripts/BD/Account/AccountList.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.Acct)

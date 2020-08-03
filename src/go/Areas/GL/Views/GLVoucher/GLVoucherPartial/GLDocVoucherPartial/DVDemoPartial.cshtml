@@ -1,0 +1,119 @@
+﻿@using JieNor.Megi.Identity.HtmlHelper
+@using JieNor.Megi.EntityModel.MultiLanguage
+@using JieNor.Megi.Identity.Go.HtmlHelper
+@using JieNor.Megi.Core.Const
+@using JieNor.Megi.Common.Utility
+@using JieNor.Megi.Common.Context
+@using JieNor.Megi.EntityModel.Enum
+@using JieNor.Megi.Identity.Go.AutoManager
+
+@{
+    var dashBoardInfoModel = ViewData["DashboardInfo"] as JieNor.Megi.DataModel.GL.GLDashboardInfoModel;
+    var isCanEdit = dashBoardInfoModel.CanEdit;
+    var lang = dashBoardInfoModel.LangID;
+    var dateString = dashBoardInfoModel.DateString;
+    var defaultDate = dashBoardInfoModel.DefaultDate;
+}
+
+<!--模版div-->
+<div class="dv-partial-demo">
+    <!--左边的操作按钮-->
+    <div class="dv-operate-left m-tab-toolbar left">
+        @if (dashBoardInfoModel.CanEdit)
+        {
+        <!--批量生成凭证-->
+            <a href="####" class="easyui-linkbutton easyui-linkbutton-yellow dv-create-button easyui-linkbutton-m" style="display:none;">@HtmlLang.Write(LangModule.GL, "BatchCreate", "批量生成")</a>
+        <!--批量设置科目-->
+            <a href="####" class="easyui-linkbutton dv-batch-setup-button" style="display:none;" data-options="width:100">@HtmlLang.Write(LangModule.GL, "BatchSet", "批量设置")</a>
+        <!--删除-->
+            <a href="####" class="easyui-linkbutton dv-delete-button" style="display:none;">@HtmlLang.Write(LangModule.Common, "DeleteVoucher", "删除凭证")</a>
+            <!--重新创建凭证-->
+            <a href="####" class="easyui-linkbutton dv-reset-button easyui-tooltip" style="display:none;" etitle="@HtmlLang.Write(LangModule.GL, "ResetDocVoucherTip", "将业务单据重新创建凭证")">@HtmlLang.Write(LangModule.GL, "ResetDocVoucher", "重置凭证")</a>
+        }
+        <!--展开相同业务单据的内容-->
+        <a href="####" class="easyui-linkbutton dv-collapsedown-button" style="display:none;">@HtmlLang.Write(LangModule.Common, "CollapseDown", "Collapse Down")</a>
+        <!--隐藏相同业务单据的内容-->
+        <a href="####" class="easyui-linkbutton dv-collapseup-button" style="display:none;">@HtmlLang.Write(LangModule.Common, "CollapseUp", "Collapse Up")</a>
+    </div>
+    <!--右边的过滤查询-->
+    <div class="dv-operate-right m-tab-toolbar right">
+        <!--编号-->
+        <input type="text" class="dv-number-input" />
+        <!--关键字-->
+        <input type="text" class="dv-keyword-input" hint="@HtmlLang.Write(LangModule.Common, "Keywords", "keywords")" />
+        <!--是否生成凭证-->
+        <input type="text" class="dv-status-input easyui-combobox" hint="@HtmlLang.Write(LangModule.Common, "Status", "Status")" />
+        <!--日期-->
+        <input type="text" class="dv-date-input Wdate" onfocus="WdatePicker({ dateFmt: 'yyyy-MM', lang: '@lang', skin:'@lang', @dateString, isShowClear : false })" hint="@HtmlLang.Write(LangModule.Common, "Date", "Date")" style="width: 100px;" />
+
+        <!--查询按钮-->
+        <a id="btnSearch" class="easyui-linkbutton dv-search-button  m-location-clear" style="float:none">@HtmlLang.Write(LangKey.Search)</a>
+        <!--clear按钮-->
+        <a id="btnClear" class="dv-clear-button" style="float:none">@HtmlLang.Write(LangModule.GL, "ResetDocVoucher", "重置")</a>
+
+    </div>
+    <!--下方的表格-->
+    <div class="dv-doc-voucher-div">
+        <!--表格-->
+        <div class="div-doc-voucher-tablel">
+            <!--左边的是业务单据表格，内容是不定的-->
+        </div>
+    </div>
+    @if (isCanEdit)
+    {
+    <!--悬浮的编辑层-->
+        <div class="dv-function-layer" style="display:none" title="@HtmlLang.Write(LangModule.Common, "HideWithDoubleClick", "双击隐藏")">
+            <div class="dv-function-button dv-doc-part" style="float:left;">
+                <!--查看按钮-->
+                <div class="dv-doc-edit dv-function-ico">
+                    <span class="dv-function-span">@HtmlLang.Write(LangModule.Common, "Edit", "Edit")</span>
+                </div>
+                <!--展开按钮-->
+                <span class="dv-doc-expand dv-function-ico">
+                    <span class="dv-function-span">
+                        @HtmlLang.Write(LangModule.Common, "CollapseDown", "Collapse Down")
+                    </span>
+                </span>
+                <!--合起按钮-->
+                <span class="dv-doc-collspan dv-function-ico">
+                    <span class="dv-function-span">
+                        @HtmlLang.Write(LangModule.Common, "CollapseUp", "Collapse Up")
+                    </span>
+                </span>
+            </div>
+            <!--用来控制居中-->
+            <div class="dv-function-button dv-voucher-part" style="float:right;margin-right:4px;">
+                @if (dashBoardInfoModel.CanEdit)
+                {
+                <!--编辑按钮-->
+                    <div class="dv-voucher-rule-edit dv-function-ico">
+                        <span class="dv-function-span">@HtmlLang.Write(LangModule.Common, "Edit", "Edit")</span>
+                    </div>
+
+                <!--创建凭证-->
+                    <div class="dv-voucher-create dv-function-ico">
+                        <span class="dv-function-span">@HtmlLang.Write(LangModule.GL, "Create_L", "Create")</span>
+                    </div>
+                }
+                @if (dashBoardInfoModel.CanView)
+                {
+                <!--查看按钮-->
+                    <div class="dv-voucher-view dv-function-ico">
+                        <span class="dv-function-span">@HtmlLang.Write(LangModule.Common, "View", "View")</span>
+                    </div>
+                }
+                @if (dashBoardInfoModel.CanEdit)
+                {
+                <!--删除按钮-->
+                    <span class="dv-voucher-delete dv-function-ico">
+                        <span class="dv-function-span">
+                            @HtmlLang.Write(LangKey.Delete)
+                        </span>
+                    </span>
+                }
+
+            </div>
+        </div>
+    }
+
+</div>

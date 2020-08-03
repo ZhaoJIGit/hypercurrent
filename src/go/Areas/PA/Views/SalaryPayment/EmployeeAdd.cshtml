@@ -1,0 +1,28 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    //是否有编辑权限
+    bool haveChangePermission = HtmlSECMenu.HavePermission(BizObject.PayRun, PermissionItem.Change);
+}
+@using JieNor.Megi.Common.Utility;
+<div class="m-imain">
+    <div class="m-imain-content">
+        <div id="empList" fitcolumns="true"></div>
+    </div>
+</div>
+@*底部工具栏*@
+<div class="m-toolbar-footer">
+    <div class="left">
+        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-gray" onclick="$.mDialog.close();" id="aCancel">@HtmlLang.Write(LangKey.Cancel)</a>
+    </div>
+    <div class="right">
+        @if (haveChangePermission)
+        {
+            <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aSave">@HtmlLang.Write(LangKey.Save)</a>
+        }
+    </div>
+    <div class="clear"></div>
+</div>
+<input id="hidRunId" type="hidden" value="@ViewBag.RunId" />
+<script src="@ServerHelper.ScriptServer/Scripts/PA/SalaryPayment/EmployeeAdd.js?@ServerHelper.JSVersion"></script>
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)
+@HtmlLang.WriteScript(LangModule.PA)

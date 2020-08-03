@@ -1,0 +1,223 @@
+﻿@using JieNor.Megi.Common.Utility;
+<div class="m-form m-form-nopadding" id="divOrg">
+    <div class="row">
+        <span class="lbl">@HtmlLang.Write(LangModule.Org, "DisplayName", "Display Name")</span>
+        <span class="content"><input class="easyui-validatebox mg-data" style="width:360px;" maxlength="50" data-options=" required:true" name="MDisplayName" id="txtDisplayName" /></span>
+    </div>
+    <div class="row">
+        <span class="lbl">@HtmlLang.Write(LangModule.Org, "LegalTradingName", "Legal / Trading Name")</span>
+        <span class="content"><input class="easyui-validatebox mg-data" style="width:360px;" data-options="required:true" maxlength="200" name="MLagalTrading" id="txtLagalTrading" /></span>
+    </div>
+    <div class="row">
+        <span class="lbl">@HtmlLang.Write(LangModule.Org, "OrganizationType", "Organization Type")</span>
+        <span class="content">
+            <select class="easyui-combobox mg-data m-default" name="MOrgTypeID" style="width:360px; height:28px;" panelheight="170">
+                @HtmlDataDict.SelectOptions(DataDictionaryType.ORGANIZATION_TYPE)
+            </select>
+        </span>
+    </div>
+    <div class="row">
+        <span class="lbl">@HtmlLang.Write(LangModule.Org, "WhatLineOfBusiness", "What is your line of business?")</span>
+        <span class="content">
+            <select name="MOrgDesc" class="easyui-combobox mg-data" style="width:360px; height:28px;" data-options="@HtmlDataDict.DataOptionsByGroup(DataDictionaryType.ORGANIZATION_BUSINESS_TYPE)"></select>
+        </span>
+        <div class="clear"></div>
+    </div>
+    <div class="row">
+        <span class="lbl">@HtmlLang.Write(LangModule.Org, "Country", "Country")</span>
+        <span class="content">
+            <select id="selCountry" name="MCountryID" class="easyui-combobox mg-data" style="width:360px; height:28px;" data-options="@HtmlBASCountry.DataOptions()"></select>
+        </span>
+    </div>
+    <div class="row">
+        <span class="lbl">@HtmlLang.Write(LangModule.Org, "StateRegion", "State / Region")</span>
+        <span class="content">
+            <select id="selProvince" name="MStateID" class="easyui-combobox mg-data" style="width:360px; height:28px;" data-options="@HtmlBASCountry.ProvinceDataOptions()"></select>
+            <input id="txtProvince" class="textbox mg-data" name="MStateID" style="width: 360px; display: none;" maxlength="36" />
+        </span>
+    </div>
+    <div class="row">
+        <span class="lbl">@HtmlLang.Write(LangModule.Org, "TownCity", "Town / City")</span>
+        <span class="content"><input id="txtCity" class="textbox mg-data" style="width:360px;" name="MCityID" maxlength="36" /></span>
+    </div>
+    <div class="row">
+        <span class="lbl">@HtmlLang.Write(LangModule.Org, "StreetAddress", "Street Address")</span>
+        <span class="content"><input id="txtStreet" class="textbox mg-data" style="width:360px;" name="MStreet" maxlength="300" /></span>
+    </div>
+    <div class="row">
+        <span class="lbl">@HtmlLang.Write(LangModule.Org, "PostalZipCode", "Postal / Zip Code")</span>
+        <span class="content"><input id="txtPostalNo" class="textbox mg-data" style="width:360px;" name="MPostalNo" maxlength="50" /></span>
+    </div>
+    <div class="row">
+        <span class="lbl">@HtmlLang.Write(LangModule.Org, "Language", "Language")</span>
+        <span class="content m-org-lang">@HtmlLang.InputCheckBoxs()</span>
+        <span class="reg-error-image">&nbsp;</span>
+    </div>
+</div>
+
+<input type="hidden" class="mg-data" name="MSystemLanguage" id="hidLangIds" />
+<input type="hidden" class="mg-data" name="MUpdateFields" id="hidUpdateFields" />
+<input type="hidden" class="mg-data" name="MItemID" id="hidItemId" />
+
+<div class="m-form-vtcl-content">
+    @*<div class="m-form-section" style="display:none;">
+        <div class="m-form-section-title">@HtmlLang.Write(LangModule.Org, "ContactDetails", "Contact Details")</div>
+        <div class="m-form-sub-section">
+            <div class="m-form-item">
+                <div class="m-form-lable">&nbsp;</div>
+                <div class="m-form-input m-bold">@HtmlLang.Write(LangModule.Org, "PostalAddress", "Postal Address")</div>
+                <br class="clear" />
+            </div>
+            <div class="m-form-item">
+                <div class="m-form-lable">@HtmlLang.Write(LangModule.Org, "StreetAddressOrPOBox", "Street Address or PO Box")</div>
+                <div class="m-form-input"><textarea class="mg-data postal1" name="MPostalStreet"></textarea></div>
+                <br class="clear" />
+            </div>
+            <div class="m-form-item">
+                <div class="m-form-lable">@HtmlLang.Write(LangModule.Org, "TownCity", "Town / City")</div>
+                <div class="m-form-input"><input class="mg-data textbox postal2" name="MPostalTownCity" /></div>
+                <br class="clear" />
+            </div>
+            <div class="m-form-item">
+                <div class="m-form-lable">@HtmlLang.Write(LangModule.Org, "StateRegion", "State / Region")</div>
+                <div class="m-form-input"><input class="mg-data textbox postal3" name="MPostalStateRegion" /></div>
+                <br class="clear" />
+            </div>
+
+            <div class="m-form-item">
+                <div class="m-form-lable">@HtmlLang.Write(LangModule.Org, "PostalZipCode", "Postal / Zip Code") </div>
+                <div class="m-form-input"><input class="mg-data textbox postal4" name="MPostalZipcode" /></div>
+                <br class="clear" />
+            </div>
+
+            <div class="m-form-item">
+                <div class="m-form-lable">@HtmlLang.Write(LangModule.Org, "Country", "Country")</div>
+                <div class="m-form-input"><input class="mg-data textbox postal5" name="MPostalCountry" /></div>
+                <br class="clear" />
+            </div>
+
+            <div class="m-form-item">
+                <div class="m-form-lable">@HtmlLang.Write(LangKey.Attention)</div>
+                <div class="m-form-input"><input class="mg-data textbox postal6" name="MPostalAttention" /></div>
+                <br class="clear" />
+            </div>
+            <input type="hidden" class="mg-data" name="MPostalID" />
+        </div>
+
+        <div class="m-form-sub-section">
+            <div class="m-form-item">
+                <div class="m-form-lable">&nbsp;</div>
+                <div class="m-form-input"><span class="m-bold">@HtmlLang.Write(LangModule.Org, "PhysicalAddress", "Physical Address")</span> <a href="javascript:void(0)" id="aCopyPostal">@HtmlLang.Write(LangModule.Org, "CopyPostal", "Copy Postal")</a></div>
+                <br class="clear" />
+            </div>
+            <div class="m-form-item">
+                <div class="m-form-lable">@HtmlLang.Write(LangModule.Org, "StreetAddressOrPOBox", "Street Address or PO Box")</div>
+                <div class="m-form-input"><textarea class="mg-data physical1" name="MPhysicalStreet"></textarea></div>
+                <br class="clear" />
+            </div>
+            <div class="m-form-item">
+                <div class="m-form-lable">@HtmlLang.Write(LangModule.Org, "TownCity", "Town / City")</div>
+                <div class="m-form-input"><input class="mg-data textbox physical2" name="MPhysicalTownCity" /></div>
+                <br class="clear" />
+            </div>
+            <div class="m-form-item">
+                <div class="m-form-lable">@HtmlLang.Write(LangModule.Org, "StateRegion", "State / Region")</div>
+                <div class="m-form-input"><input class="mg-data textbox physical3" name="MPhysicalStateRegion" /></div>
+                <br class="clear" />
+            </div>
+
+            <div class="m-form-item">
+                <div class="m-form-lable">@HtmlLang.Write(LangModule.Org, "PostalZipCode", "Postal / Zip Code") </div>
+                <div class="m-form-input"><input class="mg-data textbox physical4" name="MPhysicalZipcode" /></div>
+                <br class="clear" />
+            </div>
+
+            <div class="m-form-item">
+                <div class="m-form-lable">@HtmlLang.Write(LangModule.Org, "Country", "Country")</div>
+                <div class="m-form-input"><input class="mg-data textbox physical5" name="MPhysicalCountry" /></div>
+                <br class="clear" />
+            </div>
+
+            <div class="m-form-item">
+
+                <div class="m-form-lable">@HtmlLang.Write(LangKey.Attention)</div>
+                <div class="m-form-input"><input class="mg-data textbox physical6" name="MPhysicalAttention" /></div>
+                <br class="clear" />
+            </div>
+            <input type="hidden" class="mg-data" name="MPhysicalID" />
+
+            <br class="clear" />
+        </div>
+
+        <br class="clear" />
+    </div>
+
+
+    <div class="m-form-section section-type2" style="display:none;">
+        <div class="m-form-section-title">@HtmlLang.Write(LangModule.Org, "SocialLinks", "Social Links")</div>
+        <div class="m-form-section-title-promt">@HtmlLang.Write(LangModule.Org, "SocialMediaLinks", "These social media links will appear on your online invoices.")</div>
+
+        <div class="m-form-item">
+            <ul>
+                <li class="m-bold">@HtmlLang.Write(LangModule.Org, "Facebook", "Facebook")</li>
+                <li class="m-facebook">http://facebook.com/<input class="mg-data textbox" name="MFacebook" /></li>
+            </ul>
+        </div>
+
+        <div class="m-form-item">
+            <ul>
+                <li class="m-bold">@HtmlLang.Write(LangModule.Org, "LinkedIn", "LinkedIn")</li>
+                <li class="m-linkedin">http://linkedin.com/<input class="mg-data textbox" name="MLinkedIn" /></li>
+            </ul>
+        </div>
+        <div class="m-form-item">
+            <ul>
+                <li class="m-bold">@HtmlLang.Write(LangModule.Org, "Twitter", "Twitter")</li>
+                <li class="m-twitter">http://twitter.com/<input class="mg-data textbox" name="MTwitter" /></li>
+            </ul>
+        </div>
+        <div class="m-form-item">
+            <ul>
+                <li class="m-bold">@HtmlLang.Write(LangModule.Org, "Google", "Google+")</li>
+                <li class="m-googleplus">http://plus.google.com/<input class="mg-data textbox" name="MGooglePlus" /></li>
+            </ul>
+        </div>
+
+        <div class="m-form-item">
+            <ul>
+                <li class="m-bold">@HtmlLang.Write(LangModule.Org, "Website", "Website")</li>
+                <li><input class="mg-data textbox" name="MWebsite" /></li>
+            </ul>
+        </div>
+        <div class="m-form-item">
+            <ul>
+                <li class="m-bold">@HtmlLang.Write(LangModule.Org, "TaoBaoShop", "TaoBao Shop")</li>
+                <li><input class="mg-data textbox" name="MTBShop" /></li>
+            </ul>
+        </div>
+        <div class="m-form-item">
+            <ul>
+                <li class="m-bold">@HtmlLang.Write(LangModule.Org, "WeChat", "WeChat")</li>
+                <li><input class="mg-data textbox" name="MWeChat" /></li>
+            </ul>
+        </div>
+        <div class="m-form-item">
+            <ul>
+                <li class="m-bold">@HtmlLang.Write(LangModule.Org, "Weibo", "Weibo")</li>
+                <li><input class="mg-data textbox" name="MWeibo" /></li>
+            </ul>
+        </div>
+        <div class="m-form-item">
+            <ul>
+                <li class="m-bold">@HtmlLang.Write(LangModule.Org, "QQ", "QQ")</li>
+                <li><input class="mg-data textbox" name="MQQ" /></li>
+            </ul>
+        </div>
+        <input type="hidden" class="mg-data" name="MContactID" />
+        <br class="clear" />
+    </div>*@
+
+</div>
+<script src="@ServerHelper.ScriptServer/Scripts/BD/Setup/SetupBase.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.ScriptServer/Scripts/BD/Organisation/OrganisationEdit.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.Org)

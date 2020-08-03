@@ -1,0 +1,273 @@
+﻿@using JieNor.Megi.Identity.Go.HtmlHelper
+@using JieNor.Megi.Core.Const
+@using JieNor.Megi.Common.Utility
+@{
+    var ctx = JieNor.Megi.Common.Context.ContextHelper.MContext;
+
+    bool isSmartVersion = ctx.MOrgVersionID == (int)JieNor.Megi.EntityModel.Enum.OrgVersionEnum.Smart;
+    }
+<!--银行/销售/采购/费用报销图表，通用一个模版-->
+<div class="bspe-partial">
+    <!--头部-->
+    <div class="bspe-header">
+        <!--银行-->
+        <span class="bank-ico item-ico" style="display:none;"></span>
+        <!--展示销售或者销售账户-->
+        @if (HtmlSECMenu.HavePermission(BizObject.BankAccount, PermissionItem.View))
+{//银行账号（查看）权限校验
+    <a class="bank-title item-title" style="display:none;" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Bank, "BankAccounts", "Bank Accounts")', '/BD/BDBank/BDBankHome',true)">@HtmlLang.Write(LangModule.Bank, "Bank", "Bank")</a>
+}
+else
+{
+            <a class="bank-title item-title" style="display:none;">@HtmlLang.Write(LangModule.Bank, "Bank", "Bank")</a>
+        }
+        <!--销售-->
+        <span class="sale-ico item-ico" style="display:none;"></span>
+        <!--展示销售或者销售账户-->
+        @if (HtmlSECMenu.HavePermission(BizObject.Invoice_Sales, PermissionItem.View))
+{//销售发票（查看）权限校验
+    <a class="sale-title item-title" style="display:none;" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.IV, "Sales", "Sales")', '/IV/Invoice/InvoiceList',true)">@HtmlLang.Write(LangModule.IV, "Sales", "Sales")</a>
+}
+else
+{
+            <a class="sale-title item-title" style="display:none;">@HtmlLang.Write(LangModule.IV, "Sales", "Sales")</a>
+        }
+        <!--采购-->
+        <span class="purchase-ico item-ico" style="display:none;"></span>
+        <!--展示销售或者销售账户-->
+        @if (HtmlSECMenu.HavePermission(BizObject.Invoice_Purchases, PermissionItem.View))
+        {//采购发票（查看）权限校验
+            <a class="purchase-title item-title" style="display:none;" onclick="$.mTab.add('@HtmlLang.Write(LangModule.IV, "Purchase", "Purchase")', '/IV/Bill/BillList',true)">@HtmlLang.Write(LangModule.IV, "Purchase", "Purchase")</a>
+        }
+        else
+        {
+            <a class="purchase-title item-title" style="display:none;">@HtmlLang.Write(LangModule.IV, "Purchase", "Purchase")</a>
+        }
+        <!--费用报销-->
+        <span class="expense-ico item-ico" style="display:none;"></span>
+        <!--展示销售或者销售账户-->
+        @if (HtmlSECMenu.HavePermission(BizObject.Expense, PermissionItem.View))
+{
+    //费用报销（查看）权限校验
+    <a class="expense-title item-title" style="display:none;" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.IV, "ExpenseClaims", "Expense Claims")', '/IV/Expense/ExpenseList',true)">@HtmlLang.Write(LangModule.IV, "ExpenseClaims", "Expense Claims")</a>
+}
+else
+{
+            <a class="expense-title item-title" style="display:none;">@HtmlLang.Write(LangModule.IV, "ExpenseClaims", "Expense Claims")</a>
+        }
+        @if (HtmlSECMenu.HavePermission(BizObject.Bank, PermissionItem.Change))
+        {
+            <!--右边的设置按钮-->
+            <span class="bank-manage header-manage-button" style="display:none;"></span>
+            <!--银行账户快捷操作功能-->
+            <div class="bank-manage-sub-div" style="display:none;">
+                <ul class="manage-table">
+                    @if (HtmlSECMenu.HavePermission(BizObject.BankAccount, PermissionItem.Change))
+                    { 
+                    
+                        <li><a href="javascript:void(0);" id="aNewAccount">@HtmlLang.Write(LangModule.Bank, "newaccount", "New Account")</a></li>
+                        if (!isSmartVersion)
+                        {
+                             <li><a href="javascript:void(0);" id="aTransfer">@HtmlLang.Write(LangModule.Bank, "Transfer", "Transfer")</a></li>
+                        }
+                       
+                    }
+                    @if (!isSmartVersion && HtmlSECMenu.HavePermission(BizObject.Bank_Reconciliation, PermissionItem.Change))
+                    { 
+                    <li><a href="javascript:void(0);" id="aBankRules">@HtmlLang.Write(LangModule.Bank, "BankRules", "BankRules")</a></li>
+                    }
+                </ul>
+            </div>
+        }
+    </div>
+    <!--body-->
+    <div class="bspe-body">
+        <!--左边是一张图以及下方可以选择的日期-->
+        <div class="bspe-body-left">
+            <!--图形格式选择，柱状图/趋势图/数据图等等-->
+            <div class="bspe-chart-type">
+                <!--面积图-->
+                <span class="bank-chart chart-use-selected trend-chart" index="0">Area2D</span>
+                <span class="sale-chart trend-chart" index="0">Area2D</span>
+                <span class="purchase-chart trend-chart" index="0">Area2D</span>
+                <span class="expense-chart  trend-chart" index="0">Area2D</span>
+                <!--柱状图-->
+                <span class="bank-chart column-chart" index="1">Bar3D</span>
+                <span class="sale-chart column-chart chart-use-selected" index="1">Bar3D</span>
+                <span class="purchase-chart column-chart chart-use-selected" index="1">Bar3D</span>
+                <span class="expense-chart chart-use-selected column-chart " index="1">Bar3D</span>
+                <!--折线图-->
+                <span class="bank-chart line-chart" index="2">Line3D</span>
+                <span class="sale-chart line-chart" index="2">Line3D</span>
+                <span class="purchase-chart line-chart" index="2">Line3D</span>
+                <span class="expense-chart line-chart" index="2">Line3D</span>
+                <!--饼图-->
+                <span class="bank-chart pie-chart" index="3">Pie3D</span>
+                <span class="sale-chart pie-chart" index="3">Pie3D</span>
+                <span class="purchase-chart pie-chart" index="3">Pie3D</span>
+                <span class="expense-chart pie-chart" index="3">Pie3D</span>
+            </div>
+            <!--图片chart-->
+            <div class="bank-chart" id="bankChartDiv" style="display:none;">
+
+            </div>
+            <!--图片chart-->
+            <div class="sale-chart" id="saleChartDiv" style="display:none;">
+
+            </div>
+            <!--图片chart-->
+            <div class="purchase-chart" id="purchaseChartDiv" style="display:none;">
+
+            </div>
+            <!--图片chart-->
+            <div class="expense-chart" id="expenseChartDiv" style="height: 180px;display:none;">
+
+            </div>
+            <!--日期选择-->
+            <div class="bspe-date-select" style="display:none;">
+                <span class="recent-a-week date-use-selected" index="0">All</span>
+                <span class="recent-a-week" index="1">Week</span>
+                <span class="recent-a-month" index="2">Month</span>
+                <span class="recent-a-season" index="3">Quarter</span>
+                <span class="recent-half-year" index="4">Semiannual </span>
+            </div>
+        </div>
+        <!--右边，是一张展示销售账户信息的表格-->
+        <div class="bspe-body-right">
+            <!--表格-->
+            <div class="bspe-info-table-div" style="overflow-y:hidden">
+                <!--银行-->
+                <table class="bank-info-table" style="display:none;"></table>
+                <!--销售-->
+                <table class="sale-info-table" style="display:none;">
+                    <tr>
+                        <td class="first-column">@HtmlLang.Write(LangModule.Common, "awaitingapprovement", "Awaiting Approvement")</td>
+                        <td class="">
+                            <a class="second-column">0.00</a>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td class="first-column">@HtmlLang.Write(LangModule.IV, "AwaitingReceive", "Awaiting Receive")</td>
+                        <td class="">
+                            <a class="second-column">0.00</a>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td class="first-column">@HtmlLang.Write(LangModule.Common, "overdue", "Overdue")</td>
+                        <td class="">
+                            <a class="second-column">0.00</a>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td class="first-column">@HtmlLang.Write(LangModule.IV, "Received", "Received")</td>
+                        <td class="">
+                            <a class="second-column">0.00</a>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>
+                            &nbsp;
+                            @if (HtmlSECMenu.HavePermission(BizObject.Invoice_Sales, PermissionItem.Change))
+{
+    <a href="javascript:void(0);" class="easyui-linkbutton new-btn sale-new-invoice m-btn-s" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.IV, "NewInvoice", "New Invoice")', '/IV/Invoice/InvoiceEdit?Origin=Misson_Control',true)">@HtmlLang.Write(LangModule.IV, "NewInvoice", "New Invoice")</a>
+}
+                        </td>
+                    </tr>
+                </table>
+                <!--采购-->
+                <table class="purchase-info-table" style="display:none;">
+                    <tr>
+                        <td class="first-column">@HtmlLang.Write(LangModule.Common, "awaitingapprovement", "Awaiting Approvement")</td>
+                        <td class="">
+                            <a class="second-column">0.00</a>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td class="first-column">@HtmlLang.Write(LangModule.Common, "AwaitingPayment", "Awaiting Payment")</td>
+                        <td class="">
+                            <a class="second-column">0.00</a>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td class="first-column">@HtmlLang.Write(LangModule.Common, "overdue", "Overdue")</td>
+                        <td class="">
+                            <a class="second-column">0.00</a>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td class="first-column">@HtmlLang.Write(LangModule.Common, "paid", "Paid")</td>
+                        <td class="">
+                            <a class="second-column">0.00</a>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>
+                            &nbsp;
+                            @if (HtmlSECMenu.HavePermission(BizObject.Invoice_Purchases, PermissionItem.Change))
+{
+    <a href="javascript:void(0);" class="easyui-linkbutton new-btn purchase-new-order m-btn-s" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.IV, "NewBill", "New Bill")', '/IV/Bill/BillEdit?Origin=Misson_Control', true)">@HtmlLang.Write(LangModule.IV, "NewBill", "New Bill")</a>
+}
+                        </td>
+                    </tr>
+                </table>
+                @*费用报销单*@
+                <table class="expense-info-table" style="display:none;">
+                    <tr>
+                        <td class="first-column">@HtmlLang.Write(LangModule.Common, "allclaims", "All Claims")</td>
+                        <td class="">
+                            <a class="second-column">0.00</a>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td class="first-column">@HtmlLang.Write(LangModule.Common, "awaitingapprovement", "Awaiting Approvement")</td>
+                        <td class="">
+                            <a class="second-column">0.00</a>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td class="first-column">@HtmlLang.Write(LangModule.Common, "awaitingpayement", "Awaiting Payment")</td>
+                        <td class="">
+                            <a class="second-column">0.00</a>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td class="first-column">@HtmlLang.Write(LangModule.Common, "Paid", "Paid")</td>
+                        <td class="">
+                            <a class="second-column">0.00</a>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>
+                            &nbsp;
+                            @if (HtmlSECMenu.HavePermission(BizObject.Expense, PermissionItem.Change))
+{
+    <a href="javascript:void(0);" class="easyui-linkbutton new-btn expense-new-claim m-btn-s" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.IV, "NewExpense", "New Expense")', '/IV/Expense/ExpenseEdit?Origin=Misson_Control',true);">@HtmlLang.Write(LangModule.IV, "NewExpense", "New Expense")</a>
+}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="b" value='' />
+<input type="hidden" id="s" value='' />
+<input type="hidden" id="p" value='' />
+<input type="hidden" id="e" value='' />
+@HtmlLang.WriteScript(LangModule.BD)
+@HtmlLang.WriteScript(LangModule.IV)

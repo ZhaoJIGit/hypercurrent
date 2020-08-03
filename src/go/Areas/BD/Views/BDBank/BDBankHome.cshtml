@@ -1,0 +1,220 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    //是否有编辑权限
+
+    bool isBankPermission = HtmlSECMenu.HavePermission(BizObject.Bank, PermissionItem.Change);
+    bool isCanEditPermission = HtmlSECMenu.HavePermission(BizObject.BankAccount, PermissionItem.Change);
+
+    JieNor.Megi.EntityModel.Context.MContext ctx = JieNor.Megi.Common.Context.ContextHelper.MContext;
+
+    bool isSmartVersion = ctx.MOrgVersionID == (int)JieNor.Megi.EntityModel.Enum.OrgVersionEnum.Smart;
+    
+}
+@using JieNor.Megi.Identity.Go.HtmlHelper
+@using JieNor.Megi.Core.Const
+@using JieNor.Megi.Common.Utility;
+<!--js引入-->
+<link href="@ServerHelper.StaticServer/fw/include/jquery-fallr/css/jquery-fallr-1.3.css?@ServerHelper.JSVersion" rel="Stylesheet" type="text/css" />
+<link href="@ServerHelper.StaticServer/fw/include/jquery-fallr/css/main.css?@ServerHelper.JSVersion" rel="stylesheet" type="text/css" />
+<script src="@ServerHelper.StaticServer/fw/include/ichartjs/ichart.1.2.min.js?@ServerHelper.JSVersion"></script>
+<!--工具栏  管理帐户/转账/收入/支出-->
+@if (isBankPermission)
+{
+    <div class="m-toolbar">
+        @if(isCanEditPermission)
+        { 
+        <!--帐户管理-->
+        <a href="javascript:void(0)" id="aNewBankAccountTop" class="easyui-splitbutton easyui-linkbutton-yellow  easyui-splitbutton-base"
+           data-options="menu:'#divNewBankAccount'">@HtmlLang.Write(LangModule.Bank, "New", "New")</a>
+        <!--银行/现金/信用卡帐户-->
+        <div id="divNewBankAccount" style="width:180px;display:none;">
+            <div><a href="javascript:void(0)" id="aNewBankAccount">@HtmlLang.Write(LangModule.Bank, "BankAccount", "Bank Account")</a></div>
+            <div><a href="javascript:void(0)" id="aNewCreditAccount">@HtmlLang.Write(LangModule.Bank, "CreditAccount", "Credit Account")</a></div>
+            <div><a href="javascript:void(0)" id="aNewCashAccount">@HtmlLang.Write(LangModule.Bank, "CashAccount", "Cash Account")</a></div>
+            <div><a href="javascript:void(0)" id="aNewPayPalAccount">@HtmlLang.Write(LangModule.Bank, "PayPal", "PayPal")</a></div>
+            <div><a href="javascript:void(0)" id="aNewAlipayAccount">@HtmlLang.Write(LangModule.Bank, "Alipay", "Alipay")</a></div>
+        </div>
+            if (!isSmartVersion)
+            {
+                 <!--转账-->
+                <a href="#" id="aTransfer" class="easyui-linkbutton  easyui-linkbutton-base">@HtmlLang.Write(LangModule.Bank, "Transfer", "Transfer")</a>
+            }
+       
+        }
+        @if (!isSmartVersion && HtmlSECMenu.HavePermission(BizObject.Bank_Reconciliation, PermissionItem.Change))
+        { 
+        <!--bank rules-->
+        <a href="#" id="aBankRules" class="easyui-linkbutton">@HtmlLang.Write(LangModule.Bank, "BankRules", "Bank Rules")</a>
+        }
+    </div>
+}
+<!--最外层-->
+<div class="m-imain m-bank-wrapper m-location-restore">
+    <div class="m-imain-content" style="padding-top: 0px;padding-left:0px;">
+        <!--银行帐户详情显示，具体内容在js中计算-->
+        <div id="divBankInfo" class="m-bank-box-top" style="display:none;">
+            <!--一个银行帐户信息-->
+            <div class="m-bank-box">
+                <!--帐户信息的标题，包含操作按钮-->
+                <div class="m-bank-box-left">
+                    <!--帐户标题-->
+                    <div class="header-title">
+                        <!--一级标题-->
+                        <div class="first-title">
+                            <!--一级标题-->
+                            <span class="first-title-txt">
+
+                            </span>
+                            <!--帐户管理，编辑，删除-->
+                            @if (isCanEditPermission)
+                            {
+                                <span class="header-cuid-button"></span>
+                                <div class="header-cuid-sub-div">
+                                    <ul class="m-tip-ul-one">
+                                        <li><span><a href="javascript:void(0);" class="edit-account">@HtmlLang.Write(LangModule.Bank, "EditAccount", "Edit Account")</a></span></li>
+                                        <li><span><a href="javascript:void(0);" class="delete-account">@HtmlLang.Write(LangModule.Bank, "RemoveAccount", "Remove Account")</a></span></li>
+                                    </ul>
+                                </div>
+                            }
+                            <!--帐户管理，spend, recieve, transfer, import a statement,transaction list-->
+                            <span class="header-manage-button">&nbsp;</span>
+                            <div class="header-manage-sub-div">
+                                <ul class="manage-table">
+                                    @if (!isSmartVersion)
+                                    {
+                                          <li class="payment">
+                                        <span><a href="javascript:void(0);">@HtmlLang.Write(LangModule.Bank, "SpendMoney", "Spend Money")</a></span>
+                                    </li>
+                                    <li class="receipt">
+                                        <span><a href="javascript:void(0);">@HtmlLang.Write(LangModule.Bank, "ReceiveMoney", "Receive Money")</a></span>
+
+                                    </li>
+                                    <li class="transfer">
+                                        <span><a href="javascript:void(0);">@HtmlLang.Write(LangModule.Bank, "Transfer", "Transfer")</a></span>
+                                    </li>
+                                    }
+                                  
+                                    <li class="import">
+                                        <span><a href="javascript:void(0);">@HtmlLang.Write(LangModule.Bank, "ImportStatement", "Import a Statement")</a></span>
+                                    </li>
+                                    @if (!isSmartVersion)
+                                    {
+                                        <li class="transaction">
+                                        <span><a href="javascript:void(0);">@HtmlLang.Write(LangModule.Bank, "TransactionsList", "TransactionsList")</a></span>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li class="transaction-cashCodeing">
+                                            <span><a href="javascript:void(0);">@HtmlLang.Write(LangModule.Bank, "cashcoding", "Cash Coding")</a></span>
+                                        </li>
+                                    }
+                                    
+                                    <li class="bank-feeds">
+                                        <span><a href="javascript:void(0);">@HtmlLang.Write(LangModule.Bank, "GetBankFeeds", "Get Bank Feeds")</a></span>
+                                    </li>
+                                    @if (!isSmartVersion)
+                                    { 
+                                        <li class="reconcile-account">
+                                          <span><a href="javascript:void(0);">@HtmlLang.Write(LangModule.Bank, "ReconcileAccount", "Reconcile Account")</a></span>
+                                        </li>
+                                    }
+                                   
+                                    <li class="statement">
+                                        <span class="cash-statement" style="display:none;"><a href="javascript:void(0);">@HtmlLang.Write(LangModule.Bank, "Statement", "Statement")</a></span>
+                                        <span class="bank-statement"><a href="javascript:void(0);">@HtmlLang.Write(LangModule.Bank, "BankStatement", "Bank Statement")</a></span>
+                                    </li>
+                                    @if (!isSmartVersion)
+                                    {
+                                        <li class="reconcile-report">
+                                          <span><a href="javascript:void(0);">@HtmlLang.Write(LangModule.Bank, "ReconcileReport", "Reconcile Report")</a></span>
+                                        </li>
+                                    }
+                                    
+                                </ul>
+                            </div>
+                        </div>
+                        <!--二级标题-->
+                        <div class="second-title">
+                            <!--二级标题-->
+                            <span class="second-title-txt">
+                                <!--银行名称，靠左-->
+                                <span class="account-bank" style="float: left; margin-right: 50px;">
+
+                                </span>
+                                <!--更新日期，靠右-->
+                                <span class="account-update-date">
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <!--帐户信息的图标-->
+                    <div class="main-chart">
+                    </div>
+                </div>
+                <!--帐户信息，包含图标，数据展示，功能按钮-->
+                <div class="m-bank-box-right">
+                    <!--帐户信息的数据-->
+                    <div class="account-main-data">
+                         <!--银行余额-->
+                        <div class="bank-balance">
+                            <!--余额数据-->
+                            <span class="bank-balance-data-span">
+
+                            </span>
+                            <!--余额文字-->
+                            <span class="bank-balance-data-title" style="display:none" id="spBankBalance">
+                                @HtmlLang.Write(LangModule.Bank, "BankBalance", "Bank Balance")
+                            </span>
+                            <span class="bank-balance-data-title" style="display:none" id="spStatementBalance">
+                                @HtmlLang.Write(LangModule.Bank, "StatementBalance", "Statement Balance")
+                            </span>
+                        </div>
+                        <!--美记余额-->
+                        <div class="megi-balance">
+                            <!--余额数据-->
+                            <span class="megi-balance-data-span">
+
+                            </span>
+                            <!--余额文字-->
+                            <span class="megi-balance-data-title">
+                                @HtmlLang.Write(LangModule.Bank, "BalanceInMegi", "Balance in Megi")
+                            </span>
+                        </div>
+                        @if (!isSmartVersion)
+                        {
+                              <!--对账功能-->
+                        <div class="reconcile-div">
+                            <!--需要对账-->
+                            <span class="need-reconcile">@HtmlLang.Write(LangModule.Bank, "reconcile", "Reconcile")</span>
+                            <!--对账单按钮-->
+                            <span class="no-reconcile">@HtmlLang.Write(LangModule.Bank, "noreconcile", "No Reconcile")</span>
+                            @if (isCanEditPermission)
+                            {
+                                 <!--在银行金额为0的时候，提醒用户倒入对账单-->
+                                <span class="import-bank-feed">@HtmlLang.Write(LangModule.Bank, "ImportStatement", "Import a Statement")</span>
+
+                            }
+                        </div>
+                        }
+                      
+                    </div>
+                </div>
+                <!--图形底部脚本，暂时没有内容，如果增加新功能再做计划-->
+                <div class="m-box-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="hideVersion" value="@isSmartVersion"/>
+@HtmlLang.WriteScript(LangModule.Bank)
+<script src="~/Scripts/BD/BDBank/BDBankHome.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript">
+    //
+    $(document).ready(function () {
+        new BDBankHome('@ViewData["acctId"]', '@HtmlSECMenu.HavePermission(BizObject.BankAccount,PermissionItem.Change)', '@HtmlSECMenu.HavePermission(BizObject.Bank_Reconciliation,PermissionItem.View)', '@HtmlSECMenu.HavePermission(BizObject.General_Reports,PermissionItem.View)').InitAll();
+    });
+</script>
+<script src="@ServerHelper.StaticServer/FW/scripts/window.constant.variable.js?@ServerHelper.JSVersion"></script>

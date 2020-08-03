@@ -1,0 +1,134 @@
+﻿@using JieNor.Megi.Common.Utility;
+<div class="m-form-vtcl-content">
+    @*<div class="m-form-section section-type4">
+        <div class="m-form-section-title">@HtmlLang.Write(LangModule.Org, "Language", "Language") </div>
+
+        <div class="mg-top">
+            @HtmlLang.InputCheckBoxs()
+        </div>
+        <input type="hidden" class="mg-data" name="MSystemLanguage" id="langIds"/>
+        <input type="hidden" class="mg-data" name="MItemID" />
+        <div class="clear"></div>
+    </div>*@
+
+    <div class="m-form-section">
+        <div class="m-form-section-title">@HtmlLang.Write(LangModule.Org, "TimeZone", "Time Zone")</div>
+        <div class="m-form-sub-section" style="width:100%">
+            <div class="m-form-item">
+                <div class="m-form-lable">@HtmlLang.Write(LangModule.Org, "SystemZone", "System Zone")</div>
+                <div class="m-form-input">
+                    <select class="easyui-combobox mg-data" name="MSystemZone" disabled="disabled" data-options="editable:false" style="width: 400px;">
+                        @HtmlTimezone.SelectOptions()
+                    </select>
+                </div>
+                <br class="clear" />
+            </div>
+        </div>
+        <br class="clear" />
+    </div>
+
+    <div class="m-form-section">
+        <div class="m-form-section-title">@HtmlLang.Write(LangKey.Date)</div>
+        <div class="m-form-sub-section">
+            <div class="m-form-item">
+                <div class="m-form-lable">@HtmlLang.Write(LangKey.Date)</div>
+                <div class="m-form-input">
+                    <select class="easyui-combobox mg-data" name="MSystemDate" data-options="editable:true" style="width: 200px;">
+                        @HtmlDataDict.SelectOptions("DateFormatType")
+                    </select>
+                </div>
+                <br class="clear" />
+            </div>
+            <div style="margin-left: 70px;">
+                <p>@HtmlLang.Write(LangModule.Org, "Eachsymbolmeaning", "Each symbol meaning")：</p>
+                <p style="width: 800px;">d,dd = @HtmlLang.Write(LangKey.Day)； ddd,dddd = @HtmlLang.Write(LangKey.Week)；M =  @HtmlLang.Write(LangKey.Month)；y =  @HtmlLang.Write(LangKey.Year)</p>
+            </div>
+        </div>
+
+        <br class="clear" />
+    </div>
+
+    <div class="m-form-section">
+        <div class="m-form-section-title">@HtmlLang.Write(LangModule.Org, "Time", "Time")</div>
+        <div class="m-form-sub-section">
+            <div class="m-form-item">
+                <div class="m-form-lable">@HtmlLang.Write(LangModule.Org, "Time", "Time")</div>
+                <div class="m-form-input">
+                    <select class="easyui-combobox mg-data" name="MSystemTime" data-options="editable:true" style="width: 200px;">
+                        @HtmlDataDict.SelectOptions("TimeFormatType")
+                    </select>
+                </div>
+                <br class="clear" />
+            </div>
+            <div style="margin-left: 70px;">
+                <p>@HtmlLang.Write(LangModule.Org, "Eachsymbolmeaning", "Each symbol meaning")：</p>
+                <p style="width: 800px;">h = @HtmlLang.Write(LangKey.Hour)；m = @HtmlLang.Write(LangKey.Minute)；s = @HtmlLang.Write(LangKey.Seconds)（@HtmlLang.Write(LangModule.Org, "OnlyLongTime", "Only Long Time")）；tt = @HtmlLang.Write(LangModule.Org, "MorningOrAfternoon", "Morning Or Afternoon")；hh，mm，ss = @HtmlLang.Write(LangModule.Org, "Beginatzero", "Begin at zero")；h，m，s = @HtmlLang.Write(LangModule.Org, "NotBeginatzero", "Not Begin at zero")</p>
+            </div>
+        </div>
+
+        <br class="clear" />
+    </div>
+
+    <div class="m-form-section">
+        <div class="m-form-section-title">@HtmlLang.Write(LangModule.Org, "Digital", "Digital")</div>
+        <div class="m-form-sub-section" style="width: 50%">
+            <div class="m-form-item">
+                <div class="m-form-lable">@HtmlLang.Write(LangModule.Org, "Dot", "Dot")</div>
+                <div class="m-form-input">
+                    <input class="mg-data textbox" name="MSystemDigitDot" value="." disabled="disabled"/>
+                </div>
+                <br class="clear" />
+            </div>
+            <div class="m-form-item">
+                <div class="m-form-lable">@HtmlLang.Write(LangModule.Org, "DigitGroupingSymbol", "Digit Grouping Symbol")</div>
+                <div class="m-form-input">
+                    <input class="mg-data textbox" name="MSystemDigitGroupingSymbol" value="," disabled="disabled" />
+                </div>
+                <br class="clear" />
+            </div>
+            <div class="m-form-item">
+                <div style="padding:0 48px">
+                    <p>@HtmlLang.Write(LangModule.Org, "ForExample", "For Example")：123,456,789</p>
+                </div>
+            </div>
+            @*<div class="m-form-item">
+                <div class="m-form-lable">@HtmlLang.Write(LangModule.Org, "DigitGroupingFormat", "Digit Grouping Format")</div>
+                <div class="m-form-input">
+                    <input class="mg-data textbox" name="MSystemDigitGroupingFormat" />
+                </div>
+                <br class="clear" />
+            </div>*@
+        </div>
+        <div class="m-form-sub-section" style="width: 50%">
+            <div class="m-form-item">
+                <div class="m-form-lable">@HtmlLang.Write(LangModule.Org, "Negative", "Negative")</div>
+                <div class="m-form-input">
+                    <input class="mg-data textbox" name="MSystemDigitNegative" value="-" disabled="disabled" />
+                </div>
+                <br class="clear" />
+            </div>
+            <div class="m-form-item">
+                <div style="padding:0 48px">
+                <p>@HtmlLang.Write(LangModule.Org, "ForExample", "For Example")：-1.11</p>
+                </div>
+            </div>
+            @*<div class="m-form-item">
+                <div style="padding:0 48px">
+                <input type="checkbox" class="mg-data" name="MIsShowCSymbol"/>@HtmlLang.Write(LangModule.Org, "IsShowCSymbol", "Is Show Currency Symbol")
+                </div>
+            </div>*@
+            @*<div class="m-form-item">
+                <div class="m-form-lable">@HtmlLang.Write(LangModule.Org, "NegativeNumberFormat", "Negative Number Format")</div>
+                <div class="m-form-input">
+                    <input class="mg-data textbox" name="MSystemDigitNegativeNumFormat" />
+                </div>
+                <br class="clear" />
+            </div>*@
+        </div>
+        <br class="clear" />
+    </div>
+</div>
+<input type="hidden" class="mg-data" name="MSystemLanguage" />
+<input type="hidden" class="mg-data" name="MItemID" />
+<script src="@ServerHelper.ScriptServer/Scripts/BD/Organisation/GlobalizationEdit.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.Org)

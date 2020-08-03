@@ -1,0 +1,33 @@
+﻿@{
+    Layout = "~/Areas/Report/Views/Shared/_LayoutReport.cshtml";
+}
+@using JieNor.Megi.Common.Utility
+<div class="m-form-vtcl m-form-min">
+    <div class="m-form-vtcl-content">
+        <div class="m-form-section section-type">
+            <span class="m-bold">@HtmlLang.Write(LangModule.Report, "AccountingPeriod", "会计期间")</span>
+            <span>
+                <select class="easyui-combobox mg-data" name="MStartPeroid" id="cbxStartPeriod" style="width:100px" data-options="required:true">
+                    @HtmlAccount.AccountPeriodOptions(true)
+                </select>
+                <span>@HtmlLang.Write(LangModule.Report, "To", "至")</span>
+                <select class="easyui-combobox mg-data" name="MStartPeroid" id="cbxEndPeriod" style="width:100px" data-options="required:true">
+                    @HtmlAccount.AccountPeriodOptions(true)
+                </select>
+            </span>
+            <span><a href="javascript:void(0);" id="btnMoreFilter" class="gl-rpt-a">@HtmlLang.Write(LangModule.Report, "AdvancedSearch", "更多过滤条件")</a></span>
+            <span><a href="javascript:void(0)" class="m-btn l-btn" id="aReportUpdate" style="width:60px">@HtmlLang.Write(LangModule.Report, "Update", "Update")</a></span>
+        </div>
+    </div>
+</div>
+@Html.Partial("~/Areas/Report/Views/RptUC/GL/GLReportFilter.cshtml")
+@HtmlLang.WriteScript(LangModule.Acct)
+<script src="@ServerHelper.ScriptServer/scripts/Report/RptUC/GL/AccountBalance.js?@ServerHelper.JSVersion"></script>
+<script>
+    $(document).ready(function () {
+        GLReportBase.init();
+    });
+</script>
+
+
+

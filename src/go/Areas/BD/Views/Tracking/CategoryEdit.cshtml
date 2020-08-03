@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "CategoryEdit";
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+@using JieNor.Megi.Common.Utility;
+<div id="divTrackEdit" class="m-form m-imain">
+    <h3 class="mg-track-edit-title">@ViewBag.curName @HtmlLang.Write(LangModule.BD, "Tracking", "tracking") </h3>
+    <div class="mg-track-edit-desc">@HtmlLang.Write(LangModule.BD, "Rename", "Rename") @ViewBag.curName @HtmlLang.Write(LangModule.BD, "TrackingCategory", "tracking category.") </div>
+    @*<div class="m-form-setion">@HtmlLang.Write(LangModule.BD, "ItemCode", "Item Code:")</div>*@
+    <input id="tbxMName" class="easyui-validatebox  m-lang" data-options="required:true,filterChar:' ',isOnlyFirst:true,validType:'isBlank'" value="@ViewBag.curName" name="MName" />
+    <input class="mg-data" type="hidden" name="MItemID" id="itemId" value="@ViewBag.pkId">
+    <input type="hidden" value="@ViewBag.tabIndex" id="hideTabIndex" />
+   
+</div>
+<div class="m-toolbar-footer">
+    <div class="left">
+        <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray" id="aCancel">@HtmlLang.Write(LangKey.Cancel)</a>
+    </div>
+    <div class="right">
+        <a href="/BD/Tracking/Index" class="easyui-linkbutton easyui-linkbutton-yellow" id="aSave">@HtmlLang.Write(LangModule.BD, "Rename", "Rename")</a>
+    </div>
+    <div class="clear" />
+</div>
+<script src="@ServerHelper.ScriptServer/scripts/BD/Tracking/CategoryEdit.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.BD)

@@ -1,0 +1,99 @@
+﻿@{
+    ViewBag.Title = HtmlLang.Write(LangModule.Login, "WelcomeToMegi", "Welcome to Megi");
+    var langId = LangIndentity.CurrentLangID;
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+    string orgName = ViewData["orgName"] == null ? "" : ViewData["orgName"].ToString();
+}
+@using JieNor.Megi.Common.Utility
+@using JieNor.Megi.Identity
+@using JieNor.Megi.EntityModel.Enum
+@using JieNor.Megi.Identity.HtmlHelper
+<script type="text/javascript">
+    @Html.Raw(string.Format("document.domain ='{0}';", JieNor.Megi.Common.Utility.ServerHelper.Domain))
+</script>
+<div class="m-reg-box">
+    <style>
+        .m-action .m-btn-yellow {
+            padding-left: 20px;
+        }
+
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus,
+        input:-webkit-autofill:active {
+            -webkit-transition-delay: 99999s;
+            -webkit-transition: color 99999s ease-out, background-color 99999s ease-out;
+        }
+    </style>
+    <div id="loginBox" class="m-login-box">
+        <div class="container form-login-content">
+            <!--<h1 class="m-logo">MEGI</h1>-->
+            <!--显示Logo图片的位置-->
+            <div class="migi_Logo">
+
+            </div>
+            <div class="lang-bar">
+                @HtmlLang.Write(LangModule.Login, "changeLang", "切换语言") : @HtmlLang.LangBar(ServerType.LoginServer)
+            </div>
+            @if (!string.IsNullOrEmpty(orgName))
+            {
+                <div class="m-login-box-title-tip">@HtmlLang.WriteFormat(LangModule.Login, "LoginJoinMegi", "Login and join {0}", MText.Encode(orgName))</div>
+            }
+            <div class="main login">
+                <p class="item-wrap">
+                    <input list="userEmailList" type="text" id="txtEmail" class="easyui-validatebox textbox email" value="" hint="@HtmlLang.Write(LangModule.Login, "EmailAddress", "Email Address")"
+                           data-options="required:true, validType:['email','length[0,256]']" tabindex="1" onblur="document.getElementById('userNameHidden').value=this.value" />
+                    <datalist id="userEmailList"></datalist>
+                </p>
+                <p class="item1-wrap">
+                    <input type="text" class="easyui-validatebox textbox password password-text " tabindex="2" value="" hint="@HtmlLang.Write(LangModule.Common, "Password", "Password")" data-options="required:true, validType:['length[0,28]']" />
+                    <input type="text" style="display:none" id="userNameHidden" />
+                    <input type="text" onfocus="this.type='password'" autocomplete="off" id="txtPwd" class="easyui-validatebox textbox password password-password" value="" style="display: none;" data-options="required:true, validType:['length[0,28]']" />
+                </p>
+                <div><a href="/Password/ForgetPwd">@HtmlLang.Write(LangModule.Login, "ForgotYourPassword", "Forgot the password?")</a></div>
+                <p id="divCode" style="width:260px;display:none">
+                    <input type="text" id="tbxCode" class="easyui-validatebox textbox" hint="@HtmlLang.Write(LangModule.Login, "validatecode", "code")"
+                           data-options="required:true" style="width: 60px; height: 26px; line-height:26px; padding-left: 2px;background-image:none;" />
+                    <span id="divCodeImage" style="display:none">
+                        <label id="isCorrent" href="javascript:void(0);" code="false" style="width: 16px; height: 16px; padding: 1px 5px;margin:0 auto;">&nbsp;&nbsp;</label>
+
+                        <a href="javascript:void(0);" id="btnChangeImage">@HtmlLang.Write(LangModule.Login, "changeImage", "Can't see clearly")</a>
+                    </span>
+                </p>
+                <div id="lblError" class="error-msg">
+                </div>
+                <div class="m-action">
+                    <a href="javascript:void(0)" class="m-btn-blue" id="aLogin" tabindex="3">@HtmlLang.Write(LangModule.Login, "Login", "Login")</a>
+                </div>
+                <div class="m-reg-wrap">
+                    <span style="color:red"></span>
+                    <br />
+                    <span>@HtmlLang.Write(LangModule.Login, "YouAreAlreadyActive", "Don't have account?")</span>
+                </div>
+                <div class="m-trial-wrap">
+                    <a href="@ServerHelper.MainServer/Account/Register">@HtmlLang.Write(LangModule.Login, "freetrial", "Free Trial")</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="userId" value="@ViewData["userId"]" />
+<input type="hidden" id="orgId" value="@ViewData["orgId"]" />
+<input type="hidden" id="sendLinkID" value="@ViewData["sendLinkID"]" />
+<input type="hidden" id="redirectUrl" value='@ViewData["RedirectUrl"]' />
+<input type="hidden" id="forceToLogin" value='@ViewData["ForceToLogin"]' />
+<input type="hidden" value='@ViewData["Relogin"]' id="relogin" />
+<input type="hidden" value="@ServerHelper.GoServer" id="hidGoServer" />
+<input type="hidden" value="@ServerHelper.MyServer" id="hidMyServer" />
+<input type="hidden" value='@ViewData["Email"]' id="hidEmail" />
+<input type="hidden" value='@ViewData["HE"]' id="hidHE" />
+<input type="hidden" value="@ViewData["LoginErrorCount"]" id="hideLoginErrorCount" />
+<input type="hidden" value="@ViewData["AllowLoginErrorCount"]" id="hideAllowLoginErrorCount" />
+<input type="hidden" value="@ViewData["InviteEmail"]" id="hideInviteEmail" />
+<script src="@ServerHelper.StaticServer/FW/scripts/jquery.megi.password.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.StaticServer/FW/scripts/jquery.megi.footprint.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.LoginServer/login/scripts/Account/Login.js?@ServerHelper.JSVersion"></script>
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)
+@HtmlLang.WriteScript(LangModule.BD)
+@HtmlLang.WriteScript(LangModule.Login)

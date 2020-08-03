@@ -1,0 +1,89 @@
+﻿@using JieNor.Megi.Identity.HtmlHelper
+@using JieNor.Megi.EntityModel.MultiLanguage
+@using JieNor.Megi.Identity.Go.HtmlHelper
+@using JieNor.Megi.Core.Const
+@using JieNor.Megi.Common.Utility
+@using JieNor.Megi.Common.Context
+@using JieNor.Megi.EntityModel.Enum
+
+<!--采购发票单-->
+<div class="dv-purchase-div dv-doc-div">
+    <div class="dv-table-div">
+        <table class="dv-purchase-table dv-table m-location-restore">
+            <thead>
+                <tr>
+                    <!--全选框-->
+                    <th class="dv-doc-check" style="width:2%;"><input type="checkbox" /></th>
+                    <!--客户-->
+                    <th class="dv-doc-contact" style="width:8%;">@HtmlLang.Write(LangModule.IV, "Supplier", "Supplier")</th>
+                    <!--编号-->
+                    <th class="dv-doc-number" style="width:8%;">@HtmlLang.Write(LangModule.IV, "Number", "Number")</th>
+                    <!--摘要-->
+                    <th class="dv-doc-reference" style="width:8%;">@HtmlLang.Write(LangModule.IV, "Reference", "Reference")</th>
+                    <!--业务日期-->
+                    <th class="dv-doc-date" style="width: 8%;">@HtmlLang.Write(LangModule.IV, "Date", "Date")</th>
+                    <!--物料-->
+                    <th class="dv-doc-item" style="width: 7%;">@HtmlLang.Write(LangModule.GL, "MerItem", "商品项目")</th>
+                    <!--摘要-->
+                    <th class="dv-doc-desc" style="width:8%;">@HtmlLang.Write(LangModule.GL, "Desc", "Desc")</th>
+                    <!--金额-->
+                    <th class="dv-doc-amount" style="width: 7%;">@HtmlLang.Write(LangModule.IV, "Amount", "Amount")</th>
+                    <!--税额-->
+                    <th class="dv-doc-tax" style="width: 7%;">@HtmlLang.Write(LangModule.IV, "Tax", "Tax")</th>
+                    <!--空列-->
+                    <th class="dv-empty" style="width:1%;">&nbsp;&nbsp;</th>
+                    <!--应收科目(贷方)-->
+                    <th class="dv-voucher-debit" style="width:9%;">@HtmlLang.Write(LangModule.GL, "CostAccount", "Cost Account")</th>
+                    <!--应交税金科目(贷方)-->
+                    <th class="dv-voucher-tax" style="width:9%;">@HtmlLang.Write(LangModule.GL, "InputVATAccount", "Input VAT Account")</th>
+                    <!--收入科目(借方)-->
+                    <th class="dv-voucher-credit" style="width:9%;">@HtmlLang.Write(LangModule.GL, "CurrentAccount", "往来科目")</th>
+
+                    <!--凭证编号-->
+                    <th class="dv-voucher-number" style="width:8%;">@HtmlLang.Write(LangModule.GL, "Voucher", "Voucher")</th>
+                    <!--边距-->
+                    <th class="dv-border" style="width:1%;">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="dv-tr demo-tr" style="display:none;">
+                    <!--全选框-->
+                    <td class="dv-doc-check" style="width:2%;"><div><input type="checkbox" /></div></td>
+                    <!--客户-->
+                    <td class="dv-doc-contact dv-doc-td dv-td-left" style="width:8%;"><div>&nbsp;</div></td>
+                    <!--编号-->
+                    <td class="dv-doc-number dv-doc-td" style="width:8%;"><div>&nbsp;</div></td>
+                    <!--摘要-->
+                    <td class="dv-doc-reference dv-doc-td" style="width:8%;"><div>&nbsp;</div></td>
+                    <!--业务日期-->
+                    <td class="dv-doc-date dv-doc-td tcenter" style="width:8%;"><div>&nbsp;</div></td>
+                    <!--物料-->
+                    <td class="dv-doc-item dv-doc-td" style="width:7%;"><div>&nbsp;</div></td>
+                    <!--描述-->
+                    <td class="dv-doc-desc dv-doc-td" style="width:8%;"><div>&nbsp;</div></td>
+                    <!--金额-->
+                    <td class="dv-doc-amount dv-doc-td tright" style="width:7%;"><div>&nbsp;</div></td>
+                    <!--税额-->
+                    <td class="dv-doc-tax dv-doc-td  dv-td-right tright" style="width:7%;"><div>&nbsp;</div></td>
+                    <!--空列-->
+                    <td class="dv-empty" style="width:1%;"><div>&nbsp;&nbsp;</div></td>
+                    <!--应收科目(借方)-->
+                    <td class="dv-voucher-debit dv-voucher-td  dv-td-left" style="width:9%;"><div>&nbsp;</div></td>
+                    <!--应交税金科目(贷方)-->
+                    <td class="dv-voucher-tax dv-voucher-td" style="width:9%;"><div>&nbsp;</div></td>
+                    <!--收入科目(贷方)-->
+                    <td class="dv-voucher-credit dv-voucher-td" style="width:9%;"><div>&nbsp;</div></td>
+                    <!--凭证编号-->
+                    <td class="dv-voucher-number dv-voucher-td  dv-td-right tcenter" style="width:8%;"><div>&nbsp;</div></td>
+                    <!--边距-->
+                    <td class="dv-border" style="width:1%;"><div>&nbsp;</div></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!--分页功能-->
+<div class="dv-pagination">
+
+</div>

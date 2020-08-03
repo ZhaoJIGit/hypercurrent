@@ -1,0 +1,175 @@
+﻿@using JieNor.Megi.EntityModel.Enum;
+@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Contacts";
+    List<BDContactsTypeLModel> contactTypes = ViewData["ContactType"] as List<BDContactsTypeLModel>;
+    bool hasViewSaleAuth = HtmlSECMenu.HavePermission(BizObject.Invoice_Sales, PermissionItem.View);
+    bool hasViewPurchaseAuth = HtmlSECMenu.HavePermission(BizObject.Invoice_Purchases, PermissionItem.View);
+
+    string tabKey = ViewData["tabKeySelected"] == null ? "0" : Convert.ToString(ViewData["tabKeySelected"]);
+}
+@using JieNor.Megi.Common.Utility;
+@using JieNor.Megi.Tools
+@using JieNor.Megi.Common.Context
+@using JieNor.Megi.EntityModel.Enum
+@{
+    //获取上下文
+    var ctx = ContextHelper.MContext;
+    //是否是总账版
+    bool isSmartVersion = ctx.MOrgVersionID == OrgVersionEnum.Smart;
+}
+<div class="m-toolbar">
+    <input type="hidden" id="hidVersion" value="@isSmartVersion.ToString()" />
+    <div class="btn">
+        @if (HtmlSECMenu.HavePermission(BizObject.Contact, PermissionItem.Change))
+        {
+            <a href="#" class="easyui-linkbutton easyui-linkbutton-yellow" id="NewContact">@HtmlLang.Write(LangModule.Contact, "NewContact", "New Contact")</a>
+            <a href="#" class="easyui-linkbutton" id="NewGroup">@HtmlLang.Write(LangModule.Contact, "NewGroup", "New Group")</a>
+            <a href="#" class="easyui-linkbutton" id="aImport">@HtmlLang.Write(LangKey.Import)</a>
+        }
+        @if (HtmlSECMenu.HavePermission(BizObject.Contact, PermissionItem.Export))
+        {
+            <a href="#" class="easyui-linkbutton" id="aExport">@HtmlLang.Write(LangKey.Export)</a>
+        }
+    </div>
+    <div class="search">
+        <input type="text" class="textbox" id="txtKey" maxlength="36" />
+        <a href="#" class="easyui-linkbutton" id="btnSearch">@HtmlLang.Write(LangKey.Search)</a>
+    </div>
+</div>
+<div class="m-imain" style="overflow-y:hidden">
+    <div id="divMessage"></div>
+    <div class="m-imain-content" style="padding-bottom:0px;">
+        @*联系人类别*@
+        <div id="tbContactGroups" class="easyui-tabs">
+            <div title="@HtmlLang.Write(LangModule.Contact, "ALL", "ALL")" class="mg-track-tab" id="tab0">
+                <div class="m-filter-item">
+                    <a href="#" class="easyui-linkbutton " id="ALLSearchALL" style="margin-left:0px;">@HtmlLang.Write(LangModule.Contact, "ALL", "ALL")</a>
+                    <a href="#" class="easyui-linkbutton " id="ALLSearch123">123</a>
+                    @{
+                        for (int i = (int)'A'; i <= (int)'Z'; i++)
+                        {
+                            char iName = (char)i;
+                            string searchId = "ALLSearch" + iName.ToString();
+                            <a href="#" class="easyui-linkbutton " id="@searchId">@iName</a>
+                        }
+                    }
+                    <div class="clear"></div>
+                </div>
+                
+                    <div class="m-tab-toolbar">
+                    @if(HtmlSECMenu.HavePermission(BizObject.Contact, PermissionItem.Change))
+                    {
+                        <a href="#" class="m-btn-m easyui-linkbutton " id="ALLAddToGroup">@HtmlLang.Write(LangModule.Contact, "AddToGroup", "Add to Group")</a>
+                        <a href="#" class="m-btn-s easyui-linkbutton " id="AllArchive">@HtmlLang.Write(LangModule.Contact, "Archive", "Archive")</a>
+                        <a href="#" class="m-btn-s easyui-linkbutton" id="btnDelete">@HtmlLang.Write(LangKey.Delete)</a>
+                        if(!isSmartVersion)
+                        {
+                            <input type="checkbox" id="AllShowInvoice" /><span style="margin-left:5px;">@HtmlLang.Write(LangModule.Contact, "ShowInvoice", "显示销售采购详情")</span>
+                        }
+                    }
+                    </div>
+                @{
+                    var allGridId = "tbGrid" + HtmlLang.Write(LangModule.Contact, "ALL", "ALL");
+                    <div id="tbGrid0" fitcolumns="true">
+                    </div>
+                }
+            </div>
+
+            @{
+    //是否有编辑权限
+    bool isHavePermission = HtmlSECMenu.HavePermission(BizObject.Contact, PermissionItem.Change);
+
+    if (contactTypes != null && contactTypes.Count > 0)
+    {
+        int gridIndex = 1;
+        foreach (BDContactsTypeLModel model in contactTypes)
+        {
+            var name = model.MName;
+            int contactTypeId = 0;
+            int.TryParse(model.MParentID, out contactTypeId);
+            var contactType = (ContactTypeEnum)contactTypeId;
+            var gridSuffixes = model.MName.Replace(" ", ""); //去掉空格，因为js id不允许空格
+            var htmlTabId = "tab" + gridIndex;
+            var htmlGridId = "tbGrid" + gridIndex;
+            var htmlTypeId = "typeId" + gridIndex;
+            gridIndex++;
+            var typeId = model.MParentID;
+            <div title="@name" class="mg-track-tab" id="@htmlTabId">
+                <div class="contact-tab-div" style="display:none;">
+                    <div class="m-filter-item">
+                        <input type="hidden" value="@typeId" id='@htmlTypeId' />
+                        <a href="#" class="easyui-linkbutton " id='@string.Format("{0}SearchALL",@name)' style="margin-left:0px;">@HtmlLang.Write(LangModule.Contact, "ALL", "ALL")</a>
+                        <a href="#" class="easyui-linkbutton " id='@string.Format("{0}Search123",@name)'>123</a>
+
+                        @{
+            for (int i = (int)'A'; i <= (int)'Z'; i++)
+            {
+                char iName = (char)i;
+                string searId = name + "Search" + iName.ToString();
+                <a href="#" class="easyui-linkbutton " id="@searId">@iName</a>
+            }
+                        }
+                        <div class="clear"></div>
+                    </div>
+                        <div class="m-tab-toolbar">
+                            @if (isHavePermission && ((contactType != ContactTypeEnum.Customer && contactType != ContactTypeEnum.Supplier
+&& contactType != ContactTypeEnum.Archived && contactType != ContactTypeEnum.Other)))
+                            {
+                                <a href="#" class="m-btn-m easyui-linkbutton" id='@string.Format("{0}MoveToGroup", @name)'>@HtmlLang.Write(LangModule.Contact, "MoveToGroup", "Move to Group")</a>
+                                <a href="#" class="m-btn-m easyui-linkbutton " id='@string.Format("{0}RemoveFromGroup", @name)'>@HtmlLang.Write(LangModule.Contact, "RemoveFromGroup", "Remove from Group")</a>
+                                <a href="#" class="m-btn-m easyui-linkbutton" id='@string.Format("{0}DeleteFromGroup", @name)' style="float:right;">@HtmlLang.Write(LangModule.Contact, "DeleteGroup", "Delete Group")</a>
+                                <a href="#" class="easyui-linkbutton " id='@string.Format("{0}Archive", @name)'>@HtmlLang.Write(LangModule.Contact, "Archive", "Archive")</a>
+                            }
+                            else if (isHavePermission)
+                            {
+                                if (contactType == ContactTypeEnum.Archived)
+                                {
+                                    <a href="#" class="easyui-linkbutton " id='@string.Format("{0}Restore", @name)'>@HtmlLang.Write(LangModule.Contact, "Restore", "Restore")</a>
+                                }
+                                else
+                                {
+                                    <a href="#" class="m-btn-m easyui-linkbutton " id='@string.Format("{0}AddToGroup", @name)'>@HtmlLang.Write(LangModule.Contact, "AddToGroup", "Add to Group")</a>
+                                    @*<a href="#" class="easyui-linkbutton " id='@string.Format("{0}Merge", @name)'>@HtmlLang.Write(LangModule.Contact, "NewGroup", "New Group")Merge</a>*@
+                                    <a href="#" class="easyui-linkbutton " id='@string.Format("{0}Archive", @name)'>@HtmlLang.Write(LangModule.Contact, "Archive", "Archive")</a>
+                                }
+                            }
+
+                            @if (!isSmartVersion)
+                            {
+                                <input type="checkbox" id="@string.Format("{0}ShowInvoice", @name)" /><span style="margin-left:5px;">@HtmlLang.Write(LangModule.Contact, "ShowInvoice", "显示销售采购详情")</span>
+                            }
+                        </div>
+                    <div id="@htmlGridId" fitcolumns="true">
+                    </div>
+                </div>
+            </div>
+        }
+    }
+}
+        </div>
+
+        <div class="clear"></div>
+        @if (HtmlSECMenu.HavePermission(BizObject.Contact, PermissionItem.Change))
+        {
+            <input type="hidden" id="hidChangeAuth" value="1" />
+        }
+        else
+        {
+            <input type="hidden" id="hidChangeAuth" value="0" />
+        }
+        <input id="tabKeySel" type="hidden" value="@tabKey" />
+        <input type="hidden" id="aGoServer" value="@ServerHelper.GoServer" />
+        <input type="hidden" id="hidViewSaleAuth" value="@(hasViewSaleAuth ? 1:0)" />
+        <input type="hidden" id="hasViewPurchaseAuth" value="@(hasViewPurchaseAuth ? 1 : 0)" />
+        
+        @HtmlLang.WriteScript(LangModule.Common)
+        @HtmlLang.WriteScript(LangModule.Acct)
+        @HtmlLang.WriteScript(LangModule.Contact)
+        @HtmlLang.WriteScript(LangModule.BD)
+        <script src="@ServerHelper.ScriptServer/scripts/BD/BDQuote.js?@ServerHelper.JSVersion"></script>
+        <script src="@ServerHelper.ScriptServer/scripts/BD/Contacts/ContactsList.js?@ServerHelper.JSVersion"></script>
+        <script src="@ServerHelper.ScriptServer/Scripts/BD/Import/ImportBase.js?@ServerHelper.JSVersion"></script>
+
+    </div>
+</div>

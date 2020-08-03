@@ -1,0 +1,26 @@
+﻿@using JieNor.Megi.Identity.HtmlHelper
+@using JieNor.Megi.EntityModel.MultiLanguage
+@using JieNor.Megi.Identity.Go.HtmlHelper
+@using JieNor.Megi.Core.Const
+@using JieNor.Megi.Common.Context
+@using JieNor.Megi.Identity.Go.AutoManager
+@using JieNor.Megi.Common.Utility
+
+<div class="fp-importlog-partial" style="overflow-y:hidden;">
+
+    <div class="fp-importlog-toolbar" style="height:40px;width:100%;">
+        <a class="easyui-linkbutton" id="btnRefreshLog" style="margin-left:10px;float:right">@HtmlLang.Write(LangModule.FP, "Reresh", "更新日志")</a>
+
+        <div class="fp-importlog-info" style="float:right;line-height:30px;">
+            <span class="fp-import-log-last">@HtmlLang.Write(LangModule.Common, "FPLastCollectTime", "最后成功获取时间"):</span>
+            <span class="fp-importlog-value">2017-06-18 21:22:23</span>
+        </div>
+    </div>
+    <div class="fp-importlog-body" style="width:100%;">
+
+        <table class="fp-importlog-table"></table>
+    </div>
+
+    <!--翻页控件-->
+    <div class="fp-importlog-partial-pager"></div>
+</div>

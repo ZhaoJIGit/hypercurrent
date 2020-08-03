@@ -1,0 +1,186 @@
+﻿@using JieNor.Megi.Identity.HtmlHelper
+@using JieNor.Megi.EntityModel.MultiLanguage
+@using JieNor.Megi.Identity.Go.AutoManager
+@using JieNor.Megi.EntityModel.Enum
+@using JieNor.Megi.Common.Context
+@using JieNor.Megi.Common.Utility
+@using JieNor.Megi.EntityModel.Enum
+@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    //
+    var mid = ViewData["mid"];
+    //
+    var tableId = ViewData["tableId"];
+    //
+    var contactId = ViewData["contactId"];
+    //
+    var date = (DateTime)ViewData["date"];
+    //
+    var number = ViewData["number"];
+    //
+    var explanation = ViewData["explanation"];
+    //
+    var tableNumber = ViewData["tableNumber"];
+    //
+    var maxAmount = ViewData["maxAmount"];
+    //
+    var maxTaxAmount = ViewData["maxTaxAmount"];
+    //
+    var invoiceType = ViewData["invoiceType"].ToString();
+    //
+    var taxClass = JieNor.Megi.Common.Context.ContextHelper.MContext.MLCID == "0x0009" ? "fp-tax-en" : "fp-tax-cn";
+    var context = ContextHelper.MContext;
+    var langID = context.MLCID;
+    var lang = langID == LangCodeEnum.EN_US ? "en" : (langID == LangCodeEnum.ZH_CN ? "zh-cn" : "zh-tw");
+    var dateString = "minDate:'" + context.MBeginDate + "'";
+    //
+    var hasFapiaoPermission = (invoiceType == "0" && JieNor.Megi.Identity.Go.HtmlHelper.HtmlSECMenu.HavePermission(JieNor.Megi.Core.Const.BizObject.Sales_Fapiao, JieNor.Megi.Core.Const.PermissionItem.Change)) || (invoiceType == "1" && JieNor.Megi.Identity.Go.HtmlHelper.HtmlSECMenu.HavePermission(JieNor.Megi.Core.Const.BizObject.Purchases_Fapiao, JieNor.Megi.Core.Const.PermissionItem.Change));
+}
+
+@using JieNor.Megi.EntityModel.MultiLanguage
+@using JieNor.Megi.Common.Utility
+@using JieNor.Megi.Identity.HtmlHelper
+
+<link type="text/css" rel="stylesheet" href="~/Scripts/GL/fp.css?@ServerHelper.JSVersion" />
+<link type="text/css" rel="stylesheet" href="~/Scripts/GL/css.css?@ServerHelper.JSVersion" />
+
+
+<script src="~/Scripts/Log/BusLog.interface.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.StaticServer/FW/include/My97Datepicker/WdatePicker.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="~/Scripts/FP/FPHome.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="~/Scripts/FP/FPEditFapiao.js?@ServerHelper.JSVersion"></script>
+
+<div class="m-imain">
+    <div class="m-imain-content" style="padding-bottom:0px;">
+        <div class="ef-top-div">
+            <!--上面是显示联系人 美记发票号 录入事件 金额-->
+            <div class="ef-baseinfo-div m-form-icon m-form">
+                <div class="column">
+                    <div class="cell">
+                        <span class="lbl m-icon-text" title="@HtmlLang.Write(LangModule.FP, "TableNumber", "美记发票号")">&nbsp;</span>
+                        <input id="txtTableNumber" hint="@HtmlLang.Write(LangModule.FP, "TableNumber", "美记发票号")" tabindex="2" maxlength="50" type="text" class="textbox" style="width:132px;padding:0 3px;" readonly="readonly" />
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="cell">
+                        <span class="lbl fp-total-amount" title="@HtmlLang.Write(LangModule.FP, "MaxAmount", "最大开票金额")">&nbsp;</span>
+                        <input type="text" id="txtMaxAmount" tabindex="3" hint="@HtmlLang.Write(LangModule.FP, "MaxAmount", "最大开票金额")" class="textbox easyui-validatebox easyui-numberbox" data-options="required:false,precision:2" style="width:132px;padding:0 3px;" maxlength="80" readonly="readonly" value="@maxAmount" />
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="cell">
+                        <span class="lbl @taxClass" title="@HtmlLang.Write(LangModule.FP, "MaxTaxAmount", "最大开票税额")">&nbsp;</span>
+                        <input type="text" id="txtMaxTaxAmount" tabindex="3" hint="@HtmlLang.Write(LangModule.FP, "MaxTaxAmount", "最大开票税额")" class="textbox easyui-validatebox easyui-numberbox" data-options="required:false,precision: 2" style="width:132px;padding:0 3px;" maxlength="80" readonly="readonly" value="@maxTaxAmount" />
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="cell">
+                        <div class="">
+                            <span class="lbl m-icon-customer" title="@HtmlLang.Write(LangModule.FP, "Contact", "联系人")">&nbsp;</span>
+                            <input type="text" id="txtContact" class="et-table-contact easyui-validatebox textbox" data-options="required:true" readonly="readonly" />
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="cell">
+                        <span class="lbl m-icon-text" title="@HtmlLang.Write(LangModule.FP, "FapiaoNumber", "发票号")">&nbsp;</span>
+                        <input id="txtNumber" hint="@HtmlLang.Write(LangModule.FP, "FapiaoNumber", "发票号")" tabindex="2" maxlength="50" type="text" class="textbox easyui-validatebox easyui-numberbox" data-options="required:true,precision: 0,min:0,formatter: function (value) { return $(this).val();}" style="width:132px;padding:0 3px;" />
+                    </div>
+                </div>
+
+                <div class="column">
+                    <div class="cell">
+                        <span class="lbl m-icon-time" title="@HtmlLang.Write(LangModule.FP, "FapiaoDate", "开票日期")">&nbsp;</span>
+                        <input id="txtDate" tabindex="5" hint="@HtmlLang.Write(LangModule.FP, "FapiaoDate", "开票日期")" type="text" class="easyui-datebox" data-options="required:true" style="width:140px;" />
+                    </div>
+                </div>
+                @if (invoiceType != null && invoiceType == "1")
+                {
+                    <div class="column">
+                        <div class="cell">
+                            <span class="lbl m-icon-time" title="@HtmlLang.Write(LangModule.FP, "DeductionDate", "抵扣月份")">&nbsp;</span>
+                            <input id="txtDeductionDate" hint="@HtmlLang.Write(LangModule.FP, "DeductionDate", "抵扣月份")" tabindex="2" maxlength="50" type="text" style="width:132px;padding:0 3px;" class="textbox hp-period-input Wdate left" onfocus="WdatePicker({ dateFmt: 'yyyy-MM',readOnly:true, lang: '@lang', skin:'@lang',  @dateString })" value="@context.DateNow" />
+                        </div>
+                    </div>
+                }
+                <div class="column">
+                    <div class="cell">
+                        <span class="lbl m-icon-ref" title="@HtmlLang.Write(LangKey.Reference)">&nbsp;</span>
+                        <input type="text" id="txtExplanation" tabindex="3" hint="@HtmlLang.Write(LangKey.Reference)" class="textbox easyui-validatebox" data-options="required:false" style="width:132px;padding:0 3px;" maxlength="80" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--下面是显示开票单的具体信息-->
+        <div class="ef-fapiao-div">
+            <!--表格-->
+            <div class="ef-fapiao-table">
+
+            </div>
+            <!--统计div-->
+            <div class="ef-total-div">
+                <table class="ef-total-table">
+                    <tr class="ef-notax-amount">
+                        <td class="ef-name">@HtmlLang.Write(LangModule.FP, "NoTaxAmount", "未含税金额")</td>
+                        <td class="ef-value">0.00</td>
+                    </tr>
+                    <tr class="ef-tax-amount">
+                        <td class="ef-name">@HtmlLang.Write(LangModule.FP, "TaxAmount", "税金额")</td>
+                        <td class="ef-value">0.00</td>
+                    </tr>
+                    <tr class="ef-total-amount" style="border-bottom:3px double;">
+                        <td class="ef-name">@HtmlLang.Write(LangModule.FP, "Total", "合计")</td>
+                        <td class="ef-value">0.00</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@*底部工具栏*@
+<div class="m-toolbar-footer">
+    <div class="left">&nbsp;<a href="javascript:void(0);" class="easyui-linkbutton ef-cancel-button">@HtmlLang.Write(LangModule.Common, "Cancel", "取消")</a></div>
+    
+   <div class="center">
+        <div class="m-toolbar-icon" style="width:150px;">
+            @if (Convert.ToString(ViewData["mid"]).Trim() != "" && Convert.ToString(ViewData["mid"]).Trim() != null)
+            {
+                <a href="javascript:void(0)" id="aHistory" class="m-icon-msg" title='@HtmlLang.Write(LangModule.IV, "History", "History")'>&nbsp;</a>
+            }
+            @*<a href="javascript:void(0)" id="aEmail" class="m-icon-share" title="@HtmlLang.Write(LangKey.Email)">&nbsp;</a>
+
+            <a href="javascript:void(0)" class="m-icon-print" id="aPrint" invoiceid="" billtype="" title="@HtmlLang.Write(LangKey.PrintPDF)">&nbsp;</a>*@
+
+
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="right">
+        &nbsp;
+        @if (hasFapiaoPermission)
+        {
+            <a href="javascript:void(0);" class="easyui-linkbutton ef-save-button easyui-linkbutton-yellow">@HtmlLang.Write(LangModule.Common, "Save", "保存")</a>
+        }
+
+    </div>
+    <div class="clear"></div>
+</div>
+@*跳转的的时候,给隐藏域赋值  MID*@
+<input type="hidden" id="hidInvoiceId" value="@ViewData["mid"]">@*发票ID*@
+
+
+    @HtmlLang.WriteScript(LangModule.Common)
+    @HtmlLang.WriteScript(LangModule.FP)
+    <script type="text/javascript">
+        ///日志的显示加载事件
+        $(document).ready(function () {
+            var editFapiao = new FPEditFapiao('@mid', '@tableId', '@invoiceType', '@contactId', '@number', '@explanation', '@date.ToDateString()', '@tableNumber', '@maxAmount', '@maxTaxAmount');
+            //
+            editFapiao.init();
+            //日志
+            HistoryView.init();
+        });
+    </script>

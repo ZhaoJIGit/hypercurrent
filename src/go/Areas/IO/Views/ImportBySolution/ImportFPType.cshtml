@@ -1,0 +1,43 @@
+﻿@using JieNor.Megi.Core.Context
+@using JieNor.Megi.DataModel.IV
+@using JieNor.Megi.Common.Utility
+@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+
+<div class="m-imain">
+    <div class="m-imain-content" style="text-align:center;">
+        <div id="divImport" class="import-banktransaction" style="padding-top:30px;">
+            <div id="divType" >
+                <div class="field-section">@HtmlLang.Write(LangModule.FP, "SelectFaPiaoType", "请选择发票类型（单选）：")</div>
+                <div style="padding-top: 10px;">
+                    <input type="radio" name="FaPiaoType" id="SpecialFaPiao" value="0" />
+                    <span style="margin-left: 10px;font-size: 15px;">@HtmlLang.Write(LangModule.FP, "SpecialFaPiao", "增值税普通发票")</span>
+                </div>
+                <div style="padding-top: 10px;">
+                    <input type="radio" name="FaPiaoType" id="ProfessionalFaPiao" value="1" />
+                    <span style="margin-left: 10px; font-size: 15px;">@HtmlLang.Write(LangModule.FP, "ProfessionalFaPiao", "增值税专用发票")</span>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+    <div id="divNotices" style="display: none">
+        <div style="padding-top:20px;font-size:15px;padding-left: 20px;">@HtmlLang.Write(LangModule.FP, "FormatDescription", "*格式说明")</div>
+        <div style="font-size:15px;padding-left: 20px;">@HtmlLang.Write(LangModule.FP, "FormatDescription1", "进项普通发票无默认模板，可新增方案并通过匹配来完成导入。")</div>
+    </div>
+</div>
+<div class="m-toolbar-footer">
+    <div class="left">
+        <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray">@HtmlLang.Write(LangKey.Cancel)</a>
+    </div>
+    <div class="right">
+        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aNext">@HtmlLang.Write(LangModule.Common, "Next", "Next")</a>
+    </div>
+</div>
+<input type="hidden" id="hidMessage" />
+<input type="hidden" id="FPType" value="@ViewBag.Type"/>
+@HtmlLang.WriteScript(LangModule.Common)
+@HtmlLang.WriteScript(LangModule.FP)
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/IO/ImportBySolution/ImportFaPiaoType.js?@ServerHelper.JSVersion"></script>
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)

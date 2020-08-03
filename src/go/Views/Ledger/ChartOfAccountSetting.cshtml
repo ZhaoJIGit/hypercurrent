@@ -1,0 +1,39 @@
+﻿@{
+    ViewBag.Title = "Chart Of Account Setting";
+}
+
+
+<div class="mg-schedule">
+    <div class="mg-wrapper">
+        <ul>
+            <li><a href="/Setting/Setup/Start">@HtmlLang.Write(LangKey.Start)</a></li>
+            <li><a href="/Setting/Setup/Organisation">@HtmlLang.Write(LangModule.Acct, "OrganizationSettings", "Organization Settings")</a></li>
+            <li><a href="/Setting/Setup/Financial">@HtmlLang.Write(LangModule.Acct, "FinancialSettings", "Financial Settings")</a></li>
+            <li><a href="/Invoice/InvoiceSetting">@HtmlLang.Write(LangModule.Acct, "InvoiceSettings", "Invoice Settings")</a></li>
+            <li><a href="/Setting/Setup/InviteUser">@HtmlLang.Write(LangModule.Acct, "InviteUsers", "Invite Users")</a></li>
+            <li><a href="/Setting/Setup/Currency">@HtmlLang.Write(LangModule.Acct, "Currencies", "Currencies")</a></li>
+            <li class="arrow-selected"><a href="/Setting/Setup/TaxRateSetting">@HtmlLang.Write(LangModule.Acct, "TaxRates", "Tax Rates")</a> </li>
+            <li class="current">@HtmlLang.Write(LangModule.Acct, "ChartOfAccounts", "Chart of Accounts")</li>
+            <li>@HtmlLang.Write(LangModule.Acct, "AccountBalances", "Account Balances")</li>
+            <li>@HtmlLang.Write(LangModule.Acct, "Done", "Done.")</li>
+        </ul>
+    </div>
+</div>
+
+<div class="clear"></div>
+
+<div class="mg-wrapper mg-setup">
+    <div class="mg-setup-title">@HtmlLang.Write(LangModule.Acct, "SetupYourChartAccounts", "How would you like to setup your Chart of Accounts?")</div>
+    <div class="mg-setup-title-description">
+        @HtmlLang.Write(LangModule.Acct, "YourChartOfAccountsIsList", "Your Chart of Accounts is a list of all the accounts used to code your transactions. You can use Megi's default accounts or import your own: ")
+    </div>
+
+    <div class="clear"></div>
+    <div class="mg-setup-action">
+        <a href="/Setting/Setup/TaxRateSetting" class="mg-btn mg-btn-gray action-left">@HtmlLang.Write(LangKey.Back)</a>
+        <a href="action-center">@HtmlLang.Write(LangKey.SaveAndQuit)</a>
+        <a href="/Setting/Setup/ConversionDate" class="mg-btn mg-btn-green action-right">@HtmlLang.Write(LangKey.Next)</a><br class="clear" />
+    </div>
+</div>
+@HtmlLang.WriteScript(LangModule.Acct)
+

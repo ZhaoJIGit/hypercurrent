@@ -1,0 +1,61 @@
+﻿@using JieNor.Megi.Identity.HtmlHelper
+@using JieNor.Megi.EntityModel.MultiLanguage
+@{
+    var isModule = ViewData["IsModule"] != null && ViewData["IsModule"].ToString() == "1";
+
+    var dashBoardInfoModel = ViewData["DashboardInfo"] as JieNor.Megi.DataModel.GL.GLDashboardInfoModel;
+    //
+    var rowSpan = isModule ? 2 : 3;
+}
+<table class="vc-hotkey-table">
+    <tr>
+        <th colspan="3">
+            @HtmlLang.Write(LangModule.Common, "HotKeys", "Hot Keys")
+        </th>
+    </tr>
+    <tr>
+        <td rowspan="@rowSpan">@HtmlLang.Write(LangModule.GL, "Voucher", "Voucher")</td>
+        <td class="vc-hotkey-table-td1"><span class="vc-key">Ctrl</span> &nbsp;+ &nbsp;<span class="vc-key">S</span></td>
+        <td>@HtmlLang.Write(LangKey.Save)</td>
+    </tr>
+    @if (dashBoardInfoModel.CanApprove && !isModule)
+    {
+        <tr>
+            <td class="vc-hotkey-table-td1"><span class="vc-key">F11</span></td>
+            <td>@HtmlLang.Write(LangModule.Common, "SaveAndApprove", "Save & Approve")</td>
+        </tr>
+    }
+    <tr>
+        <td class="vc-hotkey-table-td1"><span class="vc-key">F12</span></td>
+        <td>@HtmlLang.Write(LangModule.Common, "SaveAndNew", "Save & New")</td>
+    </tr>
+    <tr>
+        <td rowspan="4">@HtmlLang.Write(LangModule.GL, "Entry", "Entry")</td>
+        <td class="vc-hotkey-table-td1"><span class="vc-key">/</span><span class="vc-key">/</span></td>
+        <td>@HtmlLang.Write(LangModule.GL, "CopyPreviousEntryReference", "Copy the previous entry's reference.")</td>
+    </tr>
+    <tr>
+        <td class="vc-hotkey-table-td1"><span class="vc-key">.</span><span class="vc-key">.</span></td>
+        <td>@HtmlLang.Write(LangModule.GL, "CopyFirstEntryReference", "Copy the first entry's reference.")</td>
+    </tr>
+    <tr>
+        <td class="vc-hotkey-table-td1"><span class="vc-key">=</span></td>
+        <td>@HtmlLang.Write(LangModule.GL, "AutoBalanceDebitAndCredit", "Auto balance debit and credit.")</td>
+    </tr>
+    <tr>
+        <td class="vc-hotkey-table-td1"><span class="vc-key">space</span></td>
+        <td>@HtmlLang.Write(LangModule.GL, "SwapDebitAndCredit", "Swap the debit and credit.")</td>
+    </tr>
+    <tr>
+        <td rowspan="2">@HtmlLang.Write(LangModule.Common, "Focus", "Focus")</td>
+        <td class="vc-hotkey-table-td1"><span class="vc-key">Enter</span>&nbsp;/&nbsp;<span class="vc-key">Tab</span></td>
+        <td>@HtmlLang.Write(LangModule.GL, "Switch2NextInput", "Switch to next input.")</td>
+    </tr>
+    <tr>
+        <td class="vc-hotkey-table-td1">
+            <span class="vc-key">Shift</span>&nbsp;+&nbsp;<span class="vc-key">Enter</span><br />
+            <span class="vc-key">Shift</span>&nbsp;+&nbsp;<span class="vc-key">Tab</span>
+        </td>
+        <td>@HtmlLang.Write(LangModule.GL, "Switch2previousInput", "Switch to previous input.")</td>
+    </tr>
+</table>

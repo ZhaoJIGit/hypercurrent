@@ -1,0 +1,21 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+@using JieNor.Megi.Common.Utility;
+<div class="m-imain">
+    <div id="divMessage"></div>
+    <div class="m-imain-content">
+        <div id="divFinancial" class="m-form m-form-nopadding">
+            @Html.Partial("UCGLBasicInfoEdit")
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<input type="hidden" id="hidLastDayLastMonth" value="@ViewBag.LastDayLastMonth" />
+<input type="hidden" class="mg-data m-form-key" name="MItemID" />
+<input type="hidden" class="mg-data" name="MOrgID" value="@ViewBag.OrgCode" />
+<input type="hidden" id="hidBeginDate" value="@ViewData["BeginDate"]" />
+@*添加对语言的js引用*@
+@HtmlLang.WriteScript(LangModule.Acct)
+@HtmlLang.WriteScript(LangModule.BD)
+<script src="@ServerHelper.ScriptServer/Scripts/BD/InitSetting/GLBasicInfoEdit.js?@ServerHelper.JSVersion"></script>

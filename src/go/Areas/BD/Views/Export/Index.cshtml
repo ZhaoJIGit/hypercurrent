@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="robots" content="noindex,nofllow" />
+    <title>@ViewBag.Title</title>
+    @{
+        Layout = null;
+    }
+    <script type="text/javascript">
+        @Html.Raw(string.Format("document.domain ='{0}';", ServerHelper.Domain))
+    </script>
+    <link type="text/css" href="@ServerHelper.StaticServer/FW/include/loadmask/jquery.loadmask.css?@ServerHelper.JSVersion" rel="stylesheet" />
+    <link type="text/css" href="@ServerHelper.StaticServer/FW/include/loadmask/jquery.loadmask.custom.css?@ServerHelper.JSVersion" rel="stylesheet" />
+    <link href="@ServerHelper.StaticServer/FW/min/jquery.megi.min.css?@ServerHelper.JSVersion" rel="stylesheet" />
+    <script type="text/javascript" src="@ServerHelper.StaticServer/FW/scripts/jquery-1.8.2.min.js?@ServerHelper.JSVersion"></script>
+    <script type="text/javascript" src="@ServerHelper.StaticServer/FW/scripts/jquery.megi.common.js?@ServerHelper.JSVersion"></script>
+    <script type="text/javascript" src="@ServerHelper.StaticServer/FW/include/loadmask/jquery.loadmask.js?@ServerHelper.JSVersion"></script>
+    <script type="text/javascript" src="@ServerHelper.StaticServer/FW/scripts/jquery.megi.browser.tabswitch.js?@ServerHelper.JSVersion"></script>
+    <script type="text/javascript" src="@ServerHelper.StaticServer/FW/scripts/jquery.fileDownload.js?@ServerHelper.JSVersion"></script>
+    <script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/BD/Export/Index.js?@ServerHelper.JSVersion"></script>
+</head>
+    <body>
+        <div id="divProgress" style="padding-left: 2px; padding-right: 2px; padding-top: 2px; text-align: center;">
+            <div class='progress-wrapper'>
+                <div class='progress'></div>
+            </div>
+            <div class='message' style='margin-top:10px;'>@HtmlLang.Write(LangModule.BD, "PreparingExportPlsWait", "Preparing to export, please wait...")</div>
+        </div>
+    </body>
+</html>

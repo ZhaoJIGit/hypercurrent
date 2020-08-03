@@ -1,0 +1,16 @@
+﻿
+@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+@using JieNor.Megi.Common.Utility
+<div class="m-imain mg-setup">
+    <div class="m-imain-content">
+        <div id="divPreviewList" style="padding-top: 6px;">
+            <table id="tbLogList" style="width:880px;height:400px; "></table>
+        </div>
+    </div>
+</div>
+
+@HtmlLang.WriteScript(LangModule.Acct)
+<script src="@ServerHelper.ScriptServer/scripts/BD/BDAccount/AccountMatchLog.js?@ServerHelper.JSVersion"></script>
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)

@@ -1,0 +1,17 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+@using JieNor.Megi.Common.Utility;
+@Html.Partial("PaymentPartial/PaymentEditPartial")
+<div class="m-toolbar-footer">
+    <div class="left">
+        <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray">@HtmlLang.Write(LangKey.Cancel)</a>
+    </div>
+
+    <div class="right">
+        <a href="javascript:void(0)" id="aSavePayment" class="easyui-linkbutton easyui-linkbutton-yellow">@HtmlLang.Write(LangKey.Save)</a>
+    </div>
+    <div class="clear"></div>
+</div>
+
+<script src="@ServerHelper.ScriptServer/Scripts/IV/Payment/PaymentCreateByBankBill.js?@ServerHelper.JSVersion"></script>

@@ -1,0 +1,76 @@
+﻿@using JieNor.Megi.EntityModel.MultiLanguage;
+@using JieNor.Megi.Common.Utility;
+@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    var model = ViewBag.BankBillEntry as JieNor.Megi.DataModel.IV.IVBankBillRecListModel;
+    bool isbankAccountEdit = HtmlSECMenu.HavePermission(BizObject.BankAccount, PermissionItem.Change);
+}
+@using JieNor.Megi.Common.Utility;
+<div class="recmatch-main m-imain">
+    <div class="left">
+        <div class="bank-record">
+            <div class="rec-choose-title">@HtmlLang.Write(LangModule.Bank, "BankTransactions", "银行交易记录")</div>
+            <table>
+                <tr class="rec-line" data-MBankBillEntryID="@Html.Raw(model.MEntryID)"
+                    data-MSpentAmtFor="@Html.Raw(model.MSpentAmt)" data-MBankID="@ViewBag.BankId"
+                    data-MReceiveAmtFor="@Html.Raw(model.MReceivedAmt)">
+                    <td width="30%"><span class="record-date">@Html.Raw(model.MDate.ToString("yyyy-MM-dd"))</span></td>
+                    <td width="55%">@HtmlBDBank.AssembleTransAccount(model)</td>
+                    <td width="15%">@Html.Raw(model.MSpentAmt > 0 ? model.MSpentAmt.ToMoneyFormat() : model.MReceivedAmt.ToMoneyFormat()) </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="right">
+        <div class="megi-record">
+            <div class="rec-choose-title">@HtmlLang.Write(LangModule.Bank, "PlsChooseOneItem", "请从系统匹配项中选择一行")<div class="m-f-right">@HtmlLang.Write(LangModule.Bank, "Transactions", "交易"): &nbsp;@Html.Raw(model.MMatchList.Count)</div></div>
+            <table class="megi-record">
+                @for (var i = 0; i < model.MMatchList.Count; i++)
+                {
+                    <tr class="match-line" data-MSpentAmtFor="@Html.Raw(model.MMatchList[i].MSpentAmtFor)"
+                        data-MReceiveAmtFor="@Html.Raw(model.MMatchList[i].MReceiveAmtFor)" data-MTargetBillType="@Html.Raw(model.MMatchList[i].MTargetBillType)"
+                        data-MDate="@Html.Raw(model.MMatchList[i].MBizDate.ToString("yyyy-MM-dd"))">
+                        <td width="5%">
+                            @if (model.MMatchList[i].MBillID == model.MMatchBillID)
+                            {
+                                <input type="radio" name="chooseBill" value="@Html.Raw(model.MMatchList[i].MBillID)" checked />
+                            }
+                            else
+                            {
+                                <input type="radio" name="chooseBill" value="@Html.Raw(model.MMatchList[i].MBillID)" />
+                            }
+                        </td>
+                        <td width="25%">@Html.Raw(model.MMatchList[i].MBizDate.ToString("yyyy-MM-dd"))</td>
+                        <td width="55%">@HtmlBDBank.AssembleMegiAccount(model.MMatchList[i])</td>
+                        <td width="15%">
+                            @Html.Raw(model.MMatchList[i].MSpentAmtFor > 0 ? model.MMatchList[i].MSpentAmtFor.ToMoneyFormat() : model.MMatchList[i].MReceiveAmtFor.ToMoneyFormat())
+                        </td>
+                    </tr>
+                }
+            </table>
+            <a class="chooseOther">@HtmlLang.Write(LangModule.Common, "NoneofAbove", "以上都不是？")</a>
+        </div>
+    </div>
+</div>
+<div class="m-toolbar-footer">
+    @if (HtmlSECMenu.HavePermission(BizObject.Bank_Reconciliation, PermissionItem.Change))
+    {
+        <div class="left">
+            <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray">@HtmlLang.Write(LangKey.Cancel)</a>
+        </div>
+        <div class="right">
+            <a href="javascript:void(0)" id="aSaveUpdate" class="easyui-splitbutton easyui-linkbutton-yellow"
+               data-options="menu:'#divSaveRec'">@HtmlLang.Write(LangModule.Common, "Update", "更新")</a>
+            <div id="divSaveRec" style="width:150px;">
+                <div>
+                    <a href="javascript:void(0)" id="aSaveAndRec">@HtmlLang.Write(LangModule.Common, "Update", "更新") & @HtmlLang.Write(LangModule.Bank, "ToReconcile", "勾对")</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@HtmlLang.WriteScript(LangModule.Common)
+@HtmlLang.WriteScript(LangModule.Bank)
+<script src="@ServerHelper.ScriptServer/Scripts/BD/BDBank/BDBankReconcileMatch.js?@ServerHelper.JSVersion"></script>
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)

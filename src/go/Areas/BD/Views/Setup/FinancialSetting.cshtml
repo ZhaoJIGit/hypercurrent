@@ -1,0 +1,11 @@
+﻿@{
+    ViewBag.Title = "Financial Settings";
+    Layout = "~/Areas/BD/Views/Shared/_SetupLayout.cshtml";
+}
+<div class="m-setup-content setup-form-wrapper">
+    @Html.Partial("../Financial/UCFinancialEdit")
+</div>
+<div class="m-help-bar">
+    <span>@HtmlLang.Write(LangModule.BD, "SetupFinancialHelp", "When you set up your organisation in Megi, enter your organisation's financial details including its year-end and tax return settings.")</span>
+</div>
+<div class="clear"></div>

@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "DeptEdit";
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+@using JieNor.Megi.Common.Utility;
+
+<div id="divDeptEdit" class="m-form m-imain" style="padding-left:20px">
+    <div class="m-form-item">
+        <ul>
+            <li class="mg-bold">@HtmlLang.Write(LangModule.Contact, "DeptName", "Department Name")</li>
+            <li><input class="easyui-validatebox mg-width200 mg-data m-lang" data-options="required:true" id="deptname" name="MName" /></li>
+        </ul>
+        <ul>
+            <li class="mg-bold">@HtmlLang.Write(LangModule.Contact, "DeptAttribute", "Department Attribute")</li>
+            <li>
+                <select id="DeptAttribute" class="easyui-combobox mg-data m-f-right" data-options="editable:false" name="MDeptAttribute" style="width:200px;height:26px;line-height:26px" panelheight="120">
+                    <option value="Dept_CRE">@HtmlLang.Write(LangModule.Contact, "CREATEDEPT", "CREATE DEPT")</option>
+                    <option value="Dept_SAL">@HtmlLang.Write(LangModule.Contact, "SALEDEPT", "SALE DEPT")</option>
+                    <option value="Dept_DEV">@HtmlLang.Write(LangModule.Contact, "DEVELOPDEPT", "DEVELOP DEPT")</option>
+                    <option value="Dept_SER">@HtmlLang.Write(LangModule.Contact, "SERVICEDEPT", "SERVICE DEPT")</option>
+                </select>
+            </li>
+        </ul>
+
+    </div>
+    <input type="hidden" class="mg-data" value="@ViewData["orgid"]" id="orgid" name="MOrgID" />
+    <input type="hidden" class="mg-data m-form-key" value="@ViewData["deptid"]" id="deptid" name="MItemID" />
+    <input type="hidden" class="mg-data" value="@ViewData["parentid"]" id="parentid" name="MParentID" />
+    <input type="hidden" value="@ViewData["op"]" id="op"  />
+</div>
+<div class="m-toolbar-footer">
+    @if (HtmlSECMenu.HavePermission(BizObject.Contact, PermissionItem.Change)) { 
+    <div class="left">
+        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-gray" id="aCancel">@HtmlLang.Write(LangKey.Cancel)</a>
+    </div>
+    <div class="right">
+        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aSave">@HtmlLang.Write(LangKey.Save)</a>
+    </div>
+    }
+</div>
+@HtmlLang.WriteScript(LangModule.BD)
+<script src="@ServerHelper.ScriptServer/scripts/BD/Dept/DeptEdit.js?@ServerHelper.JSVersion"></script>
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)

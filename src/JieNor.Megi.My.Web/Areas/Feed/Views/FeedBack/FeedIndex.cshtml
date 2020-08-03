@@ -1,0 +1,79 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+@using JieNor.Megi.Common.Utility
+<div class="m-imain">
+    <div class="m-imain-content">
+        <div class="easyui-tabs">
+            <div title="@HtmlLang.Write(LangModule.My, "IWantToFeedback", "I want to feedback")"> 
+                <div id="divFeed" class="m-form-vtcl" style="min-height:300px;">
+                    <div class="m-form-section">
+                        <div class="m-form-section-title">@HtmlLang.Write(LangModule.My, "FeedbackInformation", "Feedback Information")</div>
+                        <div class="m-form-item">
+                            <ul>
+                                <li class="m-bold">@HtmlLang.Write(LangModule.Common, "Module", "Module")</li>
+                                <li>
+                                    <select class="mg-data easyui-combobox m-form-item-select textbox" name="MModule" style="width: 150px; height: 25px;">
+                                        <option value="Invoice_Sales">@HtmlLang.Write(LangModule.My, "Sales", "Sales")</option>
+                                        <option value="Invoice_Purchases">@HtmlLang.Write(LangModule.My, "Bills", "Bills")</option>
+                                        <option value="Expense">@HtmlLang.Write(LangModule.My, "Expenses", "Expenses")</option>
+                                        <option value="Receive">@HtmlLang.Write(LangModule.My, "Receipts", "Receipts")</option>
+                                        <option value="Payment">@HtmlLang.Write(LangModule.My, "Payments", "Payments")</option>
+                                        <option value="Setting">@HtmlLang.Write(LangModule.My, "Settings", "Settings")</option>
+                                        <option value="GL">@HtmlLang.Write(LangModule.My, "FBGeneralLedger", "General Ledger")</option>
+                                    </select>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="m-form-item">
+                            <ul>
+                                <li>
+                                    <textarea class="mg-data easyui-validatebox validatebox-text" name="MContent" style="min-width: 500px; width: 290px; max-width: 500px; height: 20px; min-height: 50px; max-height: 50px; padding: 8px; margin-right: 10px;" hint="@HtmlLang.Write(LangModule.My, "InputSuggestion", "please input your suggestion，500 words at most")" cols="60" rows="3"></textarea>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+
+                    <div class="m-form-section section-type4" style="padding-bottom: 0;">
+                        <div class="m-form-section-title">@HtmlLang.Write(LangModule.My, "YourContactDetailsAndSomeInfo", "Your contact details (help us communicate with you when necessary,we guarantee to keep your information confidential)")</div>
+                        <div class="m-form-item" style="height: 50px;">
+                            <ul>
+                                <li class="m-bold">@HtmlLang.Write(LangModule.My, "Contact", "Contact")</li>
+                                <li><input class="mg-data textbox" name="MFeedContact" /></li>
+                            </ul>
+                        </div>
+                        <div class="m-form-item" style="height: 50px;">
+                            <ul>
+                                <li class="m-bold">@HtmlLang.Write(LangModule.My, "Email", "Email")</li>
+                                <li><input id="tbxEmail" class="easyui-validatebox mg-data textbox" name="MFeedEmail" data-options="validType:'email'" /></li>
+                            </ul>
+                        </div>
+                        <div class="m-form-item" style="height: 50px;">
+                            <ul>
+                                <li class="m-bold">@HtmlLang.Write(LangModule.My, "Telephone", "Telephone")</li>
+                                <li><input class="easyui-numberbox mg-data textbox" name="MFeedTelphone" /></li>
+                            </ul>
+                        </div>
+
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            </div>
+            
+            @*<div title="Feedback Tracking""></div>*@
+        </div>
+    </div>
+</div>
+
+<div class="m-toolbar-footer">
+    <div class="left">
+        <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray" id="aCancel">@HtmlLang.Write(LangKey.Cancel)</a>
+    </div>
+    <div class="right">
+        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aSubmit">@HtmlLang.Write(LangModule.My, "Submit", "Submit")</a>
+    </div>
+    <br class="clear" />
+</div>
+@HtmlLang.WriteScript(LangModule.My)
+<script src="@ServerHelper.ScriptServer/scripts/Feed/FeedBack.js?@ServerHelper.JSVersion"></script>

@@ -1,0 +1,39 @@
+﻿@{
+    Layout = "~/Areas/Report/Views/Shared/_LayoutReport.cshtml";
+}
+@using JieNor.Megi.Common.Utility
+<div class="m-report-toolbar">
+    <a class="easyui-linkbutton easyui-linkbutton-l" id="aBackToReport" data-options="" href="javascript:void(0)">@HtmlLang.Write(LangModule.Report, "BackToIncomeByContact", "Back to Income By Contact")</a>
+</div>
+
+<div class="m-form-vtcl margin m-form-min">
+    <div class="m-form-vtcl-content">
+        <div class="m-form-section section-type">
+            <div class="m-form-item">
+                <ul>
+                    <li class="m-bold">@HtmlLang.Write(LangKey.StartDate)</li>
+                    <li>
+                        <input type="text" class="easyui-datebox mg-data" name="MStartDate" id="StartDate" /> 
+                    </li>
+                </ul>
+            </div>
+            <div class="m-form-item">
+                <ul>
+                    <li class="m-bold">@HtmlLang.Write(LangKey.EndDate)</li>
+                    <li>
+                        <input  type="text" class="easyui-datebox mg-data" name="MEndDate" id="EndDate" />
+                    </li>
+                </ul>
+            </div>
+            <input type="hidden" class="mg-data" name="MContactID"/>
+            <div class="m-form-item">
+                <ul>
+                    <li><a href="javascript:void(0)" class="m-btn l-btn" id="aReportUpdate">@HtmlLang.Write(LangModule.Report, "Update", "Update")</a></li>
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
+<script src="@ServerHelper.ScriptServer/scripts/Report/RptUC/IncomeTransactions.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.Report)

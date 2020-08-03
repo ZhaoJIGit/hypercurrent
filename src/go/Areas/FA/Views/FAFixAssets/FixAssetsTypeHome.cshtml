@@ -1,0 +1,66 @@
+﻿
+@using JieNor.Megi.Common.Utility
+@using JieNor.Megi.EntityModel.MultiLanguage
+@using JieNor.Megi.Identity.HtmlHelper
+@using JieNor.Megi.Tools
+@using JieNor.Megi.Core.Const
+
+@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+
+
+    var accessResponse = AccessHelper.Access();
+
+    var accessList = accessResponse.Access;
+
+    var change = accessList[BizObject.FixedAsset + PermissionItem.Change];
+    var view = accessList[BizObject.FixedAsset + PermissionItem.View];
+    var approve = accessList[BizObject.FixedAsset + PermissionItem.Approve];
+
+}
+
+<link type="text/css" rel="stylesheet" href="~/Scripts/FA/fa.css?@ServerHelper.JSVersion" />
+<script type="text/javascript" src="~/Scripts/GL/GLCheckType.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="~/Scripts/GL/GLVoucherHome.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="~/Scripts/FA/entity/FAEnums.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="~/Scripts/FA/FAHome.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="~/Scripts/FA/FAFixAssetsTypeHome.js?@ServerHelper.JSVersion"></script>
+
+
+<div class="m-toolbar">
+    @if (change)
+    {
+    <!--帐户管理-->
+        <a href="javascript:void(0)" id="divNewFixAssetsType" class="easyui-linkbutton easyui-linkbutton-yellow  easyui-linkbutton-base">@HtmlLang.Write(LangKey.New)</a>
+    }
+</div>
+
+<!--主内容-->
+<div class="fa-tp-main">
+    <!--工具栏-->
+    <div class="fa-tp-toolbar" style="margin: 20px 15px 15px 20px;">
+        <a href="javascript:void(0)" id="divDeleteFixAssetsType" class="easyui-linkbutton">@HtmlLang.Write(LangKey.Delete)</a>
+    </div>
+
+    <!--删除操作栏-->
+    <div class="fa-tp-gridDiv">
+
+        <!--表格div-->
+        <div class="fa-tp-grid">
+
+        </div>
+    </div>
+</div>
+
+@HtmlLang.WriteScript(LangModule.GL)
+@HtmlLang.WriteScript(LangModule.FA)
+@HtmlLang.WriteScript(LangModule.BD)
+
+
+<script type="text/javascript">
+    $(function () {
+
+        new FAFixAssetsTypeHome().init();
+    });
+</script>
+

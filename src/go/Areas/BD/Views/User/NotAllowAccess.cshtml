@@ -1,0 +1,14 @@
+﻿
+@{
+    //ViewBag.Title = "";
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <div style="padding-top:100px;">
+        <div class="no-authority-image">&nbsp;</div>
+        <div style="text-align: center; margin: 0 auto; font-size: 24px; color: #309AF2; font-weight:bold">@HtmlLang.Write(LangModule.User, "CanNotAccessPage", "该页面不允许访问")</div>
+        <div style="text-align: center; margin: 0 auto; font-size: 16px;color: #309AF2;padding-top:20px">@HtmlLang.Write(LangModule.User, "CanNotAccessTip", "您可能缺少该页面的访问权限，如果您需要这个权限，请联系该组织的管理员")</div>
+    </div>
+</div>
+

@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "BDBankAccountEdit";
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    var canEditBank = HtmlSECMenu.HavePermission(BizObject.BankAccount, PermissionItem.Change);
+}
+@using JieNor.Megi.Common.Utility;
+<div class="m-form">
+    <div class="lang-field-top">
+        <div class="m-form-field" id="bankTypeFieldModel" style="">
+            <div class="m-form-section lang-field-name"></div>
+            <!--银行选择，编辑列表-->
+            <div class="m-form-input">
+                <input class="easyui-validatebox mg-data lang-field-value m-lang"  data-options="required:true" name="MName" style="width:200px;">
+            </div>
+        </div>
+    </div>
+    <!--提醒信息-->
+    <div class="m-form-tip m-form-tip-box">@HtmlLang.Write(LangModule.Bank, "cannotmodify", "Tips: Once be saved , the record cannot be modified!")</div>
+    <!--保存与取消按钮-->
+    <div class="m-fixed-bottom">
+        <div class="m-toolbar-footer">
+            @if (canEditBank)
+            {
+                <div class="left">
+                    <a href="javascript:void(0);" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray" id="btnCancel"><span class="l-btn-left"><span class="l-btn-text">@HtmlLang.Write(LangKey.Cancel)</span></span></a>
+                </div>
+                <div class="right">
+                    <a href="javascript:void(0);" class="easyui-linkbutton easyui-linkbutton-yellow" id="btnSave">@HtmlLang.Write(LangKey.Save)</a>
+                </div>
+            }
+            <br class="clear">
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/BD/BDBank/BDBankTypeEdit.js?@ServerHelper.JSVersion"> </script>
+
+<script type="text/javascript">
+    new BDBankTypeEdit().init();
+</script>
+
+

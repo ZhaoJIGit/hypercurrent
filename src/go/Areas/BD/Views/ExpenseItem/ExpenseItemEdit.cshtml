@@ -1,0 +1,65 @@
+﻿@{
+    ViewBag.Title = HtmlLang.Write(LangModule.BD, "ExpenseItemEdit", "Expense Item Edit");
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+@using JieNor.Megi.Common.Utility;
+<style>
+    #divItemEdit .m-form-field {
+        padding-left: 20px;
+        padding-top: 20px;
+    }
+</style>
+<div id="divItemEdit" class="m-form m-imain">
+
+    <div class="m-form-field">
+        <div class="m-form-setion">@HtmlLang.Write(LangKey.Name)</div>
+        <div class="m-form-input">
+            <input class="easyui-validatebox m-lang mg-width200 mg-data" data-options="required:true" id="txtMNumber" name="MName" />
+        </div>
+    </div>
+    <div class="m-form-field">
+        <div class="m-form-setion">@HtmlLang.Write(LangModule.BD, "ExpenseParmentID", "The higher expense item")</div>
+        <div class="m-form-input">
+            <input class="easyui-combobox mg-width200 mg-data" style="height:26px" data-options="required:false"  id="cbxMparent" name="MParentItemID" />
+        </div>
+    </div>
+    @if (ViewBag.IsEnableGL)
+    {
+        <div class="m-form-field">
+            <div class="m-form-setion">@HtmlLang.Write(LangModule.Common, "Account", "Account")</div>
+            <div class="m-form-input">
+                <input class="easyui-combobox mg-data m-account-combobox" id="cbxExpenseAccount" style="width:204px;height:26px" name="MAccountCode" />
+            </div>
+        </div>
+    }
+
+
+    <div class="m-form-field">
+        <div class="m-form-setion">@HtmlLang.Write(LangModule.Common, "Description", "Description")</div>
+        <div class="m-form-input">
+            <input class="easyui-validatebox m-lang mg-width200 mg-data" data-options="required:false" id="tbxDesc" name="MDesc" />
+        </div>
+    </div>
+
+
+
+    <input class="mg-data m-form-key" type="hidden" maxlength="30" id="hidItemID" name="MItemID" value="@ViewBag.ItemID">
+</div>
+
+<div class="m-toolbar-footer">
+    @if (HtmlSECMenu.HavePermission(BizObject.Setting, PermissionItem.Change))
+    {
+        <div class="left">
+            <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray" id="aCancel">@HtmlLang.Write(LangKey.Cancel)</a>
+        </div>
+        <div class="right">
+            <a href="/BD/ExpenseItem/ExpenseItemList" class="easyui-linkbutton easyui-linkbutton-yellow" id="aSave">@HtmlLang.Write(LangKey.Save)</a>
+        </div>
+        <br class="clear" />
+    }
+</div>
+<input type="hidden" name="op" id="op" />
+<input type="hidden" id="hideIsEnableGL" value="@ViewBag.IsEnableGL.ToString().ToLower()"/>
+<script src="@ServerHelper.ScriptServer/scripts/BD/ExpenseItem/ExpenseItemEdit.js?@ServerHelper.JSVersion"></script>
+
+@HtmlLang.WriteScript(LangModule.BD)

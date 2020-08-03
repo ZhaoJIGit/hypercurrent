@@ -1,0 +1,60 @@
+﻿@{
+    Layout = "~/Areas/Report/Views/Shared/_LayoutReport.cshtml";
+}
+@using JieNor.Megi.Common.Utility
+<div class="m-report-toolbar">
+    <a style="display:none;" class="easyui-linkbutton easyui-linkbutton-l" id="aBackToReport" data-options="" href="javascript:void(0)">@HtmlLang.Write(LangModule.Report, "BackToBankAndCashSummary", "Back to bank and cash summary")</a>
+</div>
+
+<div class="m-form-vtcl margin m-form-min">
+    <div class="m-form-vtcl-content">
+        <div class="m-form-section section-type">
+            <div class="m-form-item">
+                <ul>
+                    <li class="m-bold">@HtmlLang.Write(LangKey.Accounts)</li>
+                    <li><select id="selAccount" class="easyui-combobox mg-data" data-options="@HtmlBDAccount.BankDataOptions()" style="width:120px; height:22px;" name="MAccountID">
+                        
+                        </select>
+                    </li>
+                </ul>
+            </div>
+            <div class="m-form-item">
+                <ul>
+                    <li class="m-bold">@HtmlLang.Write(LangKey.From)</li>
+                    <li><input id="selFromDate"   type="text" onchange="" class="easyui-datebox mg-data" name="MStartDate"/>
+                    </li>
+                </ul>
+            </div>
+            <div class="m-form-item">
+                <ul>
+                    <li class="m-bold">@HtmlLang.Write(LangKey.To)</li>
+                    <li><input id="selToDate" type="text" class="easyui-datebox mg-data" name="MEndDate"/>
+                    </li>
+                </ul>
+            </div>
+           <div class="m-form-item">
+                <ul>
+                    <li class="m-bold">@HtmlLang.Write(LangModule.Report, "ShowIn", "Show In ") @JieNor.Megi.Identity.HtmlHelper.HtmlBDCurrency.GetBaseCurrency()</li>
+                    <li>
+                        <input type="checkbox" class="mg-data" name="ShowInUSD" />
+                    </li>
+                </ul>
+            </div>
+            @HtmlTrack.ReportFilter()
+
+
+            <div class="m-form-item">
+                <ul>
+                    <li><a href="javascript:void(0)" class="m-btn l-btn" id="aReportUpdate">@HtmlLang.Write(LangModule.Report, "Update", "Update")</a></li>
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<script src="@ServerHelper.ScriptServer/Scripts/Report/RptUC/CashSummary.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.Report)

@@ -1,0 +1,34 @@
+﻿
+@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+@using JieNor.Megi.Common.Utility;
+<div class="m-imain">
+    <div class="m-imain-content">
+        <div id="divTitle" style="height: 260px;">
+            <label for="MName" style="width:100%;font-weight:bold;display:inline-block;">
+                @HtmlLang.Write(LangModule.IV, "EnterBrandingThemeTitle", "Your title for the new Branding Theme")
+            </label>
+            <input class="easyui-validatebox mg-data m-lang" id="MName" data-options="required:true" name="MName" style="width:200px;" />
+            <input class="mg-data m-form-key" type="hidden" id="hidItemID" name="MItemID" value="@ViewBag.CopyID">
+            @*<div style="margin-top:15px;">
+                <input id="chkIsCopyTmpl" type="checkbox" />
+                <label for="chkIsCopyTmpl">@HtmlLang.Write(LangModule.IV, "CopyAssociatedPrintTemplate", "Copy the associated print template")</label>
+            </div>*@
+        </div>
+    </div>
+</div>
+
+<div class="m-toolbar-footer">
+    <div class="left">
+        <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray" id="aCancel">@HtmlLang.Write(LangKey.Cancel)</a>
+    </div>
+    <div class="right">
+        @if (HtmlSECMenu.HavePermission(BizObject.Setting, PermissionItem.Change))
+        {
+            <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aSave">@HtmlLang.Write(LangKey.Save)</a>
+        }
+    </div>
+</div>
+<script src="@ServerHelper.ScriptServer/scripts/BD/PrintSetting/IVSettingCopy.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.Common)

@@ -1,0 +1,49 @@
+using System;
+
+namespace JieNor.Megi.EntityModel.BD.ExpenseItem
+{
+	public class ExpenseItemViewModelBase
+	{
+		public string id
+		{
+			get;
+			set;
+		}
+
+		public string _parentId
+		{
+			get;
+			set;
+		}
+
+		public bool MIsIncludeAccount
+		{
+			get;
+			set;
+		}
+
+		public string MName
+		{
+			get;
+			set;
+		}
+
+		public string MDesc
+		{
+			get;
+			set;
+		}
+
+		public string MexpenseAccountID
+		{
+			get;
+			set;
+		}
+
+		public DateTime MModifyDate
+		{
+			get;
+			set;
+		}
+	}
+}

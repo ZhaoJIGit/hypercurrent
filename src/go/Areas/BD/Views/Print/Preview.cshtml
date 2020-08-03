@@ -1,0 +1,44 @@
+﻿@using DevExpress.Web.Mvc.UI
+@using DevExpress.XtraReports.UI
+@using JieNor.Megi.Common.Utility;
+@model JieNor.Megi.Common.ImportAndExport.DataModel.ReportModel
+@{
+    ViewBag.Title = "PrintPreview";
+    Layout = "~/Areas/Report/Views/Shared/_DialogReportLayout.cshtml";
+}
+@Html.DevExpress().GetStyleSheets(
+    new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Default" },
+    new StyleSheet { ExtensionSuite = ExtensionSuite.Icons },
+    new StyleSheet { ExtensionType = ExtensionType.DocumentViewer }
+)
+@Html.DevExpress().GetScripts(
+    new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+    new Script { ExtensionSuite = ExtensionSuite.Icons },
+    new Script { ExtensionType = ExtensionType.DocumentViewer }
+)
+@Html.DevExpress().LoadingPanel(
+    settings =>
+    {
+        settings.Name = "LoadingPanel";
+        settings.Modal = true;
+        settings.ContainerElementID = "documentViewer1";
+    }
+).GetHtml()
+@Html.Partial("PreviewPartial", Model)
+@Html.Partial("PostFormPartial")
+<input id="hidTopMargin" type="hidden" value="@Model.TopMargin" />
+<input id="hidBottomMargin" type="hidden" value="@Model.BottomMargin" />
+<input id="hidLeftMargin" type="hidden" value="@Model.Report.Margins.Left" />
+<input id="hidRightMargin" type="hidden" value="@Model.Report.Margins.Right" />
+<input id="hidPdfUrl" type="hidden" value="@ViewBag.PdfUrl" />
+<input id="hidReportType" type="hidden" value="@Model.ReportType" />
+<input id="hidJsonParam" type="hidden" value="@Request.Params["jsonParam"]" />
+<input id="hidReportName" type="hidden" value="@Model.Report.Name" />
+@HtmlLang.WriteScript(LangModule.Common)
+<script type="text/javascript" src="@ServerHelper.StaticServer/FW/include/PDFObject/pdfobject.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.StaticServer/fw/scripts/jquery.megi.common.js?@ServerHelper.JSVersion"></script>
+@*<script type="text/javascript" src="@ServerHelper.StaticServer/fw/scripts/jquery.megi.text.js?@ServerHelper.JSVersion"></script>*@
+<script type="text/javascript" src="@ServerHelper.StaticServer/fw/scripts/jquery.megi.ui.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.StaticServer/fw/scripts/jquery.megi.top.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.GoServer/scripts/BD/Print/PreviewBase.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.GoServer/scripts/BD/Print/Preview.js?@ServerHelper.JSVersion"></script>

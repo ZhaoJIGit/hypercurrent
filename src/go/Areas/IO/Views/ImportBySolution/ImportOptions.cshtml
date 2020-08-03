@@ -1,0 +1,315 @@
+﻿@using System.Data
+@using System.Text
+@using JieNor.Megi.Common.Utility
+@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    DataTable dtExcel = ViewBag.ExcelData as DataTable;
+    DataTable dtSpecialInvoice = ViewBag.SpecialInvoiceData as DataTable;
+    DataTable dtGeneralInvoice = ViewBag.GeneralInvoiceData as DataTable;
+    bool isHangTian = ViewBag.isHangTian;
+}
+<style>
+    .excel-data td {
+        word-break: keep-all;
+        white-space: nowrap;
+    }
+
+    table {
+        border: 1px solid #DCE0EB;
+    }
+</style>
+<div class="m-imain">
+    <div class="m-imain-content">
+        <div id="divMessage"></div>
+        <div class="mg-statement-import">
+            <div class="preview-container">
+                <div class="setting" style="padding-bottom: 10px;">
+                    <div class="title">
+                        @HtmlLang.Write(LangModule.Bank, "importSolution", "Import solution")：<span id="spSolution" style="font-size: 16px;">@Model.MName</span>
+                    </div>
+                    <div style="padding-top: 6px;">
+                        @HtmlLang.Write(LangModule.Bank, "AdjustStartLine", "Please adjust the start line imported from your file:")
+                    </div>
+                    <div class="header-row-start" style="padding-top: 5px">
+                        @Html.Raw(string.Format(HtmlLang.Write(LangModule.Common, "HeadingBeginLine", "1．Column title starts from {0} row.").ToHtmlString(),
+                            string.Format("<input id='txtHeaderRowStart' type='text' size='2' value='{0}' data-options='required:true' style='height:26px;' />", @Html.Raw(Model.MHeaderRowIndex))))
+                    </div>
+                    <div class="data-row-start" style="padding-top: 5px; padding-bottom: 5px;">
+                        @Html.Raw(string.Format(HtmlLang.Write(LangModule.Common, "DataBeginLine", "2．Valid data starts from {0} row.").ToHtmlString(),
+                            string.Format("<input id='txtDataRowStart' type='text' size='2' value='{0}' data-options='required:true' style='height:26px;' />", @Html.Raw(Model.MDataRowIndex))))
+                    </div>
+                </div>
+                <div class="param-setting">
+                    <div class="preview-excel-title">&nbsp;</div>
+                    <table id="tbColumnMapping" class="impot-data-mapping">
+                        <thead>
+                            <tr>
+                                <td class="no-border" nowrap>@HtmlLang.Write(LangModule.Common, "MegiColumnTitle", "Megi Column Title")</td>
+                                <td nowrap>@HtmlLang.Write(LangModule.Common, "MyFileColumnTitle", "My File Column Title")</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                if (Model.MConfig != null)
+                                {
+                                    var i = 0;
+                                    foreach (var config in Model.MConfig)
+                                    {
+                                <tr>
+                                    <td class="config-column">
+                                        @if (config.MIsRequired &&!(isHangTian && config.MConfigStandardName=="MType"))
+                                        {
+                                            <span style="color: red;">*</span>
+                                        }
+                                        <span id="@string.Concat("spConfig", config.MConfigID)">@config.MConfigName</span>
+                                        <input type="hidden" name="hidConfigID" value="@config.MConfigID" />
+                                        <input type="hidden" name="hidConfigStandardName" value="@config.MConfigStandardName" />
+                                    </td>
+                                    <td class="excel-column2">
+                                        <input id="@config.MConfigID" class="excel-select easyui-combobox" style="width: 200px; height: 28px;" />
+                                    </td>
+                                </tr>
+                                        i++;
+                                    }
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                @if (isHangTian)
+                {
+                    <div class="preview" style="top: 0px; float: right">
+                        @if (dtSpecialInvoice != null && dtSpecialInvoice.Rows.Count > 0)
+                        {
+                            <!--专用发票 -->
+                            <div>
+                                <div class="preview-excel-title">@HtmlLang.Write(LangModule.Common, "previewSpecialInvoiceTopFive", "上传发票文件中专用发票的前5行预览")</div>
+                                <div class="excel-data-container">
+                                    <table class="excel-data">
+                                        <thead>
+                                            <tr>
+                                                @{
+                                                    <td class="excel-data-header"></td>
+                            foreach (DataColumn column in dtSpecialInvoice.Columns)
+                            {
+                                                    <td class="excel-data-header">@column.ColumnName</td>
+                            }
+                                                }
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @{
+                            var topN = 5;
+                            if (dtSpecialInvoice.Rows.Count < 5)
+                            {
+                                topN = dtSpecialInvoice.Rows.Count;
+                            }
+                            for (var i = 0; i < topN; i++)
+                            {
+                                                <tr>
+                                                    @{
+                                                        <td class="excel-data-index">@(i + 1)</td>
+                                for (var j = 0; j < dtSpecialInvoice.Columns.Count; j++)
+                                {
+                                                        <td nowrap>@dtSpecialInvoice.Rows[i][j]</td>
+                                }
+                                                    }
+                                                </tr>
+                            }
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        }
+
+                        @if (dtGeneralInvoice != null && dtGeneralInvoice.Rows.Count > 0)
+                        {
+                            <!--普通发票 -->
+                            <div>
+                                <div class="preview-excel-title">@HtmlLang.Write(LangModule.Common, "previewGeneralInvoiceTopFive", "上传发票文件中普通发票的前5行预览")</div>
+                                <div class="excel-data-container">
+                                    <table class="excel-data">
+                                        <thead>
+                                            <tr>
+                                                @{
+                                                    <td class="excel-data-header"></td>
+
+                            foreach (DataColumn column in dtGeneralInvoice.Columns)
+                            {
+                                                    <td class="excel-data-header">@column.ColumnName</td>
+                            }
+                                                }
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @{
+                            var topN = 5;
+                            if (dtGeneralInvoice.Rows.Count < 5)
+                            {
+                                topN = dtGeneralInvoice.Rows.Count;
+                            }
+                            for (var i = 0; i < topN; i++)
+                            {
+                                                <tr>
+                                                    @{
+                                                        <td class="excel-data-index">@(i + 1)</td>
+                                for (var j = 0; j < dtGeneralInvoice.Columns.Count; j++)
+                                {
+                                                        <td nowrap>@dtGeneralInvoice.Rows[i][j]</td>
+                                }
+                                                    }
+                                                </tr>
+                            }
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                }
+                else
+                {
+                    <div class="preview" style="top: 0px; float: right">
+                        <div>
+                            <div class="preview-excel-title">@HtmlLang.Write(LangModule.Common, "previewImportDataTopN", "Preview the 20 rows of data from your selected file")</div>
+                            <div class="excel-data-container">
+                                <table class="excel-data">
+                                    <thead>
+                                        <tr>
+                                            @{
+                                                <td class="excel-data-header"></td>
+                    if (dtExcel != null)
+                    {
+                        foreach (DataColumn column in dtExcel.Columns)
+                        {
+                                                <td class="excel-data-header">@column.ColumnName</td>
+                        }
+                    }
+                                            }
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                    if (dtExcel != null)
+                    {
+                        var topN = 20;
+                        if (dtExcel.Rows.Count < 20)
+                        {
+                            topN = dtExcel.Rows.Count;
+                        }
+                        for (var i = 0; i < topN; i++)
+                        {
+                                            <tr>
+                                                @{
+                                                    <td class="excel-data-index">@(i + 1)</td>
+                            for (var j = 0; j < dtExcel.Columns.Count; j++)
+                            {
+                                                    <td nowrap>@dtExcel.Rows[i][j]</td>
+                            }
+                                                }
+                                            </tr>
+                        }
+                    }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+
+
+
+        <div id="divDBDataPreview" class="import-dbdata-preview">
+            <div class="preview-save-title">@HtmlLang.Write(LangModule.Bank, "previewBillEntryTobeSave", "preview 20 rows data will Importing to  Megi system")</div>
+            @if (isHangTian)
+            {
+                <div class="main-header" style="margin-left: 10px; margin-top: 10px;">
+                    <div index="0" id="tab0" title=@HtmlLang.Write(LangModule.FP, "SpecialFapiao", "增值税专用发票")>
+                    </div>
+                    <div index="1" id="tab1" title=@HtmlLang.Write(LangModule.FP, "NormalFapiao", "增值税普通发票")>
+                    </div>
+                </div>
+
+                <div class="main-bottom">
+                    <!--专用发票 -->
+                    <div id="specialGrid" index="0">
+                        <div class="excel-data-container">
+                            <table id='tbPreviewSpecialMapping' class='tobe-save-data excel-data'>
+                                <thead>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div id="ptGrid" index="1">
+                        <div class="excel-data-container">
+                            <table id='tbPreviewptMapping' class='tobe-save-data excel-data'>
+                                <thead>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            }
+            else
+            {
+                <div class="excel-data-container">
+                    <table id='tbPreviewMapping' class='tobe-save-data excel-data'>
+                        <thead>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            }
+        </div>
+
+    </div>
+
+</div>
+<div class="m-toolbar-footer">
+    <div class="left">
+        <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray">@HtmlLang.Write(LangKey.Cancel)</a>
+    </div>
+    <div class="right" id="btnPreview">
+
+        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aPreview">@HtmlLang.Write(LangModule.Bank, "PreviewImportData", "Preview")</a>
+        <a id="aBack" href="javascript:void(0);" class="mg-btn-back">@HtmlLang.Write(LangKey.Back)</a>
+    </div>
+    <div class="right" id="btnSave" style="display: none">
+        <a id="aSave" href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow">@HtmlLang.Write(LangKey.Save)</a>
+        <a id="aBackAgain" href="javascript:void(0);" class="mg-btn-back" style="">@HtmlLang.Write(LangKey.Back)</a>
+
+    </div>
+</div>
+<input type="hidden" id="hidExcelData" value='@ViewBag.JsonExcelData' />
+<input type="hidden" id="hidPreviewTop" value="@ViewBag.PreviewTop" />
+<input type="hidden" id="hidJsonSolution" value="@ViewBag.JsonSolution" />
+<input type="hidden" id="hidFileName" value="@ViewBag.FileName" />
+<input type="hidden" id="hidExcelHeader" value="@ViewBag.ExcelHeader" />
+<input type="hidden" id="hidConfigColumn" value='@ViewBag.JsonConfigColumn'>
+<input type="hidden" id="inOrOuttype" value="@ViewBag.inOrOuttype" />
+<input type="hidden" id="fpType" value="@ViewBag.FpType" />
+<input type="hidden" id="hidSpecivalFaPiao" value='@ViewBag.SpecialInvoiceJson' />
+<input type="hidden" id="hidGeneralFaPiao" value='@ViewBag.GeneralInvoiceJson' />
+<input type="hidden" id="isHangTian" value='@isHangTian' />
+
+@HtmlLang.WriteScript(LangModule.Docs)
+@HtmlLang.WriteScript(LangModule.GL)
+@HtmlLang.WriteScript(LangModule.IV)
+@HtmlLang.WriteScript(LangModule.Bank)
+@HtmlLang.WriteScript(LangModule.Acct)
+@HtmlLang.WriteScript(LangModule.Common)
+@HtmlLang.WriteScript(LangModule.FP)
+
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/BD/Import/ImportBase.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/IO/ImportBySolution/ImportOptions.js?@ServerHelper.JSVersion"></script>

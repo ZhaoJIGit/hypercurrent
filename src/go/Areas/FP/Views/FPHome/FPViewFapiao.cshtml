@@ -1,0 +1,338 @@
+﻿@using JieNor.Megi.Identity.HtmlHelper
+@using JieNor.Megi.EntityModel.MultiLanguage
+@using JieNor.Megi.EntityModel.Enum
+@using JieNor.Megi.Common.Utility
+@using JieNor.Megi.DataModel.FP
+
+@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    var fapiaoId = ViewData["FapiaoId"];
+    var fapiaoType = ViewData["FapiaoType"];
+    var fapiao = ViewData["FapiaoModel"] as JieNor.Megi.DataModel.FP.FPFapiaoModel;
+
+    fapiao.MTitle = fapiao.MType == 1 ? "增值税专用发票" : "增值税普通发票";
+}
+
+@using JieNor.Megi.EntityModel.MultiLanguage
+
+@using JieNor.Megi.Common.Utility
+@using JieNor.Megi.Identity.HtmlHelper
+
+<link type="text/css" rel="stylesheet" href="~/Scripts/GL/fp.css?@ServerHelper.JSVersion" />
+
+@*<script type="text/javascript" src="~/Scripts/FP/FPViewFapiao.js?@ServerHelper.JSVersion"></script>*@
+
+<div class="m-imain">
+    <div class="m-imain-content fp-top" style="padding-bottom:0px;padding-top:10px;">
+        @if (fapiao.MStatus == (int)JieNor.Megi.DataModel.Enum.FapiaoStatusEnum.Obsolete)
+        {
+            <span class="fp-obsolete-bg">
+                &nbsp;
+            </span>
+        }
+        <!--顶部显示 增值税发票  和发票代码 ，号码 开票日期  校验码-->
+        <div class="fp-view-top">
+            <!--左侧显示二维码和机器码-->
+            <div class="fp-top-left">
+                <div class="fp-top-qrcode" style="display:none;">
+                    <img src="~/Scripts/GL/images/QC.png" style="width:85px;height:85px;" />
+                </div>
+                <div class="fp-top-machinenumber" style="display:none;">
+                    <div class="fp-machinenumber-title fp-font3" style="float:left;font-family:'Arial Unicode MS';font-size:9.5px;color:#000;float:left">机器编号:</div>
+                    <div class="fap-machinenumber-value fp-font2" style="color:#000;float:left">@fapiao.MMachineCode</div>
+                </div>
+            </div>
+            <!--中间显示增值税发票-->
+            <div class="fp-top-center">
+                <div class="fp-top-name">@fapiao.MTitle</div>
+                <div class="fp-top-hr">
+                    <hr class="fp-top-hr1" />
+                    <hr class="fp-top-hr2" />
+                </div>
+            </div>
+            <!--右侧显示代码等信息-->
+            <div class="fp-top-right">
+                <!--用表格的形式来展示-->
+                <table class="fp-base-table">
+                    <!--发票代码-->
+                    <tr class="fp-base-table-tr">
+                        <td class="fp-ps-table-name fp-font0">
+                            发票代码:
+                        </td>
+                        <td class="fp-base-table-value fp-font2 fp-text-left">
+                            @fapiao.MCode
+                        </td>
+                    </tr>
+                    <!--发票号码-->
+                    <tr class="fp-base-table-tr">
+                        <td class="fp-ps-table-name fp-font0">
+                            发票号码:
+                        </td>
+                        <td class="fp-base-table-value fp-font2 fp-text-left">
+                            @fapiao.MNumber
+                        </td>
+                    </tr>
+                    <!--开票日期-->
+                    <tr class="fp-base-table-tr">
+                        <td class="fp-ps-table-name fp-font0">
+                            开票日期:
+                        </td>
+                        <td class="fp-base-table-value fp-font2 fp-text-left">
+                            @fapiao.MBizDate.ToString("yyyy年MM月dd日")
+                        </td>
+                    </tr>
+                    <!--校验码-->
+                    <tr class="fp-base-table-tr">
+                        <td class="fp-ps-table-name fp-font0">
+                            校&nbsp;&nbsp;验&nbsp;&nbsp;码:
+                        </td>
+                        <td class="fp-base-table-value fp-font2  fp-text-left">
+                            @fapiao.MValidateCode
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!--发票主体 11共有11列-->
+        <div class="fp-view-body">
+
+            <!--表体-->
+            <table class="fp-view-body-table fp-border" style="width:100%;border-collapse:collapse;">
+                <!--第一行，展示购买方相关信息-->
+                <tr class="fp-puchase-tr" style="height:100px;">
+                    <td style="width:40px;" class="fp-font0 fp-border-right">
+                        购<br /> 买<br />方
+                    </td>
+                    <td style="width:545px;">
+                        <!--用表格的形式来展示-->
+                        <table class="fp-ps-table">
+                            <!--发票代码-->
+                            <tr class="fp-ps-table-tr">
+                                <td class="fp-ps-table-name fp-font0">
+                                    名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称:
+                                </td>
+                                <td class="fp-ps-table-value fp-font1 fp-text-left">
+                                    <span class="fp-text-left fp-font1 easyui-tooltip" etitle="@MText.Encode(fapiao.MPContactName)">@fapiao.MPContactName</span>
+                                </td>
+                            </tr>
+                            <!--发票号码-->
+                            <tr class="fp-ps-table-tr">
+                                <td class="fp-ps-table-name fp-font0">
+                                    纳税人识别号:
+                                </td>
+                                <td class="fp-ps-table-value fp-font1 fp-text-left">
+                                    <span class="fp-text-left fp-font1">@fapiao.MPContactTaxCode</span>
+                                </td>
+                            </tr>
+                            <!--开票日期-->
+                            <tr class="fp-ps-table-tr">
+                                <td class="fp-ps-table-name fp-font0">
+                                    地&nbsp;&nbsp;址、电&nbsp;&nbsp;话:
+                                </td>
+                                <td class="fp-ps-table-value fp-font1 fp-text-left">
+                                    <span class="fp-text-left fp-font1 easyui-tooltip" etitle="@MText.Encode(fapiao.MPContactAddressPhone)">@fapiao.MPContactAddressPhone</span>
+                                </td>
+                            </tr>
+                            <!--校验码-->
+                            <tr class="fp-ps-table-tr">
+                                <td class="fp-ps-table-name fp-font0">
+                                    开户行及账号:
+                                </td>
+                                <td class="fp-ps-table-value fp-font1 fp-text-left">
+                                    <span class="fp-text-left fp-font1 easyui-tooltip" etitle="@MText.Encode(fapiao.MPContactBankInfo)">@fapiao.MPContactBankInfo</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="width:40px;" class="fp-font0 fp-border-right fp-border-left">密<br /> 码<br />区</td>
+                    <td class="fp-text-left">
+                        <div style="padding: 0px 5px 0px 5px; word-break: break-all; height: 100px; overflow: hidden;" class="fp-font4">@fapiao.MPassword</div>
+                    </td>
+                </tr>
+                <tr class="fp-body-tr fp-border-top" style="height:160px;overflow-y:auto">
+                    <td colspan="4" style="padding-left:0px;">
+                        <table class="fp-body-table" style="width:100%;border-collapse:collapse;">
+                            <tr>
+                                <td class="fp-header-0 fp-font0 fp-border-right fp-text-center">货物或应税劳务、服务名称</td>
+                                <td class="fp-header-1 fp-font0 fp-border-right fp-text-center">规格型号</td>
+                                <td class="fp-header-2 fp-font0 fp-border-right fp-text-center">单位</td>
+                                <td class="fp-header-3 fp-font0 fp-border-right fp-text-center">数&nbsp;&nbsp;&nbsp;量</td>
+                                <td class="fp-header-4 fp-font0 fp-border-right fp-text-center">单&nbsp;&nbsp;&nbsp;价</td>
+                                <td class="fp-header-5 fp-font0 fp-border-right fp-text-center">金&nbsp;&nbsp;&nbsp;额</td>
+                                <td class="fp-header-6 fp-font0 fp-border-right fp-text-center">税率</td>
+                                <td class="fp-font0">税&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;额</td>
+                                <td style="width:20px"></td>
+                            </tr>
+                        </table>
+                        <div class="fp-entry-div">
+                            <table class="fp-entry-table">
+
+                                @for (var i = 0; i < @fapiao.MFapiaoEntrys.Count; i++)
+                                {
+                                    <tr>
+                                        <td class="fp-col-0 fp-font1 fp-border-right fp-text-left"><span class="fp-font1 easyui-tooltip" etitle="@MText.Encode(fapiao.MFapiaoEntrys[i].MItemName)">@fapiao.MFapiaoEntrys[i].MItemName</span></td>
+                                        <td class="fp-col-1 fp-font1 fp-border-right fp-text-center">@fapiao.MFapiaoEntrys[i].MItemType</td>
+                                        <td class="fp-col-2 fp-font1 fp-border-right fp-text-center">@fapiao.MFapiaoEntrys[i].MUnit</td>
+                                        <td class="fp-col-3 fp-border-right fp-text-right"><span class="fp-font2">@(fapiao.MFapiaoEntrys[i].MQuantity == 0 ? "" : HtmlMoneyHelper.ToQuantityString(fapiao.MFapiaoEntrys[i].MQuantity) )</span></td>
+                                        <td class="fp-col-4 fp-border-right fp-text-right"><span class="fp-font2">@(fapiao.MFapiaoEntrys[i].MPrice == 0 ? "" : fapiao.MFapiaoEntrys[i].MPrice.ToString() )</span></td>
+                                        <td class="fp-col-5 fp-border-right fp-text-right"><span class="fp-font2">@fapiao.MFapiaoEntrys[i].MAmount.ToMoneyFormat()</span></td>
+                                        <td class="fp-col-6 fp-border-right fp-text-right"><span class="fp-font2">
+                                        @if (fapiao.MFapiaoEntrys[i].MTaxPercent == 0 && fapiao.MFapiaoEntrys[i].MTaxAmount != 0)
+                                        {
+                                            @Html.Raw("");
+                                        }
+                                        else
+                                        {
+                                            var taxPercent =fapiao.MFapiaoEntrys[i].MTaxPercent.ToString().Replace(".00", "");
+                                            @Html.Raw(taxPercent+"%");
+                                        }
+                                        </span></td>
+                                        <td class="fp-text-right"><span class="fp-font2 ">@fapiao.MFapiaoEntrys[i].MTaxAmount.ToMoneyFormat()</span></td>
+                                    </tr>
+                                }
+
+                                @for (var i = 0; i < 8 - fapiao.MFapiaoEntrys.Count; i++)
+                                {
+                                    <tr>
+                                        <td class="fp-col-0 fp-font1 fp-border-right fp-text-left"><span class="fp-font1 "></span></td>
+                                        <td class="fp-col-1 fp-font1 fp-border-right fp-text-left"><span class="fp-font1 "></span></td>
+                                        <td class="fp-col-2 fp-font1 fp-border-right fp-text-center"><span class="fp-font1 "></span></td>
+                                        <td class="fp-col-3 fp-border-right fp-text-right"><span class="fp-font2"></span></td>
+                                        <td class="fp-col-4 fp-border-right fp-text-right"><span class="fp-font2"></span></td>
+                                        <td class="fp-col-5 fp-border-right fp-text-right"><span class="fp-font2"></span></td>
+                                        <td class="fp-col-6 fp-border-right fp-text-right"><span class="fp-font2"></span></td>
+                                        <td class="fp-text-right"><span class="fp-font2 "></span></td>
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="fp-border-bottom">
+                    <td colspan="4">
+                        <table class="fp-total-table" style="width:100%;border-collapse:collapse;table-layout:fixed;">
+                            <tr>
+                                <td class="fp-font0 fp-border-right" style="width:240px;">
+                                    <span class="fp-text-center fp-font0">合&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;计</span>
+                                </td>
+                                <td class="fp-header-1 fp-font0 fp-border-right fp-text-center"></td>
+                                <td class="fp-header-2 fp-font0 fp-border-right fp-text-center"></td>
+                                <td class="fp-header-3 fp-font0 fp-border-right fp-text-center"></td>
+                                <td class="fp-header-4 fp-font0 fp-border-right fp-text-center"></td>
+                                <td class="fp-header-5 fp-border-right fp-text-center"><span class="fp-font2" style="float:right;margin-right:10px;">￥ @fapiao.MAmount.ToMoneyFormat()</span></td>
+                                <td class="fp-header-6 fp-font2 fp-border-right fp-text-center"></td>
+                                <td><span class="fp-font2" style="float:right;margin-right:10px;">￥ @fapiao.MTaxAmount.ToMoneyFormat()</span></td>
+                                <td style="width:20px"></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr class="fp-border-top fp-border-bottom">
+                    <td colspan="4">
+                        <table class="fp-total-table" style="width:100%;border-collapse:collapse;table-layout:fixed;">
+                            <tr>
+                                <td class="fp-font0 fp-border-right" style="width:240px;">
+                                    <span class="fp-text-center fp-font0">价税合计(大写)</span>
+                                </td>
+                                <td class="fp-font0" colspan="2">
+                                    <span style="float:left;margin-left:10px;" class="fp-font1">@(fapiao.MTotalAmount.MoneyToChinese())</span>
+                                    <span class="fp-font0">（小写）</span>
+                                    <span class="fp-font2" style="float:right;margin-right:30px;">￥ @fapiao.MTotalAmount.ToMoneyFormat()</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr class="fp-puchase-tr" style="height:100px;">
+                    <td class="fp-font0 fp-border-right">
+                        销<br /> 售<br />方
+                    </td>
+                    <td>
+                        <!--用表格的形式来展示-->
+                        <table class="fp-ps-table">
+                            <!--发票代码-->
+                            <tr class="fp-ps-table-tr">
+                                <td class="fp-ps-table-name fp-font0">
+                                    名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称:
+                                </td>
+                                <td class="fp-ps-table-value fp-text-left fp-font1">
+                                    <span class="fp-text-left fp-font1 easyui-tooltip" etitle="@MText.Encode(fapiao.MSContactName)">@fapiao.MSContactName</span>
+                                </td>
+                            </tr>
+                            <!--发票号码-->
+                            <tr class="fp-ps-table-tr">
+                                <td class="fp-ps-table-name fp-font0">
+                                    纳税人识别号:
+                                </td>
+                                <td class="fp-ps-table-value fp-text-left fp-font1">
+                                    <span class="fp-text-left fp-font1">@fapiao.MSContactTaxCode</span>
+                                </td>
+                            </tr>
+                            <!--开票日期-->
+                            <tr class="fp-ps-table-tr">
+                                <td class="fp-ps-table-name fp-font0">
+                                    地&nbsp;&nbsp;址、电&nbsp;&nbsp;话:
+                                </td>
+                                <td class="fp-ps-table-value fp-text-left fp-font1">
+                                    <span class="fp-text-left fp-font1 easyui-tooltip" etitle="@MText.Encode(fapiao.MSContactAddressPhone)">@fapiao.MSContactAddressPhone</span>
+                                </td>
+                            </tr>
+                            <!--校验码-->
+                            <tr class="fp-ps-table-tr">
+                                <td class="fp-ps-table-name fp-font0">
+                                    开户行及账号:
+                                </td>
+                                <td class="fp-ps-table-value fp-text-left fp-font1">
+                                    <span class="fp-text-left fp-font1 easyui-tooltip" etitle="@MText.Encode(fapiao.MSContactBankInfo)">@fapiao.MSContactBankInfo</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td class="fp-font0 fp-border-left fp-border-right">备<br /><br />注</td>
+                    <td>
+                        @fapiao.MExplanation
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!--底部显示收款人等信息-->
+        <div class="fp-view-bottom" style="width:100%;margin-left:20px;">
+            <div class="fp-name" style="width:25%;float:left;">
+                <div class="fp-font0" style="float:left">收款人:</div>
+                <div class="fp-bottom-user fp-text-left fp-font1" style="padding-left:5px;float:left">@fapiao.MReceiver</div>
+            </div>
+            <div class="fp-name" style="width:25%;float:left;">
+                <div class="fp-font0" style="float:left">复核:</div>
+                <div class="fp-bottom-user fp-text-left fp-font1" style="padding-left:5px;float:left">@fapiao.MReaduitor</div>
+            </div>
+            <div class="fp-name" style="width:25%;float:left;">
+                <div class="fp-font0" style="float:left">开票人:</div>
+                <div class="fp-bottom-user fp-text-left fp-font1" style="padding-left:5px;float:left">@fapiao.MDrawer</div>
+            </div>
+            <div class="fp-name" style="width:25%;float:left;">
+                <div class="fp-font0" style="float:left">销售方:&nbsp;&nbsp;&nbsp;(章)</div>
+                <div class="fp-bottom-user fp-text-left fp-font1" style="padding-left:5px;float:left"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*底部工具栏*@
+<div class="m-toolbar-footer" style="display:none;">
+    <div class="left">&nbsp;<a href="javascript:void(0);" class="easyui-linkbutton ef-cancel-button">@HtmlLang.Write(LangModule.Common, "Cancel", "取消")</a></div>
+    <div class="clear"></div>
+</div>
+
+<a class="fp-close" onclick="parent.mDialog.close()" href="javascript:void(0);">
+    &nbsp;
+</a>
+@HtmlLang.WriteScript(LangModule.Common)
+@HtmlLang.WriteScript(LangModule.FP)
+<script type="text/javascript">
+    ///日志的显示加载事件
+    $(document).ready(function () {
+        //new FPViewFapiao('@fapiaoId', '@fapiaoType').init();
+    });
+</script>

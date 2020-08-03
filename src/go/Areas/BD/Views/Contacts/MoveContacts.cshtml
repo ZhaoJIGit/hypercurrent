@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "MoveContacts";
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+<style type="text/css">
+    ul li select.m-form-item-select {
+        width:150px;
+        height:22px;
+    }
+    .m-form-group-float {
+        float: left;
+        height:50px;
+        margin-left:5px;
+    }
+</style>
+@using JieNor.Megi.Common.Utility;
+<div id="divAddToGroup" class="m-form m-imain">
+    <div class="m-form-item m-form-group-float">
+        <ul>
+            <li class="mg-bold">@HtmlLang.Write(LangModule.Contact, "MoveToExistGroup", "Move to an existing group")</li>
+            <li style="padding-top:9px;">
+                <select class="mg-data m-form-item-select" id="SelectType" style="height:26px;">
+                    @JieNor.Megi.Identity.Go.HtmlHelper.HtmlBDContactsType.ContactsTypeOptions()
+                </select>
+            </li>
+        </ul>
+    </div>
+    <div class="m-form-item m-form-group-float" style="line-height:50px;">
+        <ul>
+            <li class="mg-bold">@HtmlLang.Write(LangModule.Contact, "Or", "Or")</li>
+        </ul>
+    </div>
+    <div class="m-form-item m-form-group-float">
+        <ul>
+            <li class="mg-bold">@HtmlLang.Write(LangModule.Contact, "MoveToNewGroup", "Move to a new group")</li>
+            <li><input class="mg-data m-lang" id="NewType" /></li>
+        </ul>
+    </div>
+    <input type="hidden" value="@ViewData["selectIds"]" id="selectIds" />
+    <input type="hidden" value="@ViewData["typeId"]" id="typeId" />
+    <input type="hidden" value="@ViewData["curTitle"]" id="curTitle">
+</div>
+<div class="m-toolbar-footer">
+    @if (HtmlSECMenu.HavePermission(BizObject.Contact, PermissionItem.Change))
+    {
+    <div class="left">
+        <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray" id="aCancel">@HtmlLang.Write(LangKey.Cancel)</a>
+    </div>
+    <div class="right">
+        <a href="/BD/Contacts/ContactsList" class="easyui-linkbutton easyui-linkbutton-yellow" id="aSave">@HtmlLang.Write(LangKey.Yes)</a>
+    </div>
+    }
+</div>
+<script src="@ServerHelper.ScriptServer/scripts/BD/Contacts/MoveContacts.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.Contact)
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)

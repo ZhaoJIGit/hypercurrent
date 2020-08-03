@@ -1,0 +1,53 @@
+﻿@{
+    Layout = null;
+}
+@using JieNor.Megi.Common.Utility
+<div class="mg-wrapper">
+    <div class="space"></div>
+
+    <div class="m-form-vtcl mg-half-left">
+        <div class="m-form-vtcl-content">
+            <div class="m-form-section">
+                <div class="m-form-section-title">@HtmlLang.Write(LangModule.My, "WhatIsOrgName", "What is the name of your organization?")</div>
+                <div class="m-form-item">
+                    <div class="m-form-input"><input class="easyui-validatebox mg-width200 mg-data" data-options="required:true" id="txtOrgName" name="MName" /></div>
+                </div>
+                <br class="clear"/>
+            </div>
+
+            <div class="m-form-section">
+                <div class="m-form-section-title">@HtmlLang.Write(LangModule.My, "WhereOrgPayTaxes", "Where does your organization pay taxes?") </div>
+                <div class="m-form-item">
+                    <div class="m-form-input">
+                        <select id="selPayTaxCountry" class="easyui-combobox mg-data" name="MRegionID" data-options="required:true" style="width:200px; height:26px;">
+                            @HtmlCountryRegion.SelectOptions() 
+                        </select>
+                    </div>
+                </div>
+
+                <br class="clear" />
+            </div>
+        </div>
+        <div class="m-form-vtcl-action">
+            <a href="/Organisation/OrganisationAdd" class="mg-btn mg-btn-blue">@HtmlLang.Write(LangModule.My, "PurchaseNow", "Purchase Now")</a>
+            <span>Or</span>
+            <a href="@ServerHelper.GoServer/Setting/Setup/Start" class="mg-btn mg-btn-green" id="aStartTrial">@HtmlLang.Write(LangModule.My, "StartTrial", "Start Trial")</a>
+
+            <br class="clear" />
+        </div>
+    </div>
+
+    <div class="mg-remind">
+        <p class="mg-remind-title">@HtmlLang.Write(LangModule.My, "FreeTrial", "Free trial")</p>
+
+        <p class="mg-remind-content">@HtmlLang.Write(LangModule.My, "MegiFeaturesForFree", "the Megi features for free. Try raising a few sales invoices or bills, connecting your bank feeds and even start enjoying bank reconciliation.")</p>
+
+        <p class="mg-remind-replenish">@HtmlLang.Write(LangModule.My, "TheTrialPeriodDays", "The trial period (30 days) includes up to 5 sales invoices and bills and 50 reconciled items.")</p>
+
+    </div>
+
+
+    <div class="clear"></div>
+</div>
+<script src="@ServerHelper.ScriptServer/my/scripts/Organisation/OrganisationAdd.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.My)

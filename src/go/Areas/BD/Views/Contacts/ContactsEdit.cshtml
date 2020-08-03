@@ -1,0 +1,653 @@
+﻿@using JieNor.Megi.DataModel.BD;
+@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    List<BDTrackModel> trackList = ViewData["trackList"] as List<BDTrackModel>;
+    List<BDContactsTrackLinkModel> consTrcLinkList = ViewData["consTrcLink"] as List<BDContactsTrackLinkModel>;
+    string UIType = ViewData["tabIndex"] != null ? ViewData["tabIndex"].ToString() : "";
+
+    BDContactsInfoModel contactInfo = ViewData["ContactModel"] == null ? new BDContactsInfoModel() : ViewData["ContactModel"] as BDContactsInfoModel;
+}
+@using JieNor.Megi.Common.Utility;
+@using JieNor.Megi.Tools
+@using JieNor.Megi.Common.Context
+@using JieNor.Megi.EntityModel.Enum
+@{
+    //获取上下文
+    var ctx = ContextHelper.MContext;
+    //是否是总账版
+    bool isSmartVersion = ctx.MOrgVersionID == OrgVersionEnum.Smart;
+}
+<style type="text/css">
+    .m-form-item-width ul li input {
+        width: 60px;
+    }
+
+        .m-form-item-width ul li input.m-form-number {
+            width: 115px;
+        }
+
+    ul li select.m-form-item-select {
+        width: 150px;
+        height: 22px;
+    }
+
+    .m-form-conacts-buttons {
+        border-color: #c1c1c1;
+        border-image: none;
+        border-style: solid;
+        border-width: 0 1px 1px;
+        clear: both;
+        margin-bottom: 0 !important;
+        background-color: #d7e7ff;
+        float: left;
+        padding: 8px 0 10px;
+        width: 998px;
+    }
+
+    .contact-edit-wrapper input {
+        height: 22px !important;
+    }
+    /*联系人类型样式*/
+    .checkboxFive {
+        width: 23px;
+        position: relative;
+    }
+
+        .checkboxFive input[type=checkbox] {
+            visibility: hidden;
+        }
+
+        .checkboxFive label {
+            cursor: pointer;
+            position: absolute;
+            width: 23px;
+            height: 22px;
+            top: 0;
+            left: 0;
+            border: 1px solid #CCCCCC;
+        }
+
+            .checkboxFive label:after {
+                opacity: 0;
+                content: '';
+                position: absolute;
+                width: 9px;
+                height: 5px;
+                background: 0 0;
+                top: 5px;
+                left: 6px;
+                border: 3px solid #333;
+                border-top: none;
+                border-right: none;
+                -webkit-transform: rotate(-45deg);
+                -moz-transform: rotate(-45deg);
+                -o-transform: rotate(-45deg);
+                -ms-transform: rotate(-45deg);
+                transform: rotate(-45deg);
+            }
+
+            .checkboxFive label:hover::after {
+                opacity: .5;
+            }
+
+        .checkboxFive input[type=checkbox]:checked + label:after {
+            opacity: 1;
+        }
+
+    .checkbox_disabled label {
+        background: #eee;
+    }
+</style>
+<div class="m-imain mg-setup" id="DivContactEdit">
+    <div class="m-imain-content contact-edit-wrapper">
+        <div id="tabContact" class="easyui-tabs">
+            <div title="@HtmlLang.Write(LangModule.Contact, "ContactInformation", "Contact Information")">
+            </div>
+            <div title="@HtmlLang.Write(LangModule.Contact, "FinancialDetails", "Financial Details")">
+            </div>
+        </div>
+        <div id="divContactInfo" class="m-form-vtcl">
+            <div class="m-form-vtcl-content">
+                <div class="m-form-section section-type4">
+                    <div class="m-form-section-title">@HtmlLang.Write(LangModule.Contact, "AddContact", "Add Contact")</div>
+                    <div class="m-form-item" style="height: 50px;">
+                        <ul>
+                            <li class="m-bold">@HtmlLang.Write(LangKey.Name)</li>
+
+                            <li>
+                                <input class="easyui-validatebox mg-data textbox m-lang" data-options="required:true" name="MName" id="txtMName" /></li>
+                        </ul>
+                    </div>
+                    <div class="m-form-item" style="height: 50px; width: 90px;">
+                        <ul>
+                            <li class="m-bold">@HtmlLang.Write(LangModule.Contact, "Customer", "Customer")</li>
+                            <li style="padding: 8px 0px 0px 1px;">
+                                <div class="checkboxFive" id="divCustomer">
+                                    <input type="checkbox" id="cbCustomer" />
+                                    <label for="cbCustomer"></label>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="m-form-item" style="height: 50px; width: 90px;">
+                        <ul>
+                            <li class="m-bold">@HtmlLang.Write(LangModule.Contact, "Supplier", "Supplier")</li>
+                            <li style="padding: 8px 0px 0px 2px;">
+                                <div class="checkboxFive" id="divSupplier">
+                                    <input type="checkbox" id="cbSupplier" />
+                                    <label for="cbSupplier"></label>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="m-form-item" style="height: 50px; width: 60px;">
+                        <ul>
+                            <li class="m-bold">@HtmlLang.Write(LangModule.Contact, "Other", "Other")</li>
+                            <li style="padding: 8px 0px 0px 2px;">
+                                <div class="checkboxFive" id="divOther">
+                                    <input type="checkbox" id="cbOther" />
+                                    <label for="cbOther"></label>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="m-form-item" style="height: 50px; width: 525px;">
+                        <ul>
+                            <li class="m-bold">&nbsp;</li>
+                            <li style="padding: 8px 0px 0px 0px;">
+                                <span id="spanContactTypeError" class="reg-error-image" style="margin-right:15px;float:left;margin-top:3px;" title='@HtmlLang.Write(LangModule.Contact, "PleaseSelectCustomerSupplierOrOther", "Please select customer, supplier or other !")'>&nbsp;</span>
+                                @* @HtmlLang.Write(LangModule.Contact, "ContactTypeOperationRemindMes", "Select customer, supplier or other contact type after save, will not be allowed to change.")*@
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+
+                <div class="m-form-section section-type4">
+                    <div class="m-form-section-title">@HtmlLang.Write(LangModule.Contact, "PrimaryPerson", "Primary Person")</div>
+                    <div class="m-form-item" style="height: 50px;">
+                        <ul>
+                            <li class="m-bold">@HtmlLang.Write(LangKey.FirstName)</li>
+                            <li>
+                                <input class="mg-data textbox m-lang" name="MFirstName" /></li>
+                        </ul>
+                    </div>
+                    <div class="m-form-item" style="height: 50px;">
+                        <ul>
+                            <li class="m-bold">@HtmlLang.Write(LangKey.LastName)</li>
+                            <li>
+                                <input class="mg-data textbox m-lang" name="MLastName" /></li>
+                        </ul>
+                    </div>
+                    <div class="m-form-item" style="height: 50px;">
+                        <ul>
+                            <li class="m-bold">@HtmlLang.Write(LangKey.Email)</li>
+                            <li>
+                                <input class="mg-data textbox" style="margin-top: 8.89999px;" name="MEmail" id="aMEmail" /></li>
+                        </ul>
+                    </div>
+
+                    <div class="clear">
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+                <div class="m-form-section">
+                    <div class="m-form-section-title">@HtmlLang.Write(LangModule.Contact, "ContactDetails", "Contact Details")</div>
+                    <div class="m-form-sub-section" style="width: 35%">
+                        <div class="m-form-item">
+                            <div class="m-form-lable">&nbsp;</div>
+                            <div class="m-form-input m-bold">@HtmlLang.Write(LangModule.Contact, "PostalAddress", "Postal Address")</div>
+                            <br class="clear" />
+                        </div>
+                        <div class="m-form-item">
+                            <div class="m-form-lable" style="padding-top: 10px">@HtmlLang.Write(LangModule.Contact, "Contactobject", "联系对象")</div>
+                            <div class="m-form-input">
+                                <input class="mg-data textbox postal6 m-lang" style="width: 180px;" name="MPAttention" /></div>
+                            <br class="clear" />
+                        </div>
+                        <div class="m-form-item">
+                            <div class="m-form-lable" style="padding-top: 10px">@HtmlLang.Write(LangModule.Contact, "StreetAddressORPOBox", "Street Address or PO Box")</div>
+                            <div class="m-form-input">
+                                <input class="mg-data textbox postal1 m-lang" style="width: 180px;" name="MPStreet" /></div>
+                            <br class="clear" />
+                        </div>
+                        <div class="m-form-item" >
+                            <div class="m-form-lable" style="padding-top: 10px">@HtmlLang.Write(LangModule.Contact, "TownCity", "Town / City")</div>
+                            <div class="m-form-input">
+                                <input class="mg-data textbox postal2 m-lang" style="width: 180px;" id="aMPCityID" name="MPCityID" /></div>
+                            <br class="clear" />
+                        </div>
+                        <div class="m-form-item">
+                            <div class="m-form-lable" style="padding-top: 10px;">@HtmlLang.Write(LangModule.Contact, "StateRegion", "State / Region")</div>
+                            <div class="m-form-input">
+                                <input class="mg-data textbox postal3 m-lang" style="width: 180px;" name="MPRegion" /></div>
+                            <br class="clear" />
+                        </div>
+                        <div class="m-form-item" style="padding-top: 9px">
+                            <div class="m-form-lable">@HtmlLang.Write(LangModule.Contact, "PostalZipCode", "Postal / Zip Code") </div>
+                            <div class="m-form-input">
+                                <input class="mg-data textbox postal4" style="width: 180px;" name="MPPostalNo" id="aPostalZipCode" /></div>
+                            <br class="clear" />
+                        </div>
+                        <div class="m-form-item" style="padding-top: 9px">
+                            <div class="m-form-lable">@HtmlLang.Write(LangModule.Contact, "Country", "Country")</div>
+                            <div class="m-form-input">
+                                <select id="selMPCountryID" name="MPCountryID" class="easyui-combobox mg-data" style="width:182px; height:28px;" data-options="@HtmlBASCountry.DataOptions()"></select>
+                            </div>
+                            <br class="clear"/>
+                        </div>
+                    </div>
+
+                    <div class="m-form-sub-section" style="width: 36%">
+                        <div class="m-form-item">
+                            <div class="m-form-lable">&nbsp;</div>
+                            <div class="m-form-input"><span class="m-bold">@HtmlLang.Write(LangModule.Contact, "PhysicalAddress", "Physical Address")</span> <a href="javascript:void(0)" id="aCopyPostal">@HtmlLang.Write(LangModule.Contact, "SameAsPostalAddress", "[Same as postal address]")</a></div>
+                            <br class="clear" />
+                        </div>
+                        <div class="m-form-item">
+                            <div class="m-form-lable" style="padding-top: 10px">@HtmlLang.Write(LangModule.Contact, "Contactobject", "联系对象")</div>
+                            <div class="m-form-input">
+                                <input class="mg-data textbox physical6 m-lang" style="width: 180px;" name="MRealAttention" /></div>
+                            <br class="clear" />
+                        </div>
+                        <div class="m-form-item">
+                            <div class="m-form-lable" style="padding-top: 10px">@HtmlLang.Write(LangModule.Contact, "StreetAddressORPOBox", "Street Address or PO Box")</div>
+                            <div class="m-form-input">
+                                <input class="mg-data textbox physical1 m-lang" style="width: 180px;" name="MRealStreet" /></div>
+                            <br class="clear" />
+                        </div>
+                        <div class="m-form-item" >
+                            <div class="m-form-lable" style="padding-top: 10px">@HtmlLang.Write(LangModule.Contact, "TownCity", "Town / City")</div>
+                            <div class="m-form-input">
+                                <input class="mg-data textbox physical2 m-lang" style="width: 180px;" name="MRealCityID" id="aMRealCityID" /></div>
+                            <br class="clear" />
+                        </div>
+                        <div class="m-form-item">
+                            <div class="m-form-lable" style="padding-top: 10px;">@HtmlLang.Write(LangModule.Contact, "StateRegion", "State / Region")</div>
+                            <div class="m-form-input">
+                                <input class="mg-data textbox physical3 m-lang" style="width: 180px;" name="MRealRegion" /></div>
+                            <br class="clear" />
+                        </div>
+                        <div class="m-form-item" style="padding-top: 9px">
+                            <div class="m-form-lable">@HtmlLang.Write(LangModule.Contact, "PostalZipCode", "Postal / Zip Code") </div>
+                            <div class="m-form-input">
+                                <input class="mg-data textbox physical4" style="width: 180px;" name="MRealPostalNo" id="aMRealPostalNo" /></div>
+                            <br class="clear" />
+                        </div>
+                        <div class="m-form-item" style="padding-top: 9px">
+                            <div class="m-form-lable">@HtmlLang.Write(LangModule.Contact, "Country", "Country")</div>
+                            <div class="m-form-input">
+                                <select id="selMRealCountryID" name="MRealCountryID" class="easyui-combobox mg-data" style="width:182px; height:28px;" data-options="@HtmlBASCountry.DataOptions()"></select>
+                            </div>
+                            <br class="clear" />
+                        </div>
+                        @*<br class="clear" />*@
+                    </div>
+
+                    <div class="m-form-sub-section" style="width: 28%">
+                        <div class="m-form-item">
+                            <div class="m-form-lable">&nbsp;</div>
+                            <div class="m-form-input m-bold">@HtmlLang.Write(LangModule.Contact, "OtherInfo", "其他信息")</div>
+                            <br class="clear" />
+                        </div>
+                        @*Telephone*@
+                        <div class="m-form-item" style="padding-top: 9px">
+                            <div class="m-form-lable" style="padding-top: 3px">@HtmlLang.Write(LangModule.Contact, "Telephone", "Telephone")</div>
+                            <div class="m-form-input">
+                                <input class="mg-data textbox" style="width: 180px" name="MPhone" id="aMPhone" /></div>
+                            <br class="clear" />
+
+                        </div>
+                        @*FAX*@
+                        <div class="m-form-item" style="padding-top: 9px">
+                            <div class="m-form-lable" style="padding-top: 3px">@HtmlLang.Write(LangModule.Contact, "Fax", "Fax")</div>
+                            <div class="m-form-input">
+                                <input class="mg-data textbox" style="width: 180px" name="MFax" id="aMFax" /></div>
+                            <br class="clear" />
+
+                        </div>
+                        @*Mobile*@
+                        <div class="m-form-item" style="padding-top: 9px">
+                            <div class="m-form-lable" style="padding-top: 3px">@HtmlLang.Write(LangModule.Contact, "Mobile", "Mobile")</div>
+                            <div class="m-form-input">
+                                <input class="mg-data textbox" style="width: 180px" name="MMobile" id="aMMobile" /></div>
+                            <br class="clear" />
+
+                        </div>
+                        @*Direct Dial*@
+                        <div class="m-form-item" style="padding-top: 9px">
+                            <div class="m-form-lable" style="padding-top: 3px">@HtmlLang.Write(LangModule.Contact, "DirectDial", "Direct Dial")</div>
+                            <div class="m-form-input">
+                                <input class="mg-data textbox" style="width: 180px" name="MDirectPhone" id="aMDirectPhone" /></div>
+                            <br class="clear" />
+
+                        </div>
+
+                        <div class="m-form-item" style="padding-top: 9px">
+                            <div class="m-form-lable" style="padding-top: 3px">@HtmlLang.Write(LangModule.Contact, "SkypeNameOrNumber", "Skype Name/Number")</div>
+                            <div class="m-form-input">
+                                <input class="mg-data textbox" style="width: 180px;" name="MSkypeName" id="aMSkypeName" /></div>
+                            <br class="clear" />
+                        </div>
+                        <div class="m-form-item" style="padding-top: 9px">
+                            <div class="m-form-lable" style="padding-top: 3px">@HtmlLang.Write(LangModule.Contact, "Website", "Website")</div>
+                            <div class="m-form-input">
+                                <input class="mg-data textbox" style="width: 180px;" name="MWebsite" id="aMWebsite" /></div>
+                            <br class="clear" />
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <br class="clear" />
+            </div>
+        </div>
+        <div id="divFinDetail" class="m-form-vtcl">
+            <div class="m-form-vtcl-content">
+                @if (trackList != null && trackList.Count > 0)
+                {
+                    <div id="divSaleTracking" class="m-form-section section-type4" style="">
+
+                        <div class="m-form-section-title">
+                            @if (!isSmartVersion)
+                            {
+                                @HtmlLang.Write(LangModule.Contact, "ForSales", "For Sales")
+                            }
+                            else
+                            {
+                                @HtmlLang.Write(LangModule.Contact, "ContactOutputItem", "销项")
+                            }
+                        </div>
+                        <div class="m-form-item" style="height: 50px; display: none;">
+                            <ul>
+                                <li class="m-bold">@HtmlLang.Write(LangModule.Contact, "DefaultAccount", "Default Account")</li>
+                                <li>
+                                    <select class="mg-data m-form-item-select easyui-combobox" name="MRecAcctID" data-options="@HtmlBDAccount.DataOptions()" style="width:205px;height:25px;"></select></li>
+                            </ul>
+                        </div>
+                        @{
+                            if (trackList != null)
+                            {
+                                var groupItems = trackList.GroupBy(e => e.MItemID);
+                                int sIndex = 0;
+                                string prefix = "sal_";
+                                foreach (var item in groupItems)
+                                {
+                                    sIndex += 1;
+                                    var itemList = item.ToList();
+                                    var title = itemList[0].MName;
+                                    var TrcHeadId = prefix + "MTrackHead" + sIndex.ToString();
+                                    var salTrcEntryId = prefix + "MSalTrackEntry" + sIndex.ToString();
+                                    string trackEntryJson = JieNor.Megi.Common.Utility.MText.ToJson(itemList);
+                                    string entryJsonId = prefix + "hideEntryJosn" + sIndex.ToString();
+                                    string selectedEntryId = prefix + "hideSelectedEntryId" + sIndex.ToString();
+                                    string contactId = ViewData["ItemId"] as string;
+                                    BDContactsTrackLinkModel consTrcLink = consTrcLinkList.Where(w => w.MTrackID == itemList[0].MItemID).FirstOrDefault();
+
+                                    string salTrackId = consTrcLink == null || string.IsNullOrWhiteSpace(consTrcLink.MSalTrackId) ? "" : consTrcLink.MSalTrackId;
+
+                            <div class="m-form-item" style="height: 50px;">
+                                <ul>
+                                    <li class="m-bold">@title</li>
+                                    <li>
+                                        <input type="hidden" value="@itemList[0].MItemID" class="track-id" id="@TrcHeadId" />
+                                        <input type="hidden" value="@trackEntryJson" class="track-data" id="@entryJsonId" />
+                                        <input type="hidden" value="@salTrackId" class="track-select-optionid" id="@selectedEntryId" />
+                                        <select class="m-form-item-select  easyui-combobox textbox track-entry" style="width:205px;height:25px;" id="@salTrcEntryId"></select>
+                                    </li>
+                                </ul>
+                            </div>
+                                }
+                            }
+                        }
+                        <div class="clear"></div>
+                    </div>
+                    
+
+                    <div id="divPurTracking" class="m-form-section section-type4" style="">
+                        <div class="m-form-section-title">
+                            @if (!isSmartVersion)
+                            {
+                                @HtmlLang.Write(LangModule.Contact, "ForPurchases", "For Purchases")
+                            }
+                            else
+                            {
+                                @HtmlLang.Write(LangModule.Contact, "ContactInputItem", "进项")
+                            }
+
+                        </div>
+                        <div class="m-form-item" style="height: 50px; display: none;">
+                            <ul>
+                                <li class="m-bold">@HtmlLang.Write(LangModule.Contact, "DefaultAccount", "Default Account")</li>
+                                <li>
+                                    <select class="mg-data m-form-item-select easyui-combobox" name="MPayAcctID" data-options="@HtmlBDAccount.DataOptions()" style="width:205px;height:25px;"></select></li>
+                            </ul>
+                        </div>
+                        @{
+                            if (trackList != null)
+                            {
+                                var groupItems = trackList.GroupBy(e => e.MItemID);
+                                int sIndex = 0;
+                                string prefix = "pur_";
+                                foreach (var item in groupItems)
+                                {
+                                    sIndex += 1;
+                                    var itemList = item.ToList();
+                                    var title = itemList[0].MName;
+                                    var TrcHeadId = prefix + "MTrackHead" + sIndex.ToString();
+                                    var salTrcEntryId = prefix + "MPurTrackEntry" + sIndex.ToString();
+                                    string trackEntryJson = JieNor.Megi.Common.Utility.MText.ToJson(itemList);
+                                    string entryJsonId = prefix + "hideEntryJosn" + sIndex.ToString();
+                                    string selectedEntryId = prefix + "hideSelectedEntryId" + sIndex.ToString();
+                                    string contactId = ViewData["ItemId"] as string;
+                                    BDContactsTrackLinkModel consTrcLink = consTrcLinkList.Where(w => w.MTrackID == itemList[0].MItemID).FirstOrDefault();
+
+                                    string purTrackId = consTrcLink == null || string.IsNullOrWhiteSpace(consTrcLink.MPurTrackId) ? "" : consTrcLink.MPurTrackId;
+
+                            <div class="m-form-item" style="height: 50px;">
+                                <ul>
+                                    <li class="m-bold">@title</li>
+                                    <li>
+                                        <input type="hidden" value="@itemList[0].MItemID" class="track-id" id="@TrcHeadId" />
+                                        <input type="hidden" value="@trackEntryJson" class="track-data" id="@entryJsonId" />
+                                        <input type="hidden" value="@purTrackId" class="track-select-optionid" id="@selectedEntryId" />
+                                        <select class="m-form-item-select  easyui-combobox textbox track-entry" style="width:205px;height:25px;" id="@salTrcEntryId"></select>
+                                    </li>
+                                </ul>
+                            </div>
+                                }
+                            }
+                        }
+                        <div class="clear"></div>
+                    </div>
+                }
+
+
+                @if (ViewBag.IsEnableGL)
+                {
+                    <div class="m-form-section section-type4" style="padding-bottom: 0;">
+                        <div class="m-form-section-title">
+                            @HtmlLang.Write(LangModule.Contact, "AccountSetting", "Account Setting")
+                        </div>
+                        <div class="m-form-item" style="height: 50px;">
+                            <ul>
+                                <li class="m-bold">@HtmlLang.Write(LangModule.Contact, "CurrentMoneyAccount", "Current Money Account")</li>
+                                <li>
+                                    <input id="cbxCCurrentMoney" style="height: 26px; width: 208px; margin-top: 10px" class="easyui-combobox m-account-combobox" />
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div id="divCustomersCMA" class="m-form-item" style="height: 50px; margin-top: 10px; display: block">
+                        </div>
+
+
+                        <div class="clear"></div>
+                    </div>
+                }
+                <div class="m-form-section section-type4" style="">
+                    <div class="m-form-section-title">
+                        @HtmlLang.Write(LangModule.Contact, "Tax", "Tax")
+                    </div>
+                    <div class="m-form-item" style="height: 50px;">
+                        <ul>
+                            <li class="m-bold">@HtmlLang.Write(LangModule.Contact, "TaxIDNumber", "Tax ID Number")</li>
+                            <li>
+                                <input class="mg-data textbox" name="MTaxNo" id="aMTaxNo" style="width: 205px" /></li>
+                        </ul>
+                    </div>
+                    <div id="divSaleTax" class="m-form-item" style="height: 50px;">
+                        <ul>
+                            <li class="m-bold">@HtmlLang.Write(LangModule.Contact, "SalesTax", "Sales Tax")</li>
+                            <li>
+                                <select id="SelMSalTaxTypeID" class="mg-data easyui-combobox m-form-item-select textbox" name="MSalTaxTypeID" style="width: 205px; height: 25px">
+                                    @HtmlREGTaxRate.SelectOptions()
+                                </select>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="divPurTax" class="m-form-item" style="height: 50px;">
+                        <ul>
+                            <li class="m-bold">@HtmlLang.Write(LangModule.Contact, "PurchasesTax", "Purchases Tax")</li>
+                            <li>
+                                <select id="SelMPurTaxTypeID" class="mg-data easyui-combobox m-form-item-select textbox" name="MPurTaxTypeID" style="width: 205px; height: 25px;">
+                                    @HtmlREGTaxRate.SelectOptions()
+                                </select>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+
+                <div class="m-form-section section-type4" style="padding-bottom: 0;">
+                    <div class="m-form-section-title">
+                        @HtmlLang.Write(LangModule.Contact, "DiscountTitle", "折扣")
+                    </div>
+                    <div class="m-form-item" style="height: 50px;">
+                        <ul>
+                            <li class="m-bold">@HtmlLang.Write(LangModule.Contact, "Discount", "Discount %")</li>
+                            <li>
+                                <input class="mg-data textbox easyui-numberbox" data-options="min:0,precision:2" style="width: 205px; height: 25px;" name="MDiscount" id="aMDiscount" /></li>
+                        </ul>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+
+                <div class="m-form-section section-type4" style="padding-bottom: 0;">
+                    <div class="m-form-section-title">
+                        @HtmlLang.Write(LangModule.Contact, "Currency", "Currency")
+                    </div>
+                    <div class="m-form-item" style="height: 50px;">
+                        <ul>
+                            <li class="m-bold">@HtmlLang.Write(LangModule.Contact, "DefaultCurrency", "Default Currency")</li>
+                            <li>
+                                <select class="easyui-combobox mg-data m-form-item-select textbox" name="MDefaultCyID" data-options="@HtmlBDCurrency.DataOptions()" style="width:205px;height:25px;"></select>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+
+                <div class="m-form-section section-type4" style="padding-bottom: 0;">
+                    <div class="m-form-section-title">
+                        @HtmlLang.Write(LangModule.Contact, "BatchPayments", "Batch Payments")
+                    </div>
+                    <div class="m-form-item" style="height: 60px;">
+                        <ul>
+                            <li class="m-bold">@HtmlLang.Write(LangKey.BankAccount_Number)</li>
+                            <li>
+                                <input class="mg-data textbox" style="margin-top: 8.89999px; width: 205px" name="MBankAcctNo" id="aMBankAcctNo" /></li>
+                        </ul>
+                    </div>
+                    <div class="m-form-item" style="height: 60px;">
+                        <ul>
+                            <li class="m-bold">@HtmlLang.Write(LangKey.Account_Name)</li>
+                            <li>
+                                <input class="mg-data textbox m-lang" name="MBankAccName" /></li>
+                        </ul>
+                    </div>
+                    <div class="m-form-item" style="height: 60px;">
+                        <ul>
+                            <li class="m-bold">@HtmlLang.Write(LangModule.Contact, "Details", "Details") </li>
+                            <li>
+                                <input class="mg-data textbox m-lang" name="MBankName" /></li>
+                        </ul>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+
+                @if (!isSmartVersion)
+                {
+                    <div id="divIVSetting" class="m-form-section section-type4" style="padding-bottom: 0;">
+                        <div class="m-form-section-title">
+                            @HtmlLang.Write(LangModule.Contact, "InvoiceSettings", "Invoice Settings")
+                        </div>
+                        <div id="divPurDueDate" class="m-form-item" style="height: 50px; width: 40%;">
+                            <ul>
+                                <li class="m-bold">@HtmlLang.Write(LangModule.Contact, "BillsDefaultDueDate", "Bills Default Due Date (Optional)")  </li>
+                                <li>
+                                    <label style="font-weight: bold;">@HtmlLang.Write(LangModule.Contact, "Due", "Due") </label>
+                                    <input class="mg-data textbox easyui-numberbox" style="width: 30px;" name="MPurDueDate" id="MPurDueDate" />
+                                    <select class=" mg-data textbox m-form-item-select easyui-combobox" style="width: 205px; height: 24px;" name="MPurDueCondition" id="MPurDueCondition">
+                                        <option value="item0">@HtmlLang.Write(LangModule.Contact, "OfTheFollowingMonth", "of the following month")</option>
+                                        <option value="item1">@HtmlLang.Write(LangModule.Contact, "DayAfterTheBillDate", "day(s) after the bill date")</option>
+                                        <option value="item2">@HtmlLang.Write(LangModule.Contact, "DayDfterEndBillMonth", "day(s) after the end of the bill month")</option>
+                                        <option value="item3">@HtmlLang.Write(LangModule.Contact, "OfTheCurrentMonth", "of the current month")</option>
+                                    </select>
+                                </li>
+                            </ul>
+                        </div>
+                        <div id="divSaleDueDate" class="m-form-item" style="height: 50px; width: 40%;">
+                            <ul>
+                                <li class="m-bold">@HtmlLang.Write(LangModule.Contact, "SalesInvDefDueDate", "Sales Invoices Default Due Date (Optional)")</li>
+                                <li>
+                                    <label style="font-weight: bold;">@HtmlLang.Write(LangModule.Contact, "Due", "Due")</label>
+                                    <input class="mg-data textbox easyui-numberbox" style="width: 30px;" name="MSalDueDate" id="MSalDueDate" />
+                                    <select class="mg-data m-form-item-select easyui-combobox" style="width: 205px; height: 24px;" name="MSalDueCondition" id="MSalDueCondition">
+                                        <option value="item0">@HtmlLang.Write(LangModule.Contact, "OfTheFollowingMonth", "of the following month")</option>
+                                        <option value="item1">@HtmlLang.Write(LangModule.Contact, "CondactsDayAfterTheBillDate", "销售单日期后的天数")</option>
+                                        <option value="item2">@HtmlLang.Write(LangModule.Contact, "CondactsDayDfterEndBillMonth", "销售单日期后的天数")</option>
+                                        <option value="item3">@HtmlLang.Write(LangModule.Contact, "OfTheCurrentMonth", "of the current month")</option>
+                                    </select>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                }
+            </div>
+        </div>
+        <input class="mg-data m-form-key" type="hidden" name="MItemID" value="@ViewData["ItemId"]" id="ContactID">
+        @*@Html.Partial("~/Areas/Log/Views/Log/BusLogList.cshtml")*@
+
+        <div class="clear"></div>
+        <div style=""></div>
+    </div>
+
+</div>
+<div class="m-toolbar-footer">
+    @if (HtmlSECMenu.HavePermission(BizObject.Contact, PermissionItem.Change))
+    {
+        <div class="left">
+            <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray" id="aCancel">@HtmlLang.Write(LangKey.Cancel)</a>
+        </div>
+        <div class="right">
+            <a href="/BD/Contacts/ContactView" class="easyui-linkbutton easyui-linkbutton-yellow" id="aSave">@HtmlLang.Write(LangKey.Save)</a>
+        </div>
+    }
+</div>
+<input type="hidden" value="@ViewData["ContactName"]" id="hidName" />
+@HtmlLang.WriteScript(LangModule.Contact)
+@HtmlLang.WriteScript(LangModule.Acct)
+<input type="hidden" id="hideTabTitle" value="@ViewData["TabTitle"]" />
+<input type="hidden" id="hidContactType" value="@ViewData["ContactType"]" />@*联系人类型*@
+<input type="hidden" id="hidTabIndex" value="@ViewData["tabIndex"]" />
+<input type="hidden" id="hideIsEnableGL" value="@ViewBag.IsEnableGL" />
+<input type="hidden" id="hideIsQuote" value="@Html.Raw(ViewData["IsQuote"])" />
+<input type="hidden" id="hideIsCustomer" value="@contactInfo.MIsCustomer.ToString().ToLower()" />
+<input type="hidden" id="hideIsSupplier" value="@contactInfo.MIsSupplier.ToString().ToLower()" />
+<input type="hidden" id="hideIsOther" value="@contactInfo.MIsOther.ToString().ToLower()" />
+<script src="@ServerHelper.ScriptServer/scripts/BD/Contacts/ContactsEdit.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.StaticServer/FW/scripts/jquery.megi.lang.js?@ServerHelper.JSVersion"></script>

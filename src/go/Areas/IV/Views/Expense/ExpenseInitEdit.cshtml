@@ -1,0 +1,25 @@
+﻿@using JieNor.Megi.DataModel.IV;
+@using JieNor.Megi.DataModel.IV.Expense;
+@using JieNor.Megi.Common.Utility;
+@{
+    //Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    IVExpenseModel model = ViewData["ExpenseModel"] as IVExpenseModel;
+}
+@Html.Partial("ExpenseEdit")
+@*底部工具栏*@
+<div class="m-toolbar-footer">
+    <div class="left">
+        <a href="javascript:void(0)" onclick="$.mDialog.close()" class="easyui-linkbutton easyui-linkbutton-gray">@HtmlLang.Write(LangKey.Cancel)</a>
+    </div>
+
+    <div class="right" style="width:380px;">
+        @if ((string.IsNullOrEmpty(@model.MID) || @model.MVerificationAmt == 0) && HtmlSECMenu.HavePermission(BizObject.Setting, PermissionItem.Change))
+        {
+            <a href="javascript:void(0)" id="btnSave" class="easyui-linkbutton easyui-linkbutton-yellow">@HtmlLang.Write(LangKey.Save)</a>
+        }
+    </div>
+    <div class="clear"></div>
+</div>
+
+<script src="@ServerHelper.ScriptServer/Scripts/IV/Expense/ExpenseInitEdit.js?@ServerHelper.JSVersion"></script>
+

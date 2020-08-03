@@ -1,0 +1,49 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+@using JieNor.Megi.Common.Utility
+<div class="m-form">
+    <div class="m-form-field" id="bankBankTypeInputDiv">
+        <div class="m-form-setion">@HtmlLang.Write(LangModule.Report, "Title", "Title")</div>
+        <div class="m-form-input">
+            <input class="easyui-validatebox mg-data mg-width200 " data-options="required:true" name="MTitle" />
+        </div>
+    </div>
+    <div class="m-form-field" id="bankBankTypeInputDiv">
+        <div class="m-form-setion">@HtmlLang.Write(LangModule.Report, "Subtitle", "Subtitle")</div>
+        <div class="m-form-input">
+            <input class="mg-data textbox mg-width200 " name="MSubtitle" />
+        </div>
+    </div>
+    <div class="m-form-field" id="bankBankTypeInputDiv">
+        <div class="m-form-setion">@HtmlLang.Write(LangModule.Report, "ReportDate", "Report date")</div>
+        <div class="m-form-input">
+            <input class="mg-data easyui-datebox mg-width200 " name="MReportDate" style="width:204px; height:24px;" />
+        </div>
+    </div>
+    <div class="m-form-field" id="bankBankTypeInputDiv">
+        <div class="m-form-setion">@HtmlLang.Write(LangModule.Report, "Author", "Author")</div>
+        <div class="m-form-input">
+            <input class="mg-data textbox mg-width200 " name="MAuthor" />
+        </div>
+    </div>
+</div>
+
+
+<!--保存与取消按钮-->
+<div class="m-fixed-bottom">
+    <div class="m-toolbar-footer">
+        <div style="float:left;">
+            <a href='javascript:void(0);' onclick="$.mDialog.close(0,'0');" id="aCancel" class="easyui-linkbutton easyui-linkbutton-gray">@HtmlLang.Write(LangKey.Cancel)</a>
+        </div>
+        <div style="float:right">
+            @*<a href="javascript:void(0)" id="aSaveAsDraft" class="easyui-linkbutton easyui-linkbutton-gray">@HtmlLang.Write(LangKey.SaveAsDraft)</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-gray" id="aUpdate">@HtmlLang.Write(LangKey.Delete)</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-grayn">@HtmlLang.Write(LangKey.Export)</a>*@
+            <a href="javascript:void(0)" id="aPublish" class="easyui-linkbutton easyui-linkbutton-yellow">@HtmlLang.Write(LangModule.Report, "Publish", "Publish")</a>
+        </div>
+    </div>
+</div>
+<input type="hidden" class="mg-data m-form-key" name="MID" value='@ViewData["ReportID"]' id="hidReportID" />
+<script src="@ServerHelper.ScriptServer/scripts/Report/RptHome/Publish.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.Report)

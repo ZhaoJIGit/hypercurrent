@@ -1,0 +1,107 @@
+﻿@using JieNor.Megi.DataModel.BD;
+@using JieNor.Megi.EntityModel.MultiLanguage;
+@using JieNor.Megi.Identity.HtmlHelper;
+@model JieNor.Megi.DataModel.BD.BDAttachmentFolderListModel
+@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    List<BDAttachmentCategoryListModel> attachmentCategoryList = Model.List as List<BDAttachmentCategoryListModel>;
+
+    int folderCount = attachmentCategoryList != null ? attachmentCategoryList.Count() : 0;
+}
+@using JieNor.Megi.Common.Utility;
+<div class="m-imain m-setup">
+    <div class="m-box-container m-imain-content">
+        <div class="m-box-folders">
+            <div id="divFolderList">
+                @Html.Partial("FoldersPartial", Model)
+            </div>
+            @if (HtmlSECMenu.HavePermission(BizObject.Attachment, PermissionItem.Change))
+            {
+                <div class="add-folder clear">
+                    <a id="aAddFolder" onclick="return false;">
+                        <span>+ @HtmlLang.Write(LangModule.Docs, "NewFolder", "New folder")</span>
+                    </a>
+                </div>
+            }
+        </div>
+        <div class="m-box m-box-folder-files">
+            <div id="divFolderEditPanel" class="m-box-header">
+                <div id="divCurrentFolder" class="m-left title"></div>
+                <div id="divFolderInput" class="folder-edit-panel hide">
+                    <div class="folder-name-input">
+                        <input type="text" id="txtFolder" name="MCategoryName" class="easyui-validatebox textbox" data-options="required:true" size="47" style="height:24px;" />
+                    </div>
+                    <div class="folder-name-action">
+                        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aSave">@HtmlLang.Write(LangKey.Save)</a>
+                        <a href="javascript:void(0)" class="m-btn-s easyui-linkbutton" id="aCancel">@HtmlLang.Write(LangKey.Cancel)</a>
+                    </div>
+                </div>
+                @if (HtmlSECMenu.HavePermission(BizObject.Attachment, PermissionItem.Change))
+                {
+                    <div id="divOptions" class="folder-options">
+                        <a href="javascript:void(0)" id="aOptions" class="easyui-menubutton"
+                           data-options="menu:'#divFolderOptions'">@HtmlLang.Write(LangModule.Docs, "Options", "Options")</a>
+                        <div id="divFolderOptions" style="width: 143px;">
+                            <div id="divRename"><a href="javascript:void(0)" id="aRename">@HtmlLang.Write(LangModule.Docs, "Rename", "Rename")</a></div>
+                            <div id="divDelete"><a href="javascript:void(0)" id="aDelete" class="delete-folder">@HtmlLang.Write(LangKey.Delete)</a></div>
+                        </div>
+                    </div>
+
+                }
+                <br class="clear" />
+            </div>
+            <div class="m-box-main file-list">
+                <div id="divUploadPanel" class="upload-panel hide">
+                    <h3 class="nofile-title">@HtmlLang.Write(LangModule.Docs, "NoFiles", "No files")</h3>
+                    <div class="nofile-desc">@HtmlLang.Write(LangModule.Docs, "UploadFilesTitle", "Upload your files to store them alongside all of your financial documents")</div>
+                    <div class="upload-btn">
+                        <a id="aUploadFile2" class="easyui-linkbutton">@HtmlLang.Write(LangModule.Docs, "UploadFiles", "Upload files")</a>
+                    </div>
+                </div>
+                <div id="divFileList">
+                    @if (HtmlSECMenu.HavePermission(BizObject.Attachment, PermissionItem.Change))
+                    {
+                        <div>
+                            <div class="m-file-action">
+                                <input type="file" id="fileInput" name="fileInput"  filter='track;uploadFile' multiple="multiple" class="input-file" />
+                                <a id="aUploadFile" class="easyui-linkbutton easyui-linkbutton-yellow upload-btn">@HtmlLang.Write(LangModule.Docs, "UploadFiles", "Upload files")</a>
+                                <a href="javascript:void(0)" id="aMoveTo" class="easyui-menubutton" style="margin-left:10px;"
+                                   data-options="menu:'#divMoveTo'">@HtmlLang.Write(LangModule.Docs, "MoveTo", "Move to")</a>
+                                <div id="divMoveTo" style="width: 180px;">
+                                    @{
+                                        if (@attachmentCategoryList != null)
+                                        {
+                                            for (int i = 0; i < @attachmentCategoryList.Count; i++)
+                                            {
+                                                var model = @attachmentCategoryList[i];
+                                                var categoryName = string.IsNullOrWhiteSpace(model.MBizObject) ? model.MCategoryName : HtmlLang.GetText(LangModule.Docs, model.MBizObject);
+                                                <div><a href="javascript:void(0)" data-id="@Html.Raw(model.MItemID)">@Html.Raw(categoryName)</a></div>
+                                            }
+                                        }
+                                        
+                                    }
+                                </div>
+                                <a id="aDelFile" href="#" class="easyui-linkbutton" style="margin-left:10px;">@HtmlLang.Write(LangModule.Docs, "FileDelete", "Delete")</a>
+                            </div>
+                        </div>
+                    }
+                    <div id="tbFileList" fitcolumns="true"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br class="clear" />
+    <input type="hidden" id="hdnCurFolderID" />
+    <input type="hidden" id="hdnCurUserID" value="@ViewBag.CurrentUserId" />
+    <input type="hidden" id="hdnIsNewAdd" value="@ViewBag.IsNewAdd" />
+    <input type="hidden" id="hdnMaxUploadSize" value="@ViewBag.MaxUploadSize" />
+    <input type="hidden" id="hideFolderCount" value="@folderCount"/>
+</div>
+@HtmlLang.WriteScript(LangModule.Docs)
+<script type="text/javascript" src="@ServerHelper.StaticServer/fw/scripts/jquery.ui.widget.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.StaticServer/fw/scripts/jquery.iframe-transport.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.StaticServer/fw/scripts/jquery.fileupload.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.GoServer/scripts/BD/Docs/FileBase.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.GoServer/scripts/BD/Import/ImportBase.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.GoServer/scripts/BD/Docs/Folders.js?@ServerHelper.JSVersion"></script>
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)

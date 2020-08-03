@@ -1,0 +1,36 @@
+﻿@using JieNor.Megi.Common.Utility;
+@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+@using JieNor.Megi.Common.Utility;
+<div class="m-imain " style="padding:0px 55px 0px 0px">
+    <div class="m-imain-content">
+        <div class="m-form m-form-line">
+            <div class="row">
+                <span class="lbl">@HtmlLang.Write(LangModule.Bank, "Balance", "Balance")</span>
+                <span class="content">@Html.Raw(ViewBag.TotalAmtMoneyFormat)</span>
+            </div>
+            <div class="row">
+                <span class="lbl">@HtmlLang.Write(LangModule.Bank, "PartPayment", "Part payment")</span>
+                <span class="content"><input type="text" id="txtPartPayment" style="width:150px; height:28px; text-align:right;" class="easyui-numberbox mg-validate" data-options="precision:2,required:true,min:0,max:@Html.Raw(ViewBag.TotalAmtFor)" /> </span>
+            </div>
+            <div class="row">
+                <span class="lbl">@HtmlLang.Write(LangModule.Bank, "RemainingAmount", "Remaining amount")</span>
+                <span class="content" id="spRemainAmt"></span>
+            </div>
+        </div>
+</div>
+
+</div>
+<input type="hidden" value="@Html.Raw(ViewBag.TotalAmtFor)" id="hidTotalAmtFor" />
+<input type="hidden" value="@Html.Raw(ViewBag.RowIndex)" id="hidRowIndex" />
+<div class="m-toolbar-footer">
+    <div class="left">
+        <a href="javascript:void(0);" onclick="Megi.closeDialog();" class="easyui-linkbutton easyui-linkbutton-gray">@HtmlLang.Write(LangKey.Cancel)</a>@*取消*@
+    </div>
+    <div class="right">
+        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aSplit">@HtmlLang.Write(LangModule.Bank, "Split", "Split")</a>
+    </div>
+</div>
+
+<script src="@ServerHelper.ScriptServer/Scripts/BD/BDBank/BDBankReconcileSplitEdit.js?@ServerHelper.JSVersion"></script>

@@ -1,0 +1,30 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+@using JieNor.Megi.Common.Utility
+<div class="m-form m-imain" style="padding-left:20px">
+    <div class="m-form-item">
+        <label id="lblMessage"></label>
+    </div>
+    <div class="m-form-item">
+        <table id="tbAll" class="easyui-datagrid">
+            <thead>
+                <tr>
+                    <th data-options="field:'Item',width:125,align:'center'">@HtmlLang.Write(LangModule.Acct, "Item", "Item")</th>
+                    <th data-options="field:'DebitAmount',width:110,align:'right'">@HtmlLang.Write(LangModule.Acct, "DebitTotalAmount", "借方总额")</th>
+                    <th data-options="field:'CreditAmount',width:110,align:'right'">@HtmlLang.Write(LangModule.Acct, "CreditTotalAmount", "贷方总额")</th>
+                    <th data-options="field:'Difference',width:110,align:'right'">@HtmlLang.Write(LangModule.Acct, "Difference ", "Difference")</th>
+
+                </tr>
+            </thead>
+           
+        </table>
+    </div>
+
+</div>
+<input type="hidden" id="hideGLMonth" value="@ViewData["GLMonth"]" />
+@HtmlLang.WriteScript(LangModule.Acct)
+@HtmlLang.WriteScript(LangModule.Bank)
+<script src="@ServerHelper.ScriptServer/Scripts/BD/BDAccount/TrialInitBalance.js?@ServerHelper.JSVersion"></script>
+
+

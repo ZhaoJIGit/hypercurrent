@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XtraReportsLayoutSerializer SerializerVersion="15.1.5.0" Ref="1" Name="OpeningBalances" ControlType="DevExpress.XtraReports.UI.XtraReport, DevExpress.XtraReports.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" DataSource="#Ref-0" Font="微软雅黑, 9.75pt" Version="15.1" PageWidth="850" PageHeight="1100" Margins="0, 0, 100, 100">
+  <Bands>
+    <Item1 Ref="2" ControlType="DetailBand" Name="Detail" TextAlignment="TopLeft" Font="微软雅黑, 9.75pt" Padding="0,0,0,0,100" HeightF="25">
+      <Controls>
+        <Item1 Ref="3" Name="xrTable1" ControlType="XRTable" SizeF="850,25" LocationFloat="0, 0" Font="微软雅黑, 11pt, charSet=134" BorderColor="255,50,50,50" Borders="All" TextAlignment="MiddleLeft">
+          <Rows>
+            <Item1 Ref="4" ControlType="XRTableRow" Name="xrTableRow1" Weight="11.5">
+              <Cells>
+                <Item1 Ref="5" Name="xrTableCell1" ControlType="XRTableCell" Weight="0.4">
+                  <DataBindings>
+                    <Item1 Ref="6" PropertyName="Text" DataMember="CodeTitle" />
+                  </DataBindings>
+                </Item1>
+                <Item2 Ref="7" Name="xrTableCell2" ControlType="XRTableCell" Weight="0.4">
+                  <DataBindings>
+                    <Item1 Ref="8" PropertyName="Text" DataMember="NameTitle" />
+                  </DataBindings>
+                </Item2>
+                <Item3 Ref="9" Name="xrTableCell3" ControlType="XRTableCell" Weight="0.4">
+                  <DataBindings>
+                    <Item1 Ref="10" PropertyName="Text" DataMember="DirectionTitle" />
+                  </DataBindings>
+                </Item3>
+                <Item4 Ref="11" Name="xrTableCell11" ControlType="XRTableCell" Weight="0.4">
+                  <DataBindings>
+                    <Item1 Ref="12" PropertyName="Text" DataMember="CurrencyTitle" />
+                  </DataBindings>
+                </Item4>
+                <Item5 Ref="13" Name="xrTableCell4" ControlType="XRTableCell" Weight="0.4">
+                  <DataBindings>
+                    <Item1 Ref="14" PropertyName="Text" DataMember="InitialBalanceTitle" />
+                  </DataBindings>
+                </Item5>
+                <Item6 Ref="15" Name="xrTableCell6" ControlType="XRTableCell" Weight="0.4">
+                  <FormattingRuleLinks>
+                    <Item1 Ref="17" Value="#Ref-16" />
+                  </FormattingRuleLinks>
+                  <DataBindings>
+                    <Item1 Ref="18" PropertyName="Text" DataMember="CumulativeDebitThisYearTitle" />
+                  </DataBindings>
+                </Item6>
+                <Item7 Ref="19" Name="xrTableCell7" ControlType="XRTableCell" Weight="0.4">
+                  <FormattingRuleLinks>
+                    <Item1 Ref="20" Value="#Ref-16" />
+                  </FormattingRuleLinks>
+                  <DataBindings>
+                    <Item1 Ref="21" PropertyName="Text" DataMember="CumulativeCreditThisYearTitle" />
+                  </DataBindings>
+                </Item7>
+              </Cells>
+            </Item1>
+          </Rows>
+          <StylePriority Ref="22" UseFont="false" UseBorderColor="false" UseBorders="false" UseTextAlignment="false" />
+        </Item1>
+      </Controls>
+      <StylePriority Ref="23" UseFont="false" />
+    </Item1>
+    <Item2 Ref="24" Name="TopMargin" ControlType="TopMarginBand" TextAlignment="TopLeft" Font="微软雅黑, 9.75pt" Padding="0,0,0,0,100" HeightF="100">
+      <StylePriority Ref="25" UseFont="false" />
+    </Item2>
+    <Item3 Ref="26" Name="BottomMargin" ControlType="BottomMarginBand" TextAlignment="TopLeft" Font="微软雅黑, 9.75pt" Padding="0,0,0,0,100" HeightF="100">
+      <StylePriority Ref="27" UseFont="false" />
+    </Item3>
+    <Item4 Ref="28" ControlType="DetailReportBand" Name="DetailReport" DataMember="OpeningBalanceRows" Level="0" DataSource="#Ref-0">
+      <Bands>
+        <Item1 Ref="29" ControlType="DetailBand" Name="Detail1" HeightF="25">
+          <Controls>
+            <Item1 Ref="30" Name="xrTable2" ControlType="XRTable" SizeF="850,25" LocationFloat="0, 0" Font="Times New Roman, 10pt" BorderColor="255,50,50,50" Borders="Left, Right, Bottom" TextAlignment="MiddleLeft">
+              <Rows>
+                <Item1 Ref="31" ControlType="XRTableRow" Name="xrTableRow2" Weight="11.5">
+                  <Cells>
+                    <Item1 Ref="32" Name="xrTableCell5" ControlType="XRTableCell" Text="xrTableCell5" Weight="0.4">
+                      <DataBindings>
+                        <Item1 Ref="33" PropertyName="Text" DataMember="OpeningBalanceRows.MNumber" />
+                      </DataBindings>
+                    </Item1>
+                    <Item2 Ref="34" Name="xrTableCell8" ControlType="XRTableCell" Weight="0.4">
+                      <DataBindings>
+                        <Item1 Ref="35" PropertyName="Text" DataMember="OpeningBalanceRows.MName" />
+                      </DataBindings>
+                    </Item2>
+                    <Item3 Ref="36" Name="xrTableCell9" ControlType="XRTableCell" Weight="0.4">
+                      <DataBindings>
+                        <Item1 Ref="37" PropertyName="Text" DataMember="OpeningBalanceRows.MDC" />
+                      </DataBindings>
+                    </Item3>
+                    <Item4 Ref="38" Name="xrTableCell14" ControlType="XRTableCell" Weight="0.4">
+                      <DataBindings>
+                        <Item1 Ref="39" PropertyName="Text" DataMember="OpeningBalanceRows.Currency" />
+                      </DataBindings>
+                    </Item4>
+                    <Item5 Ref="40" Name="xrTableCell10" ControlType="XRTableCell" Weight="0.40000010770909933">
+                      <DataBindings>
+                        <Item1 Ref="41" FormatString="{0:n}" PropertyName="Text" DataMember="OpeningBalanceRows.MInitBalanceFor" />
+                      </DataBindings>
+                    </Item5>
+                    <Item6 Ref="42" Name="xrTableCell12" ControlType="XRTableCell" Weight="0.39999989229090072">
+                      <FormattingRuleLinks>
+                        <Item1 Ref="43" Value="#Ref-16" />
+                      </FormattingRuleLinks>
+                      <DataBindings>
+                        <Item1 Ref="44" FormatString="{0:n}" PropertyName="Text" DataMember="OpeningBalanceRows.MYtdDebit" />
+                      </DataBindings>
+                    </Item6>
+                    <Item7 Ref="45" Name="xrTableCell13" ControlType="XRTableCell" Weight="0.4">
+                      <FormattingRuleLinks>
+                        <Item1 Ref="46" Value="#Ref-16" />
+                      </FormattingRuleLinks>
+                      <DataBindings>
+                        <Item1 Ref="47" FormatString="{0:n}" PropertyName="Text" DataMember="OpeningBalanceRows.MYtdCredit" />
+                      </DataBindings>
+                    </Item7>
+                  </Cells>
+                </Item1>
+              </Rows>
+              <StylePriority Ref="48" UseFont="false" UseBorderColor="false" UseBorders="false" UseTextAlignment="false" />
+            </Item1>
+          </Controls>
+        </Item1>
+      </Bands>
+    </Item4>
+  </Bands>
+  <FormattingRuleSheet>
+    <Item1 Ref="16" Name="hideCumulativeField" Condition="[HideCumulativeField] == True">
+      <Formatting Ref="49" StringFormat="Near;Near;0;None;Character;Default" Visible="False" BorderStyle="Inset" />
+    </Item1>
+  </FormattingRuleSheet>
+  <ObjectStorage>
+    <Item1 ObjectType="DevExpress.XtraReports.Serialization.ObjectStorageInfo, DevExpress.XtraReports.v15.1" Ref="0" Content="~Xtra#NULL" Type="System.Windows.Forms.BindingSource" />
+  </ObjectStorage>
+</XtraReportsLayoutSerializer>

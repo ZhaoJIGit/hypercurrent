@@ -1,0 +1,72 @@
+﻿@*编辑权限*@
+@HtmlLang.WriteScript(LangModule.Common)
+
+<div class="easyui-tabs" id="tabInit" data-options="">
+    <div title="@HtmlLang.Write(LangModule.IV, "SalesInvoice", "Sales Invoice")">
+        @if (HtmlSECMenu.HavePermission(BizObject.Setting, PermissionItem.Change))
+        {
+            <div class="m-tab-toolbar" style="padding:0 0 10px 0;margin-bottom:0px;">
+                <a href="javascript:void(0)" id="aAddInvoice" hidden="true" class="easyui-linkbutton easyui-linkbutton-yellow">@HtmlLang.Write(LangModule.IV, "AddInvoice", "Add Invoice")</a>
+                <a href="javascript:void(0)" id="aAddInvCreditNote" hidden="true" class="easyui-linkbutton easyui-linkbutton-base">@HtmlLang.Write(LangModule.IV, "AddInvCreditNote", "Add Credit Note")</a>
+                <a href="javascript:void(0)" id="aDeleteInvoice" hidden="true" class="easyui-linkbutton easyui-linkbutton-base">@HtmlLang.Write(LangKey.Delete)</a>
+            </div>
+        }
+        else
+        {
+            <div class="space"></div>
+        }
+    </div>
+    <div title="@HtmlLang.Write(LangModule.IV, "Bills", "Bills")">
+        @if (HtmlSECMenu.HavePermission(BizObject.Setting, PermissionItem.Change))
+        {
+            <div class="m-tab-toolbar" style="padding:0 0 10px 0;margin-bottom:0px;">
+                <a href="javascript:void(0)" id="aAddBills" hidden="true" class="easyui-linkbutton easyui-linkbutton-yellow">@HtmlLang.Write(LangModule.IV, "AddBills", "Add Bills")</a>
+                <a href="javascript:void(0)" id="aAddBillsCreditNote" hidden="true" class="easyui-linkbutton easyui-linkbutton-base">@HtmlLang.Write(LangModule.IV, "AddBillsCreditNote", "Add Credit Note")</a>
+                <a href="javascript:void(0)" id="aDeleteBills" hidden="true" class="easyui-linkbutton easyui-linkbutton-base">@HtmlLang.Write(LangKey.Delete)</a>
+            </div>
+        }
+        else
+        {
+            <div class="space"></div>
+        }
+    </div>
+    <div title="@HtmlLang.Write(LangModule.IV, "ReceiveMoney", "Receive Money")">
+        @if (HtmlSECMenu.HavePermission(BizObject.Setting, PermissionItem.Change))
+        {
+            <div class="m-tab-toolbar" style="padding:0 0 10px 0;margin-bottom:0px;">
+                <a href="javascript:void(0)" id="aAddReceive" hidden="true" class="easyui-linkbutton easyui-linkbutton-yellow">@HtmlLang.Write(LangModule.IV, "AddReceive", "Add Receive")</a>
+                <a href="javascript:void(0)" id="aDeleteReceive" hidden="true" class="easyui-linkbutton easyui-linkbutton-base">@HtmlLang.Write(LangKey.Delete)</a>
+            </div>
+        }
+        else
+        {
+            <div class="space"></div>
+        }
+    </div>
+    <div title="@HtmlLang.Write(LangModule.IV, "SpendMoney", "Spend Money")">
+        @if (HtmlSECMenu.HavePermission(BizObject.Setting, PermissionItem.Change))
+        {
+            <div class="m-tab-toolbar" style="padding:0 0 10px 0;margin-bottom:0px;">
+                <a href="javascript:void(0)" id="aAddSpend" hidden="true" class="easyui-linkbutton easyui-linkbutton-yellow">@HtmlLang.Write(LangModule.IV, "AddSpend", "Add Spend")</a>
+                <a href="javascript:void(0)" id="aDeleteSpend" hidden="true" class="easyui-linkbutton easyui-linkbutton-base">@HtmlLang.Write(LangKey.Delete)</a>
+            </div>
+        }
+        else
+        {
+            <div class="space"></div>
+        }
+    </div>
+    <div title="@HtmlLang.Write(LangModule.IV, "ExpenseClaims", "费用报销单")">
+        @if (HtmlSECMenu.HavePermission(BizObject.Setting, PermissionItem.Change))
+        {
+            <div class="m-tab-toolbar" style="padding:0 0 10px 0;margin-bottom:0px;">
+                <a href="javascript:void(0)" id="aAddExpense" hidden="true" class="easyui-linkbutton easyui-linkbutton-yellow">@HtmlLang.Write(LangModule.IV, "AddExpense", "新增费用报销单")</a>
+                <a href="javascript:void(0)" id="aDeleteExpense" hidden="true" class="easyui-linkbutton easyui-linkbutton-base">@HtmlLang.Write(LangKey.Delete)</a>
+            </div>
+        }
+        else
+        {
+            <div class="space"></div>
+        }
+    </div>
+</div>

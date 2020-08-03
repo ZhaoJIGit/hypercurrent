@@ -1,0 +1,437 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XtraReportsLayoutSerializer SerializerVersion="15.1.5.0" Ref="1" Name="SaleInvoice" ControlType="DevExpress.XtraReports.UI.XtraReport, DevExpress.XtraReports.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" DataSource="#Ref-0" BorderDashStyle="Dash" Font="微软雅黑, 9.75pt" Version="15.1" PageWidth="850" PageHeight="1100" Margins="100, 100, 14, 100">
+  <Bands>
+    <Item1 Ref="2" ControlType="DetailBand" Name="Detail" TextAlignment="TopLeft" Font="微软雅黑, 9.75pt" Padding="0,0,0,0,100" HeightF="165.625">
+      <Controls>
+        <Item1 Ref="3" Name="xrLabel1" ControlType="XRLabel" SizeF="200,23" LocationFloat="0, 0" Font="微软雅黑, 9.75pt, style=Bold" ForeColor="255,102,102,102" Padding="2,2,0,0,100" TextAlignment="MiddleLeft" AutoWidth="true">
+          <DataBindings>
+            <Item1 Ref="4" PropertyName="Text" DataMember="InvoiceStatus" />
+          </DataBindings>
+          <StylePriority Ref="5" UseFont="false" UseForeColor="false" UseTextAlignment="false" />
+        </Item1>
+        <Item2 Ref="6" Name="xrLine6" ControlType="XRLine" SizeF="649.9999,5.291672" ForeColor="255,204,204,204" LocationFloat="0, 22.99999">
+          <StylePriority Ref="7" UseForeColor="false" />
+        </Item2>
+        <Item3 Ref="8" Name="xrLabel20" ControlType="XRLabel" SizeF="100,23" LocationFloat="547.9165, 63.62508" Padding="2,2,0,0,100" TextAlignment="MiddleLeft">
+          <DataBindings>
+            <Item1 Ref="9" PropertyName="Text" DataMember="MExpectedDate" />
+          </DataBindings>
+          <StylePriority Ref="10" UseTextAlignment="false" />
+        </Item3>
+        <Item4 Ref="11" Name="xrLabel18" ControlType="XRLabel" SizeF="100,23" LocationFloat="547.9162, 40.625" Padding="2,2,0,0,100" TextAlignment="MiddleLeft">
+          <DataBindings>
+            <Item1 Ref="12" PropertyName="Text" DataMember="MReference" />
+          </DataBindings>
+          <StylePriority Ref="13" UseTextAlignment="false" />
+        </Item4>
+        <Item5 Ref="14" Name="xrLabel17" ControlType="XRLabel" SizeF="144.1754,23" LocationFloat="403.741, 40.625" Font="微软雅黑, 9.75pt" Padding="2,2,0,0,100" TextAlignment="MiddleRight">
+          <DataBindings>
+            <Item1 Ref="15" PropertyName="Text" DataMember="RefTitle" />
+          </DataBindings>
+          <StylePriority Ref="16" UseFont="false" UseTextAlignment="false" />
+        </Item5>
+        <Item6 Ref="17" Name="xrLabel19" ControlType="XRLabel" SizeF="165.4164,23" LocationFloat="382.5, 63.62508" Font="微软雅黑, 9.75pt" Padding="2,2,0,0,100" TextAlignment="MiddleRight">
+          <DataBindings>
+            <Item1 Ref="18" PropertyName="Text" DataMember="ExpectedDateTitle" />
+          </DataBindings>
+          <StylePriority Ref="19" UseFont="false" UseTextAlignment="false" />
+        </Item6>
+        <Item7 Ref="20" Name="xrLabel14" ControlType="XRLabel" SizeF="87.5,23" LocationFloat="295, 40.625" Padding="2,2,0,0,100" TextAlignment="MiddleLeft">
+          <DataBindings>
+            <Item1 Ref="21" PropertyName="Text" DataMember="MNumber" />
+          </DataBindings>
+          <StylePriority Ref="22" UseTextAlignment="false" />
+        </Item7>
+        <Item8 Ref="23" Name="xrLabel16" ControlType="XRLabel" SizeF="87.5,23" LocationFloat="295, 63.62508" Padding="2,2,0,0,100" TextAlignment="MiddleLeft">
+          <DataBindings>
+            <Item1 Ref="24" PropertyName="Text" DataMember="MDueDate" />
+          </DataBindings>
+          <StylePriority Ref="25" UseTextAlignment="false" />
+        </Item8>
+        <Item9 Ref="26" Name="xrLabel8" ControlType="XRLabel" SizeF="69.99986,23" LocationFloat="0, 40.625" Font="微软雅黑, 9.75pt" Padding="2,2,0,0,100" TextAlignment="MiddleRight">
+          <DataBindings>
+            <Item1 Ref="27" PropertyName="Text" DataMember="ToOrFromTitle" />
+          </DataBindings>
+          <StylePriority Ref="28" UseFont="false" UseTextAlignment="false" />
+        </Item9>
+        <Item10 Ref="29" Name="xrLabel4" ControlType="XRLabel" SizeF="96.04205,23" LocationFloat="198.9579, 86.62504" Padding="2,2,0,0,100" TextAlignment="MiddleRight">
+          <DataBindings>
+            <Item1 Ref="30" PropertyName="Text" DataMember="TaxTypeTitle" />
+          </DataBindings>
+          <StylePriority Ref="31" UseTextAlignment="false" />
+        </Item10>
+        <Item11 Ref="32" Name="xrLabel15" ControlType="XRLabel" SizeF="96.04167,23" LocationFloat="198.9583, 63.62508" Font="微软雅黑, 9.75pt" Padding="2,2,0,0,100" TextAlignment="MiddleRight">
+          <DataBindings>
+            <Item1 Ref="33" PropertyName="Text" DataMember="DueDateTitle" />
+          </DataBindings>
+          <StylePriority Ref="34" UseFont="false" UseTextAlignment="false" />
+        </Item11>
+        <Item12 Ref="35" Name="xrLabel13" ControlType="XRLabel" SizeF="96.04173,23" LocationFloat="198.9583, 40.625" Font="微软雅黑, 9.75pt" Padding="2,2,0,0,100" TextAlignment="MiddleRight">
+          <DataBindings>
+            <Item1 Ref="36" PropertyName="Text" DataMember="NumberTitle" />
+          </DataBindings>
+          <StylePriority Ref="37" UseFont="false" UseTextAlignment="false" />
+        </Item12>
+        <Item13 Ref="38" Name="xrLabel10" ControlType="XRLabel" SizeF="100,23" LocationFloat="70, 40.625" Padding="2,2,0,0,100" TextAlignment="MiddleLeft">
+          <DataBindings>
+            <Item1 Ref="39" PropertyName="Text" DataMember="MContactName" />
+          </DataBindings>
+          <StylePriority Ref="40" UsePadding="false" UseTextAlignment="false" />
+        </Item13>
+        <Item14 Ref="41" Name="xrLabel12" ControlType="XRLabel" SizeF="100,23" LocationFloat="70, 63.62508" Padding="2,2,0,0,100" TextAlignment="MiddleLeft">
+          <DataBindings>
+            <Item1 Ref="42" PropertyName="Text" DataMember="MBizDate" />
+          </DataBindings>
+          <StylePriority Ref="43" UseTextAlignment="false" />
+        </Item14>
+        <Item15 Ref="44" Name="xrLabel7" ControlType="XRLabel" SizeF="169.7916,23" LocationFloat="70, 109.625" Padding="2,2,0,0,100" TextAlignment="MiddleLeft" AutoWidth="true">
+          <DataBindings>
+            <Item1 Ref="45" PropertyName="Text" DataMember="ExchangeInfo" />
+          </DataBindings>
+          <StylePriority Ref="46" UseTextAlignment="false" />
+        </Item15>
+        <Item16 Ref="47" Name="xrLabel3" ControlType="XRLabel" SizeF="128.9579,23" LocationFloat="70, 86.625" Padding="2,2,0,0,100" TextAlignment="MiddleLeft" AutoWidth="true">
+          <DataBindings>
+            <Item1 Ref="48" PropertyName="Text" DataMember="MCyID" />
+          </DataBindings>
+          <StylePriority Ref="49" UseTextAlignment="false" />
+        </Item16>
+        <Item17 Ref="50" Name="xrLabel2" ControlType="XRLabel" SizeF="70,23" LocationFloat="0, 86.62504" Padding="2,2,0,0,100" TextAlignment="MiddleRight">
+          <DataBindings>
+            <Item1 Ref="51" PropertyName="Text" DataMember="CurrencyTitle" />
+          </DataBindings>
+          <StylePriority Ref="52" UseTextAlignment="false" />
+        </Item17>
+        <Item18 Ref="53" Name="xrLabel11" ControlType="XRLabel" SizeF="70.00006,23" LocationFloat="0, 63.62508" Font="微软雅黑, 9.75pt" Padding="2,2,0,0,100" TextAlignment="MiddleRight">
+          <DataBindings>
+            <Item1 Ref="54" PropertyName="Text" DataMember="DateTitle" />
+          </DataBindings>
+          <StylePriority Ref="55" UseFont="false" UseTextAlignment="false" />
+        </Item18>
+        <Item19 Ref="56" Name="xrLabel5" ControlType="XRLabel" SizeF="100,23" LocationFloat="295, 86.62507" Padding="2,2,0,0,100" TextAlignment="MiddleLeft" AutoWidth="true">
+          <DataBindings>
+            <Item1 Ref="57" PropertyName="Text" DataMember="MTaxID" />
+          </DataBindings>
+          <StylePriority Ref="58" UseTextAlignment="false" />
+        </Item19>
+        <Item20 Ref="59" Name="xrTable3" ControlType="XRTable" SizeF="650,25" LocationFloat="7.947286E-05, 140.625" Font="微软雅黑, 9.75pt, style=Bold" BackColor="255,244,244,244" BorderColor="255,204,204,204" Borders="Bottom" BorderDashStyle="Solid" TextAlignment="MiddleCenter">
+          <Rows>
+            <Item1 Ref="60" ControlType="XRTableRow" Name="xrTableRow3" Weight="1">
+              <Cells>
+                <Item1 Ref="61" Name="xrTableCell13" ControlType="XRTableCell" Borders="Bottom" TextAlignment="MiddleLeft" Weight="0.5">
+                  <DataBindings>
+                    <Item1 Ref="62" PropertyName="Text" DataMember="ItemCodeTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="63" UseBorders="false" UseTextAlignment="false" />
+                </Item1>
+                <Item2 Ref="64" Name="xrTableCell22" ControlType="XRTableCell" TextAlignment="MiddleCenter" Weight="0.5">
+                  <DataBindings>
+                    <Item1 Ref="65" PropertyName="Text" DataMember="DescriptionTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="66" UseTextAlignment="false" />
+                </Item2>
+                <Item3 Ref="67" Name="xrTableCell14" ControlType="XRTableCell" Weight="0.5">
+                  <DataBindings>
+                    <Item1 Ref="68" PropertyName="Text" DataMember="QuantityTitle" />
+                  </DataBindings>
+                </Item3>
+                <Item4 Ref="69" Name="xrTableCell23" ControlType="XRTableCell" Weight="0.5">
+                  <DataBindings>
+                    <Item1 Ref="70" PropertyName="Text" DataMember="UnitPriceTitle" />
+                  </DataBindings>
+                </Item4>
+                <Item5 Ref="71" Name="xrTableCell15" ControlType="XRTableCell" Weight="0.5625">
+                  <DataBindings>
+                    <Item1 Ref="72" PropertyName="Text" DataMember="DiscountTitle" />
+                  </DataBindings>
+                </Item5>
+                <Item6 Ref="73" Name="xrTableCell24" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.5625">
+                  <DataBindings>
+                    <Item1 Ref="74" PropertyName="Text" DataMember="TaxRateTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="75" UseTextAlignment="false" />
+                </Item6>
+                <Item7 Ref="76" Name="xrTableCell18" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.5625">
+                  <DataBindings>
+                    <Item1 Ref="77" PropertyName="Text" DataMember="TrackItem1Name" />
+                  </DataBindings>
+                  <StylePriority Ref="78" UseTextAlignment="false" />
+                </Item7>
+                <Item8 Ref="79" Name="xrTableCell19" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.5625">
+                  <DataBindings>
+                    <Item1 Ref="80" PropertyName="Text" DataMember="TrackItem2Name" />
+                  </DataBindings>
+                  <StylePriority Ref="81" UseTextAlignment="false" />
+                </Item8>
+                <Item9 Ref="82" Name="xrTableCell16" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.5625">
+                  <DataBindings>
+                    <Item1 Ref="83" PropertyName="Text" DataMember="TrackItem3Name" />
+                  </DataBindings>
+                  <StylePriority Ref="84" UseTextAlignment="false" />
+                </Item9>
+                <Item10 Ref="85" Name="xrTableCell20" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.5625">
+                  <DataBindings>
+                    <Item1 Ref="86" PropertyName="Text" DataMember="TrackItem4Name" />
+                  </DataBindings>
+                  <StylePriority Ref="87" UseTextAlignment="false" />
+                </Item10>
+                <Item11 Ref="88" Name="xrTableCell17" ControlType="XRTableCell" TextAlignment="MiddleLeft" CanShrink="true" Weight="0.5625">
+                  <DataBindings>
+                    <Item1 Ref="89" PropertyName="Text" DataMember="TrackItem5Name" />
+                  </DataBindings>
+                  <StylePriority Ref="90" UseTextAlignment="false" />
+                </Item11>
+                <Item12 Ref="91" Name="xrTableCell21" ControlType="XRTableCell" Borders="Bottom" Weight="0.5625">
+                  <DataBindings>
+                    <Item1 Ref="92" PropertyName="Text" DataMember="AmountTitle" />
+                  </DataBindings>
+                  <StylePriority Ref="93" UseBorders="false" />
+                </Item12>
+              </Cells>
+            </Item1>
+          </Rows>
+          <StylePriority Ref="94" UseFont="false" UseBackColor="false" UseBorderColor="false" UseBorders="false" UseBorderDashStyle="false" UseTextAlignment="false" />
+        </Item20>
+      </Controls>
+      <StylePriority Ref="95" UseFont="false" />
+    </Item1>
+    <Item2 Ref="96" Name="TopMargin" ControlType="TopMarginBand" TextAlignment="TopLeft" Font="微软雅黑, 9.75pt" Padding="0,0,0,0,100" HeightF="13.54167">
+      <StylePriority Ref="97" UseFont="false" />
+    </Item2>
+    <Item3 Ref="98" Name="BottomMargin" ControlType="BottomMarginBand" TextAlignment="TopLeft" Font="微软雅黑, 9.75pt" Padding="0,0,0,0,100" HeightF="100">
+      <StylePriority Ref="99" UseFont="false" />
+    </Item3>
+    <Item4 Ref="100" ControlType="DetailReportBand" Name="DetailReport" Font="微软雅黑, 9.75pt" DataMember="InvoiceEntries" Level="0" DataSource="#Ref-0">
+      <Bands>
+        <Item1 Ref="101" ControlType="DetailBand" Name="Detail1" Expanded="false" HeightF="25">
+          <Controls>
+            <Item1 Ref="102" Name="xrTable4" ControlType="XRTable" SizeF="650,25" LocationFloat="3.178914E-05, 0" Font="微软雅黑, 9.75pt" BorderColor="255,204,204,204" Borders="Bottom" BorderDashStyle="Solid" TextAlignment="MiddleCenter">
+              <Rows>
+                <Item1 Ref="103" ControlType="XRTableRow" Name="xrTableRow4" Weight="1">
+                  <Cells>
+                    <Item1 Ref="104" Name="xrTableCell25" ControlType="XRTableCell" Borders="Bottom" TextAlignment="MiddleLeft" Weight="0.50000049591064455">
+                      <DataBindings>
+                        <Item1 Ref="105" PropertyName="Text" DataMember="InvoiceEntries.MNumber" />
+                      </DataBindings>
+                      <StylePriority Ref="106" UseBorders="false" UseTextAlignment="false" />
+                    </Item1>
+                    <Item2 Ref="107" Name="xrTableCell26" ControlType="XRTableCell" Borders="Bottom" Weight="0.49999980926513665">
+                      <DataBindings>
+                        <Item1 Ref="108" PropertyName="Text" DataMember="InvoiceEntries.MDesc" />
+                      </DataBindings>
+                      <StylePriority Ref="109" UseBorders="false" />
+                    </Item2>
+                    <Item3 Ref="110" Name="xrTableCell27" ControlType="XRTableCell" Weight="0.4999996948242188">
+                      <DataBindings>
+                        <Item1 Ref="111" PropertyName="Text" DataMember="InvoiceEntries.MQty" />
+                      </DataBindings>
+                    </Item3>
+                    <Item4 Ref="112" Name="xrTableCell28" ControlType="XRTableCell" Weight="0.5">
+                      <DataBindings>
+                        <Item1 Ref="113" PropertyName="Text" DataMember="InvoiceEntries.MPrice" />
+                      </DataBindings>
+                    </Item4>
+                    <Item5 Ref="114" Name="xrTableCell29" ControlType="XRTableCell" Weight="0.5625">
+                      <DataBindings>
+                        <Item1 Ref="115" PropertyName="Text" DataMember="InvoiceEntries.MDiscount" />
+                      </DataBindings>
+                    </Item5>
+                    <Item6 Ref="116" Name="xrTableCell30" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.5625">
+                      <DataBindings>
+                        <Item1 Ref="117" PropertyName="Text" DataMember="InvoiceEntries.MTaxID" />
+                      </DataBindings>
+                      <StylePriority Ref="118" UseTextAlignment="false" />
+                    </Item6>
+                    <Item7 Ref="119" Name="xrTableCell31" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.5625">
+                      <DataBindings>
+                        <Item1 Ref="120" PropertyName="Text" DataMember="InvoiceEntries.MTrackItem1" />
+                      </DataBindings>
+                      <StylePriority Ref="121" UseTextAlignment="false" />
+                    </Item7>
+                    <Item8 Ref="122" Name="xrTableCell32" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.5625">
+                      <DataBindings>
+                        <Item1 Ref="123" PropertyName="Text" DataMember="InvoiceEntries.MTrackItem2" />
+                      </DataBindings>
+                      <StylePriority Ref="124" UseTextAlignment="false" />
+                    </Item8>
+                    <Item9 Ref="125" Name="xrTableCell33" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.5625">
+                      <DataBindings>
+                        <Item1 Ref="126" PropertyName="Text" DataMember="InvoiceEntries.MTrackItem3" />
+                      </DataBindings>
+                      <StylePriority Ref="127" UseTextAlignment="false" />
+                    </Item9>
+                    <Item10 Ref="128" Name="xrTableCell34" ControlType="XRTableCell" TextAlignment="MiddleLeft" Weight="0.5625">
+                      <DataBindings>
+                        <Item1 Ref="129" PropertyName="Text" DataMember="InvoiceEntries.MTrackItem4" />
+                      </DataBindings>
+                      <StylePriority Ref="130" UseTextAlignment="false" />
+                    </Item10>
+                    <Item11 Ref="131" Name="xrTableCell35" ControlType="XRTableCell" TextAlignment="MiddleLeft" CanShrink="true" Weight="0.5625">
+                      <DataBindings>
+                        <Item1 Ref="132" PropertyName="Text" DataMember="InvoiceEntries.MTrackItem5" />
+                      </DataBindings>
+                      <StylePriority Ref="133" UseTextAlignment="false" />
+                    </Item11>
+                    <Item12 Ref="134" Name="xrTableCell36" ControlType="XRTableCell" Borders="Bottom" Weight="0.5625">
+                      <DataBindings>
+                        <Item1 Ref="135" PropertyName="Text" DataMember="InvoiceEntries.MAmountFor" />
+                      </DataBindings>
+                      <StylePriority Ref="136" UseBorders="false" />
+                    </Item12>
+                  </Cells>
+                </Item1>
+              </Rows>
+              <StylePriority Ref="137" UseFont="false" UseBorderColor="false" UseBorders="false" UseBorderDashStyle="false" UseTextAlignment="false" />
+            </Item1>
+          </Controls>
+        </Item1>
+        <Item2 Ref="138" ControlType="GroupFooterBand" Name="GroupFooter4" HeightF="43">
+          <Controls>
+            <Item1 Ref="139" Name="xrLine5" ControlType="XRLine" SizeF="355,2" LocationFloat="295.0004, 40.37501" LineStyle="Dash">
+              <FormattingRuleLinks>
+                <Item1 Ref="141" Value="#Ref-140" />
+              </FormattingRuleLinks>
+            </Item1>
+            <Item2 Ref="142" Name="xrLabel6" ControlType="XRLabel" SizeF="227.491,26" LocationFloat="295, 12.20833" Padding="2,2,0,0,100" TextAlignment="MiddleRight">
+              <DataBindings>
+                <Item1 Ref="143" PropertyName="Text" DataMember="SubTotalTitle" />
+              </DataBindings>
+              <StylePriority Ref="144" UseTextAlignment="false" />
+            </Item2>
+            <Item3 Ref="145" Name="xrLabel9" ControlType="XRLabel" SizeF="80.78992,26" LocationFloat="522.4916, 12.20833" Padding="2,2,0,0,100" TextAlignment="MiddleRight">
+              <DataBindings>
+                <Item1 Ref="146" PropertyName="Text" DataMember="SubTotal" />
+              </DataBindings>
+              <StylePriority Ref="147" UseTextAlignment="false" />
+            </Item3>
+          </Controls>
+        </Item2>
+      </Bands>
+    </Item4>
+    <Item5 Ref="148" ControlType="DetailReportBand" Name="DetailReport1" Font="微软雅黑, 9.75pt" DataMember="InvoiceTaxes" Level="1" DataSource="#Ref-0">
+      <Bands>
+        <Item1 Ref="149" ControlType="DetailBand" Name="Detail2" Font="微软雅黑, 9.75pt" HeightF="27.87501">
+          <FormattingRuleLinks>
+            <Item1 Ref="151" Value="#Ref-150" />
+          </FormattingRuleLinks>
+          <Controls>
+            <Item1 Ref="152" Name="xrTable5" ControlType="XRTable" SizeF="352.9161,25" LocationFloat="295, 0" BorderColor="255,204,204,204" Borders="None" TextAlignment="MiddleRight">
+              <Rows>
+                <Item1 Ref="153" ControlType="XRTableRow" Name="xrTableRow5" Weight="1">
+                  <Cells>
+                    <Item1 Ref="154" Name="xrTableCell37" ControlType="XRTableCell" Weight="1.6760154585741427">
+                      <DataBindings>
+                        <Item1 Ref="155" PropertyName="Text" DataMember="InvoiceTaxes.TaxName" />
+                      </DataBindings>
+                    </Item1>
+                    <Item2 Ref="156" Name="xrTableCell38" ControlType="XRTableCell" Weight="0.56368827458025628">
+                      <DataBindings>
+                        <Item1 Ref="157" PropertyName="Text" DataMember="InvoiceTaxes.TaxAmtFor" />
+                      </DataBindings>
+                    </Item2>
+                    <Item3 Ref="158" Name="xrTableCell39" ControlType="XRTableCell" Weight="0.36036167746878089" />
+                  </Cells>
+                </Item1>
+              </Rows>
+              <StylePriority Ref="159" UseBorderColor="false" UseBorders="false" UseTextAlignment="false" />
+            </Item1>
+            <Item2 Ref="160" Name="xrLine1" ControlType="XRLine" SizeF="355,2" LocationFloat="295, 25" LineStyle="Dash" />
+          </Controls>
+          <StylePriority Ref="161" UseFont="false" />
+        </Item1>
+        <Item2 Ref="162" ControlType="GroupFooterBand" Name="GroupFooter2" HeightF="33.83331">
+          <Controls>
+            <Item1 Ref="163" Name="xrTable6" ControlType="XRTable" SizeF="352.9161,25" LocationFloat="295, 0" TextAlignment="MiddleRight">
+              <Rows>
+                <Item1 Ref="164" ControlType="XRTableRow" Name="xrTableRow6" Weight="1">
+                  <Cells>
+                    <Item1 Ref="165" Name="xrTableCell40" ControlType="XRTableCell" Font="微软雅黑, 9.75pt, style=Bold" Weight="1.7931963462415159">
+                      <DataBindings>
+                        <Item1 Ref="166" PropertyName="Text" DataMember="TotalTitle" />
+                      </DataBindings>
+                      <StylePriority Ref="167" UseFont="false" />
+                    </Item1>
+                    <Item2 Ref="168" Name="xrTableCell41" ControlType="XRTableCell" Font="微软雅黑, 9.75pt, style=Bold" Weight="0.60309870958718">
+                      <DataBindings>
+                        <Item1 Ref="169" PropertyName="Text" DataMember="Total" />
+                      </DataBindings>
+                      <StylePriority Ref="170" UseFont="false" />
+                    </Item2>
+                    <Item3 Ref="171" Name="xrTableCell42" ControlType="XRTableCell" Font="微软雅黑, 9.75pt" ForeColor="255,136,136,136" Weight="0.38555716869205153">
+                      <DataBindings>
+                        <Item1 Ref="172" PropertyName="Text" DataMember="TotalCurrency" />
+                      </DataBindings>
+                      <StylePriority Ref="173" UseFont="false" UseForeColor="false" />
+                    </Item3>
+                  </Cells>
+                </Item1>
+              </Rows>
+              <StylePriority Ref="174" UseTextAlignment="false" />
+            </Item1>
+            <Item2 Ref="175" Name="xrLine2" ControlType="XRLine" SizeF="355.0004,5.999998" LocationFloat="295, 27.8333" />
+          </Controls>
+        </Item2>
+      </Bands>
+    </Item5>
+    <Item6 Ref="176" ControlType="DetailReportBand" Name="drVerification" Font="微软雅黑, 9.75pt" DataMember="InvoiceVerifications" Level="2" DataSource="#Ref-0">
+      <Bands>
+        <Item1 Ref="177" ControlType="DetailBand" Name="Detail3" Font="微软雅黑, 9.75pt" HeightF="29.16669">
+          <Controls>
+            <Item1 Ref="178" Name="xrTable7" ControlType="XRTable" SizeF="352.9162,25" LocationFloat="294.9994, 0" BorderColor="255,204,204,204" Borders="None" TextAlignment="MiddleRight">
+              <Rows>
+                <Item1 Ref="179" ControlType="XRTableRow" Name="xrTableRow7" Weight="1">
+                  <Cells>
+                    <Item1 Ref="180" Name="xrTableCell43" ControlType="XRTableCell" Weight="2.069385885864286">
+                      <DataBindings>
+                        <Item1 Ref="181" PropertyName="Text" DataMember="InvoiceVerifications.BizType" />
+                      </DataBindings>
+                    </Item1>
+                    <Item2 Ref="182" Name="xrTableCell44" ControlType="XRTableCell" Weight="0.69598902425412823">
+                      <DataBindings>
+                        <Item1 Ref="183" PropertyName="Text" DataMember="InvoiceVerifications.Amount" />
+                      </DataBindings>
+                    </Item2>
+                    <Item3 Ref="184" Name="xrTableCell45" ControlType="XRTableCell" Weight="0.44494131611637139" />
+                  </Cells>
+                </Item1>
+              </Rows>
+              <StylePriority Ref="185" UseBorderColor="false" UseBorders="false" UseTextAlignment="false" />
+            </Item1>
+            <Item2 Ref="186" Name="xrLine7" ControlType="XRLine" SizeF="355,2" LocationFloat="295.0004, 27.16669" LineStyle="Dash" />
+          </Controls>
+          <StylePriority Ref="187" UseFont="false" />
+        </Item1>
+        <Item2 Ref="188" ControlType="GroupFooterBand" Name="GroupFooter1" HeightF="100">
+          <Controls>
+            <Item1 Ref="189" Name="xrLine3" ControlType="XRLine" SizeF="355,4.083347" ForeColor="Transparent" Borders="Top, Bottom" BorderDashStyle="Solid" LocationFloat="295.0004, 0" LineWidth="0">
+              <StylePriority Ref="190" UseForeColor="false" UseBorders="false" UseBorderDashStyle="false" />
+            </Item1>
+          </Controls>
+        </Item2>
+      </Bands>
+      <FormattingRuleLinks>
+        <Item1 Ref="192" Value="#Ref-191" />
+      </FormattingRuleLinks>
+    </Item6>
+  </Bands>
+  <FormattingRuleSheet>
+    <Item1 Ref="191" Name="hideVerificationList" Condition="[InvoiceVerifications] == null">
+      <Formatting Ref="193" StringFormat="Near;Near;0;None;Character;Default" Visible="False" BorderStyle="Inset" />
+    </Item1>
+    <Item2 Ref="150" Name="hideTaxList" Condition="[InvoiceTaxes] == null">
+      <Formatting Ref="194" StringFormat="Near;Near;0;None;Character;Default" Visible="False" BorderStyle="Inset" />
+    </Item2>
+    <Item3 Ref="195" Name="hideVerificationDashLine" Condition="[InvoiceVerifications.RowIndex]==0">
+      <Formatting Ref="196" StringFormat="Near;Near;0;None;Character;Default" Visible="False" BorderStyle="Inset" />
+    </Item3>
+    <Item4 Ref="140" Name="hideSubtotalLine" Condition="[InvoiceTaxes] != null">
+      <Formatting Ref="197" StringFormat="Near;Near;0;None;Character;Default" Visible="False" BorderStyle="Inset" />
+    </Item4>
+  </FormattingRuleSheet>
+  <StyleSheet>
+    <Item1 Ref="198" Name="styleMiddleRight" BorderStyle="Inset" Padding="0,0,0,0,100" StringFormat="Far;Center;0;None;Character;Default" TextAlignment="MiddleRight" />
+  </StyleSheet>
+  <ObjectStorage>
+    <Item1 ObjectType="DevExpress.XtraReports.Serialization.ObjectStorageInfo, DevExpress.XtraReports.v15.1" Ref="0" Content="~Xtra#NULL" Type="System.Windows.Forms.BindingSource" />
+  </ObjectStorage>
+</XtraReportsLayoutSerializer>

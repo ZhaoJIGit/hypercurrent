@@ -1,0 +1,41 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+@using JieNor.Megi.Common.Utility;
+<div id="divEdit" class="m-form m-imain" style="padding-left:20px">
+    <div class="m-form-item">
+        <span>@HtmlLang.Write(LangModule.Contact, "BankAccName", "Account Balance")</span>
+        <br />
+        <span><input type="text" class="easyui-validatebox mg-data" style="height: 25px; line-height: 25px; width: 135px" value="@ViewData["name"]" disabled />  </span>
+        <br />
+        <span> @HtmlLang.Write(LangModule.Bank, "BalanceOriginalCurrency", "Account Balance(original currency)")</span>
+        <br />       
+        <input type="text" id="tbxBalancesFor" class="easyui-numberbox" precision="2" value="@ViewData["balancefor"]" data-options="required:true" />
+        <br />
+        <span> @HtmlLang.Write(LangModule.Bank, "BalanceStandard", "Account Balance(standard currency)")</span>
+        <br />
+        <input type="text" id="tbxBalances" class="easyui-numberbox" precision="2" value="@ViewData["balance"]" data-options="required:true" />
+
+    </div>
+    <input type="hidden" class="mg-data" value="@ViewData["accountId"]" id="accountId" />
+    <input type="hidden" class="mg-data" value="@ViewData["mcyId"]" id="mcyId"/>
+    <input type="hidden" class="mg-data" value="@ViewData["id"]" id="mId" />
+    <input type="hidden" class="mg-data" value="@ViewData["baseCurrency"]" id="hideBaseCy" />
+</div>
+<div class="m-toolbar-footer">
+    @if (HtmlSECMenu.HavePermission(BizObject.Contact, PermissionItem.Change))
+    {
+        <div class="left">
+            <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-gray" id="aCancel">@HtmlLang.Write(LangKey.Cancel)</a>
+        </div>
+        <div class="right">
+            <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aSave">@HtmlLang.Write(LangKey.Save)</a>
+        </div>
+    }
+</div>
+<script src="@ServerHelper.ScriptServer/Scripts/BD/BDBank/BDBankBalancesEdit.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.Bank)
+@HtmlLang.WriteScript(LangModule.My)
+@HtmlLang.WriteScript(LangModule.Org)
+@HtmlLang.WriteScript(LangModule.BD)
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)

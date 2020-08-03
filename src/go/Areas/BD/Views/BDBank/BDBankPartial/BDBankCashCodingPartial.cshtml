@@ -1,0 +1,96 @@
+﻿@{
+    //是否有编辑权限
+    bool isCanEditPermission = HtmlSECMenu.HavePermission(BizObject.BankAccount, PermissionItem.Change);
+    List<BDContactItem> contactList = ViewData["ContactList"] as List<BDContactItem>;
+    System.Web.Script.Serialization.JavaScriptSerializer jss = new System.Web.Script.Serialization.JavaScriptSerializer();
+    string jsonModel = jss.Serialize(contactList);
+    string isGL = JieNor.Megi.Common.Context.ContextHelper.MContext.MRegProgress == (int)BASOrgScheduleTypeEnum.GLSuccess ? "1" : "0";
+    string jsonTaxRate = jss.Serialize(HtmlREGTaxRate.GetOrgTaxRateList());
+}
+@using JieNor.Megi.Common.Utility
+
+
+@using JieNor.Megi.Tools
+@using JieNor.Megi.Common.Context
+@using JieNor.Megi.EntityModel.Enum
+@{
+    //获取所有的权限（包括了所有权限列表，以及上下文信息）
+    var accessResponse = AccessHelper.Access();
+
+
+    //获取上下文
+    var ctx = accessResponse.ctx;
+    //所有权限
+    Dictionary<string, bool> accessList = accessResponse.Access;
+
+    //是否是总账版
+    bool isSmartVersion = ctx.MOrgVersionID == OrgVersionEnum.Smart;
+
+}
+<style>
+    #btnSaveAndRec .l-btn-text { width: 100%; min-width: 120px; }
+</style>
+
+<!--勾兑-->
+<div class="cash-coding">
+    <div id="divMessage"></div>
+    <input id="hidTabSelectedIndex" type="hidden" value="1" />
+
+    @*是否有基础资料的编辑权限*@
+    @if (HtmlSECMenu.HavePermission(BizObject.Setting, PermissionItem.Change))
+    {
+        <input type="hidden" id="hidIsCanSettingChangePermission" value="1" />
+    }
+    else
+    {
+        <input type="hidden" id="hidIsCanSettingChangePermission" value="0" />
+    }
+
+    @if (isCanEditPermission)
+    {
+        <a href="javascript:void(0)" id="aDeleteCashCoding" class="easyui-linkbutton" style="margin-bottom:10px;">@HtmlLang.Write(LangKey.DeleteSelected)</a>
+    }
+    @if (isSmartVersion && isCanEditPermission)
+    {
+        <a href="javascript:void(0)" id="aCCMarkAsNonGenerateVoucher" class="easyui-linkbutton easyui-splitbutton-m" style="margin-left: 10px; margin-bottom: 10px; " status="2">@HtmlLang.Write(LangModule.Bank, "MarkAsUnGenerate", "标记不生成凭证")</a>
+    }
+    @if (isCanEditPermission)
+    {
+        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="btnSaveAndRec" style="margin-left:10px;margin-bottom:10px;width: 160px;">
+            @(isSmartVersion ? HtmlLang.Write(LangModule.Bank, "SaveAndCreateVoucherAll", "全部保存并生成凭证") : HtmlLang.Write(LangModule.Bank, "SaveAndReconcileAll", "Save & Reconcile All"))
+        </a>
+    }
+
+    <div class="m-keyword-search">
+        <a class="easyui-linkbutton btnSearchDiv" href="javascript:void(0)" id="aCashCodingSearch">@HtmlLang.Write(LangKey.Search)</a>
+    </div>
+    <!--显示一个键盘-->
+    <div class="tip-hotkey-div">
+        @HtmlLang.Write(LangModule.Bank, "hothandeltip", "快捷操作提示")
+    </div>
+    <div class="clear"></div>
+    <div class="m-adv-search m-adv-search-cashcoding">
+        @Html.Partial("BDBankPartial/BDBankSearchPartial")
+    </div>
+    <div class="m-iv">
+        <div id="gridCashCodingDiv">
+            <div id="gridCashCoding" fitcolumns="true"></div>
+        </div>
+    </div>
+    @if (!isSmartVersion)
+    {
+        <span style="color:green;" class="bank-text">
+            @HtmlLang.Write(LangModule.BD, "tips", "提示:") @HtmlLang.Write(LangModule.BD, "FunctioncallAttentionto", "本功能将不能用于勾对销售单、采购单、红字冲销单、费用报销单和转帐记录。如果使用此功能手动匹配导入的资金类对帐单记录，系统将会重新生成一张收付款单，而这些单据将不会与已录入系统内的业务单据自动进行核销，这些业务单据将仍然显示为未支付状态。")
+        </span>
+    }
+
+    @*<input type="hidden" id="hidTrack" value='@ViewData["Track"]' />*@
+    <input type="hidden" value="@jsonModel" id="hidContacts" />
+    <input type="hidden" value="@isGL" id="hidIsGL" />
+    <input type="hidden" value="@jsonTaxRate" id="hidOrgTaxRateList" />
+    <input type="hidden" value="@isSmartVersion" id="isSmartVersion" />
+    @HtmlLang.WriteScript(LangModule.Bank)
+    @HtmlLang.WriteScript(LangModule.FP)
+    <script src="~/Scripts/BD/BDBank/BDBankCashCoding.js?@ServerHelper.JSVersion"></script>
+    <script src="~/Scripts/BD/BDBank/BDBankCashCodingFastCode.js?@ServerHelper.JSVersion"></script>
+</div>

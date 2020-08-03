@@ -1,0 +1,108 @@
+﻿@using JieNor.Megi.Identity.HtmlHelper
+@using JieNor.Megi.EntityModel.MultiLanguage
+@using JieNor.Megi.Identity.Go.AutoManager
+@using JieNor.Megi.EntityModel.Enum
+@using JieNor.Megi.Common.Context
+@using JieNor.Megi.Common.Utility
+@using JieNor.Megi.EntityModel.Enum
+
+@{
+    var dashBoardInfoModel = ViewData["DashboardInfo"] as JieNor.Megi.DataModel.GL.GLDashboardInfoModel;
+
+    var title = HtmlLang.Write(LangModule.Common, "GLTitle", "All the datas in General Ledger will change based on the time period below:");
+    var today = new DateTime().ToDateString();
+    var lang = dashBoardInfoModel.LangID;
+    var dateString = dashBoardInfoModel.DateString;
+    var defaultDate = dashBoardInfoModel.DefaultDate;
+    //是否是自定义会计准则
+    var isUDAS = dashBoardInfoModel.IsUDAS;
+
+
+    var isSmartVersion = dashBoardInfoModel.ctx.MOrgVersionID == OrgVersionEnum.Smart;
+}
+
+<!--Entry 会计工作台-->
+<div class="hp-entry-top">
+    <!--显示第一行提醒-->
+    <div class="hp-title">
+        @title
+    </div>
+    <!--ul标题-->
+    <div class="hp-quarter m-tab-toolbar">
+        <!--右边-->
+        <div class="hp-top-left">
+            <!--日期-->
+            <input type="text" class="hp-period-input Wdate left" onfocus="WdatePicker({ dateFmt: 'yyyy-MM',readOnly:true, lang: '@lang', skin:'@lang',  @dateString, isShowClear : false })" hint="@HtmlLang.Write(LangModule.Common, "Date", "Date")" value="@defaultDate" />
+            <!--查询按钮-->
+            <a class="easyui-linkbutton hp-button-update easyui-linkbutton-yellow m-page-location-clear">@HtmlLang.Write(LangModule.Common, "Update", "Update")</a>
+
+        </div>
+    </div>
+    <div id="closingPeriodDiv" class="hp-link">
+        @HtmlLang.Write(LangModule.Common, "ClosingPeriod", "已结账至：")
+        <span class="hp-ClosingPeriod"></span>
+    </div>
+    <!--一个ul-->
+    <div class="hp-body">
+        <div class="hp-ul-title">
+            @HtmlLang.Write(LangModule.Common, "DuringThisPeriod", "During this period:")
+        </div>
+        <ul class="hp-ul-body">
+
+            <li>
+                @HtmlLang.Write(LangModule.Common, "StatusOfThisPeirod", "Status Of this peirod:")
+                <span class="hp-period-status"></span>
+            </li>
+            <li>
+                @HtmlLang.Write(LangModule.Common, "PeriodBeginBalanceInited", "Begin balance of this period inited:")
+                <span class="hp-balance-inited"></span>
+            </li>
+            @if (!isUDAS)
+            {
+                <li>
+                    @HtmlLang.Write(LangModule.Common, "TransferProfitAndLossFinished", "Transfer-profit-loss voucher:")
+                    <span class="hp-profit-loss-voucher"></span>
+                </li>
+            }
+            <li>
+                @HtmlLang.Write(LangModule.Common, "TotalNumberOfJournalEntry", "Total number of journal entry:")
+                <span class="hp-journal-entry"></span>
+            </li>
+            <li>
+                @HtmlLang.Write(LangModule.Common, "UnapporvedVoucher", "Unapproved voucher:")
+                <span class="hp-unapproved-voucher"></span>
+            </li>
+            <li>
+                @HtmlLang.Write(LangModule.Common, "TotalNumberOfManualImportedJournalEntry", "Total number of manual imported journal entry:")
+                <span class="hp-imported-entry"></span>
+            </li>
+            <li>
+                @HtmlLang.Write(LangModule.Common, "FromAppImportedJournalEntry", "Total number of App imported journal entry:")
+                <span class="hp-fromappimported-entry"></span>
+            </li>
+            @if (!isSmartVersion)
+            {
+                <li>
+                    @HtmlLang.Write(LangModule.Common, "TotalNumberOfBusinessTransactionHaveTransferedToGeneralLedger", "Total number of business transactions have transfered to General Ledger:")
+                    <span class="hp-has-transfered"></span>
+                </li>
+                <li>
+
+                    @HtmlLang.Write(LangModule.Common, "TotalNumberOfBusinessTransactionHaveNotTransferedToGeneralLedger", "Total number of business transactions haven't transfered to General Ledger:")
+                    <span class="hp-not-transfered"></span>
+                </li>
+                @*<li>
+                    @HtmlLang.Write(LangModule.Common, "BusinessSystemReconcileFinished", "业务系统银行账单勾对是否完成:")
+                    <span class="hp-reconcile-finished"></span>
+                </li>*@
+            }
+
+        </ul>
+        <!--底部的提示语-->
+        <div class="hp-ul-bottom">
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/GL/GLVoucherHome.js?@ServerHelper.JSVersion"></script>
+<script src="~/Scripts/GL/GLDashboard.js?@ServerHelper.JSVersion"></script>

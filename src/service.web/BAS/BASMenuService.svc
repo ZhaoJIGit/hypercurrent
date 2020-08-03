@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="JieNor.Megi.Service.Web.BAS.BASMenuService" CodeBehind="BASMenuService.svc.cs" %>

@@ -1,0 +1,62 @@
+﻿@{
+    ViewBag.Title = "VerificationEdit";
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+@using JieNor.Megi.Common.Utility;
+<div class="m-imain">
+    <div class="m-imain-content">
+        <div class="m-form-vtcl m-form-min ">
+            <div class="m-form-vtcl-content">
+                <div class="m-form-section section-type">
+                    <div class="m-form-item">
+                        <ul>
+                            <li class="mg-bold">@HtmlLang.Write(LangKey.Reference)</li>
+                            <li><input type="text" style="width:150px" id="txtKeyword" class="textbox" value="@ViewData["Ref"]" data-options="min:0,precision:2" /> </li>
+                        </ul>
+                    </div>
+                    <div class="m-form-item">
+                        <ul>
+                            <li class="mg-bold">@HtmlLang.Write(LangModule.IV, "EnterAmount", "Enter Amount")</li>
+                            <li><input id="txtAmount" class="easyui-numberbox" data-options="min:0,precision:2" value="@ViewData["Amount"]" style="width:150px;" /></li>
+                        </ul>
+                    </div>
+                    <div class="m-form-item">
+                        <ul>
+                            <li class="mg-bold">&nbsp;</li>
+                            <li><a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow easyui-linkbutton-s-s" id="aSeach">@HtmlLang.Write(LangKey.Search)</a></li>
+                        </ul>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div id="myGrid" fitcolumns=" true"></div>
+            </div>
+            <div class="m-sum">
+                <div class="m-sum-item"><span class="lbl">@HtmlLang.Write(LangModule.IV, "AmountReconciledTotal", "Amount to be reconciled Total")</span>&nbsp;<span class="money" id="spToBeReconciledTotal"></span></div>
+                <div class="m-sum-item"><span class="lbl">@HtmlLang.Write(LangModule.IV, "WaitingForReconciled", "Waiting for reconciled")</span>&nbsp;<span class="money" id="spWaitingForReconciled"></span></div>
+                <div class="m-sum-item"><span class="lbl">@HtmlLang.Write(LangModule.IV, "OutstandingAmount", "Outstanding Amount")</span>&nbsp;<span class="money" id="spOutstandingAmount"></span></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="m-toolbar-footer">
+    <div class="left"><a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray" id="btnCancel">@HtmlLang.Write(LangKey.Cancel)</a></div>
+    <div class="center">
+    </div>
+    <div class="right">
+        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="btnSave">@HtmlLang.Write(LangModule.IV, "Reconcile", "Reconcile")</a>
+    </div>
+    <div class="clear"></div>
+</div>
+<input type="hidden" value='@ViewData["MBillID"]' id="hidMBillID" />
+<input type="hidden" value='@ViewData["MBizBillType"]' id="hidMBizBillType" />
+<input type="hidden" value='@ViewData["MBizType"]' id="hidMBizType" />
+<input type="hidden" value='@ViewData["MSrcBizBillType"]' id="hidSrcMBizBillType" />
+<input type="hidden" value='@ViewData["MSrcBizType"]' id="hidSrcMBizType" />
+<input type="hidden" value='@ViewData["MContactID"]' id="hidMContactID" />
+<input type="hidden" value='@ViewData["MCurrencyID"]' id="hidMCurrencyID" />
+<input type="hidden" value='@ViewData["MAmount"]' id="hidAmount" />
+<input type="hidden" value='@ViewData["Amount"]' id="hidToBeVerificationAmount" />
+
+@HtmlLang.WriteScript(LangModule.IV)
+@HtmlLang.WriteScript(LangModule.Bank)
+<script src="@ServerHelper.ScriptServer/Scripts/IV/Verification/VerificationEdit.js?@ServerHelper.JSVersion"></script>

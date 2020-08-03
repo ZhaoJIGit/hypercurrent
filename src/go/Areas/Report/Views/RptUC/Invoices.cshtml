@@ -1,0 +1,77 @@
+﻿@{
+    Layout = "~/Areas/Report/Views/Shared/_LayoutReport.cshtml";
+}
+@using JieNor.Megi.Common.Utility
+<div class="m-report-toolbar">
+    <input type="hidden" value="@ViewData["ParentReportTypeID"]" id="hidParentReportTypeID" />
+    @if (Convert.ToInt32(ViewData["ParentReportTypeID"]) == 19)
+    {
+        <a class="easyui-linkbutton easyui-linkbutton-l" id="aBackToReport" data-options="" href="javascript:void(0)">@HtmlLang.Write(LangModule.Report, "BackToAgedPayables", "Back to Aged Payables")</a>
+    }
+    else
+    {
+        <a class="easyui-linkbutton easyui-linkbutton-l" id="aBackToReport" data-options="" href="javascript:void(0)">@HtmlLang.Write(LangModule.Report, "BackToAgedReceiveables", "Back to Aged Receiveables")</a>
+    }
+
+</div>
+<div class="m-form-vtcl margin m-form-min">
+
+    <input type="hidden" name="AgedType" class="mg-data" />
+    <div class="m-form-vtcl-content">
+        <div class="m-form-section section-type">
+            <div class="m-form-item">
+                <ul>
+                    <li class="m-bold">@HtmlLang.Write(LangKey.From):</li>
+                    <li>
+                        <input class="easyui-datebox mg-data" name="DateFrom" style="width:120px; height:22px;" />
+                    </li>
+                </ul>
+            </div>
+            <div class="m-form-item">
+                <ul>
+                    <li class="m-bold">@HtmlLang.Write(LangKey.To)</li>
+                    <li>
+                        <input class="easyui-datebox mg-data" name="DateTo" style="width:120px; height:22px;" />
+                    </li>
+                </ul>
+            </div>
+            <div class="m-form-item">
+                <ul>
+                    <li class="m-bold">@HtmlLang.Write(LangModule.Report, "ShowBy", "Show by")</li>
+                    <li>
+                        <select id="selSearchWithin" class="easyui-combobox mg-data" name="AgedByField" style="width:120px; height:22px;">
+                            @if (Convert.ToInt32(ViewData["ParentReportTypeID"]) == 19)
+                            {
+                                <option value="1">@HtmlLang.Write(LangModule.Report, "PurchaseInvoiceDate", "Purchase Date")</option>
+                            }
+                            else 
+                            { 
+                                <option value="1">@HtmlLang.Write(LangModule.Report, "InvoiceDate", "Invoice Date")</option>
+                            }
+                            <option value="2">@HtmlLang.Write(LangKey.DueDate)</option>
+                        </select>
+                    </li>
+                </ul>
+            </div>
+            @*<div class="m-form-item">
+                <ul>
+                    <li class="m-bold">@HtmlLang.Write(LangModule.Report, "AsAt", "As at")</li>
+                    <li>
+                        <input class="easyui-datebox mg-data" name="AsAt" style="width:120px; height:22px;" />
+                    </li>
+                </ul>
+            </div>*@
+            <div class="m-form-item">
+                <ul>
+                    <li><a href="javascript:void(0)" class="m-btn l-btn" id="aReportUpdate">@HtmlLang.Write(LangModule.Report, "Update", "Update")</a></li>
+                </ul>
+            </div>
+            <input type="hidden" class="mg-data" name="MContactID" />
+            <input type="hidden" class="mg-data" name="MContactName" />
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
+
+<script src="@ServerHelper.ScriptServer/scripts/Report/RptUC/Invoices.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.Report)

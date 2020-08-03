@@ -1,0 +1,16 @@
+﻿//document.write('<script src="jquery-1.8.2.min.js"></script>');
+//document.write('<script src="jquery.cookie.js"></script>');
+//document.write('<script src="jquery.json-2.3.min.js"></script>');
+//document.write('<script src="window.constant.variable.js"></script>');
+//document.write('<script src="jquery.megi.common.js"></script>');
+//document.write('<script src="jquery.megi.ajax.js"></script>');
+//document.write('<script src="jquery.megi.form.js"></script>');
+//document.write('<script src="jquery.megi.lang.js"></script>');
+//document.write('<script src="jquery.megi.ui.js"></script>');
+//document.write('<script src="jquery.megi.easyui.js"></script>');
+//document.write('<script src="jquery.megi.date.js"></script>');
+//document.write('<script src="jquery.megi.extend.js"></script>');
+//document.write('<script src="jquery.loadmask.js"></script>');
+//document.write('<script src="jquery.alert.js"></script>');
+//document.write('<script src="jquery.XYTipsWindow.2.8.js"></script>');
+//document.write('<script src="jquery.megi.easyui.extend.js"></script>');

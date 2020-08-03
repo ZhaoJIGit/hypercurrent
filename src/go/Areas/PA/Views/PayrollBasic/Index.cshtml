@@ -1,0 +1,263 @@
+﻿@using JieNor.Megi.Identity.HtmlHelper;
+@using JieNor.Megi.EntityModel.MultiLanguage;
+@using JieNor.Megi.Common.Utility;
+@using JieNor.Megi.Core;
+@using JieNor.Megi.Identity.Go.HtmlHelper;
+@using JieNor.Megi.Core.Const;
+@model JieNor.Megi.DataModel.PA.PAPrintSettingListModel
+
+@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+
+    JieNor.Megi.DataModel.PA.PAPaySettingModel paySetting = ViewData["PAPaySettingModel"] == null ? new JieNor.Megi.DataModel.PA.PAPaySettingModel() : ViewData["PAPaySettingModel"] as JieNor.Megi.DataModel.PA.PAPaySettingModel;
+
+    //是否有 工资（编辑）权限
+    bool isCanEditPayRun = HtmlSECMenu.HavePermission(BizObject.PayRun, PermissionItem.Change);
+    //不可编辑
+    string disabledAttr = isCanEditPayRun ? " " : " disabled=\"disabled\" ";
+}
+
+<style>
+    #divPayRoll .m-form-sub-section .m-form-lable {
+        width: 200px;
+        text-align: left;
+    }
+
+    .m-form-sub-section .m-form-item .sub-item {
+        padding-left: 20px;
+    }
+
+    .m-form-sub-section .m-form-item .m-form-input .textalign-right {
+        text-align: right;
+    }
+
+    #divPayRoll .m-form-sub-section {
+        width: 39%;
+        float: left;
+    }
+</style>
+
+<div id="divPayRoll" class="m-form m-imain m-form-hrtl m-form-hrtl-lbl100 m-form-vtcl" style="padding-left:20px">
+    <div id="divAccordion" class="easyui-accordion">
+        <!--社保-->
+        <div class="divInsuance" title="@HtmlLang.Write(LangModule.BD, "SocialSecurityEmployer", "1.Social Security(Employer)")" data-options="selected:true" style="overflow:auto;padding:10px;">
+            <input type="hidden" id="hideMitemID" name="MItemID" value="@paySetting.MItemID" />
+            <div class="m-form-sub-section">
+                <div class="m-form-item">
+                    <div class="m-form-lable">@HtmlLang.Write(LangModule.BD, "CompanySocialSecurityAccount", "Company Social Security Account")</div>
+                    <div class="m-form-input"><input @disabledAttr id="MSocialSecurityAccount" value="@paySetting.MSocialSecurityAccount" type="text" name="MSocialSecurityAccount" class="easyui-validatebox" data-options="required:false" /></div>
+                    <br class="clear" />
+                </div>
+                <div class="m-form-item ">
+                    <div class="m-form-lable">@HtmlLang.Write(LangModule.BD, "SocialSecurityDetialsRatio", "Social Security Detials (Ratio):")</div>
+                    <br class="clear" />
+                </div>
+                <div class="m-form-item sub-item">
+                    <div class="m-form-lable">@HtmlLang.Write(LangModule.BD, "Employer", "Employer")</div>
+                    <div class="m-form-input">&nbsp;</div>
+                    <br class="clear" />
+                </div>
+                <div class="m-form-item sub-item">
+                    <div class="m-form-lable">@HtmlLang.Write(LangModule.BD, "BaiscRetirementSecurity", "Baisc Retirement Security")</div>
+                    <div class="m-form-input"><input @disabledAttr id="MRetirementSecurityPer" value="@paySetting.MRetirementSecurityPer" type="text" name="MRetirementSecurityPer" class="easyui-numberbox textalign-right" data-options="required:true,min:0,max:100,precision:2" />%</div>
+                    <br class="clear" />
+                </div>
+
+                <div class="m-form-item sub-item">
+                    <div class="m-form-lable">@HtmlLang.Write(LangModule.BD, "BasicMedicalInsurance", "Basic Medical Insurance")</div>
+                    <div class="m-form-input"><input @disabledAttr id="MMedicalInsurancePer" value="@paySetting.MMedicalInsurancePer" type="text" name="MMedicalInsurancePer" class="easyui-numberbox textalign-right" data-options="required:true,min:0,max:100,precision:2" />%</div>
+                    <br class="clear" />
+                </div>
+
+                <div class="m-form-item sub-item">
+                    <div class="m-form-lable">@HtmlLang.Write(LangModule.BD, "UmemploymentInsurance", "Umemployment Insurance")</div>
+                    <div class="m-form-input"><input @disabledAttr id="MUmemploymentInsurancePer" value="@paySetting.MUmemploymentInsurancePer" type="text" name="MUmemploymentInsurancePer" class="easyui-numberbox textalign-right" data-options="required:true,min:0,max:100,precision:2" />%</div>
+                    <br class="clear" />
+                </div>
+                <div class="m-form-item sub-item">
+                    <div class="m-form-lable">@HtmlLang.Write(LangModule.BD, "IndustrialInjury", "Industrial Injury")</div>
+                    <div class="m-form-input"><input @disabledAttr id="MIndustrialInjuryPer" type="text" value="@paySetting.MIndustrialInjuryPer" name="MIndustrialInjuryPer" class="easyui-numberbox textalign-right" data-options="required:true,min:0,max:100,precision:2" />%</div>
+                    <br class="clear" />
+                </div>
+                <div class="m-form-item sub-item">
+                    <div class="m-form-lable">@HtmlLang.Write(LangModule.BD, "MeternityInsurance", "Meternity Insurance")</div>
+                    <div class="m-form-input"><input @disabledAttr id="MMaternityInsurancePer" value="@paySetting.MMaternityInsurancePer" type="text" name="MMaternityInsurancePer" class="easyui-numberbox textalign-right" data-options="required:true,min:0,max:100,precision:2" />%</div>
+                    <br class="clear" />
+                </div>
+
+
+                <div class="m-form-item sub-item">
+                    <div class="m-form-lable">@HtmlLang.Write(LangModule.BD, "SeriousIlinessMedicalTreatment", "Serious Illiness Medical Treatment")</div>
+                    <div class="m-form-input"><input @disabledAttr id="MSeriousIiinessInjuryPer" type="text" value="@paySetting.MSeriousIiinessInjuryPer" name="MSeriousIiinessInjuryPer" class="easyui-numberbox textalign-right" data-options="required:true,min:0,max:100,precision:2" />%</div>
+                    <br class="clear" />
+                </div>
+
+                <div class="m-form-item sub-item">
+                    <div class="m-form-lable">@HtmlLang.Write(LangModule.BD, "Other", "Other")</div>
+                    <div class="m-form-input"><input @disabledAttr id="MOtherPer" type="text" name="MOtherPer" value="@paySetting.MOtherPer" class="easyui-numberbox textalign-right" data-options="required:true,min:0,max:100,precision:2" />%</div>
+                    <br class="clear" />
+                </div>
+            </div>
+
+            <!--员工相关-->
+            <div class="m-form-sub-section">
+
+                <div class="m-form-item sub-item">
+                    <div class="m-form-lable">&nbsp;</div>
+                    <div class="m-form-input">&nbsp;</div>
+                    <br class="clear" />
+                </div>
+                <div class="m-form-item sub-item">
+                    <div class="m-form-lable">&nbsp;</div>
+                    <div class="m-form-input">&nbsp;</div>
+                    <br class="clear" />
+                </div>
+                <div class="m-form-item sub-item">
+                    <div class="m-form-lable">@HtmlLang.Write(LangModule.BD, "Employee", "Employee")</div>
+                    <div class="m-form-input">&nbsp;</div>
+                    <br class="clear" />
+                </div>
+                <div class="m-form-item sub-item">
+                    <div class="m-form-lable">@HtmlLang.Write(LangModule.BD, "BaiscRetirementSecurity", "Baisc Retirement Security")</div>
+                    <div class="m-form-input"><input @disabledAttr id="MEmpRetirementSecurityPer" value="@paySetting.MEmpRetirementSecurityPer" type="text" name="MEmpRetirementSecurityPer" class="easyui-numberbox textalign-right" data-options="required:true,min:0,max:100,precision:2" />%</div>
+                    <br class="clear" />
+                </div>
+
+                <div class="m-form-item sub-item">
+                    <div class="m-form-lable">@HtmlLang.Write(LangModule.BD, "BasicMedicalInsurance", "Basic Medical Insurance")</div>
+                    <div class="m-form-input"><input @disabledAttr id="MEmpMedicalInsurancePer" value="@paySetting.MEmpMedicalInsurancePer" type="text" name="MEmpMedicalInsurancePer" class="easyui-numberbox textalign-right" data-options="required:true,min:0,max:100,precision:2" />%</div>
+                    <br class="clear" />
+                </div>
+
+                <div class="m-form-item sub-item">
+                    <div class="m-form-lable">@HtmlLang.Write(LangModule.BD, "UmemploymentInsurance", "Umemployment Insurance")</div>
+                    <div class="m-form-input"><input @disabledAttr id="MEmpUmemploymentInsurancePer" value="@paySetting.MEmpUmemploymentInsurancePer" type="text" name="MEmpUmemploymentInsurancePer" class="easyui-numberbox textalign-right" data-options="required:true,min:0,max:100,precision:2" />%</div>
+                    <br class="clear" />
+                </div>
+                <div class="m-form-item sub-item">
+                    <div class="m-form-lable">&nbsp;</div>
+                    <div class="m-form-input">&nbsp;</div>
+                    <br class="clear" />
+                </div>
+                <div class="m-form-item sub-item">
+                    <div class="m-form-lable">&nbsp;</div>
+                    <div class="m-form-input">&nbsp;</div>
+                    <br class="clear" />
+                </div>
+                <div class="m-form-item sub-item">
+                    <div class="m-form-lable">&nbsp;</div>
+                    <div class="m-form-input">&nbsp;</div>
+                    <br class="clear" />
+                </div>
+
+            </div>
+
+        </div>
+        <!--住房公积金-->
+        <div id="divInsuance" title="@HtmlLang.Write(LangModule.BD, "HousingProvidentFundEmployer", "2.Housing Provident Fund(Employer)")" style="padding:10px;">
+            <div class="m-form-sub-section">
+                <div class="m-form-item">
+                    <div class="m-form-lable">@HtmlLang.Write(LangModule.BD, "CompanyHousingProvidentFundAccount", "Company Housing Provident Fund Account")</div>
+                    <div class="m-form-input"><input @disabledAttr id="MProvidentFundAccount" type="text" value="@paySetting.MProvidentFundAccount" name="MProvidentFundAccount" class="easyui-validatebox" data-options="required:false" /></div>
+                    <br class="clear" />
+                </div>
+
+                <div class="m-form-item sub-item">
+                    <div class="m-form-lable">@HtmlLang.Write(LangModule.BD, "HousingProvidentFundPercentage", "Housing Provident Fund Percentage")</div>
+                    <div class="m-form-input"><input @disabledAttr id="MProvidentFundPer" type="text" value="@paySetting.MProvidentFundPer" name="MProvidentFundPer" class="easyui-numberbox textalign-right" data-options="required:true,min:0,max:100,precision:2" />%</div>
+                    <br class="clear" />
+                </div>
+
+                <div class="m-form-item sub-item">
+                    <div class="m-form-lable">@HtmlLang.Write(LangModule.BD, "HousingProvidentFundPercentageAddition", "Housing Provident Fund Percentage (Addition)")</div>
+                    <div class="m-form-input"><input @disabledAttr id="MAddProvidentFundPer" type="text" value="@paySetting.MAddProvidentFundPer" name="MAddProvidentFundPer" class="easyui-numberbox textalign-right" data-options="required:true,min:0,max:100,precision:2" />%</div>
+                    <br class="clear" />
+                </div>
+            </div>
+        </div>
+        <!--工资-->
+        <div title="@HtmlLang.Write(LangModule.BD, "Salary", "3.Salary")" style="padding:10px;">
+            <div class="m-form-sub-section" style="width:460px">
+                <div class="m-form-item">
+                    <div class="m-form-lable">@HtmlLang.Write(LangModule.BD, "PayPeriod", "Pay Period")</div>
+                    <div class="m-form-input">
+                        <select @disabledAttr class="easyui-combobox mg-data" name="MStartPayMonth" id="MStartPayMonth" style="width: 120px; height: 25px;">
+                            <option value="2">@HtmlLang.Write(LangModule.BD, "CurrentMonth", "Current Month")</option>
+                            <option value="1">@HtmlLang.Write(LangModule.BD, "NextMonth", "Next Month")</option>
+                        </select>
+                        <input type="hidden" id="hideMStartPayMonth" value="@paySetting.MStartPayMonth">
+                    </div>
+                    <div class="m-form-input" style=" padding-left: 10px">
+                        <select @disabledAttr class="easyui-validatebox easyui-combobox mg-data" name="MStartPayDay" id="MStartPayDay" data-options="validType:'day'" style="width: 120px; height: 25px;">
+                            @HtmlDay.SelectOptions(31);
+                        </select>
+                        <input type="hidden" id="hideMStartPayDay" value="@paySetting.MStartPayDay" />
+                    </div>
+
+                    <br class="clear" />
+                </div>
+
+                <div class="m-form-item">
+                    <div class="m-form-lable">@HtmlLang.Write(LangModule.BD, "PaymentDate", "Payment Date")</div>
+                    <div class="m-form-input">
+                        <select @disabledAttr class="easyui-combobox mg-data" name="MPaymentMonth" id="MPaymentMonth" style="width: 120px; height: 25px;">
+                            <option value="2">@HtmlLang.Write(LangModule.BD, "CurrentMonth", "Current Month")</option>
+                            <option value="1">@HtmlLang.Write(LangModule.BD, "NextMonth", "Next Month")</option>
+                        </select>
+                        <input type="hidden" id="hideMPaymentMonth" value="@paySetting.MPaymentMonth" />
+                    </div>
+                    <div class="m-form-input" style=" padding-left: 10px">
+                        <select @disabledAttr class="easyui-validatebox easyui-combobox  mg-data" name="MPaymentDay" id="MPaymentDay" data-options="validType:'day'" style="width: 120px; height: 25px;">
+                            @HtmlDay.SelectOptions(31);
+                        </select>
+                        <input type="hidden" id="hideMPaymentDay" value="@paySetting.MPaymentDay" />
+                    </div>
+                    <br class="clear" />
+                </div>
+                <!--这部分先不要了-->
+                @*<div class="m-form-item">
+                        <div class="m-form-lable">@HtmlLang.Write(LangModule.BD, "SalaryComponent", "Salary Component")</div>
+                        <div>
+
+                            <table id="divSalaryTree" class="easyui-tree"></table>
+                        </div>
+                        <br class="clear" />
+                        <input type="hidden" id="hidePayItemIDs" value="@paySetting.MPayItemIDs"/>
+                    </div>*@
+            </div>
+
+            <div class="m-form-sub-section">
+                <div class="m-form-item">
+                    <div class="m-form-lable" style="width: 27px; text-align: center; ">@HtmlLang.Write(LangModule.BD, "To", "To")</div>
+                    <div class="m-form-input">
+                        <select @disabledAttr class="easyui-combobox mg-data" name="MEndPayMonth" id="MEndPayMonth" style="width: 120px; height: 25px;">
+                            <option value="2">@HtmlLang.Write(LangModule.BD, "CurrentMonth", "Current Month")</option>
+                            <option value="1">@HtmlLang.Write(LangModule.BD, "NextMonth", "Next Month")</option>
+                        </select>
+                        <input type="hidden" id="hideMEndPayMonth" value="@paySetting.MEndPayMonth" />
+                    </div>
+                    <div class="m-form-input" style=" padding-left: 10px">
+                        <select @disabledAttr class="easyui-validatebox easyui-combobox mg-data" name="MEndPayDay" id="MEndPayDay" data-options="validType:'day'" style="width: 120px; height: 25px;">
+                            @HtmlDay.SelectOptions(31);
+                        </select>
+                        <input type="hidden" id="hideMEndPayDay" value="@paySetting.MEndPayDay" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input id="hideMitemID" type="hidden" />
+    </div>
+</div>
+
+<div class="m-toolbar-footer">
+    @if (HtmlSECMenu.HavePermission(BizObject.Setting, PermissionItem.Change))
+    {
+        <div class="right">
+            <a @disabledAttr href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aSave">@HtmlLang.Write(LangKey.Save)</a>
+        </div>
+        <br class="clear" />
+    }
+</div>
+<script src="@JieNor.Megi.Common.Utility.ServerHelper.GoServer/scripts/PA/PayrollBasic/PaySettingEdit.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.StaticServer/FW/scripts/jquery.megi.easyui.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.StaticServer/FW/scripts/jquery.megi.hint.js?@ServerHelper.JSVersion"></script>

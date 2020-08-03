@@ -1,0 +1,135 @@
+﻿@using JieNor.Megi.Identity.HtmlHelper
+@using JieNor.Megi.EntityModel.MultiLanguage
+@using JieNor.Megi.Identity.Go.HtmlHelper
+@using JieNor.Megi.Core.Const
+@using JieNor.Megi.Common.Utility
+@using JieNor.Megi.Common.Context
+@using JieNor.Megi.EntityModel.Enum
+
+<!--最上头是一些功能操作按钮 vl 表示voucher List-->
+<div class="fcv-operate-top">
+    <!--左边的操作按钮-->
+    <div class="fcv-operate-left m-tab-toolbar left">
+
+        <!--打新建-->
+        <a href="#" id="btnNew" class="easyui-linkbutton  easyui-linkbutton-yellow fcv-new-button">@HtmlLang.Write(LangKey.New)</a>
+
+
+        <!--删除-->
+        <a href="####" id="btnDelete" class="easyui-linkbutton fcv-delete-button">@HtmlLang.Write(LangModule.Common, "Delete", "Delete")</a>
+
+
+    </div>
+    <!--右边的过滤查询-->
+    <div class="fcv-operate-right m-tab-toolbar right">
+        <!--快速码-->
+        <input type="text" id="txtCashCodingCode" class="fcv-cashcodingcode-input" hint="@HtmlLang.Write(LangModule.Common, "FastCode", "快速码")" />
+        <!--关键字-->
+        <input type="text" id="txtCashCodingKeyword" class="fcv-cashcodingkeyword-input" hint="@HtmlLang.Write(LangModule.Common, "Keywords", "keywords"): @HtmlLang.Write(LangModule.GL, "Description", "描述") / @HtmlLang.Write(LangModule.GL, "Reference", "备注") " />
+        <!--查询按钮-->
+        <a id="btnSearch" class="easyui-linkbutton fcv-cashcodingsearch-button" style="float:none">@HtmlLang.Write(LangKey.Search)</a>
+        <!--查询按钮-->
+        <a id="btnClear" class="fcv-cashcodingclear-button">@HtmlLang.Write(LangModule.GL, "ResetDocVoucher", "重置")</a>
+    </div>
+</div>
+
+
+
+<!--中间是All勾选框，以及所有的凭证 内部的结构是 ul + table ，最外层是ul ul里面的li对应一个一个的table-->
+<div class="fcv-cashcoding-list">
+    <!--第二个是一个div，显示表头或者其他的-->
+    <div class="fcv-entry-cashcoding-div" style="overflow-y:auto">
+        <!--放入一个表格，里面是凭证分录的列头-->
+        <table class="fcv-cashcoding-table">
+            <!--只有一行-->
+            <thead class="fcv-cashcoding-table-header">
+                <tr>
+                    <!--勾选-->
+                    <th class="" style="width: 30px;">
+                        <!--第一个是一个checkbox-->
+                        <input type="checkbox" class="fcv-checkalls-input" id="btnCheckall" />
+                    </th>
+                    <!--快速码-->
+                    <th class="fcv-fastcode-header">@HtmlLang.Write(LangModule.GL, "FastCode", "快速码")</th>
+                    <!--名字-->
+                    <th class="fcv-mname-header">@HtmlLang.Write(LangModule.GL, "Name", "名称")</th>
+                    <!--联系人-->
+                    <th class="fcv-contact-header">@HtmlLang.Write(LangModule.GL, "Contact", "联系人")</th>
+                    <!--备注-->
+                    <th class="fcv-mref-header">@HtmlLang.Write(LangModule.GL, "Reference", "备注")</th>
+                    <!--描述-->
+                    <th class="fcv-mdesc-header">@HtmlLang.Write(LangModule.GL, "Description", "描述")</th>
+                    @if (HtmlSECMenu.HavePermission(BizObject.General_Ledger, PermissionItem.Change))
+                    {
+                    <!--科目-->
+                        <th class="fcv-account-header">@HtmlLang.Write(LangModule.Common, "Account", "科目")</th>
+                    }
+                    <!--税率-->
+                    <th class="fcv-tax-header">@HtmlLang.Write(LangModule.Common, "TaxRate", "科目")</th>
+                    <!--跟踪项1-5 -->
+                    <th class="vlc-track-header1" style="display: none; word-wrap: break-word;">@HtmlLang.Write(LangModule.GL, "Tracking", "跟踪项")1</th>
+                    <th class="vlc-track-header2" style="display: none; word-wrap: break-word;">@HtmlLang.Write(LangModule.GL, "Tracking", "跟踪项")2</th>
+                    <th class="vlc-track-header3" style="display: none; word-wrap: break-word;">@HtmlLang.Write(LangModule.GL, "Tracking", "跟踪项")3</th>
+                    <th class="vlc-track-header4" style="display: none; word-wrap: break-word;">@HtmlLang.Write(LangModule.GL, "Tracking", "跟踪项")4</th>
+                    <th class="vlc-track-header5" style="display: none; word-wrap: break-word;">@HtmlLang.Write(LangModule.GL, "Tracking", "跟踪项")5</th>
+                    <!--Credit-->
+                    <th class="fcv-operation-header" style="max-width: 100px;">@HtmlLang.Write(LangModule.Common, "Operation", "操作")</th>
+                </tr>
+            </thead>
+
+            <!--一条用来复制的li-->
+            <tbody>
+                <!--后面的每一列都是凭证的分录-->
+                <tr class="fcv-cashcoding-entry-demo  fcv-hide">
+                    <!--勾选-->
+                    <td class="fcv-entry-cachcodingselect">
+                        <!--第1个是一个checkbox-->
+                        <input type="checkbox" class="fcv-check-input fcv-hide" />
+                    </td>
+                    <!--第1列 快速码-->
+                    <td class="fcv-entry-cachcodinfastcode"></td>
+                    <!--第2列 名字-->
+                    <td class="fcv-entry-cachcodinmname"></td>
+                    <!--第3列 联系人-->
+                    <td class="fcv-entry-cachcodincontact"></td>
+                    <!--第4列 模板备注-->
+                    <td class="fcv-entry-cachcodinmref"></td>
+                    <!--第5列 描述-->
+                    <td class="fcv-entry-cachcodinmdesc"></td>
+                    @if (HtmlSECMenu.HavePermission(BizObject.General_Ledger, PermissionItem.Change))
+                    {
+                    <!--第6列 科目-->
+                        <td class="fcv-entry-cachcodinaccount"></td>
+                    }
+                    <!--第7列 税率-->
+                    <td class="fcv-entry-cachcodintax"></td>
+                    <!--第8-12列 跟踪项-->
+                    <td class="fcv-entry-track1" style="display: none"></td>
+                    <td class="fcv-entry-track2" style="display: none"></td>
+                    <td class="fcv-entry-track3" style="display: none"></td>
+                    <td class="fcv-entry-track4" style="display: none"></td>
+                    <td class="fcv-entry-track5" style="display: none"></td>
+                    <!--第13列 操作-->
+                    <td class="fcv-entry-operation">
+                        <div class="fcv-cashcoding-operation">
+                            @if (HtmlSECMenu.HavePermission(BizObject.Bank_Reconciliation, PermissionItem.Change))
+                            {
+                            <!--编辑-->
+                            <a class="fcv-cashcoding-edit list-item-edit" title="@HtmlLang.Write(LangKey.Edit)">&nbsp;</a>
+                            <!--编辑-->
+                            <a class="fcv-cashcoding-delete list-item-del" title="@HtmlLang.Write(LangKey.Delete)">&nbsp;</a>
+                            }
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<input type="hidden" value=@HtmlSECMenu.HavePermission(BizObject.General_Ledger, PermissionItem.Change) id="haveGLPermission" />
+<!--底部是分页的控件-->
+<div class="easyui-pagination fcv-pagenations-div">
+
+</div>
+
+<script src="~/Scripts/FC/FCCashCodingModileList.js?@ServerHelper.JSVersion"></script>

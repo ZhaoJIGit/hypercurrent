@@ -1,0 +1,25 @@
+﻿<!--查看银行账单-->
+@using JieNor.Megi.Common.Utility
+<div class="statement">
+    <input id="hidTabSelectedIndex" type="hidden" value="4" />
+    @if (HtmlSECMenu.HavePermission(BizObject.BankAccount, PermissionItem.Change))
+    {
+        <a href="javascript:void(0)" id="aMarkAsNonGenerateVoucher" class="easyui-splitbutton easyui-splitbutton-m easyui-linkbutton-yellow"
+           data-options="menu:'#divMarkAsGenerateVoucher'" status="2">@HtmlLang.Write(LangModule.Bank, "MarkAsUnGenerate", "标记不生成凭证")</a>
+        <div id="divMarkAsGenerateVoucher" style="width:180px;">
+            <div><a href="javascript:void(0)" id="aMarkAsUnGenerateVoucher" status="1">@HtmlLang.Write(LangModule.Bank, "MarkAsNonGenerate", "标记要生成凭证")</a></div>
+        </div>
+    }
+    <div class="m-keyword-search">
+        <a class="easyui-linkbutton btnSearchDiv" href="javascript:void(0)">@HtmlLang.Write(LangKey.Search)</a>
+    </div>
+    <div class="space"></div>
+    <div class="m-adv-search m-adv-search-statementdetail">
+        @Html.Partial("BDBankPartial/BDBankSearchPartial")
+    </div>
+    <div id="gridBankStatementDetailDiv">
+        <div id="gridBankStatementDetail" fitcolumns="true"></div>
+    </div>
+
+    <script type="text/javascript" src="/Scripts/BD/BDBank/BDBankStatementDetail.js?@ServerHelper.JSVersion"></script>
+</div>

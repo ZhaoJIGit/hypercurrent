@@ -1,0 +1,145 @@
+﻿@{
+    ViewBag.Title = "GLDocVoucherEdit";
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+<link type="text/css" rel="stylesheet" href="~/Scripts/GL/css.css?@ServerHelper.JSVersion" />
+@HtmlLang.WriteScript(LangModule.GL)
+@using JieNor.Megi.Identity.HtmlHelper
+@using JieNor.Megi.EntityModel.MultiLanguage
+@using JieNor.Megi.Core.Const
+@using JieNor.Megi.Common.Utility
+<!--顶部-->
+<div class="de-top-div m-form m-imain">
+    <!--内部是一个表格-->
+    <div class="de-body-div">
+        <!--表格-->
+        <table class="de-table-body m-resize-table" style="display:none;">
+            <!--表头-->
+            <thead class="de-body-head">
+                <tr class="de-head-tr demo">
+                    <!--第1列，显示其他的基本信息，发票显示联系人-->
+                    <th class="de-basic-info-2" mwidth="100">@HtmlLang.Write(LangModule.GL, "Contact", "联系人")</th>
+                    <!--第2列，显示单据的基本信息，发票显示发票号，-->
+                    <th class="de-basic-info-1" mwidth="100">@HtmlLang.Write(LangModule.GL, "Number", "Number")</th>
+                    <!--第三列，显示日期-->
+                    <th class="de-bizdate-info" mwidth="100">@HtmlLang.Write(LangKey.Date)</th>
+                    <!--第4列，显示摘要-->
+                    <th class="de-referece-info" mwidth="100">@HtmlLang.Write(LangModule.GL, "Reference", "摘要")</th>
+                    <!--第5列，显示物料-->
+                    <th class="de-item-info" mwidth="100">@HtmlLang.Write(LangModule.GL, "MerItem", "商品项目")</th>
+                    <!--第6列，显示分录的摘要信息-->
+                    <th class="de-description-info" mwidth="150">@HtmlLang.Write(LangModule.GL, "Desc", "描述")</th>
+                    <!--第7列，显示总金额-->
+                    <th class="de-amount-info" mwidth="100">@HtmlLang.Write(LangKey.Amount)</th>
+                    <!--第8列，显示税额，如果没有税，则显示-- -->
+                    <th class="de-taxamount-info" mwidth="100">@HtmlLang.Write(LangModule.GL, "Tax", "Tax")</th>
+                    <!--第9列，是空行-->
+                    <th class="de-empty-cell" mwidth="10">&nbsp;</th>
+                    <!--第10列，借方-->
+                    <th class="de-debitaccount-info" mwidth="120">
+                        @HtmlLang.Write(LangModule.GL, "DebitAccount", "Debit Account")
+                    </th>
+                    <!--第11列，借方税科目-->
+                    <th class="de-debittax-info de-tax-info" mwidth="110">
+                        @HtmlLang.Write(LangModule.GL, "TaxAccount", "Tax Account")
+                    </th>
+                    <!--第12列，贷方-->
+                    <th class="de-creditaccount-info" mwidth="110">
+                        @HtmlLang.Write(LangModule.GL, "CreditAccount", "Credit Account")
+                    </th>
+                    <!--第13列，贷方税科目-->
+                    <th class="de-credittax-info  de-tax-info" mwidth="110">
+                        @HtmlLang.Write(LangModule.GL, "TaxAccount", "TaxAccount")
+                    </th>
+                    <!--第十二列，凭证-->
+                    <th class="de-voucher-info" mwidth="150">
+                        @HtmlLang.Write(LangModule.GL, "Voucher", "Voucher")
+                    </th>
+                </tr>
+            </thead>
+            <!--表身-->
+            <tbody>
+                <tr class="de-body-tr demo">
+                    <!--第1列，显示其他的基本信息，发票显示联系人-->
+                    <td class="de-basic-info-2 de-disable">Felson_luo</td>
+                    <!--第2列，显示单据的基本信息，发票显示发票号，-->
+                    <td class="de-basic-info-1 de-disable">INV-0001</td>
+                    <!--第三列，显示日期-->
+                    <td class="de-bizdate-info de-disable">2015-12-01</td>
+                    <!--第四列，显示描述-->
+                    <td class="de-reference-info de-disable">Felson_luo</td>
+                    <!--第5列，显示Item-->
+                    <td class="de-item-info de-disable">xxxxxx</td>
+                    <!--第6列，显示分录的摘要信息-->
+                    <td class="de-description-info de-disable">xxxxxx</td>
+                    <!--第7列，显示税额，如果没有税，则显示-- -->
+                    <td class="de-amount-info td-money de-disable">100,000.00</td>
+                    <!--第8列，显示税额，如果没有税，则显示-- -->
+                    <td class="de-taxamount-info  td-money de-disable">---</td>
+                    <!--第9列，是空行-->
+                    <td class="de-empty-cell"></td>
+                    <!--第10列，借方-->
+                    <td class="de-debit-info de-account-td">
+                        <!--选择借方科目-->
+                    </td>
+                    <!--第11列，税科目-->
+                    <td class="de-tax-info de-account-td">
+                        <!--选择税对应的科目-->
+                    </td>
+                    <!--第12列，贷方-->
+                    <td class="de-credit-info de-account-td">
+                        <!--选择贷方对应的科目-->
+                    </td>
+                    <!--第13列，贷方税科目-->
+                    <td class="de-tax-info de-account-td">
+                        <!--选择贷方对应的科目-->
+                    </td>
+                    <!--第14列，凭证-->
+                    <td class="de-voucher-info"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--底部是一些提示-->
+    <div class="de-tip-div">
+        <div class="de-ul-title">
+            @HtmlLang.Write(LangModule.Common, "Tips", "提示:")
+        </div>
+        <ul class="de-ul-body">
+
+            <li>
+                @HtmlLang.Write(LangModule.Common, "DebitCreditAccountCannotbeempty", "借贷科目不可为空")
+            </li>
+            <li>
+                @HtmlLang.Write(LangModule.Common, "DocWithTaxTaxAccountCannotbeempty", "含税分录的税科目不可为空")
+            </li>
+            <li>
+                @HtmlLang.Write(LangModule.Common, "InvoiceExpenseBillCannotCreateVoucherWithUnappovedStatus", "发票单、费用报销单在未审核的状态下不可创建凭证")
+            </li>
+            <li>
+                @HtmlLang.Write(LangModule.Common, "UpdateAccountInMultiEntryBillWithMergedVoucherWillDeleteItsVoucher", "对于多行分录的业务单据合并生成凭证后，再次修改科目会导致凭证删除,你需要重新生成凭证")
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="m-toolbar-footer">
+    @if (HtmlSECMenu.HavePermission(BizObject.General_Ledger, PermissionItem.Change))
+    {
+        <div class="left">
+            <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray de-cancel-button">@HtmlLang.Write(LangKey.Cancel)</a>
+        </div>
+        <div class="right">
+            <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow de-save-button" style="display:none;">@HtmlLang.Write(LangModule.Common, "Save", "Save")</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton de-create-button easyui-linkbutton-yellow" style="display:none;">@HtmlLang.Write(LangModule.GL, "SaveAndCreate", "保存 & 生成")</a>
+        </div>
+    }
+</div>
+@HtmlLang.WriteScript(LangModule.GL)
+@HtmlLang.WriteScript(LangModule.IV)
+<script src="~/Scripts/GL/GLVoucherHome.js?@ServerHelper.JSVersion"></script>
+<script src="~/Scripts/GL/GLDocVoucherRuleEdit.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript">
+    var rule = new GLDocVoucherRuleEdit();
+    rule.init('@ViewData["MDocIDs"]', '@ViewData["MType"]');
+</script>

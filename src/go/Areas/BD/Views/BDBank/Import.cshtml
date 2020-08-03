@@ -1,0 +1,57 @@
+﻿@using JieNor.Megi.Core.Context
+@using JieNor.Megi.DataModel.IV
+@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Import Bank Transactions";
+}
+@using JieNor.Megi.Common.Utility;
+<div class="m-imain">
+    <div class="m-imain-content" style="text-align:center;">
+        <div id="divStatementFile" class="import-banktransaction">
+            <div class="title" style="">@HtmlLang.Write(LangModule.Bank, "Uploadyourbanktransaction", "Upload your bank transaction records")</div>
+            <div class="field-section">
+                <div style="">
+                    @HtmlLang.Write(LangModule.Bank, "SelectImportSolution", "Select import solution")
+                </div>
+                <select class="easyui-combobox" id="selSolution" style="width: 270px; height: 28px;font-size:14px;"
+                        data-options="valueField: 'Key',textField: 'Value',data:@ViewBag.BankStaImpSolKVList"></select>
+            </div>
+            <div class="second-title-txt">@HtmlLang.Write(LangModule.Bank, "RecordsFiletype", "Your bank transaction records File type must be")</div>
+            <ul style="padding-left: 16px;">
+                <li style="">xls</li>
+                <li style="">xlsx</li>
+                <li style="">csv</li>
+            </ul>
+            <div class="file-selected">
+                @using (Ajax.BeginForm("ReadStatementData", "Import", new { bankId = ViewBag.BankId }, new AjaxOptions { HttpMethod = "POST" }, new { ID = "fileSelectForm", enctype = "multipart/form-data" }))
+                {
+                    <label class="upload-image">&nbsp;</label>
+                    <input type="file" id="fileInput" name="fileInput" class="import-file-input" />
+                    <a href="javascript:void(0)" class="upload-label non-alert">@HtmlLang.Write(LangModule.Common, "UploadLabel", "Browse...")</a>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="m-toolbar-footer">
+    @if (HtmlSECMenu.HavePermission(BizObject.BankAccount, PermissionItem.Change))
+    {
+    <div class="left">
+        <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray">@HtmlLang.Write(LangKey.Cancel)</a>
+    </div>
+    <div class="right">
+        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aImport">@HtmlLang.Write(LangModule.Bank, "ImportButtonName", "Import")</a>
+    </div>
+    }
+</div>
+<input type="hidden" id="hidBankTypeId" value="@Html.Raw(@ViewBag.BankTypeId)" />
+<input type="hidden" id="hidBankId" value="@ViewBag.BankId" />
+<input type="hidden" id="hidMessage" value="@ViewBag.Message" />
+<input type="hidden" id="hidMessage" value="@Request.Params["message"]" />
+@HtmlLang.WriteScript(LangModule.Docs)
+@HtmlLang.WriteScript(LangModule.Bank)
+<script type="text/javascript" src="@ServerHelper.StaticServer/fw/scripts/jquery.form.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/BD/Docs/FileBase.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/BD/Import/ImportBase.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/BD/BDBank/Import.js?@ServerHelper.JSVersion"></script>
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)

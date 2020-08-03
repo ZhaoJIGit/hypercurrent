@@ -1,0 +1,303 @@
+﻿@using JieNor.Megi.Identity.HtmlHelper
+@using JieNor.Megi.EntityModel.MultiLanguage
+@using JieNor.Megi.Identity.Go.HtmlHelper
+@using JieNor.Megi.Core.Const
+@using JieNor.Megi.Common.Context
+@using JieNor.Megi.Identity.Go.AutoManager
+@using JieNor.Megi.Common.Utility
+
+@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+
+    JieNor.Megi.EntityModel.Context.MContext ctx = JieNor.Megi.Common.Context.ContextHelper.MContext;
+
+    bool isSmartVersion = ctx.MOrgVersionID == (int)JieNor.Megi.EntityModel.Enum.OrgVersionEnum.Smart;
+
+    var accessResponse = JieNor.Megi.Tools.AccessHelper.Access();
+
+    var accessList = accessResponse.Access;
+
+    //是否有 销售发票（查看）权限
+    bool isCanSaleFapiaoViewPermission = accessList[BizObject.Sales_Fapiao + PermissionItem.View];
+    bool isCanSaleFapiaoChangePermission = accessList[BizObject.Sales_Fapiao + PermissionItem.Change];
+
+    //是否有 采购发票（查看）权限
+    bool isCanPurchaseFapiaoViewPermission = accessList[BizObject.Purchases_Fapiao + PermissionItem.View];
+
+    bool isCanPurchaseFapiaoChangePermission = accessList[BizObject.Purchases_Fapiao + PermissionItem.Change];
+
+    string vatFapiaoBarChartId = isSmartVersion ? "vatFapiaoSmartChartDiv" : "vatFapiaoChartDiv";
+
+    string incomeFapiaoBarChartId = isSmartVersion ? "incomeFapiaoSmartChartDiv" : "incomeFapiaoChartDiv";
+    
+}
+
+<div class="m-imain " style="width:100%;">
+    <div class="dashboard-home fapiao-dashboard">
+        <div class="space"></div>
+        <div class="m-imain-content data-home">
+
+            <div>
+                <!--销项发票-->
+                @if (isCanSaleFapiaoViewPermission)
+                {
+                    <div class="bspe-partial div-vat">
+                        <div class="fpdashboard-title bspe-header">
+                            <a id="btnOutputFPTitle" class="item-title">@HtmlLang.Write(LangModule.FP, "VATFapiao", "销项发票")</a>
+
+                            <span class="header-manage-button" id="btnVatMange" style="float: right; position: relative; left: -20px; cursor: pointer">&nbsp;</span>
+                            <div class="header-manage-sub-div" id="divVatSub" style="display:none;">
+                                <ul class="manage-table">
+                                    @if (isCanSaleFapiaoChangePermission)
+                                    {
+                                        <li class="importFapiao">
+                                            <span><a href="javascript:void(0);" onclick="IOImport.fpOpen(0)">@HtmlLang.Write(LangModule.FP, "ImportFapiaoTitle", "导入发票")</a></span>
+                                        </li>
+
+                                    }
+
+                                    @if (isCanSaleFapiaoViewPermission)
+                                    {
+                                        if (!isSmartVersion)
+                                        {
+                                            <li class="fapiaoTable">
+                                                <span><a href="javascript:void(0);" id="btnOutputFPTable">@HtmlLang.Write(LangModule.FP, "fapiaoTable", "开票单")</a></span>
+                                            </li>
+                                            <li class="fapiaoHook">
+                                                <span><a href="javascript:void(0);" id="btnOutputFPHook">@HtmlLang.Write(LangModule.FP, "fapiaoHook", "发票勾对")</a></span>
+                                            </li>
+                                        }
+                                        <li class="importList">
+                                            <span><a href="javascript:void(0);" id="btnOutputFPImportList">@HtmlLang.Write(LangModule.FP, "ImportFapiaoList", "发票导入清单")</a></span>
+                                        </li>
+
+                                        <li class="fapiaoTransactionList">
+                                            <span><a href="javascript:void(0);" id="btnOutputFPTransaction">@HtmlLang.Write(LangModule.FP, "fapiaoTransactionList", "发票明细")</a></span>
+                                        </li>
+
+                                        if (isSmartVersion && isCanSaleFapiaoChangePermission)
+                                        {
+                                            <li class="fapiaoTransactionList">
+                                                <span><a href="javascript:void(0);" id="btnOutputFPCoding">@HtmlLang.Write(LangModule.FP, "FapiaoCashcoding", "发票 Coding")</a></span>
+                                            </li>
+                                        }
+
+                                        <li class="receipt">
+                                            <a href="javascript:void(0);" id="btnOutPutFPAutoRecevieLog">@HtmlLang.Write(LangModule.FP, "AutoReceiveFapiaoLog", "自动获取日志")</a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="bspe-body" style="height:230px">
+                            <div class="vat-bargraph bspe-body-left" style="width:70%">
+                                <div style="padding-left:18px">
+                                    <span> @HtmlLang.Write(LangModule.FP, "HistoryBilling", "历史开票情况")</span>
+                                    <div style="float:right">
+                                        <div style="height: 20px; padding: 5px; ">
+                                            <span style="display: inline-block; width: 25px; height: 18px; background-color: #449BE0">&nbsp;</span>
+                                            <span style="display: inline-block; width: 170px;position:relative;top:-4px">
+                                                @HtmlLang.Write(LangModule.FP, "InvoicedAmount", "已开发票金额")
+                                            </span>
+                                            @if (!isSmartVersion)
+                                            {
+                                                <span style="display: inline-block; width: 25px; height:18px; background-color: #F5AB8D">&nbsp;</span>
+                                                <span style="display: inline-block; width: 170px; position: relative; top: -4px">@HtmlLang.Write(LangModule.FP, "NotInvoiceAmount", "未开发票金额")</span>
+                                            }
+
+                                        </div>
+                                    </div>
+                                    <div class="vat-canvas" id="@vatFapiaoBarChartId" width="1000" height="160"></div>
+                                </div>
+
+                            </div>
+
+                            <div class="vat-piechart bspe-body-right" style="width:30%;margin-top:0px">
+                                @if (!isSmartVersion)
+                                {
+                                    <div class="vatpie-canvas" id="vatPieChartDiv" style="margin:0 auto ; width:250px ; height:170px"></div>
+                                    <div style="text-align:center;">
+                                        <span style="font-size: 20px; color: #459CE1" id="outputFapiaoTotalAmount">0</span>
+                                        <br />
+                                        <span>@HtmlLang.Write(LangModule.FP, "ThisYearHistoryBilling", "本年开票金额")</span>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div style="text-align:right; padding-top:80px;padding-right:50px">
+                                        <span style="font-size: 20px; font-weight: bold" id="outputFapiaoTotalAmount">0</span>
+                                        <br />
+                                        <span>@HtmlLang.Write(LangModule.FP, "ThisYearHistoryBilling", "本年开票金额")</span>
+                                    </div>
+                                }
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                }
+
+
+                <!--进项发票-->
+                @if (isCanPurchaseFapiaoViewPermission)
+                {
+                    <div class="bspe-partial div-input">
+                        <div class="fpdashboard-title bspe-header">
+                            <a id="btnInputFPTitle" class="item-title">@HtmlLang.Write(LangModule.FP, "IncomeFapiaoTitle", "进项发票")</a>
+                            <span class="header-manage-button" id="btnIncome" style="float: right; position: relative; left: -20px; cursor: pointer">&nbsp;</span>
+                            <div class="header-manage-sub-div" id="divIncomeSub" style="display:none">
+                                <ul class="manage-table">
+                                    @if (isCanPurchaseFapiaoChangePermission)
+                                    {
+                                        <li class="importFapiao">
+                                            <a href="###" id="ImportFaPiao" onclick="IOImport.fpOpen(1)">@HtmlLang.Write(LangModule.BD, "ImportFaPiao", "导入发票")</a>
+                                        </li>
+                                    }
+                                    @if (!isSmartVersion)
+                                    {
+                                        <li class="fapiaoTable">
+                                            <a href="javascript:void(0);" id="btnInputFPTable">@HtmlLang.Write(LangModule.FP, "fapiaoTable", "开票单")</a>
+                                        </li>
+                                        <li class="fapiaoHook">
+                                            <a href="javascript:void(0);" id="btnInputFPHook">@HtmlLang.Write(LangModule.FP, "fapiaoHook", "发票勾对")</a>
+                                        </li>
+                                    }
+
+                                    <li class="importList">
+                                        <a href="javascript:void(0);" id="btnInputFPImportList">@HtmlLang.Write(LangModule.FP, "ImportFapiaoList", "发票导入清单")</a>
+                                    </li>
+
+                                    <li class="fapiaoTransactionList">
+                                        <a href="javascript:void(0);" id="btnInputFPTransaction">@HtmlLang.Write(LangModule.FP, "fapiaoTransactionList", "发票明细")</a>
+                                    </li>
+
+                                    @if (isSmartVersion && isCanPurchaseFapiaoChangePermission)
+                                    {
+                                        <li class="fapiaoTransactionList">
+                                            <span><a href="javascript:void(0);" id="btnInputFPCoding">@HtmlLang.Write(LangModule.FP, "FapiaoCashcoding", "发票 Coding")</a></span>
+                                        </li>
+                                    }
+
+                                    <li class="receipt">
+                                        <a href="javascript:void(0);" id="btnInputFPAutoRecevieLog">@HtmlLang.Write(LangModule.FP, "AutoReceiveFapiaoLog", "自动获取日志")</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="bspe-body" style="height:230px">
+                            <div class="vat-bargraph bspe-body-left" style="width:70%">
+                                <div style="padding-left:18px">
+                                    <span> @HtmlLang.Write(LangModule.FP, "HistoryReceiveFapiao", "历史收票情况")</span>
+                                    <div style="float:right">
+                                        <div style="height: 20px; padding: 5px; ">
+                                            <span style="display: inline-block; width: 25px; height:18px; background-color: #449BE0">&nbsp;</span>
+                                            <span style="display: inline-block; width: 170px; position: relative; top: -4px">
+                                                @HtmlLang.Write(LangModule.FP, "ReceivedAmount", "已收到发票金额")
+                                            </span>
+                                            @if (!isSmartVersion)
+                                            {
+                                                <span style="display: inline-block; width: 25px; height:18px; background-color: #F5AB8D">&nbsp;</span>
+                                                <span style="display: inline-block; width: 170px; position: relative; top: -4px">@HtmlLang.Write(LangModule.FP, "NotReceiveAmount", "未收到发票金额")</span>
+                                            }
+
+                                        </div>
+                                    </div>
+                                    <div class="incomeFapiao-canvas" id="@incomeFapiaoBarChartId" width="1000" height="160"></div>
+                                </div>
+                            </div>
+
+                            <div class="vat-piechart bspe-body-right" style="width: 30%; margin-top: 0px;height:200px">
+                                @if (!isSmartVersion)
+                                {
+                                    <div class="incomepie-canvas" id="incomePieChartDiv" style="margin:0 auto ; width:250px ; height:170px"></div>
+                                    <div style="text-align:center;">
+                                        <span style="font-size: 20px; color: #459CE1" id="inputFapiaoTotalAmount">0</span>
+                                        <br />
+                                        <span>@HtmlLang.Write(LangModule.FP, "ThisYearHistoryReceive", "本年已收票金额")</span>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div style="text-align:right; padding-top:80px;padding-right:50px">
+                                        <span style="font-size: 20px; font-weight: bold" id="inputFapiaoTotalAmount">0</span>
+                                        <br />
+                                        <span>@HtmlLang.Write(LangModule.FP, "ThisYearHistoryReceive", "本年已收票金额")</span>
+                                    </div>
+                                }
+
+                            </div>
+
+                        </div>
+                    </div>
+                }
+
+                <div style="height:125px" class="dashboard-table">
+                    @if (isCanSaleFapiaoViewPermission || isCanPurchaseFapiaoViewPermission)
+                    {
+                    <!--当月差额-->
+                        <div class="div-currentbalance" style="float: left; width: 40%;">
+                            <div style="border-bottom: 1px solid #DEDEDE; ">@HtmlLang.Write(LangModule.FP, "CurrentBalance", "当月差额")</div>
+                            <div>
+                                <table class="fp-table">
+
+                                    @if (isCanSaleFapiaoViewPermission)
+                                    {
+                                        <tr>
+                                            <td>@HtmlLang.Write(LangModule.FP, "OutputFapiaoTaxAmount", "销项税额")</td>
+                                            <td class="fp-td-amount ounputAmount">0.00</td>
+                                        </tr>
+                                    }
+
+                                    @if (isCanPurchaseFapiaoViewPermission)
+                                    {
+                                        <tr>
+                                            <td>@HtmlLang.Write(LangModule.FP, "IncomeFapiaoTaxAmount", "进项税额")</td>
+                                            <td class="fp-td-amount incomeAmount">0.00</td>
+                                        </tr>
+                                    }
+
+                                    @if (isCanPurchaseFapiaoViewPermission && isCanSaleFapiaoViewPermission)
+                                    {
+                                        <tr>
+                                            <td class="fa-blue-color">@HtmlLang.Write(LangModule.FP, "IncomeOutPuntBalance", "销进项差额")</td>
+                                            <td class="fp-td-amount balance">0.00</td>
+                                        </tr>
+                                    }
+
+                                </table>
+                            </div>
+                        </div>
+                    }
+
+
+                    @if (isCanPurchaseFapiaoViewPermission && !isSmartVersion)
+                    {
+                    <!--排行榜-->
+                        <div class="div-top" style="float: right; width: 40%;height:125px">
+                            <div style="border-bottom: 1px solid #DEDEDE; ">@HtmlLang.Write(LangModule.FP, "ThisYearSuplierNotOpenFapiao", "本年累计未收票供应商前三名")</div>
+                            <div style="height:88px;overflow-y:auto">
+                                <table class="fp-table supplier-table"></table>
+                            </div>
+                        </div>
+                    }
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="hideVersion" value="@Html.Raw(isSmartVersion)" />
+<script src="@ServerHelper.StaticServer/fw/include/ichartjs/ichart.1.2.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.ScriptServer/Scripts/IO/ImportBySolution/Import.interface.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.GoServer/Scripts/Dashboard/FWDashboardHome.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.GoServer/Scripts/FP/FPDashboard.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.FP)
+<script type="text/javascript">
+    $(document).ready(function () {
+        FPDashboard.init();
+    });
+</script>

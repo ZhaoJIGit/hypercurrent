@@ -1,0 +1,144 @@
+﻿@using JieNor.Megi.DataModel.PA
+@using JieNor.Megi.Common.Utility
+@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    var isEdit = Convert.ToString(ViewData["IsEdit"]);
+    PASalaryPaymentModel model = ViewData["model"] as PASalaryPaymentModel;
+    var showAdvance = model.MStatus >= (int)PASalaryPaymentStatusEnum.WaitingPayment;
+    string disabledAttr = model.IsCalculatePIT ? "" : " disabled=\"disabled\" ";
+}
+<div id="divItemEdit" class="m-imain">
+   <div class="m-imain-content m-salary-edit" style="min-height:600px;">		
+       <p style="font-size: 24px; font-weight: bold; padding-bottom: 10px; border-bottom: 1px dotted #ccc;display:none;" id="pageTitle"></p>
+       <p style="font-size: 14px;font-weight: bold;padding-bottom: 5px;" id="dialogTitle">@HtmlLang.Write(LangModule.PA, "PayCalculation", "Pay Calculation")</p>
+       <div class="m-iv-entry">
+           <div id="divSalaryDetail" style="float: left; width: 811px;">
+               <div class="form-invoice-line">
+                   <div id="tbPaySalaryDetail" fitcolumns="true"></div>
+               </div>
+               <div class="form-invoice-total" style="width: 475px; float: right; ">
+                   <div class="sub-total">
+                       <span class="mg-total-text">
+                           @HtmlLang.Write(LangModule.PA, "PretaxTotal", "Pre-tax Total")
+                       </span>
+                       <span class="mg-total-value" id="spTotal">0.00</span>
+                       <span class="mg-total-action"></span>
+                   </div>
+                   <div class="sub-total" style="border-top: 1px solid #000; border-bottom: 1px dotted #777;">
+                       <span class="mg-total-text">
+                           @HtmlLang.Write(LangModule.PA, "PIT", "PIT")
+                       </span>
+                       @if (Convert.ToBoolean(ViewData["IsEdit"]))
+                       {
+                           <span class="mg-total-value"><input id="spTax" @disabledAttr style="width: 50px;text-align: right;" type="text" class="easyui-numberbox" data-options="min:0,precision:2" value="0.00" /></span>
+                       }
+                       else
+                       {
+                           <span class="mg-total-value" id="spTax">0.00</span>
+                       }
+                   <span class="mg-total-action"></span>
+                   </div>
+                   <div class="sub-total">
+                       <span class="mg-total-text">
+                           @HtmlLang.Write(LangModule.PA, "NetSalary", "Net Salary")
+                       </span>
+                       <span class="mg-total-value" id="spNet">0.00</span>
+                       <span class="mg-total-action"></span>
+                   </div>
+                   <div id="divCredit"></div>
+               </div>
+
+           </div>
+       </div>
+       @*发票列表项 和 高级选项*@
+       @if (showAdvance == true && model.MActionPermission.MHaveAction)
+        {
+       <div class="m-iv" style="float: right; padding-right: 0px;margin-top: -3px;">
+            @*<div class="m-iv-adv-switch" style="top:0px;">
+                <a href="javascript:void(0)" class="show" style="cursor:default;">&nbsp;</a><span>@HtmlLang.Write(LangModule.IV, "AdvancedOptions", "Advanced Options")</span>
+            </div>*@
+           <div class="m-iv-adv clear" style="float:none;">
+               <div id="aa" class="easyui-accordion" style="width:260px;min-height:385px;">
+                   @*<div title="@HtmlLang.Write(LangModule.IV, "ValueAddedTaxInvoice", "Value-added Tax Invoice")" style="overflow:auto;padding:10px;">
+                   </div>*@
+                   <div title="@HtmlLang.Write(LangModule.IV, "FinancialInformation", "Financial Information")" data-options="selected:true" style="padding:10px;">
+                       <ul>
+                           @if (model.MActionPermission.MIsCanPay)
+                           {
+                               string paymentTitle = Convert.ToString(HtmlLang.Write(LangModule.IV, "MakeAPayment", "Make a payment"));
+                               <li><a href="javascript:void(0)" onclick="PayRunBase.batchPayment('@ViewData["SalaryPayID"]', true)">@paymentTitle</a></li>
+                           }
+                           @if (model.MActionPermission.MIsCanVerification)
+                           {
+                               <li><a href="javascript:void(0)" onclick="Verification.open('@ViewData["SalaryPayID"]','@BizObject.PayRun')">@HtmlLang.Write(LangModule.IV, "Reconcile", "Reconcile")</a></li>
+                           }
+                           @if (model.MActionPermission.MIsCanUnApprove)
+                           {
+                               <li><a href="javascript:void(0)" onclick='SalaryPaymentEdit.unApproveToDraft()'>@HtmlLang.Write(LangModule.IV, "UnAuditToDraft", "UnAudit To Draft")</a></li>
+                           }
+                           @if (model.MActionPermission.MIsCanViewVoucherCreateDetail)
+                           {
+                               <li><a href="javascript:void(0)" onclick="IVGL.open('@ViewData["SalaryPayID"]','1')">@HtmlLang.Write(LangModule.GL, "VoucherCreateDetails", "Voucher Create Detail")</a></li>
+                           }
+                           @*@if (model.MActionPermission.MIsCanDelete)
+                        {
+                            <li><a href="javascript:void(0)" onclick='IVBase.deleteItem("@ViewData["SalaryPayID"]","/IV/Bill/BillList/@Request.QueryString["TabIndex"]")'>@HtmlLang.Write(LangKey.Delete)</a></li>
+                        }*@
+                       </ul>
+                   </div>
+               </div>
+           </div>
+
+       </div>
+        }
+       <div class="clear"></div>
+   </div>
+</div>
+
+<input type="hidden" id="hidSalaryPayID" value="@ViewData["SalaryPayID"]" />
+<input type="hidden" id="hidTaxAmt" value="@ViewData["TaxAmt"]" />
+<input type="hidden" id="hidIsEdit" value="@Html.Raw(@isEdit)" />
+<input type="hidden" id="hidModel" value="@MText.ToJson(model)" />
+@*是否有银行的查看权限*@
+@if (HtmlSECMenu.HavePermission(BizObject.BankAccount, PermissionItem.View))
+{
+    <input type="hidden" id="hidIsCanBankAccountViewPermission" value="1" />
+}
+else
+{
+    <input type="hidden" id="hidIsCanBankAccountViewPermission" value="0" />
+}
+@*是否有银行的编辑权限*@
+@if (HtmlSECMenu.HavePermission(BizObject.BankAccount, PermissionItem.Change))
+{
+    <input type="hidden" id="hidIsCanBankAccountChangePermission" value="1" />
+}
+else
+{
+    <input type="hidden" id="hidIsCanBankAccountChangePermission" value="0" />
+}
+@if (Convert.ToBoolean(ViewData["IsEdit"]))
+{
+<div class="m-toolbar-footer">
+    @if (HtmlSECMenu.HavePermission(BizObject.PayRun, PermissionItem.Change))
+    { 
+    <div class="left">
+        <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray" id="aCancel">@HtmlLang.Write(LangKey.Cancel)</a>
+    </div>
+    <div class="right">
+        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aSave">@HtmlLang.Write(LangKey.Save)</a>
+    </div>
+    <br class="clear" />
+    }
+</div>
+}
+<script src="@ServerHelper.StaticServer/fw/scripts/jquery.megi.treegrid.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.ScriptServer/Scripts/PA/SalaryPayment/PayRunBase.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.ScriptServer/scripts/PA/SalaryPayment/SPEditBase.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.ScriptServer/Scripts/IV/BillUrlHelper.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/IV/Verification/Verification.interface.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.ScriptServer/scripts/PA/SalaryPayment/SalaryPaymentEdit.js?@ServerHelper.JSVersion"></script>
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)
+@HtmlLang.WriteScript(LangModule.Common)
+@HtmlLang.WriteScript(LangModule.PA)
+@HtmlLang.WriteScript(LangModule.IV)

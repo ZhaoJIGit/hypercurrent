@@ -1,0 +1,16 @@
+﻿@{
+    Layout = "~/Areas/Bank/Views/Shared/_LayoutBankTransMain.cshtml";
+}
+@using JieNor.Megi.Common.Utility;
+<input id="hidTabSelectedIndex" type="hidden" value="3" />
+@if (HtmlSECMenu.HavePermission(BizObject.BankAccount, PermissionItem.Change))
+{
+    <div class="tab-tool-bar">
+        <a href="/IV/Payment/PaymentEdit?acctId=@ViewData["BankID"]" class="easyui-linkbutton m-tool-bar-btn" data-options="iconCls:'icon-add'" id="btnNewTransaction">@HtmlLang.Write(LangModule.Bank, "NewTransaction", "New Transaction")</a>
+    </div>
+}
+<div class="space"></div>
+<div id="gridTransaction" fitcolumns="true"></div>
+
+<script src="@ServerHelper.ScriptServer/Sripts/BD/BDBank/BDBankTransList.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.Bank)

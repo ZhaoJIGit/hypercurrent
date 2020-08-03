@@ -1,0 +1,38 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "DeptList";
+}
+@using JieNor.Megi.Common.Utility;
+<div class="m-imain">
+    @*编辑权限*@
+    @if (HtmlSECMenu.HavePermission(BizObject.Contact, PermissionItem.Change)) { 
+    <div class="m-toolbar">
+        <a href="javascript:" class="easyui-linkbutton easyui-linkbutton-yellow" id="NewDept">@HtmlLang.Write(LangModule.Contact, "NewDept", "New Department")</a>
+        <a href="javascript:" class="easyui-linkbutton" id="AlterDept">@HtmlLang.Write(LangModule.Contact, "EditDept", "Edit Department")</a>
+        <a href="javascript:" class="easyui-linkbutton" id="RemoveDept">@HtmlLang.Write(LangModule.Contact, "RemoveDept", "Remove Department")</a>
+        <a href="javascript:" class="easyui-linkbutton" id="MoveToEmp">@HtmlLang.Write(LangModule.Contact, "MoveTo", "Move To")</a>
+        <a href="javascript:" class="easyui-linkbutton" id="RemoveEmp">@HtmlLang.Write(LangModule.Contact, "RemoveEmployee", "Remove Employee")</a>
+    </div>
+    }
+    @*部门员工列表*@
+    <div class="m-imain-content">
+        <div style="float: left; width: 298px">
+            <div id="tbDeptTree" fitcolumns="true"></div>
+        </div>
+        <div style="padding-left: 324px">
+            <div id="tbEmpGrid" fitcolumns="true"></div>
+        </div>
+    </div>
+</div>
+@*编辑权限*@
+@if (HtmlSECMenu.HavePermission(BizObject.Contact, PermissionItem.Change))
+{
+    <input type="hidden" id="hidChangeAuth" value="1" />
+}
+else
+{
+    <input type="hidden" id="hidChangeAuth" value="0" />
+}
+@HtmlLang.WriteScript(LangModule.Contact)
+<script src="@ServerHelper.ScriptServer/scripts/BD/Dept/DeptList.js?@ServerHelper.JSVersion"></script>
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)

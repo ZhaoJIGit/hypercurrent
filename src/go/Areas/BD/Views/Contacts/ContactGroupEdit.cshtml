@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "ContactGroupEdit";
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+@using JieNor.Megi.Common.Utility;
+<div id="divContactGroupEdit" class="m-imain m-form" style="height: 145px; padding-left:20px">
+    <div class="">@HtmlLang.Write(LangKey.Name):</div>
+    <input class="easyui-validatebox mg-data m-lang" data-options="required:true" name="MName" id="txtMName" />
+    @*<div class="m-form-action">
+            <a href="/BD/Contacts/ContactsList" class="mg-btn mg-btn-gray mg-btn-cancel" id="aCancel">@HtmlLang.Write(LangKey.Cancel)</a>
+            <a href="/BD/Contacts/ContactsList" class="mg-btn mg-btn-green mg-btn-save" id="aSave" style="width:60px">@HtmlLang.Write(LangKey.Save)</a>
+            <br class="clear" />
+        </div>*@
+</div>
+<div class="m-toolbar-footer">
+    @if (HtmlSECMenu.HavePermission(BizObject.Contact, PermissionItem.Change))
+    {
+    <div class="left">
+        <a href="javascript:void(0)" onclick="$.mDialog.close();" id="aCancel" class="easyui-linkbutton easyui-linkbutton-gray">@HtmlLang.Write(LangKey.Cancel)</a>
+    </div>
+    <div class="right">
+        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aSave">@HtmlLang.Write(LangKey.Save)</a>
+    </div>
+    }
+</div>
+<script src="@ServerHelper.ScriptServer/scripts/BD/Contacts/ContactGroupEdit.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.Contact)
+@HtmlLang.WriteScript(LangModule.Acct)
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)

@@ -1,0 +1,144 @@
+﻿/*styles for jquery ui daterangepicker plugin */
+
+.ui-daterangepickercontain {
+	position: absolute;
+	z-index: 999;
+}
+.ui-daterangepickercontain .ui-daterangepicker {
+	float: left;
+	padding: 5px !important;
+	width: auto;
+	display: inline;
+	background-image: none !important;
+	clear: left;
+}
+.ui-daterangepicker ul, .ui-daterangepicker .ranges, .ui-daterangepicker .range-start, .ui-daterangepicker .range-end {
+	float: left;
+	padding: 0;
+	margin: 0;
+}
+.ui-widget-content{float:right;}
+.ui-daterangepicker .ranges {
+	width: auto;
+	position: relative;
+	padding: 5px 5px 20px 0px;
+	margin-left: 10px;
+}
+.ui-daterangepicker .range-start, .ui-daterangepicker .range-end {
+	margin-left: 5px;
+}
+.ui-daterangepicker .range-end{
+        border-left: 1px solid #ccc;
+        padding-left: 5px;
+}
+.ui-daterangepicker input.btnDone {
+	margin: 0 5px 5px 0;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	clear: both;
+	cursor: pointer;
+    height: 20px;
+    font-size: 10px;
+    line-height: 15px;
+    color: #fff;
+    border: 0;
+    border-radius: 2px;
+    filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#e98153',endColorStr='#de6f3e',gradientType='0'); 
+    background:linear-gradient(#e98153,#de6f3e) repeat scroll 0 0 rgba(0,0,0,0) !important;
+    background: -moz-linear-gradient(#e98153,#de6f3e) repeat scroll 0 0 rgba(0,0,0,0)!important;
+    background: -o-linear-gradient(#e98153,#de6f3e) repeat scroll 0 0 rgba(0,0,0,0)!important;
+    background:  -webkit-gradient(linear, 0% 0%, 0% 100%, from(#e98153), to(#de6f3e)) !important;
+}
+.ui-daterangepicker ul {
+	width: 10.6em;
+	background: none;
+	border: 1px solid #ccc;
+}
+.ui-daterangepicker li {
+	list-style: none;
+	cursor: pointer;
+	margin: 1px 0;
+}
+.ui-daterangepicker li.ui-state-hover, .ui-daterangepicker li.ui-state-active {
+	padding: 0;
+}
+.ui-daterangepicker li.preset_0 {
+	border-top: 1px solid #CCC;
+}
+.ui-daterangepicker .ui-widget-content a {
+	text-decoration: none !important;
+}
+.ui-daterangepicker li a {
+	font-weight: normal;
+	padding-right: 4px;
+	display: block;
+}
+
+.ui-daterangepicker li span {
+	float: left;
+	margin: .3em .2em;
+}
+li.ui-corner-all{
+    margin: .3em .5em !important;
+}
+.ui-daterangepicker .title-start, .ui-daterangepicker .title-end {
+	display: block;
+	margin: 0 0 .2em;
+	font-size: 1em;
+	padding: 0 4px 2px;
+}
+.ui-daterangepicker .ui-datepicker-inline {
+	font-size: 1em;
+}
+.ui-daterangepicker-arrows {
+	padding: 2px;
+	width: 204px;
+	position: relative;
+}
+.ui-daterangepicker-arrows input.ui-rangepicker-input {
+	width: 158px;
+	margin: 0 2px 0 20px;
+	padding: 2px;
+	height: 1.1em;
+}
+.ui-daterangepicker-arrows .ui-daterangepicker-prev, .ui-daterangepicker-arrows .ui-daterangepicker-next {
+	position: absolute;
+	top: 2px; 
+	padding: 1px;
+}
+.ui-daterangepicker-arrows .ui-daterangepicker-prev {
+	left: 2px;
+}
+.ui-daterangepicker-arrows .ui-daterangepicker-next {
+	right: 2px;
+}
+.ui-daterangepicker-arrows .ui-daterangepicker-prev:hover, 
+.ui-daterangepicker-arrows .ui-daterangepicker-next:hover,
+.ui-daterangepicker-arrows .ui-daterangepicker-prev:focus, 
+.ui-daterangepicker-arrows .ui-daterangepicker-next:focus {
+	padding: 0;
+}
+
+ul.ui-widget-content:before{
+    content: '';
+    display: inline-block;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-bottom: 7px solid #ccc;
+    border-bottom-color: rgba(0, 0, 0, 0.2);
+    position: absolute;
+    top: -2px;
+    right: 110px;
+}
+
+ul.ui-widget-content:after{
+    content: '';
+    display: inline-block;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid #ffffff;
+    position: absolute;
+    top: -1px;
+    right: 111px;
+}

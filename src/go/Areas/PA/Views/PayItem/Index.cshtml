@@ -1,0 +1,36 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    //是否有编辑权限
+    bool isCanEditPermission = HtmlSECMenu.HavePermission(BizObject.PayRun, PermissionItem.Change);
+}
+@using JieNor.Megi.Common.Utility;
+<input type="hidden" id="hidChangeAuth" value="@Html.Raw(isCanEditPermission)" />
+<div class="m-toolbar">
+    @if (isCanEditPermission)
+    {
+        <a href="#" class="easyui-linkbutton easyui-linkbutton-yellow" id="btnNew">@HtmlLang.Write(LangModule.Common, "New", "新增")</a>
+        <a href="#" class="easyui-linkbutton" id="DeleteItems">@HtmlLang.Write(LangKey.Delete)</a>
+        <a href="#" class="easyui-linkbutton" id="DisableItems">@HtmlLang.Write(LangModule.BD, "Disable", "Disable")</a>
+        <a href="#" class="easyui-linkbutton" id="EnableExpItems">@HtmlLang.Write(LangModule.Acct, "Restore", "恢复")</a>
+    }
+</div>
+
+<div class="m-imain">
+    <div class="m-imain-content">
+        <div id="divSalaryItemList">
+            <div id="tbSalaryItem">
+
+            </div>
+        </div>
+        <input type="hidden" id="aGoServer" value="@JieNor.Megi.Common.Utility.ServerHelper.GoServer" />
+
+
+        @JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteScript(JieNor.Megi.EntityModel.MultiLanguage.LangModule.BD)
+        <div class="clear"></div>
+    </div>
+</div>
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)
+@HtmlLang.WriteScript(LangModule.BD)
+<script src="@ServerHelper.ScriptServer/scripts/BD/BDQuote.js?@ServerHelper.JSVersion"></script>
+<script src="/scripts/PA/PayItem/PayItemList.js?@ServerHelper.JSVersion"></script>
+

@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{675EF372-9074-46CF-890B-E85F6B1D8F50}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>Library</OutputType>
+    <AssemblyName>JieNor.Megi.ServiceContract</AssemblyName>
+    <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System.Data" />
+    <Reference Include="System.ServiceModel">
+      <HintPath>C:\WINDOWS\Microsoft.NET\assembly\GAC_MSIL\System.ServiceModel\v4.0_4.0.0.0__b77a5c561934e089\System.ServiceModel.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="JieNor.Megi.ServiceContract.BAS\IBASCountry.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.BAS\IBASCountryRegion.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.BAS\IBASCurrency.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.BAS\IBASDataDictionary.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.BAS\IBASLang.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.BAS\IBASMyHome.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.BAS\IBASOrganisation.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.BAS\IBASOrgInitSetting.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.BAS\IBASOrgPrefixSetting.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.BAS\IBASSearch.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.BAS\IBASTimezone.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.BAS\IOptLogList.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.BD\IBDAccount.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.BD\IBDAccountMatchLog.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.BD\IBDAttachment.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.BD\IBDBankAccount.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.BD\IBDBankRule.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.BD\IBDBankType.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.BD\IBDContacts.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.BD\IBDEmailTemplate.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.BD\IBDEmployees.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.BD\IBDExchangeRate.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.BD\IBDExpenseItem.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.BD\IBDInitDocument.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.BD\IBDItem.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.BD\IBDTrack.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.BD\IBDTrackEntry.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.BD\IBDVoucherSetting.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.COM\ICOMAccess.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.COM\ICOMMultiLang.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.COM\ICOMTableInfo.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.FA\IFADepreciation.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.FA\IFAFixAssets.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.FA\IFAFixAssetsChange.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.FA\IFAFixAssetsType.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.FC\IFCCashCodingModule.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.FC\IFCFapiaoModule.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.FC\IFCVoucherModule.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.FP\IFPFapiao.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.FP\IFPSetting.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.FP\IFPTable.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.GL\IGLCheckType.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.GL\IGLDocVoucher.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.GL\IGLExcel.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.GL\IGLInitBalance.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.GL\IGLPeriodTransfer.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.GL\IGLSettlement.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.GL\IGLVoucher.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.GL\IGLVoucherReference.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.IO\IIOImport.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.IO\IIOSolution.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.IV\IIVBankApi.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.IV\IIVBankBill.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.IV\IIVExpense.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.IV\IIVInvoice.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.IV\IIVPayment.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.IV\IIVReceive.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.IV\IIVTransactions.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.IV\IIVTransfer.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.IV\IIVVerification.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.MSG\IMSGMessage.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.PA\IPAPayrollBasic.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.PA\IPASalaryPayment.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.PT\IPTBiz.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.PT\IPTSalaryList.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.PT\IPTVoucher.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.REG\IREGCurrency.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.REG\IREGFinancial.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.REG\IREGGlobalization.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.REG\IREGTaxRate.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.RI\IRIInspect.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.RPT\IRPTAccountBalance.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.RPT\IRPTAccountDimensionSummary.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.RPT\IRPTAgedInvoice.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.RPT\IRPTAgedPayable.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.RPT\IRPTAgedReceivable.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.RPT\IRPTAssetChange.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.RPT\IRPTAssetDepreciation.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.RPT\IRPTBalanceSheet.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.RPT\IRPTBankAndCashSummary.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.RPT\IRPTBankBillRecSummary.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.RPT\IRPTBankStatement.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.RPT\IRPTBizReport.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.RPT\IRPTCashFlowStatement.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.RPT\IRPTCashSummary.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.RPT\IRPTDepreciationDetail.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.RPT\IRPTDepreciationSummary.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.RPT\IRPTExpenseClaim.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.RPT\IRPTGeneralLedger.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.RPT\IRPTIncomeByContact.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.RPT\IRPTIncomeStatement.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.RPT\IRPTIncomeTrans.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.RPT\IRPTReport.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.RPT\IRPTSalesByItemTrans.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.RPT\IRPTSalesTaxAuditReport.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.RPT\IRPTSalesTaxReport.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.RPT\IRPTSalseByItem.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.RPT\IRPTSubsidiaryLedger.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.SEC\ISECAccount.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.SEC\ISECPermission.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.SEC\ISECSendLinkInfo.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.SEC\ISECUser.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.SEC\ISECUserAccount.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.SEC\ISECUserLoginLog.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.SYS\ISYSCoupon.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\core\JieNor.Megi.Core.csproj">
+      <Project>{e56a4df7-e8eb-407f-aafd-5b763bffa364}</Project>
+      <Name>JieNor.Megi.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\datamodel\JieNor.Megi.DataModel.csproj">
+      <Project>{2f8cbbd3-6276-49a4-87e0-8b6c4597e3e0}</Project>
+      <Name>JieNor.Megi.DataModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\entitymodel\JieNor.Megi.EntityModel.csproj">
+      <Project>{eef2457d-0b83-44e8-96ce-d6c0cf427a8a}</Project>
+      <Name>JieNor.Megi.EntityModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -1,0 +1,33 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+@using JieNor.Megi.Common.Utility;
+<div class="m-imain">
+
+    @if (HtmlSECMenu.HavePermission(BizObject.Bank_Reconciliation, PermissionItem.Change))
+    {
+        <div class="m-toolbar">
+            <a href="#" id="lbtnAddRule" class="easyui-linkbutton easyui-linkbutton-yellow">@HtmlLang.Write(LangModule.Bank, "CreateRule", "Create rule")</a>
+            <a href="javascript:void(0)" id="aDeleteBankRule" class="easyui-linkbutton">@HtmlLang.Write(LangKey.Delete)</a>
+        </div>
+    }
+
+    <div class="m-imain-content">
+        <div id="tbBankRule" fitcolumns="true"></div>
+    </div>
+    <input type="hidden" value="@ViewData["OrgCode"]" id="hidOrgCode" />
+    @if (HtmlSECMenu.HavePermission(BizObject.Bank_Reconciliation, PermissionItem.Change))
+    {
+        <input type="hidden" id="hidChangeAuth" value="1" />
+    }
+    else
+    {
+        <input type="hidden" id="hidChangeAuth" value="0" />
+    }
+    @HtmlLang.WriteScript(LangModule.Bank)
+    <script src="~/Scripts/BD/BDBank/BDBankRule.js?@ServerHelper.JSVersion"></script>
+    <script src="~/Scripts/BD/BDBank/BDBankRuleEdit.js?@ServerHelper.JSVersion"></script>
+
+
+    <div class="clear"></div>
+</div>

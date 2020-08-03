@@ -1,0 +1,19 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+
+<div class="m-imain">
+    <div id="divMessage"></div>
+    <div class="m-imain-content">
+        @Html.Partial("UCGLBasicInfoEdit")
+        <div class="clear"></div>
+    </div>
+</div>
+@*<div class="m-toolbar-footer">
+    <div class="right">
+        @if (HtmlSECMenu.HavePermission(BizObject.General_Ledger, PermissionItem.Change))
+        {
+        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aUpdate">@HtmlLang.Write(LangKey.Save)</a>
+        }
+    </div>
+</div>*@

@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{2462EB8A-63A5-4FD2-AC44-1FE021BE08B7}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>Library</OutputType>
+    <AssemblyName>JieNor.Megi.Identity</AssemblyName>
+    <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>JieNor.Megi.Identity</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core">
+      <HintPath>C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\System.Core\v4.0_4.0.0.0__b77a5c561934e089\System.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <HintPath>C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\System\v4.0_4.0.0.0__b77a5c561934e089\System.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Configuration">
+      <HintPath>C:\WINDOWS\Microsoft.NET\assembly\GAC_MSIL\System.Configuration\v4.0_4.0.0.0__b03f5f7f11d50a3a\System.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions">
+      <HintPath>C:\WINDOWS\Microsoft.NET\assembly\GAC_MSIL\System.Web.Extensions\v4.0_4.0.0.0__31bf3856ad364e35\System.Web.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp">
+      <HintPath>D:\workspace\megi\src\libs\Microsoft.CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel">
+      <HintPath>C:\WINDOWS\Microsoft.NET\assembly\GAC_MSIL\System.ServiceModel\v4.0_4.0.0.0__b77a5c561934e089\System.ServiceModel.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.0\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.1.0\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.1.0\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.0\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.0\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.0\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Attribute\OperateTypeEnum.cs" />
+    <Compile Include="Attribute\PermissionAttribute.cs" />
+    <Compile Include="AutoManager\BASCountryRegionManager.cs" />
+    <Compile Include="AutoManager\BASCurrencyManager.cs" />
+    <Compile Include="AutoManager\BASDataDictManager.cs" />
+    <Compile Include="AutoManager\BASLangManager.cs" />
+    <Compile Include="AutoManager\BASOrganisationManager.cs" />
+    <Compile Include="AutoManager\BASTimezoneManager.cs" />
+    <Compile Include="AutoManager\BDTrackManager.cs" />
+    <Compile Include="AutoManager\MSGMessageManager.cs" />
+    <Compile Include="Common\CustomerErrorPageHelper.cs" />
+    <Compile Include="Controllers\FrameworkController.cs" />
+    <Compile Include="Controllers\MegiActionResult.cs" />
+    <Compile Include="HtmlHelper\HtmlCountryRegion.cs" />
+    <Compile Include="HtmlHelper\HtmlCurrency.cs" />
+    <Compile Include="HtmlHelper\HtmlDataDict.cs" />
+    <Compile Include="HtmlHelper\HtmlDateTime.cs" />
+    <Compile Include="HtmlHelper\HtmlDay.cs" />
+    <Compile Include="HtmlHelper\HtmlLang.cs" />
+    <Compile Include="HtmlHelper\HtmlMessage.cs" />
+    <Compile Include="HtmlHelper\HtmlMoneyHelper.cs" />
+    <Compile Include="HtmlHelper\HtmlMonth.cs" />
+    <Compile Include="HtmlHelper\HtmlOrg.cs" />
+    <Compile Include="HtmlHelper\HtmlTimezone.cs" />
+    <Compile Include="HtmlHelper\HtmlTrack.cs" />
+    <Compile Include="HtmlHelper\HtmlUser.cs" />
+    <Compile Include="HtmlHelper\HtmlYear.cs" />
+    <Compile Include="HtmlHelper\LangConverter.cs" />
+    <Compile Include="HtmlHelper\MenuHtmlHepler.cs" />
+    <Compile Include="BundleHelper.cs" />
+    <Compile Include="DataDictionaryType.cs" />
+    <Compile Include="LangHelper.cs" />
+    <Compile Include="LangIndentity.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\common\JieNor.Megi.Common.csproj">
+      <Project>{2ae7309b-bcdb-4842-a0dd-6c9aa217f2ed}</Project>
+      <Name>JieNor.Megi.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\core\JieNor.Megi.Core.csproj">
+      <Project>{e56a4df7-e8eb-407f-aafd-5b763bffa364}</Project>
+      <Name>JieNor.Megi.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\datamodel\JieNor.Megi.DataModel.csproj">
+      <Project>{2f8cbbd3-6276-49a4-87e0-8b6c4597e3e0}</Project>
+      <Name>JieNor.Megi.DataModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\entitymodel\JieNor.Megi.EntityModel.csproj">
+      <Project>{eef2457d-0b83-44e8-96ce-d6c0cf427a8a}</Project>
+      <Name>JieNor.Megi.EntityModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\servicecontract\JieNor.Megi.ServiceContract.csproj">
+      <Project>{675ef372-9074-46cf-890b-e85f6b1d8f50}</Project>
+      <Name>JieNor.Megi.ServiceContract</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

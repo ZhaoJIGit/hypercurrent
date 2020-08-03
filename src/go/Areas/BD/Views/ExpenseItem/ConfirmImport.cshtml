@@ -1,0 +1,35 @@
+﻿@using System.Web.Script.Serialization
+@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = HtmlLang.Write(LangModule.BD, "ImportExpenseItem", "Import Expense Item");
+    List<ItemModel> itemList = ViewBag.ItemList as List<ItemModel>;
+    string fileName = ViewBag.FileName;
+    int importCount = ViewBag.ItemListCount;
+}
+<div class="m-imain mg-confirm-import">
+    <div id="divMessage"></div>
+    <div class="m-confirm-import-notify">
+        <em class="m-confirm-import-icon">
+            &nbsp;
+        </em>
+        <div class="m-confirm-import-msg">
+            @Html.Raw(string.Format(HtmlLang.Write(LangModule.Acct, "confirmImportNotify", "<p>The imported file <strong>{0}</strong> contains {1} line. From this file Megi will:</p><ul><li><strong>Create {2}</strong> Expense Item</li></ul>").ToString(), fileName, importCount, importCount))
+        </div>
+    </div>
+    <div class="m-confirm-import-form">
+        <fieldset>
+            <p>
+                @Html.Raw(HtmlLang.Write(LangModule.Acct, "confirmImportState", "If you're happy to continue with the import please click the \"Complete Import\" button below. Please note <em>this action CANNOT be undone</em>"))
+            </p>
+        </fieldset>
+        <div class="m-form-action">
+            @if (HtmlSECMenu.HavePermission(BizObject.Setting, PermissionItem.Change))
+            {
+            <a href="javascript:void(0);" class="mg-btn mg-btn-green mg-btn-save" id="aCompleteImport">@HtmlLang.Write(LangModule.Common, "CompleteImport", "Complete Import")</a>
+            <a href="/BD/Item/Import" class="mg-btn mg-btn-gray mg-btn-cancel" id="aGoBack">@HtmlLang.Write(LangModule.Common, "GoBack", "< Go Back")</a>
+            <br class="clear" />
+            }
+        </div>
+    </div>
+</div>
+<script src="@ServerHelper.GoServer/scripts/BD/ExpenseItem/ConfirmImport.js?@ServerHelper.JSVersion"></script>

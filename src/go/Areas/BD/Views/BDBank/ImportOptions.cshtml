@@ -1,0 +1,179 @@
+﻿@using System.Data
+@using System.Text
+
+@{
+    ViewBag.Title = "Import Bank Transactions";
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+
+    DataTable dtExcelStatement = ViewBag.ExcelStatementData as DataTable;
+}
+@using JieNor.Megi.Common.Utility;
+<style>
+    .excel-data td {
+        word-break: keep-all;
+        white-space: nowrap;
+    }
+
+    .sys-column {
+        text-align:right;
+    }
+
+    table {
+        border: 1px solid #DCE0EB;
+    }
+</style>
+<div class="m-imain">
+    <div class="m-imain-content">
+        <div id="divMessage"></div>
+        <div class="mg-statement-import">
+            <div class="preview-container">
+                <div class="setting" style=" padding-bottom: 10px;">
+                    <div id="divTmplName" class="title">
+                        <div style="float:left;font-size:15px;">
+                            @(Convert.ToBoolean(ViewBag.IsNewSolution) ? @HtmlLang.Write(LangModule.Bank, "new", "New").ToHtmlString() : "")
+                            @HtmlLang.Write(LangModule.Bank, "importSolution", "Import solution")：
+                        </div>
+                        <div style="float:left;">
+                            @if (Model.MIsDefault)
+                            {
+                                <span id="spSolution" style="font-size:16px;">@(Model.MName)</span>
+                            }
+                            <div id="divSolution" style="float:left;display: @(Model.MIsDefault ? "none":"block");">
+                                <input type="text" id="txtSolution" name="MName" hint="@HtmlLang.Write(LangModule.Common, "SolutionName", "Solution Name")" class="easyui-validatebox textbox mg-data m-lang"
+                                       data-options="required:true" size="36" maxlength="100" style="height: 28px; width: 300px; font-size: 16px; vertical-align:top;" />
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                    <div style="padding-top: 6px;">
+                        @HtmlLang.Write(LangModule.Bank, "AdjustStartLine", "Please adjust the start line imported from your file:")
+                    </div>
+                    <div class="header-row-start" style="padding-top:5px">
+                        @Html.Raw(string.Format(HtmlLang.Write(LangModule.Bank, "HeadingBeginLine", "1．The Column heading begins from line {0}").ToHtmlString(),
+                                 string.Format("<input id='txtHeaderRowStart' name='MHeaderRowStart' data-options='required:true' type='text' size='2' value='{0}' style='height:26px;' />", @Html.Raw(Model.MHeaderRowStart))))
+                    </div>
+                    <div class="data-row-start" style="padding-top:5px;padding-bottom:5px;">
+                        @Html.Raw(string.Format(HtmlLang.Write(LangModule.Bank, "ActualTransactionBeginLine", "2．The first line of actual transaction starts from {0}").ToHtmlString(),
+                                string.Format("<input id='txtDataRowStart' name='MDataRowStart' data-options='required:true' type='text' size='2' value='{0}' style='height:26px;' />", @Html.Raw(Model.MDataRowStart))))
+                    </div>
+
+
+                </div>
+                <div class="param-setting">
+
+                    <div class="preview-excel-title">@HtmlLang.Write(LangModule.Bank, "previewStatement", " Statement lines imported from your file...")</div>
+                    <table id="tbColumnMapping" class="impot-data-mapping">
+                        <thead>
+                            <tr>
+                                <td colspan="2" nowrap>@HtmlLang.Write(LangModule.Bank, "importExcelHeader", "Import the column headings of the file")</td>
+                                <td class="no-border" nowrap>@HtmlLang.Write(LangModule.Bank, "sysHeader", "Bank Statement Column Heading")</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                            if (dtExcelStatement != null && ViewBag.JsonSysStatementColumn != null)
+                            {
+                                for (var i = 0; i < dtExcelStatement.Columns.Count; i++)
+                                {
+                        <tr>
+                            <td class="excel-column"></td>
+                            <td class="excel-value"></td>
+                            <td class="sys-column">
+                                <input id="@i" class="multi-select easyui-combobox" style="width: 180px; height: 28px;" data-options="data: @ViewBag.JsonSysStatementColumn,valueField:'Key',textField:'Value',multiple:true,panelHeight:'140'" />
+                            </td>
+                        </tr>
+                                }
+                            }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="preview" style=" top: 0px; float:right">
+                    <div>
+                        <div class="preview-excel-title">@HtmlLang.Write(LangModule.Bank, "previewImportBillEntryTopN", "Preview the 20 rows of data Transaction details from your selected file")</div>
+                        <div class="excel-data-container">
+                            <table class="excel-data">
+                                <thead>
+                                    <tr>
+                                        @{
+                                            <td class="excel-data-header"></td>
+                                        if (dtExcelStatement != null)
+                                        {
+                                            foreach (DataColumn column in dtExcelStatement.Columns)
+                                            {
+                                    <td class="excel-data-header">@column.ColumnName</td>
+                                            }
+                                        }
+                                        }
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                    if (dtExcelStatement != null)
+                                    {
+                                        var topN = 20;
+                                        if (dtExcelStatement.Rows.Count < 20)
+                                        {
+                                            topN = dtExcelStatement.Rows.Count;
+                                        }
+                                        for (var i = 0; i < topN; i++)
+                                        {
+                                <tr>
+                                    @{
+                                                <td class="excel-data-index">@(i + 1)</td>
+                                            for (var j = 0; j < dtExcelStatement.Columns.Count; j++)
+                                            {
+                                                <td nowrap>@dtExcelStatement.Rows[i][j]</td>
+                                            }
+                                    }
+                                </tr>
+                                        }
+                                    }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="divDBDataPreview" class="import-dbdata-preview">
+            <div class="preview-save-title">@HtmlLang.Write(LangModule.Bank, "previewBillEntryTobeSave", "preview  20 rows data will Importing to  Megi system")</div>
+            <div class="excel-data-container">
+                <table id='tbPreviewMapping' class='tobe-save-data' style="table-layout:fixed;">
+                    <thead>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="m-toolbar-footer">
+    <div class="left">
+        <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray">@HtmlLang.Write(LangKey.Cancel)</a>
+    </div>
+    <div class="right" id="btnPreview">
+        
+        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aPreview">@HtmlLang.Write(LangModule.Bank, "PreviewImportData", "Preview")</a>
+        <a id="aBack" href="javascript:void(0);" class="mg-btn-back">@HtmlLang.Write(LangKey.Back)</a>
+    </div>
+    <div class="right" id="btnSave" style="display:none">
+        <a id="aSave" href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow">@HtmlLang.Write(LangKey.Save)</a>
+        <a id="aBackAgain" href="javascript:void(0);" class="mg-btn-back" style="">@HtmlLang.Write(LangKey.Back)</a>
+        
+    </div>
+</div>
+<input type="hidden" id="hidExcelStatement" value='@Html.Raw(ViewBag.JsonStatementData)'/>
+<input type="hidden" id="hidPreviewTop" value="@ViewBag.PreviewTop" />
+<input type="hidden" id="hidIsNewSolution" value='@Html.Raw(ViewBag.IsNewSolution.ToString().ToLower())' />
+<input type="hidden" id="hidJsonSolution" value="@ViewBag.JsonSolution" />
+<input type="hidden" id="hidBankTypeId" value="@ViewBag.BankTypeId" />
+<input type="hidden" id="hidBankId" value="@ViewBag.BankID" />
+<input type="hidden" id="hidFileName" value="@ViewBag.FileName" />
+<input type="hidden" id="hidExcelHeader" value="@ViewBag.ExcelHeader" />
+<input type="hidden" id="hidStatementColumn" value='@ViewBag.JsonSysStatementColumn' />
+@HtmlLang.WriteScript(LangModule.Docs)
+@HtmlLang.WriteScript(LangModule.Bank)
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/BD/BDBank/ImportOptions.js?@ServerHelper.JSVersion"></script>

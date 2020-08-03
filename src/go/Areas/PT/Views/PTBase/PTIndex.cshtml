@@ -1,0 +1,64 @@
+﻿@using JieNor.Megi.EntityModel.Enum;
+@using JieNor.Megi.Common.Utility;
+@model JieNor.Megi.DataModel.PT.PTListModel
+@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    //是否有设置的编辑权限
+    bool haveSettingEditPermission = HtmlSECMenu.HavePermission(BizObject.Setting, PermissionItem.Change);
+    bool haveVoucherEditPermission = HtmlSECMenu.HavePermission(BizObject.General_Ledger, PermissionItem.Change);
+    bool havePayRunEditPermission = HtmlSECMenu.HavePermission(BizObject.PayRun, PermissionItem.Change);
+    var isSmartVersion = JieNor.Megi.Common.Context.ContextHelper.MContext.MOrgVersionID == OrgVersionEnum.Smart;
+    var editPerList = new List<bool> { haveSettingEditPermission, haveVoucherEditPermission, !isSmartVersion && havePayRunEditPermission };
+    var splitBtnH = editPerList.Count(f => f) * 30;
+}
+<div class="m-toolbar">
+    @*编辑权限*@
+    @if (haveSettingEditPermission || haveVoucherEditPermission || havePayRunEditPermission)
+    {
+    <a data-options="menu:'#divNewTmpl'" href="javascript:void(0)" id="aNewTmpl" class="easyui-splitbutton easyui-splitbutton-base easyui-linkbutton-yellow easyui-splitbutton-l ">@HtmlLang.Write(LangModule.Common, "NewPrtTmpl", "新增打印模板")</a>
+    <div id="divNewTmpl" style="width:260px;height:@(splitBtnH)px;display:none;">
+        @if (haveSettingEditPermission)
+        {
+        <div id="divNewBizTmpl">
+            <a href="javascript:void(0)">@HtmlLang.Write(LangModule.IV, "NewBizPrintTmpl", "新增单据和报表打印模板")</a>
+        </div>
+        }
+        @if (haveVoucherEditPermission)
+        {
+        <div id="divNewVoucherTmpl">
+            <a href="javascript:void(0)">@HtmlLang.Write(LangModule.GL, "NewVoucherPrintTmpl", "新增凭证打印模板")</a>
+        </div>
+        }
+        @if (!isSmartVersion && havePayRunEditPermission) { 
+        <div id="divNewSalaryListTmpl">
+            <a href="javascript:void(0)">@HtmlLang.Write(LangModule.PA, "NewSalaryListPrintTmpl", "新增工资单打印模板")</a>
+        </div>
+        }
+    </div>
+    }
+</div>
+<div class="m-imain">
+    <div id="divSettings" class="m-imain-content">
+        <div class="easyui-tabs" id="tabInit" data-options="" style="padding-bottom:10px;">
+            <div title="@HtmlLang.Write(LangModule.Common, "BizAndReportPT", "单据和报表打印模板")">
+            </div>
+            <div title="@HtmlLang.Write(LangModule.Common, "VoucherPT", "凭证打印模板")">
+            </div>
+            @if (!isSmartVersion)
+            {
+                <div title="@HtmlLang.Write(LangModule.Common, "SalaryListPT", "工资单打印模板")">
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<input type="hidden" id="hidIsSmartVersion" value="@Html.Raw(isSmartVersion)"/>
+<input type="hidden" id="hidCanEditSetting" value="@Html.Raw(haveSettingEditPermission)" />
+<input type="hidden" id="hidCanEditVoucher" value="@Html.Raw(haveVoucherEditPermission)" />
+<input type="hidden" id="hidCanEditPayRun" value="@Html.Raw(havePayRunEditPermission)" />
+<script src="@ServerHelper.StaticServer/FW/scripts/Sortable.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.GoServer/scripts/PT/PTBase.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.GoServer/scripts/PT/PTBase/PTIndex.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.Common)
+@HtmlLang.WriteScript(LangModule.IV)
+@HtmlLang.WriteScript(LangModule.Docs)

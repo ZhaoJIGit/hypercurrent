@@ -1,0 +1,49 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+@using JieNor.Megi.Core.Const
+@using JieNor.Megi.Identity.Go.HtmlHelper
+@using JieNor.Megi.EntityModel.MultiLanguage
+@using JieNor.Megi.Identity.HtmlHelper
+@using JieNor.Megi.Identity
+@using JieNor.Megi.Common.Utility
+<div class="m-imain">
+    <div class="m-imain-content">
+        <div class="easyui-tabs m-report-toolbar" id="tabReport">
+            @if (HtmlSECMenu.HavePermission(BizObject.Sale_Reports, PermissionItem.View)
+                || HtmlSECMenu.HavePermission(BizObject.Purchase_Reports, PermissionItem.View)
+                || HtmlSECMenu.HavePermission(BizObject.Bank_Reports, PermissionItem.View)
+                || HtmlSECMenu.HavePermission(BizObject.General_Reports, PermissionItem.View))
+{
+    <div title='@HtmlLang.Write(LangModule.Report, "Summary", "Summary")'>
+        @Html.Partial("UCSummary")
+    </div>
+}
+            <div title="@HtmlLang.Write(LangModule.Report, "Draft", "Draft")">
+                <div id="gridDraftReport" fitcolumns="true"></div>
+            </div>
+            <div title="@HtmlLang.Write(LangModule.Report, "Published", "Published")">
+                <div id="gridPublishedReport" fitcolumns="true"></div>
+            </div>
+            @*<div title="Archived">
+                <div id="gridArchivedReport" fitcolumns="true"></div>
+            </div>*@
+        </div>
+
+        <br class="clear" />
+    </div>
+</div>
+<input type="hidden" value='@ViewData["TabType"]' id="hidTabType" />
+<input type="hidden" value='@ViewData["AccountTableID"]' id="hideAccountStandard" />
+
+@if (HtmlSECMenu.HavePermission(BizObject.Report, PermissionItem.Change))
+{
+    <input type="hidden" id="hidChangeAuth" value="1" />
+}
+else
+{
+    <input type="hidden" id="hidChangeAuth" value="0" />
+}
+<script src="@ServerHelper.ScriptServer/scripts/Report/RptHome/Index.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.Report)
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)

@@ -1,0 +1,107 @@
+﻿@using DevExpress.Web.Mvc.UI
+@using DevExpress.XtraReports.Web
+@using JieNor.Megi.Common.ImportAndExport.Utility
+@using JieNor.Megi.Common.ImportAndExport.DataModel
+@using Newtonsoft.Json
+@using System.Web.UI.WebControls
+@using JieNor.Megi.Identity.Go.HtmlHelper
+@using JieNor.Megi.Core.Const
+@using JieNor.Megi.Common.Utility;
+@model JieNor.Megi.Common.ImportAndExport.DataModel.ReportModel
+@{
+    List<ListElement> listItem = new List<ListElement>();
+    if (Model.PrintSettingList != null)
+    {
+        foreach (var key in Model.PrintSettingList.Keys)
+        {
+            listItem.Add(new ListElement { Value = key, Text = Model.PrintSettingList[key] });
+        }
+    }
+}
+@Html.DevExpress().DocumentViewer(settings =>
+{
+    settings.Name = "documentViewer1";
+    settings.Report = Model.Report;
+    settings.SettingsReportViewer.UseIFrame = false;
+    settings.Width = Convert.ToInt32(Request.Params["width"]);
+    settings.ClientSideEvents.BeforeExportRequest = "function(s, e) { e.customArgs['jsonParam'] = '" + Request.Params["jsonParam"] + "';}";
+    settings.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['jsonParam'] = '" + Request.Params["jsonParam"] + "';}";
+    settings.CallbackRouteValues = new { Area = "BD", Controller = "Print", Action = "PreviewPartial", reportType = Model.ReportType };
+    settings.ExportRouteValues = new { Area = "BD", Controller = "Print", Action = "ExportDocument", reportType = Model.ReportType };
+    settings.SettingsLoadingPanel.Enabled = true;
+
+    //移除不要的按钮
+    var removeItemList = new List<ReportToolbarItemKind>() {
+        ReportToolbarItemKind.FirstPage,
+        ReportToolbarItemKind.LastPage,
+        ReportToolbarItemKind.NextPage,
+        ReportToolbarItemKind.OfLabel,
+        ReportToolbarItemKind.PageLabel,
+        ReportToolbarItemKind.PageNumber,
+        ReportToolbarItemKind.PageCount,
+        ReportToolbarItemKind.PreviousPage,
+        ReportToolbarItemKind.PrintPage,
+        ReportToolbarItemKind.PrintReport,
+        ReportToolbarItemKind.Search
+    };
+    foreach (ReportToolbarItemKind item in removeItemList)
+    {
+        settings.ToolbarItems.RemoveAll(f => f.ItemKind == item);
+    }
+
+    //自定的按钮
+    if (HtmlSECMenu.HavePermission(Model.BizObject, PermissionItem.View))
+    {
+        settings.ToolbarItems.Add(new ReportToolbarSeparator());
+
+        ReportToolbarComboBox cbTmpl = new ReportToolbarComboBox() { Name = "cbTmpl", ItemKind = ReportToolbarItemKind.Custom, Width = 300 };
+        cbTmpl.Elements.AddRange(listItem.ToArray());
+        settings.ToolbarItems.Add(cbTmpl);
+
+        if (Model.PrintSettingList != null)
+        {
+            settings.ToolbarItems.Add(new ReportToolbarButton
+            {
+                ItemKind = ReportToolbarItemKind.Custom,
+                Text = LangHelper.GetText(LangModule.Report, "LoadSetting", "Load Setting"),
+                Name = "loadSetting"
+            });
+            settings.ToolbarItems.Add(new ReportToolbarSeparator());
+
+            //解决Edge浏览器内嵌PDF文件没有打印选项
+            if (System.Text.RegularExpressions.Regex.IsMatch(Request.UserAgent, @"Edge\/\d+"))
+            {
+                settings.ToolbarItems.Add(new ReportToolbarButton
+                {
+                    ItemKind = ReportToolbarItemKind.Custom,
+                    Text = LangHelper.GetText(LangModule.Common, "Print", "Print"),
+                    Name = "printPDF"
+                });
+                settings.ToolbarItems.Add(new ReportToolbarSeparator());
+            }            
+        }
+
+        settings.ToolbarItems.Add(new ReportToolbarButton
+        {
+            ItemKind = ReportToolbarItemKind.Custom,
+            Text = LangHelper.GetText(LangModule.Report, "ReportDesigner", "Report Designer"),
+            Name = "reportDesigner",
+            Enabled = (Model.PTVoucher == null || Model.PTVoucher.MIsAllowCustomize) && HtmlSECMenu.HavePermission(Model.BizObject, PermissionItem.Change)
+        });
+        if (!string.IsNullOrWhiteSpace(Model.LayoutId))
+        {
+            settings.ToolbarItems.Add(new ReportToolbarButton
+            {
+                ItemKind = ReportToolbarItemKind.Custom,
+                Text = LangHelper.GetText(LangModule.Report, "RestoreToDefault", "Restore to default"),
+                Name = "restoreToDefault",
+                Enabled = HtmlSECMenu.HavePermission(Model.BizObject, PermissionItem.Change)
+            });
+        }
+
+        //事件
+        settings.ClientSideEvents.ToolbarItemClick = "function(s, e) { Preview.onBtnClick(s, e, '" + Model.LayoutId + "'); }";
+        settings.ClientSideEvents.ToolbarItemValueChanged = "function(s, e) { Preview.onComboValueChanged(s, e); }";
+        settings.ClientSideEvents.Init = "function(s, e){ Preview.documentViewer_Init(s, e, '" + Model.PrintSettingID + "'); }";
+    }
+}).GetHtml()

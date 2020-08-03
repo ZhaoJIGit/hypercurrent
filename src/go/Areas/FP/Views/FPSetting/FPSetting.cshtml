@@ -1,0 +1,31 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .tabs-panels, .panel, .panel-body, .easyui-tabs, .m-imain-content {
+        height: 100% !important;
+    }
+
+    .combo-p {
+        height: auto !important;
+    }
+</style>
+
+<div class="m-imain" style="overflow: hidden ;">
+    <div class="m-imain-content">
+        <div id="tt" class="easyui-tabs">
+            <div title="@HtmlLang.Write(LangModule.FP, "IncomesFaPiao", "进项发票")" fitcolumns="true">
+                @Html.Partial("FPPartial/FPIncomesSettingPartial")
+            </div>
+            <div title="@HtmlLang.Write(LangModule.FP, "SalesFaPiao", "销项发票")">
+                @Html.Partial("FPPartial/FPSalesSettingPartial")
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+
+@HtmlLang.WriteScript(LangModule.FP)
+<script src="~/Scripts/FP/FPFaPiaoSetting.js?@ServerHelper.JSVersion"></script>
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)

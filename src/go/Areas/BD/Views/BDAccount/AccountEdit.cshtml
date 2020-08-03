@@ -1,0 +1,218 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+@using JieNor.Megi.Common.Utility
+
+<style>
+    .account-title {
+        text-align: center;
+    }
+
+    .account-middle-title {
+        color: #c2cbd3;
+    }
+
+    .account-indent {
+        padding-left: 15px;
+    }
+
+    .m-form-lable .account-checktype-name {
+       margin-right:16px;
+    }
+
+    .check-type-enabledtext{
+        display:inline-block;
+    } 
+</style>
+<div class="m-form m-imain" style="padding-left:15px">
+    <div id="tabsAccountEdit" class="easyui-tabs">
+        <div title="@HtmlLang.Write(LangModule.Acct, "AccountBaseInfo", "科目基础信息")" style="padding:20px;">
+            @if (ViewData["ParentName"] != null && ViewData["ParentName"] != "")
+            {
+                <div class="m-form-field">
+                    <div class="m-form-setion">@HtmlLang.Write(LangModule.Acct, "TheSuperiorAccount", "The Superior Account")</div>
+                    <div class="m-form-input">
+                        <input id="tbxParentName" class="textbox" style="width:200px;" disabled value="@ViewData["ParentName"]" />
+                    </div>
+                </div>
+            }
+            else if (ViewData["isCombox"] != null && (bool)ViewData["isCombox"] == true)
+            {
+                <div class="m-form-field">
+                    <div class="m-form-setion">@HtmlLang.Write(LangModule.Acct, "TheSuperiorAccount", "The Superior Account")</div>
+                    <div class="m-form-input">
+                        <input id="tbxParentName" class="easyui-combotree textbox" data-options="multiple: false,url:'/BD/BDAccount/GetAccountList?IsActive=true&ShowNumber=true&NotParentCodes=1001,1002'" style="width:200px; height:26px" />
+                    </div>
+                </div>
+            }
+            <div class="m-form-field">
+                <div class="m-form-setion">@HtmlLang.Write(LangModule.Acct, "AccountType", "Account Type")</div>
+                <div class="m-form-input">
+                    @if (ViewData["isCombox"] != null && (bool)ViewData["isCombox"] == true)
+                    {
+                        <select id="sltAccountType" class="easyui-combobox mg-data" name="MAccountTypeID" data-options="@HtmlBDAccount.DataOptions()" disabled style="width:200px; height:26px;"></select>
+                    }
+                    else
+                    {
+                        <select id="sltAccountType" class="easyui-combobox mg-data" name="MAccountTypeID" data-options="@HtmlBDAccount.DataOptions()" disabled style="width:200px; height:26px;"></select>
+                    }
+
+                </div>
+            </div>
+            <div class="m-form-field">
+                <div class="m-form-setion">@HtmlLang.Write(LangModule.Common, "AccountCode", "Account Code")</div>
+                <div class="m-form-input">
+                    <div class="easyui-validatebox" style="height:26px;line-height:26px;width:200px">
+                        <div id="lblParentId" style="display: inline-block; float: left;height:26px;line-height:26px"></div>
+                        <input class="easyui-validatebox mg-width200 mg-data easyui-filterchar" style="border: 1px; height: 22px; line-height: 22px;margin-bottom :4px" data-options="required:true,filterChar:'., '" id="tbxNumber" />
+
+                    </div>
+                    <input type="hidden" id="hideNumber" name="MNumber" />
+                </div>
+                @*<div class="m-form-tip">@HtmlLang.Write(LangModule.Acct, "UniqueCodeOrNumber", "A unique code/number for this account (limited to 10 characters)")</div>*@
+            </div>
+            <div class="m-form-field" style="float:none">
+                <div class="m-form-setion" style="clear:both">@HtmlLang.Write(LangModule.Acct, "AccountName", "Account Name")</div>
+                <div class="m-form-input">
+                    <input class="easyui-validatebox textbox mg-width200 mg-data m-lang" data-options="required:true" id="txtName" name="MName" />
+                </div>
+                @*<div class="m-form-tip">@HtmlLang.Write(LangModule.Acct, "AccountTitleLimited", "A short title for this account (limited to 150 characters)")</div>*@
+            </div>
+
+
+
+            <!--借贷方向-->
+            <div class="m-form-field">
+                <div class="m-form-setion">@HtmlLang.Write(LangModule.Acct, "Direction", "Direction")</div>
+                <div class="m-form-input">
+                    <!--借-->
+                    <input id="rdoDeit" name="MDC" type="radio" value="1" disabled checked />@HtmlLang.Write(LangModule.Acct, "Debit", "Debit")
+                    <!--贷-->
+                    <input id="rdoCreit" name="MDC" type="radio" value="-1" disabled />@HtmlLang.Write(LangModule.Acct, "Credit", "Credit")
+
+                </div>
+
+            </div>
+
+            <div class="m-form-field">
+                <div class="m-form-setion">@HtmlLang.Write(LangModule.Acct, "CurrencyAccountingWay", "Currency accounting way")</div>
+                <div class="m-form-input">
+                    <select id="selIsCheckForCurrency" class="easyui-combobox mg-data" name="MIsCheckForCurrency" style="width:200px; height:26px;">
+                        <option value="false" selected>@HtmlLang.Write(LangModule.Acct, "NoAccountForeignCurrency", "No account foreign currency")</option>
+                        <option value="true">@HtmlLang.Write(LangModule.Acct, "AccountForeignCurrency", "Account foreign currency")</option>
+                    </select>
+                </div>
+
+            </div>
+            @if (Convert.ToString(ViewData["AccountStandard"]) == JieNor.Megi.EntityModel.Enum.AccountTableEnum.UCAS)
+            {
+                <div style="position:absolute; top: 10px;left:280px;width:50%;max-width:400px;max-height:520px;">
+                    <div>
+                        @HtmlLang.Write(LangModule.Acct, "AccountTypeEffectReport", "科目类别如何影响报表")
+                    </div>
+                    @if (Convert.ToString(ViewData["LangeID"]) == "0x0009")
+                    {
+                        <div class="acount-effectreport-en">
+
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="acount-effectreport-cn">
+
+                        </div>
+                    }
+
+                </div>
+            }
+        </div>
+        @{
+            MvcHtmlString accountCheck = HtmlLang.Write(LangModule.Acct, "AccountCheck", "核算维度");
+            MvcHtmlString accountCheckOptional = HtmlLang.Write(LangModule.Acct, "AccountCheckOptional ", "可选");
+            MvcHtmlString accountCheckRequired = HtmlLang.Write(LangModule.Acct, "AccountCheckRequired ", "必录");
+            MvcHtmlString enabled = HtmlLang.Write(LangModule.Acct, "Enabled", "启用");
+
+            MvcHtmlString deleteTips = HtmlLang.Write(LangModule.Acct, "AccountTypeDeleteTips", "有数据的核算维度不能删除");
+        }
+        <div title="@HtmlLang.Write(LangModule.Acct, "AccountCheckInfo", "科目核算维度")">
+            <div class="m-list-accountcheck">
+                <div class="account-checktype-item new-checktype" style="padding:10px">
+                    <!--核算维度类型-->
+                    <span class="m-form-lable"><span class="account-checktype-name">@accountCheck 1</span> <input class="easyui-combobox accout-checktype" style="width:135px; height:26px;" /></span>
+                    <!--选录必录-->
+                    <span><input class="easyui-combobox account-checktype-enterstatus" style="width:135px;height:26px" /></span>
+                    <!--启用禁用-->
+                    <input type="hidden" class="oldinputstatus" />
+                    <span style="padding:5px;padding-left:30px;padding-right:0px" class="check-type-enabledtext">@enabled</span>
+                    <span style="padding:5px;"><a class="enable-stauts check-type-enabled" href="javascript:void(0)" value="1">&nbsp;</a></span>
+                    <span style="padding:5px;"><a class="check-type-delete delete-enable" href="javascript:void(0)" title="@deleteTips">&nbsp;</a></span>
+                </div>
+                <div class="account-checktype-item new-checktype" style="padding:10px">
+                    <span class="m-form-lable"><span class="account-checktype-name">@accountCheck 2</span> <input class="easyui-combobox accout-checktype" style="width:135px; height:26px;" /></span>
+                    <!--选录必录-->
+                    <span><input class="easyui-combobox account-checktype-enterstatus" style="width:135px;height:26px" /></span>
+                    <input type="hidden" class="oldinputstatus" />
+                    <span style="padding:5px;padding-left:30px;padding-right:0px" class="check-type-enabledtext">@enabled</span>
+                    <span style="padding:5px;"><a class="enable-stauts check-type-enabled" href="javascript:void(0)" value="1">&nbsp;</a></span>
+                    <span style="padding:5px;"><a class="check-type-delete delete-enable" href="javascript:void(0)" title="@deleteTips">&nbsp;</a></span>
+                </div>
+                <div class="account-checktype-item new-checktype" style="padding:10px">
+                    <span class="m-form-lable"><span class="account-checktype-name">@accountCheck 3</span> <input class="easyui-combobox accout-checktype" style="width:135px; height:26px;" /></span>
+                    <!--选录必录-->
+                    <span><input class="easyui-combobox account-checktype-enterstatus" style="width:135px;height:26px" /></span>
+                    <input type="hidden" class="oldinputstatus" />
+                    <span style="padding:5px;padding-left:30px;padding-right:0px" class="check-type-enabledtext">@enabled</span>
+                    <span style="padding:5px;"><a class="enable-stauts check-type-enabled" href="javascript:void(0)" value="1">&nbsp;</a></span>
+                    <span style="padding:5px;"><a class="check-type-delete delete-enable" href="javascript:void(0)" title="@deleteTips">&nbsp;</a></span>
+                </div>
+            </div>
+
+
+            <div><a href="javascript:void(0);" id="btnAddNewCheckItem">@HtmlLang.Write(LangModule.Acct, "AddAccountCheck", "+新增核算维度")</a></div>
+
+        </div>
+    </div>
+
+
+    <div class="account-check-template" style="padding:10px;display:none">
+        <span class="m-form-lable"><span class="account-checktype-name"></span> <input class="accout-checktype-template" style="width:135px; height:26px;" /></span>
+        <!--选录必录-->
+        <span><input class="account-checktype-enterstatus" style="width:135px;height:26px" /></span>
+        <input type="hidden" class="oldinputstatus" />
+        <span style="padding: 5px; padding-left: 30px; padding-right: 0px" class="check-type-enabledtext">@enabled</span>
+        <span style="padding:5px"><a class="enable-stauts check-type-enabled" href="javascript:void(0)" value="1">&nbsp;</a></span>
+        <span style="padding:5px"><a class="check-type-delete delete-enable" href="javascript:void(0)" title="@deleteTips">&nbsp;</a></span>
+    </div>
+
+    <input type="hidden" class="mg-data" name="MIsActive" value="true" />
+    <input type="hidden" class="mg-data" name="MIsSys" value="" />
+    <input type="hidden" class="mg-data" name="MAccountGroupID" value="" />
+    <input type="hidden" class="mg-data" name="MAccountTableID" value="" />
+    <input type="hidden" class="mg-data" id="hidAccountID" name="MItemID" value="@ViewData["AccountID"]" />
+    <input type="hidden" class="mg-data" id="hideIsCanRelateContact" name="IsCanRelateContact" value="@ViewData["IsCanRelateContact"]" />
+    <input type="hidden" id="hidParentID" name="MParentID" value="@ViewData["ParentID"]" />
+    <input type="hidden" id="hideMDC" name="MDC" value="@ViewData["MDC"]" />
+    <input type="hidden" id="isLeaf" value="@Convert.ToString(ViewData["IsLeaf"])" />
+    <input type="hidden" id="isCombox" value="@ViewData["isCombox"]" />
+    <input type="hidden" name="MCode" class="mg-data" />
+    <input type="hidden" id="hideAllEidt" value="@ViewData["AllowEdit"]" />
+    <input type="hidden" id="hideAccountStandard" value="@ViewData["AccountStandard"]" />
+</div>
+
+
+
+<div class="m-toolbar-footer">
+    <div class="left">
+        <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray">@HtmlLang.Write(LangKey.Cancel)</a>
+    </div>
+    <div class="right">
+        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="btnSave">@HtmlLang.Write(LangKey.Save)</a>
+    </div>
+    <br class="clear" />
+</div>
+@HtmlLang.WriteScript(LangModule.Acct)
+@HtmlLang.WriteScript(LangModule.Bank)
+@HtmlLang.WriteScript(LangModule.BD)
+@HtmlLang.WriteScript(LangModule.My)
+<script src="@ServerHelper.GoServer/scripts/BD/BDAccount/AccountEdit.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.GoServer/scripts/BD/BDAccount/AccountCheckType.js?@ServerHelper.JSVersion"></script>

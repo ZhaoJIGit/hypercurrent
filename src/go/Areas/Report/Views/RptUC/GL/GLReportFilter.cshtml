@@ -1,0 +1,81 @@
+﻿<!--高级条件-->
+@using JieNor.Megi.Common.Utility
+<div class="gl-rpt-search menu" style="position:absolute;top:43px;left:293px;width:380px;display:none;z-index:999">
+    <div style="padding-left: 5px">
+        <table style="" cellspacing="5">
+            
+            <tr>
+                <td class="m-bold">
+                    @HtmlLang.Write(LangModule.Report, "StartAccount", "开始科目")
+                </td>
+                <td>
+                    <input id="cbxStartAccount" class="easyui-combotree" data-options="required: false" style="width:185px" />
+                </td>
+            </tr>
+            <tr>
+                <td class="m-bold">@HtmlLang.Write(LangModule.Report, "EndAccount", "结束科目")</td>
+                <td><input id="cbxEndAccount" class="easyui-combotree" name="" data-options="required: false" style="width:185px" /></td>
+            </tr>
+            <tr>
+                <td class="m-bold">@HtmlLang.Write(LangModule.Report, "Currency", "Currency")</td>
+                <td><input id="cbxMCurrencyID" class="easyui-combobox mg-data " name="MCurrencyID" data-options="required: false" style="width:185px" /></td>
+            </tr>
+            <tr>
+                <td class="m-bold">@HtmlLang.Write(LangModule.Report, "AccountLevel", "科目级次")</td>
+                <td><input class="easyui-numberspinner" id="nsAccountLevel" name="AccountLevel" style="width: 185px" data-options="min: 1,max: 10" /></td>
+            </tr>
+        </table>
+    </div>
+   
+    <div class="m-form-item gl-rpt-searchitem">
+        <span>
+            <input type="checkbox" class="mg-data" name="IncludeCheckType" id="ckbIncludeChecktype" />
+        </span>
+        <span class="m-bold">@HtmlLang.Write(LangModule.Report, "DisplayChecktype", "显示核算维度")</span>
+        <span style="padding-left:5px"><a href="javascript:void(0)" id="btnCheckTypeDetail" style="display:none">@HtmlLang.Write(LangModule.Report, "ViewCheckTypeDetail", "查看维度条件")</a></span>
+    </div>
+
+    <div class="m-form-item gl-rpt-searchitem">
+        <span>
+            <input type="checkbox" class="mg-data" name="MDisplayNoAccurrenceAmount" id="ckbMDisplayNoAccurrenceAmount" checked="checked"/>
+        </span>
+        <span class="m-bold">@HtmlLang.Write(LangModule.Report, "DisplayNotAmountData", "显示无发生额的科目")</span>
+    </div>
+
+    <div class="m-form-item gl-rpt-searchitem">
+        <span>
+            <input type="checkbox" class="mg-data" name="MDisplayZeorEndBalance" id="ckbMDisplayZeorEndBalance" checked="checked"/>
+        </span>
+        <span class="m-bold">@HtmlLang.Write(LangModule.Report, "DisplayNotBalance", "显示余额为0的科目")</span>
+    </div>
+    <div class="m-form-item gl-rpt-searchitem">
+        <span>
+            <input type="checkbox" class="mg-data" name="IncludeDisabledAccount" id="ckbIncludeDisabledAccount" />
+        </span>
+        <span class="m-bold">@HtmlLang.Write(LangModule.Report, "DisplayDisableAccount", "显示禁用的科目")</span>
+    </div>
+    <div class="m-form-item gl-rpt-searchitem">
+        <span>
+            <input type="checkbox" class="mg-data" name="IncludeUnapprovedVoucher" id="ckbIncludeUnapprovedVoucher" />
+        </span>
+        <span class="m-bold">@HtmlLang.Write(LangModule.Report, "IncludeUnAppVourcher", "包括未审核的凭证")</span>
+    </div>
+
+    <div class="m-form-item gl-rpt-searchitem showleafaccount">
+        <span>
+            <input type="checkbox" class="mg-data" name="IsLeafAccount" id="ckbIsLeafAccount" />
+        </span>
+        <span class="m-bold">@HtmlLang.Write(LangModule.Report, "OnlyLeafAccount", "只显示明细科目")</span>
+    </div>
+    <div class="m-form-item gl-rpt-searchitem gl-rpt-btn">
+        <span style="float: right; padding: 10px 2px">
+            <a href="javascript:void(0);" id="btnUpdate" class="l-btn easyui-linkbutton-yellow" style="width:48px">@HtmlLang.Write(LangModule.Report, "Update", "更新")</a>
+        </span>
+        <span style="float: right; padding: 10px 2px">
+            <a href="javascript:void(0);" id="btnReset" class="l-btn easyui-linkbutton-gray" style="width:48px">@HtmlLang.Write(LangModule.Report, "Reset", "重置")</a>
+        </span>
+
+    </div>
+</div>
+
+<script src="@ServerHelper.ScriptServer/scripts/Report/RptUC/GL/GLReportBase.js?@ServerHelper.JSVersion"></script>

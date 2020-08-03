@@ -1,0 +1,16 @@
+﻿@using JieNor.Megi.Common.Utility;
+<!--表头-->
+<div class="mg-setup-sub-title" id="dvCurrencyRates">
+    @HtmlLang.Write(LangModule.Acct, "ExchangeRate", "Exchange Rate") of @HtmlLang.Write(LangModule.Acct, "ForeignCurrency", "Foreign Currency") 
+</div>
+<div class="mg-setup-sub-title" style="  padding: 7px 10px;margin-top: -13px;">
+    @*<a href="#" class="easyui-linkbutton easyui-linkbutton-gray" id="btnNewExchange">@HtmlLang.Write(LangModule.BD, "NewExchange rate", "New exchange rate")</a>*@
+</div>
+<!--表-->
+<input id="flag" type="hidden" />
+<div id="tbCurrencyExchangeRate" fitcolumns="true"></div>
+
+
+@HtmlLang.WriteScript(LangModule.Acct)
+@HtmlLang.WriteScript(LangModule.BD)
+<script src="@ServerHelper.ScriptServer/scripts/BD/Currency/ExchangeRateList.js?@ServerHelper.JSVersion"></script>

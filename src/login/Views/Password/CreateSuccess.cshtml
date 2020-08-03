@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = @HtmlLang.Write(LangModule.Login, "ForgetPasswordSuccess", "Success");
+    Layout = "~/Views/Shared/_ForgetPasswordLayout.cshtml";
+}
+
+<div class="m-reg-box">
+    <div id="loginBox" class="m-login-box">
+        <div class="container form-login-content main-reg  m-send-success">
+            <h1>&nbsp;</h1>
+            <div class="space"></div>
+            <div>
+                <div class="m-login-box-title">@HtmlLang.Write(LangModule.Login, "CreatePasswordSuccess", "Congratulations, create password successfully!")</div>
+                <div class="m-login-box-title-tip">
+                    <a id="aSignInHere" href="@ServerHelper.LoginServer">@HtmlLang.Write(LangModule.Login, "SignInHere", "Sign in here")</a></div>
+            </div>
+
+            <div class="empty-content"></div>
+
+            <div class="m-signIn-wrap">
+                <div class="wrap-problem">@HtmlLang.WriteFormat(LangModule.Login, "HaveProblem", "Have problems? Please <a href=\"mailto:{0}\">Contact us</a> and we will work it out!", System.Configuration.ConfigurationManager.AppSettings["ServiceEmail"]) </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

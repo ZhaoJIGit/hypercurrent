@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+@using JieNor.Megi.Common.Utility
+<html lang="zh">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>    
+    @BundleHelper.RegisterCss()
+    <meta name="viewport" content="width=device-width" />
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" />    
+    <link href="@ServerHelper.StaticServer/FW/themes/Base/css.css?@ServerHelper.JSVersion" rel="stylesheet" type="text/css">
+    @RenderSection("Css", false)
+
+    <script src="@ServerHelper.StaticServer/fw/scripts/jquery-1.8.2.min.js?@ServerHelper.JSVersion"></script>
+    <script src="@ServerHelper.StaticServer/fw/scripts/jquery.json-2.3.min.js?@ServerHelper.JSVersion"></script>
+    <script src="@ServerHelper.StaticServer/include/easyui/jquery.easyui.min.js?@ServerHelper.JSVersion"></script>
+    @*<script src="@ServerHelper.StaticServer/fw/scripts/jquery.megi.extend.js?@ServerHelper.JSVersion"></script>*@
+    <script src="@ServerHelper.StaticServer/fw/scripts/jquery.megi.common.js?@ServerHelper.JSVersion"></script>
+    <script src="@ServerHelper.StaticServer/fw/include/hiAlert/jquery.alert.js?@ServerHelper.JSVersion"></script>
+    <script src="@ServerHelper.StaticServer/fw/include/XYTipsWindow/jquery.XYTipsWindow.2.8.js?@ServerHelper.JSVersion"></script>
+    <script src="@ServerHelper.StaticServer/fw/scripts/jquery.megi.extend.easyui.js?@ServerHelper.JSVersion"></script>
+    <script src="@ServerHelper.StaticServer/FW/scripts/window.constant.variable.js?@ServerHelper.JSVersion"></script>
+    <script src="@ServerHelper.StaticServer/fw/scripts/jquery.megi.lang.combobox.js?@ServerHelper.JSVersion"></script>
+    <script src="@ServerHelper.StaticServer/fw/scripts/jquery.megi.lang.js?@ServerHelper.JSVersion"></script>
+    <script src="@ServerHelper.StaticServer/fw/scripts/jquery.megi.framework.js?@ServerHelper.JSVersion"></script>
+    <script src="@ServerHelper.StaticServer/fw/scripts/jquery.megi.date.js?@ServerHelper.JSVersion"></script>
+    <script src="@ServerHelper.ScriptServer/go/scripts/megi.go.common.js?@ServerHelper.JSVersion"></script> 
+    <script src="@ServerHelper.StaticServer/fw/scripts/jquery.megi.ui.js?@ServerHelper.JSVersion"></script> 
+    @HtmlLang.WriteScript(LangModule.Common)
+    @HtmlLang.GlobalInfo()
+
+</head>
+<body>
+            @RenderBody()
+
+    <div id="divDialogContainer"></div>
+    @HtmlLang.OrgLang()
+</body>
+</html>

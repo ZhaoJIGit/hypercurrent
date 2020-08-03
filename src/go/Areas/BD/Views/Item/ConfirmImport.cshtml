@@ -1,0 +1,38 @@
+﻿@using System.Web.Script.Serialization
+@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Import Inventory Items";
+}
+<div class="m-imain mg-setup">
+    <div class="m-imain-content">
+        <div class="m-confirm-import-notify">
+            <em class="m-confirm-import-icon">
+                &nbsp;
+            </em>
+            <div class="m-confirm-import-msg">
+                @Html.Raw(string.Format(HtmlLang.Write(LangModule.Acct, "confirmImportNotify", "<p>The imported file <strong>{0}</strong> contains {1} line. From this file Megi will:</p><ul><li><strong>Create {1}</strong> inventory item</li></ul>").ToString(), ViewBag.ImportingFileName, ViewBag.ImportingCount, ViewBag.ImportingCount))
+            </div>
+        </div>
+        <div class="m-confirm-import-form">
+            <fieldset>
+                <p>
+                    @Html.Raw(HtmlLang.Write(LangModule.Acct, "confirmImportState", "If you're happy to continue with the import please click the \"Complete Import\" button below. Please note <em>this action CANNOT be undone</em>"))
+                </p>
+            </fieldset>
+        </div>
+    </div>
+</div>
+<div class="m-toolbar-footer">
+    @if (HtmlSECMenu.HavePermission(BizObject.Setting, PermissionItem.Change)) { 
+    <div class="left">
+        <a id="aGoBack" href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-gray" action="@ViewBag.Type">@HtmlLang.Write(LangModule.Common, "GoBack", "< Go Back")</a>
+    </div>
+    <div class="right">
+        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aCompleteImport">@HtmlLang.Write(LangModule.Common, "CompleteImport", "Complete Import")</a>
+    </div>
+    }
+</div>
+<input id="hidImportingFileName" type="hidden" value="@ViewBag.ImportingFileName" />
+<input id="hidImportingCount" type="hidden" value="@ViewBag.ImportingCount" />
+<script src="@ServerHelper.GoServer/Scripts/BD/Import/ImportBase.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.GoServer/scripts/BD/Item/ConfirmImport.js?@ServerHelper.JSVersion"></script>

@@ -1,0 +1,212 @@
+﻿@using JieNor.Megi.DataModel.BD;
+@using JieNor.Megi.EntityModel.Enum;
+@using JieNor.Megi.Common.Utility;
+@model JieNor.Megi.DataModel.PT.PTListModel
+@{
+    //是否有编辑权限
+    bool isCanEditPermission = HtmlSECMenu.HavePermission(BizObject.Setting, PermissionItem.Change);
+    List<BDPrintSettingModel> list = Model.List as List<BDPrintSettingModel>;
+    var isSmartVersion = JieNor.Megi.Common.Context.ContextHelper.MContext.MOrgVersionID == JieNor.Megi.EntityModel.Enum.OrgVersionEnum.Smart;
+}
+<div id="divBiz">
+        @if (list != null)
+        {
+            var idx = 0;
+            foreach (var settingModel in list)
+            {
+        <div class="print-tmpl" id="@settingModel.MItemID">
+            <div class="name">
+                <p><em class="drag">&nbsp;</em>@settingModel.MName</p>
+                @if (isCanEditPermission)
+                {
+                    <div id="@string.Format("divBizOptions{0}", idx)" class="options" style="padding-right: 10px;">
+                        <a href="javascript:void(0)" id="aOptions" class="easyui-menubutton" style="padding-left:9px; padding-right:6px;"
+                           data-options="menu:'#@string.Format("divBizFolderOptions{0}", idx)'">@HtmlLang.Write(LangModule.Docs, "Options", "Options")</a>
+                        <div id="@string.Format("divBizFolderOptions{0}", idx)" style="width: 160px;">
+                            <div class="edit"><a href="javascript:void(0)" id="aEdit">@HtmlLang.Write(LangModule.IV, "Edit", "Edit")</a></div>
+                            <div class="copy"><a href="javascript:void(0)" id="aCopy">@HtmlLang.Write(LangModule.Common, "Copy", "Copy")</a></div>
+                            @if (string.IsNullOrWhiteSpace(settingModel.MLogoID))
+                            {
+                                <div class="upload-logo"><a href="javascript:void(0)" id="aUploadLogo">@HtmlLang.Write(LangModule.IV, "UploadLogo", "Upload Logo")</a></div>
+                            }
+                            else
+                            {
+                                <div class="change-logo"><a href="javascript:void(0)" id="aChangeLogo">@HtmlLang.Write(LangModule.IV, "ChangeLogo", "Change Logo")</a></div>
+                                <div class="remove-logo"><a href="javascript:void(0)" id="aRemoveLogo">@HtmlLang.Write(LangModule.IV, "RemoveLogo", "Remove Logo")</a></div>
+                            }
+                            @if (list.Count() > 1)
+                            {
+                                <div class="delete"><a href="javascript:void(0)" id="aDelete" class="delete-folder">@HtmlLang.Write(LangKey.Delete)</a></div>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="details">
+                <div style="float:left;">
+                    <div class="settings">
+                        <div>
+                            <strong>@HtmlLang.Write(LangModule.IV, "MarginsTop", "Margins Top"):</strong> @settingModel.MTopMarginWithUnit
+                            <strong>&nbsp;&nbsp;@HtmlLang.Write(LangModule.IV, "Bottom", "Bottom"):</strong> @settingModel.MBottomMarginWithUnit
+                            <strong>&nbsp;&nbsp;@HtmlLang.Write(LangModule.IV, "AddressPadding", "Address Padding"):</strong> @settingModel.MAddressPaddingWithUnit
+                        </div>
+                        <div>
+                            <div>
+                                @HtmlLang.Write(LangModule.IV, "Show", "Show"):
+                            </div>
+                            <ul class="show-list">
+                                @if (!isSmartVersion)
+                                {
+                                    if (settingModel.MShowTaxNumber)
+                                    {
+                                        <li>@HtmlLang.Write(LangModule.IV, "TaxNumber", "Tax number")</li>
+                                    }
+                                    if (settingModel.MShowTaxColumn)
+                                    {
+                                        <li>@HtmlLang.Write(LangModule.IV, "TaxColumn", "Tax column")</li>
+                                    }
+                                    if (settingModel.MShowHeading)
+                                    {
+                                        <li>@HtmlLang.Write(LangModule.IV, "ColumnHeadings", "Column headings")</li>
+                                    }
+                                    if (settingModel.MShowUnitPriceAndQuantity)
+                                    {
+                                        <li>@HtmlLang.Write(LangModule.IV, "UnitPriceAndQuantity", "Unit price and quantity")</li>
+                                    }
+                                    if (settingModel.MShowRegAddress)
+                                    {
+                                        <li>@HtmlLang.Write(LangModule.IV, "RegisteredAddress", "Registered address")</li>
+                                    }
+                                }
+                                @if (settingModel.MShowLogo)
+                                {
+                                    <li>
+                                        @HtmlLang.Write(LangModule.IV, "Logo", "Logo")
+                                        @if (isSmartVersion)
+                                        {
+                                            @("  (" + HtmlLang.Write(LangModule.IV, "LogoAlign", "Logo align") + ":")@(HtmlLang.Write(LangModule.IV, settingModel.MLogoAlignment, settingModel.MLogoAlignment) + ")")
+                                        }                                    
+                                    </li>    
+                                }
+                                @if (!isSmartVersion)
+                                {
+                                    if (settingModel.MShowTracking)
+                                    {
+                                        <li>@HtmlLang.Write(LangModule.IV, "Tracking", "Tracking")</li>
+                                    }
+                                    if (!settingModel.MHideDiscount)
+                                    {
+                                        <li>@HtmlLang.Write(LangModule.IV, "Discount", "Discount")</li>
+                                    }
+                                }
+                            </ul>
+                            @if (!isSmartVersion)
+                            {
+                            <ul class="long">
+                                <li>
+                                    @HtmlLang.Write(LangModule.IV, "LogoAlign", "Logo align"):@HtmlLang.Write(LangModule.IV, settingModel.MLogoAlignment, settingModel.MLogoAlignment)
+                                </li>
+                                <li>
+                                    @HtmlLang.Write(LangModule.IV, "ShowTaxesAs", "Show taxes as ")
+                                    @if (!string.IsNullOrWhiteSpace(settingModel.MShowTaxType))
+                                    {
+                                        @HtmlLang.Write(LangModule.IV, settingModel.MShowTaxType.Replace("Tax_", ""), settingModel.MShowTaxType.Replace("Tax_", ""))
+                                    }
+                                    else
+                                    {
+                                        @HtmlLang.Write(LangModule.IV, "Original", "Original")
+                                    }
+                                </li>
+                                <li>
+                                    @HtmlLang.Write(LangModule.IV, "TaxSubtotalsBy", "Tax subtotals by ")
+                                    @{
+                                        var showTaxSubtotalsBy = string.IsNullOrWhiteSpace(settingModel.MShowTaxSubTotalWay) 
+                                            ? ShowTaxSubtotalsByEnum.None 
+                                            : (ShowTaxSubtotalsByEnum)Enum.Parse(typeof(ShowTaxSubtotalsByEnum), settingModel.MShowTaxSubTotalWay);
+                                    }
+                                    @switch (showTaxSubtotalsBy)
+                                    {
+                                        case ShowTaxSubtotalsByEnum.TaxRates:
+                                            @HtmlLang.Write(LangModule.IV, "ShowByTaxRate", "按税率合计显示")
+                                            break;
+                                        case ShowTaxSubtotalsByEnum.TaxRatesOver0Percent:
+                                        @HtmlLang.Write(LangModule.IV, "TaxRatesOver0Percent", "tax rates over 0%")
+                                            break;
+                                        case ShowTaxSubtotalsByEnum.SingleTaxSubtotal:
+                                        @HtmlLang.Write(LangModule.IV, "SingleTaxSubtotal", "a single tax subtotal")
+                                            break;
+                                    }
+                                </li>
+                                <li>
+                                    @HtmlLang.Write(LangModule.IV, "Currency conversion as", "Currency conversion as")
+                                    @switch (settingModel.MShowCurrencyConversionWay)
+                                    {
+                                        case "1":
+                                            @HtmlLang.Write(LangModule.IV, "NetAmountsWithTaxTotals", "net amounts with tax totals")
+                                            break;
+                                        case "2":
+                                        @HtmlLang.Write(LangModule.IV, "SingleTaxTotal", "a single tax total")
+                                            break;
+                                        case "3":
+                                        @HtmlLang.Write(LangModule.IV, "DontShowAnything", "don't show anything")
+                                            break;
+                                    }
+                                </li>
+                            </ul>
+                            }
+                        </div>
+                    </div>
+                    @if (!isSmartVersion)
+                    {
+                    <div class="center-wrapper" style="float:left;">
+                        <div class="headings">
+                            <strong>@HtmlLang.Write(LangModule.IV, "Headings", "Headings"):</strong> @(settingModel.Headings)
+                        </div>
+                        @if (!string.IsNullOrWhiteSpace(settingModel.MPayService))
+                        {
+                            <div>
+                                <strong>@HtmlLang.Write(LangModule.IV, "PayeeAccount", "Payee account"):</strong> @(settingModel.MPayService)
+                            </div>
+                        }
+                        <div class="terms">
+                            <strong>
+                                @HtmlLang.Write(LangModule.IV, "TermsAndPayAdvice", "Terms & Payment Advice (Invoices)"):
+                            </strong>
+                            <div class="ellipsis">@Html.Raw(string.IsNullOrWhiteSpace(settingModel.MTermsAndPayAdvice) ? string.Empty : settingModel.MTermsAndPayAdvice.Replace("\n", "<br/>"))</div>
+                        </div>
+                        <div class="address">
+                            <strong>
+                                @HtmlLang.Write(LangModule.IV, "ContactDetails", "Contact Details"):
+                            </strong>
+                            <div>@Html.Raw(settingModel.MContactDetails != null ? settingModel.MContactDetails.Replace("\n", "<br/>") : string.Empty)</div>
+                        </div>
+                    </div>
+                    }
+                    <div class="clear"></div>
+                </div>
+                <div class="logo-wrapper">
+                    <div class="logo upload-logo">
+                        @if (!string.IsNullOrWhiteSpace(settingModel.MLogoID))
+                        {
+                            <div class="ps-logo logo" id="@settingModel.MLogoID" style="float:right;"><div class="loading-logo"></div></div>
+                        }
+                        else if (isCanEditPermission)
+                        {
+                            <a>@HtmlLang.Write(LangModule.IV, "UploadLogo", "Upload Logo")</a>
+                        }
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+                        idx++;
+            }
+        }
+        else
+        {
+            @HtmlLang.Write(LangModule.Common, "nodata", "No data")
+        }
+</div>
+<script src="@ServerHelper.StaticServer/FW/scripts/Sortable.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.GoServer/scripts/PT/PTBase.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.GoServer/scripts/PT/PTBiz/PTBizList.js?@ServerHelper.JSVersion"></script>

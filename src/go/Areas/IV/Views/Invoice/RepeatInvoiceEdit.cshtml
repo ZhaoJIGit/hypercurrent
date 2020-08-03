@@ -1,0 +1,40 @@
+﻿@using JieNor.Megi.DataModel.IV;
+@using JieNor.Megi.Core.DataModel;
+@using JieNor.Megi.Common.Utility;
+@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    IVRepeatInvoiceModel model = ViewData["RepeatInvoiceModel"] as IVRepeatInvoiceModel;
+}
+@Html.Partial("InvoicePartial/RepeatInvoiceEditPartial")
+@*底部工具栏*@
+<div class="m-toolbar-footer">
+    <div class="left">&nbsp;
+        @if (Convert.ToString(ViewData["InvoiceID"]).Trim() != "" && HtmlSECMenu.HavePermission(BizObject.Invoice_Sales, PermissionItem.Change))
+        { 
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick='IVBase.deleteRepeatInvoice("@ViewData["InvoiceID"]","@Html.Raw(model.MType)","/IV/Invoice/InvoiceList/6")'>@HtmlLang.Write(LangKey.Delete)</a>@*删除重复发票*@
+        }
+    </div>
+    <div class="center">
+        <div class="m-toolbar-icon" style="width:150px;" >
+            @if (Convert.ToString(ViewData["InvoiceID"]).Trim() != "")
+            {
+                <a href="javascript:void(0)" id="aHistory" class="m-icon-msg" title='@HtmlLang.Write(LangModule.IV, "History", "History")'>&nbsp;</a>
+            }
+            @{ 
+                string mid = model == null ? string.Empty : model.MID;
+            }
+            @HtmlREGRelatedAttach.RelatedAttach(BizObject.Invoice, mid)
+        <div class="clear"></div>
+        </div>
+    </div>
+    <div class="right" style="width:380px;">
+        @if (HtmlSECMenu.HavePermission(BizObject.Invoice_Sales, PermissionItem.Change))
+        { 
+        <a href="javascript:void(0)" id="btnSave" class="easyui-linkbutton easyui-linkbutton-yellow">@HtmlLang.Write(LangKey.Save)</a>
+        }
+        @*<a href="javascript:void(0);" id="aPreviewPlaceholders" class="preview-placeholders-tagter">@HtmlLang.Write(LangModule.IV, "PreviewPlaceholders", "Preview placeholders")</a>*@
+    </div>
+    <div class="clear"></div>
+</div>
+<input type="hidden" id="hidInvoiceType" value="Invoice_Sale" />
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/IV/Invoice/RepeatInvoiceEdit.js?@ServerHelper.JSVersion"></script>

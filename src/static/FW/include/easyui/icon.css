@@ -1,0 +1,134 @@
+.icon-blank{
+	background:url('images/e-blank.gif') no-repeat center center;
+}
+.icon-add{
+	background:url('images/e-edit_add.png') no-repeat center center;
+}
+.icon-edit{
+	background:url('images/e-pencil.png') no-repeat center center;
+}
+.icon-remove{
+	background:url('images/e-edit_remove.png') no-repeat center center;
+}
+.icon-save{
+	background:url('images/e-filesave.png') no-repeat center center;
+}
+.icon-cut{
+	background:url('images/e-cut.png') no-repeat center center;
+}
+.icon-ok{
+	background:url('images/e-ok.png') no-repeat center center;
+}
+.icon-no{
+	background:url('images/e-no.png') no-repeat center center;
+}
+.icon-taxrate{
+	background:url('images/e-taxrate.png') no-repeat center center;
+}
+.icon-extend{
+	background:url('images/e-extend.png') no-repeat center center;
+}
+.icon-cancel{
+	background:url('images/e-cancel.png') no-repeat center center;
+}
+.icon-reload{
+	background:url('images/e-reload.png') no-repeat center center;
+}
+.icon-search{
+	background:url('images/e-search.png') no-repeat center center;
+}
+.icon-print{
+	background:url('images/e-print.png') no-repeat center center;
+}
+.icon-help{
+	background:url('images/e-help.png') no-repeat center center;
+}
+.icon-undo{
+	background:url('images/e-undo.png') no-repeat center center;
+}
+.icon-redo{
+	background:url('images/e-redo.png') no-repeat center center;
+}
+.icon-back{
+	background:url('images/e-back.png') no-repeat center center;
+}
+.icon-sum{
+	background:url('images/e-sum.png') no-repeat center center;
+}
+.icon-tip{
+	background:url('images/e-tip.png') no-repeat center center;
+}
+.icon-filter{
+	background:url('images/e-filter.png') no-repeat center center;
+}
+.icon-upload{
+	background:url('images/e-upload.png') no-repeat center center;
+}
+.icon-send-statement{
+	background:url('images/e-send-statement.png') no-repeat center center;
+}
+.icon-import{
+	background:url('images/e-import.png') no-repeat center center;
+}
+.icon-export{
+	background:url('images/e-export.png') no-repeat center center;
+}
+.icon-archive{
+	background:url('images/e-archive.png') no-repeat center center;
+}
+.icon-email{
+	background:url('images/e-email.png') no-repeat center center;
+}
+.icon-delete{
+	background:url('images/e-delete.png') no-repeat center center;
+}
+.icon-approval{
+	background:url('images/e-approval.png') no-repeat center center;
+}
+.icon-submit{
+	background:url('images/e-submit.png') no-repeat center center;
+}
+.icon-mini-add{
+	background:url('images/e-mini_add.png') no-repeat center center;
+}
+.icon-mini-edit{
+	background:url('images/e-mini_edit.png') no-repeat center center;
+}
+.icon-mini-refresh{
+	background:url('images/e-mini_refresh.png') no-repeat center center;
+}
+.icon-add-row{
+	background:url('images/e-add-row.png') no-repeat center center;
+}
+.icon-invoice-add{
+	background:url('images/e-invoice-add.png') no-repeat center center;
+}
+.icon-invoice-repeat{
+	background:url('images/e-invoice-repeat.png') no-repeat center center;
+}
+.icon-credit-note{
+	background:url('images/e-credit-note.png') no-repeat center center;
+}
+
+.icon-large-picture{
+	background:url('images/e-large_picture.png') no-repeat center center;
+}
+.icon-large-clipart{
+	background:url('images/e-large_clipart.png') no-repeat center center;
+}
+.icon-large-shapes{
+	background:url('images/e-large_shapes.png') no-repeat center center;
+}
+.icon-large-smartart{
+	background:url('images/e-large_smartart.png') no-repeat center center;
+}
+.icon-large-chart{
+	background:url('images/e-large_chart.png') no-repeat center center;
+}
+.icon-attachment {
+    background: url('images/e-attachment.png') no-repeat center center;
+}
+
+.icon-mgdoc{
+    background: url('images/e-mgdoc.png') no-repeat center center;
+}

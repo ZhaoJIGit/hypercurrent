@@ -1,0 +1,69 @@
+﻿@{
+    int invoiceType = Convert.ToInt32(ViewData["invoiceType"]);
+    bool hasChangeFapiaoAuth = invoiceType == 0 && HtmlSECMenu.HavePermission(BizObject.Sales_Fapiao, PermissionItem.Change)
+        || invoiceType == 1 && HtmlSECMenu.HavePermission(BizObject.Purchases_Fapiao, PermissionItem.Change);
+    bool hasViewFapiaoAuth = invoiceType == 0 && HtmlSECMenu.HavePermission(BizObject.Sales_Fapiao, PermissionItem.View)
+        || invoiceType == 1 && HtmlSECMenu.HavePermission(BizObject.Purchases_Fapiao, PermissionItem.View);
+    bool isSale = invoiceType == 0;
+    string lblWaitingIssue = isSale ? HtmlLang.GetText(LangModule.FP, "NotIssuedFapiao", "等待开票") : HtmlLang.GetText(LangModule.FP, "NotCollectedFapiao", "等待收集");
+    string lblPartialIssued = isSale ? HtmlLang.GetText(LangModule.FP, "PartlyIssuedFapiao", "部分开票") : HtmlLang.GetText(LangModule.FP, "PartlyCollectedFapiao", "部分收集");
+    string lblIssued = isSale ? HtmlLang.GetText(LangModule.FP, "IssuedFapiao", "完全开票") : HtmlLang.GetText(LangModule.FP, "CollectedFapiao", "完全收集");
+}
+@using JieNor.Megi.Common.Utility
+<!--页面头-->
+<div class="m-extend-tabs fp-main-tabs">
+    <div class="iv-tab-links">
+        <ul class="tab-links">
+            <li class="current fp-home-li" index="0">
+                <div class="tab-home statistics"></div>
+                <div class="title"></div>
+            </li>
+            <li index="1">
+                <div class="statistics">@HtmlLang.Write(LangModule.Common, "All", "全部")</div>
+                <div class="title fp-all-count"></div>
+            </li>
+            <li index="2">
+                <div class="statistics">@lblWaitingIssue</div>
+                <div class="title fp-notissued-count"></div>
+            </li>
+            <li index="3">
+                <div class="statistics">@lblPartialIssued</div>
+                <div class="title fp-partlyissued-count"></div>
+            </li>
+            <li index="4">
+                <div class="statistics">@lblIssued</div>
+                <div class="title fp-allissued-count"></div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<!--各种分布视图-->
+<div class="fp-partial">
+    <!--voucher-->
+    <div class="fp-partial-0">
+        @Html.Partial("FPPartial/FPTableHomePartial")
+    </div>
+    <!--全部发票-->
+    <div class="fp-partial-1" style="display:none;">
+        @Html.Partial("FPPartial/FPTableListPartial")
+    </div>
+    <!--未开票-->
+    <div class="fp-partial-2" style="display:none;">
+        @Html.Partial("FPPartial/FPTableListPartial")
+    </div>
+    <!--部分开票-->
+    <div class="fp-partial-3" style="display:none;">
+        @Html.Partial("FPPartial/FPTableListPartial")
+    </div>
+    <!--已开票-->
+    <div class="fp-partial-4" style="display:none;">
+        @Html.Partial("FPPartial/FPTableListPartial")
+    </div>
+    <script src="~/Scripts/FP/FPFapiao.js?@ServerHelper.JSVersion"></script>
+    <script src="~/Scripts/FP/FPTableList.js?@ServerHelper.JSVersion"></script>
+    <script type="text/javascript">
+        @*var fapiao = new FPFapiao();
+        fapiao.init('@ViewData["index"]');*@
+    </script>
+</div>

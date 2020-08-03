@@ -1,0 +1,69 @@
+﻿
+
+@using JieNor.Megi.Common.Utility
+@using JieNor.Megi.EntityModel.MultiLanguage
+@using JieNor.Megi.Identity.HtmlHelper
+
+@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+
+    var isDepreciate = ViewData["MItemIDs"] == null || ViewData["MItemIDs"].ToString().Length == 0;
+}
+
+<link type="text/css" rel="stylesheet" href="~/Scripts/FA/fa.css?@ServerHelper.JSVersion" />
+<script type="text/javascript" src="~/Scripts/GL/GLCheckType.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="~/Scripts/GL/GLVoucherHome.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="~/Scripts/FA/entity/FAEnums.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="~/Scripts/FA/FAHome.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="~/Scripts/FA/FADepreciationBatchSetup.js?@ServerHelper.JSVersion"></script>
+
+
+<div class="m-imain fa-imain">
+    <!--删除操作栏-->
+    <div class="bs-depreciate-gridDiv" style="margin-left:10px;">
+
+        <!--表格div-->
+        <div class="bs-depreciate-grid">
+
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="itemIDs" value="@ViewData["MItemIDs"]" />
+<input type="hidden" id="yearInput" value="@ViewData["MYear"]" />
+<input type="hidden" id="periodInput" value="@ViewData["MPeriod"]"  />
+
+
+<div class="m-toolbar-footer">
+    <div class="left">
+        <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray bs-cancel-button">@HtmlLang.Write(LangKey.Cancel)</a>
+    </div>
+    <div class="right">
+        <div class="bs-new-div">
+            <a href="javascript:void(0)" id="aSave" class="easyui-linkbutton @(isDepreciate ? "": "easyui-linkbutton-yellow") bs-save-button">@HtmlLang.Write(LangModule.FA, "SaveFixAssets", "保存")</a>
+            @if (isDepreciate)
+            {
+                <a href="javascript:void(0)"  style="display:none;" class="easyui-linkbutton easyui-linkbutton-yellow bs-depreciate-button">@HtmlLang.Write(LangModule.FA, "SaveAndDepreciate", "保存并计提")</a>
+                <a href="javascript:void(0)"  style="display:none;" class="easyui-linkbutton easyui-linkbutton-yellow bs-re-depreciate-button">@HtmlLang.Write(LangModule.FA, "ReDepreciate", "重新计提")</a>
+            }
+        </div>
+    </div>
+
+</div>
+
+<div class="fa-checkgroup-setup" id="divCheckGroupSetup" style="display:none;">
+    @Html.Partial("FAPartial/EditCheckGroupValueSetupPartial")
+</div>
+<div class="fa-checkgroup-tips" id="divCheckGroupTips" style="display:none;">
+    @Html.Partial("FAPartial/CheckGroupValueTipsPartial")
+</div>
+@HtmlLang.WriteScript(LangModule.GL)
+@HtmlLang.WriteScript(LangModule.FA)
+@HtmlLang.WriteScript(LangModule.BD)
+
+
+<script type="text/javascript">
+    $(function () {
+        new FADepreciationBatchSetup().init();
+    })
+</script>

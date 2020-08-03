@@ -1,0 +1,185 @@
+﻿@using JieNor.Megi.Identity.HtmlHelper
+@using JieNor.Megi.EntityModel.MultiLanguage
+@using JieNor.Megi.Identity.Go.HtmlHelper
+@using JieNor.Megi.Core.Const
+@using JieNor.Megi.Common.Utility
+@using JieNor.Megi.Common.Context
+@using JieNor.Megi.EntityModel.Enum
+@{
+    var dashBoardInfoModel = ViewData["DashboardInfo"] as JieNor.Megi.DataModel.GL.GLDashboardInfoModel;
+
+    var lang = dashBoardInfoModel.LangID;
+    var dateString = dashBoardInfoModel.DateString;
+}
+
+<!--最上头是一些功能操作按钮 vl 表示voucher List-->
+<div class="vl-operate-top">
+    <!--左边的操作按钮-->
+    <div class="vl-operate-left m-tab-toolbar left">
+        @if (dashBoardInfoModel.CanEdit)
+        {
+            <!--打新建-->
+            <a href="#" id="btnNew" class="easyui-linkbutton  easyui-linkbutton-yellow vl-new-button">@HtmlLang.Write(LangKey.New)</a>
+
+            <!--删除-->
+            <a href="####" id="btnDelete" class="easyui-linkbutton vl-delete-button" style="display:none;">@HtmlLang.Write(LangModule.Common, "Delete", "Delete")</a>
+        }
+        @if (dashBoardInfoModel.CanApprove)
+        {
+            <!--审核，反审核-->
+            <a href="javascript:void(0)" id="btnApproveTop" class="easyui-splitbutton easyui-splitbutton-base left vl-approve-button"
+               data-options="menu:'#divApprove'" style="display:none;">@HtmlLang.Write(LangModule.GL, "Approve", "Approve")</a>
+            <!--审核，反审核-->
+            <div id="divApprove" style="width:180px;display:none;">
+                <div><a href="javascript:void(0)" id="btnApprove" class="vl-approve-button">@HtmlLang.Write(LangModule.GL, "approve", "Approve")</a></div>
+                <div><a href="javascript:void(0)" id="btnUnapprove" class="vl-unapprove-button">@HtmlLang.Write(LangModule.GL, "unapprove", "Unapprove")</a></div>
+            </div>
+        }
+        <!--导入-->
+        @if (dashBoardInfoModel.CanImport)
+        {
+            <a href="javascript:void(0)" class="easyui-linkbutton vl-import-buttonimg" id="aImport">@HtmlLang.Write(LangKey.Import)</a>
+        }
+        <!--导出-->
+        @if (dashBoardInfoModel.CanExport)
+        {
+            <a href="javascript:void(0)" class="easyui-linkbutton vl-export-buttonimg" id="aExport">@HtmlLang.Write(LangKey.Export)</a>
+        }
+        <!--打印-->
+        <a href="javascript:void(0)" id="btnPrint" class="easyui-linkbutton vl-print-button">@HtmlLang.Write(LangKey.Print)</a>
+    </div>
+
+    <!--右边的过滤查询-->
+    <div class="vl-operate-right m-tab-toolbar right">
+        <a href="javascript:void(0)" class="easyui-linkbutton m-adv-search-btn">@HtmlLang.Write(LangKey.Search)</a>
+    </div>
+
+</div>
+
+<div class="m-adv-search m-adv-search-voucher">
+    <div class="m-adv-search-close"><a href="javascript:void(0)">&nbsp;</a></div>
+    <div class="m-adv-search-param">
+        <!--关键字-->
+        <input type="text" id="txtKeyword" class="vl-keyword-input textbox" hint="@HtmlLang.Write(LangModule.Common, "Keywords", "keywords")" />
+        <!--金额-->
+        <input type="text" id="txtAmount" class="vl-Amount-input easyui-numberbox" data-options="min:-99999999,max:99999999,precision:2"/>
+        <!--编号-->
+        <input type="text" id="txtNumber" class="vl-number-input textbox" hint="@HtmlLang.Write(LangModule.Common, "Number", "Number")" />
+        <!--审核状态-->
+        <input type="text" id="txtStatus" class="vl-status-input easyui-combobox" hint="@HtmlLang.Write(LangModule.Common, "Status", "Status")" />
+        <!--凭证来源-->
+        <input type="text" id="txtFrom" class="vl-from-input easyui-combobox" hint="@HtmlLang.Write(LangModule.Common, "From", "From")" />
+        <input type="text" id="txtPeriod" class="vl-date-input Wdate" onfocus="WdatePicker({ dateFmt: 'yyyy-MM', lang: '@lang', skin:'@lang',@dateString, isShowClear : false })" hint="@HtmlLang.Write(LangModule.Common, "Date", "Date")" />
+        @HtmlLang.Write(LangModule.Common, "To", "到")
+        <input type="text" id="txtPeriodEnd" class="vl-date-input Wdate" onfocus="WdatePicker({ dateFmt: 'yyyy-MM', lang: '@lang', skin:'@lang',@dateString, isShowClear : false })" hint="@HtmlLang.Write(LangModule.Common, "Date", "Date")" />
+        <div class="vl-online-block">
+            <input type="radio" name="sortByType" id="dateSort" value="1" />
+            <span>@HtmlLang.Write(LangModule.GL, "SortByVoucherDate", "按凭证日期排序")</span>
+            <input type="text" id="dateSortType" class="vl-sort-input easyui-combobox" />
+        </div>
+        <div class="vl-online-block">
+            <input type="radio" name="sortByType" id="numberSort" value="0" />
+            <span>@HtmlLang.Write(LangModule.GL, "SortByVoucherNum", "按凭证号排序")</span>
+            <input type="text" id="numberSortType" class="vl-sort-input easyui-combobox" />
+        </div>
+        @*<div class="v1-operate-button">*@
+        <a href="javascript:void(0)" id="aSearchVoucher" class="easyui-linkbutton  easyui-linkbutton-yellow">@HtmlLang.Write(LangKey.Search)</a>
+        <a href="javascript:void(0)" id="aClearSearchFilter" class="easyui-linkbutton">@HtmlLang.Write(LangModule.GL, "ResetDocVoucher", "重置")</a>
+        @*</div>*@
+        <br class="clear" />
+        </div>
+</div>
+
+<!--中间是All勾选框，以及所有的凭证 内部的结构是 ul + table ，最外层是ul ul里面的li对应一个一个的table-->
+<div class="vl-voucher-list">
+    <!--第二个是一个div，显示表头或者其他的-->
+    <div class="vl-entry-div">
+        <!--放入一个表格，里面是凭证分录的列头-->
+        <table class="vl-voucher-table m-location-restore">
+            <!--只有一行-->
+            <thead class="vl-voucher-table-header" style="position: fixed;width:-moz-calc((100% - 20px ));width:-webkit-calc((100% - 20px )); width:calc((100% - 20px ));">
+                <tr>
+                    <!--勾选-->
+                    <td class="" style="width:1%;">
+                        <!--第一个是一个checkbox-->
+                        <input type="checkbox" class="vl-checkall-input" id="btnCheckall" />
+                    </td>
+                    <!--摘要-->
+                    <td class="vl-reference-header" style="width:20%;">@HtmlLang.Write(LangModule.GL, "Explanation", "摘要")</td>
+                    <!--科目-->
+                    <td class="vl-account-header" style="width:30%;">@HtmlLang.Write(LangModule.Common, "Account", "Account")</td>
+                    <!--币别-->
+                    <td class="vc-currency-header" style="width:10%;"> @HtmlLang.Write(LangModule.GL, "CheckForCurrency", "外币核算")</td>
+                    <!--辅助核算-->
+                    <td class="vl-checkgroup-header" style="width:25%;">@HtmlLang.Write(LangModule.GL, "CheckForOther", "辅助核算")</td>
+                    <!--Debit-->
+                    <td class="vl-contact-header" style="width:7%;">@HtmlLang.Write(LangModule.Common, "Debit", "Debit")</td>
+                    <!--Credit-->
+                    <td class="vl-contact-header" style="width:10%;">@HtmlLang.Write(LangModule.Common, "Credit", "Credit")</td>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+<!--底部是分页的控件-->
+<div class="vc-pagenation-div" style="display:none;">
+
+</div>
+
+@*凭证审核编辑查看等功能*@
+@if (dashBoardInfoModel.CanView)
+{
+    <!--悬浮的编辑层-->
+    <div class="vl-function-layer" style="display:none" title="@HtmlLang.Write(LangModule.Common, "HideWithDoubleClick", "双击隐藏")">
+        <!--用来控制居中-->
+        <div class="vl-function-button">
+            @if (dashBoardInfoModel.CanEdit)
+            {
+                if (dashBoardInfoModel.CanApprove)
+                {
+                    <!--审核-->
+                    <span class="vl-function-approve vl-function-draft vl-function-unsettled vl-function-ico">
+                        @HtmlLang.Write(LangKey.Approve)
+                    </span>
+                    <!--反审核-->
+                    <span class="vl-function-unapprove vl-function-approved vl-function-unsettled vl-function-ico">
+                        @HtmlLang.Write(LangModule.Common, "Reverse", "反审核")
+                    </span>
+                }
+                if (dashBoardInfoModel.CanEdit)
+                {
+                    <!--编辑按钮-->
+                    <span class="vl-function-edit vl-function-draft vl-function-unsettled vl-function-ico">
+                        @HtmlLang.Write(LangKey.Edit)
+                    </span>
+                }
+            }
+            @if (dashBoardInfoModel.CanView)
+            {
+                <!--查看按钮-->
+                <span class="vl-function-view vl-function-approved vl-function-settled vl-function-ico">
+                    @HtmlLang.Write(LangModule.Common, "View", "View")
+                </span>
+            }
+            @if (dashBoardInfoModel.CanEdit)
+            {
+                <!--删除按钮-->
+                <span class="vl-function-delete vl-function-draft vl-function-unsettled vl-function-ico">
+                    @HtmlLang.Write(LangKey.Delete)
+                </span>
+            }
+            <!--打印按钮-->
+            <span class="vl-function-print vl-function-ico">
+                @HtmlLang.Write(LangKey.Print)
+            </span>
+        </div>
+    </div>
+}
+
+<script type="text/javascript" src="@ServerHelper.GoServer/Scripts/BD/Import/ImportBase.js?@ServerHelper.JSVersion"></script>
+<script src="~/Scripts/GL/GLVoucherHome.js?@ServerHelper.JSVersion"></script>
+<script src="~/Scripts/GL/GLCheckType.js?@ServerHelper.JSVersion"></script>
+<script src="~/Scripts/GL/GLVoucherList.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.GL)

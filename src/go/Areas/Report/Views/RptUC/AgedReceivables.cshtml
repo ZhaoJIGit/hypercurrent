@@ -1,0 +1,60 @@
+﻿@{
+    Layout = "~/Areas/Report/Views/Shared/_LayoutReport.cshtml";
+}
+@using JieNor.Megi.Common.Utility
+<div class="m-form-vtcl margin m-form-min">
+    <div class="m-form-vtcl-content">
+        <div class="m-form-section section-type">
+            <div class="m-form-item">
+                <ul>
+                    <li class="m-bold">@HtmlLang.Write(LangModule.Report, "months", "month"):</li>
+                    <li>
+                        <select id="selSearchWithin" class="easyui-combobox easyui-date-type mg-data" name="MEndDateExt" data-options="required:true" style="width: 120px; height: 22px;">
+                            @HtmlDateTime.GetSelectFullYearMonthOptions()
+                        </select>
+                    </li>
+                </ul>
+            </div>
+            <div class="m-form-item">
+                <ul>
+                    <li class="m-bold">@HtmlLang.Write(LangModule.Report, "ShowBy", "Show By")</li>
+                    <li>
+                        <select id="selSearchWithin" class="easyui-combobox mg-data" name="AgedShowType" data-options="required:true" style="width: 120px; height: 22px;">
+                            <option value="1">@HtmlLang.Write(LangModule.Report, "MonthName", "Month Name")</option>
+                            <option value="2">@HtmlLang.Write(LangModule.Report, "MonthNumber", "Month Number")</option>
+                        </select>
+                    </li>
+                </ul>
+            </div>
+            <div class="m-form-item">
+                <ul>
+                    <li class="m-bold">@HtmlLang.Write(LangModule.Report, "AgeingBy", "Ageing by")</li>
+                    <li>
+                        <select id="selSearchWithin" class="easyui-combobox mg-data" name="AgedByField" data-options="required:true" style="width: 120px; height: 22px;">
+                            <option value="1">@HtmlLang.Write(LangModule.Report, "InvoiceDate", "Invoice Date")</option>
+                            <option value="2" selected="selected">@HtmlLang.Write(LangKey.DueDate)</option>
+                        </select>
+                    </li>
+                </ul>
+            </div>
+            <div class="m-form-item">
+                <ul>
+                    <li class="m-bold">@HtmlLang.Write(LangModule.Report, "ShowInvoices", "Show invoices")</li>
+                    <li>
+                        <input type="checkbox" class="mg-data" name="ShowInvoice" />
+                    </li>
+                </ul>
+            </div>
+            <div class="m-form-item">
+                <ul>
+                    <li><a href="javascript:void(0)" class="m-btn l-btn" id="aReportUpdate">@HtmlLang.Write(LangModule.Report, "Update", "Update")</a></li>
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
+
+
+<script src="@ServerHelper.ScriptServer/scripts/Report/RptUC/AgedReceivables.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.Report)

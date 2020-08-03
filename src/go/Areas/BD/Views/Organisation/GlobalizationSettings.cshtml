@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "GlobalizationSettings";
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+
+<div class="m-imain mg-setup">
+    <div id="divMessage"></div>
+    <div class="m-imain-content">
+        <div class="m-form-vtcl">
+            @Html.Partial("UCGlobalizationEdit")
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
+<div class="m-toolbar-footer">
+    <div class="right">
+        @if (HtmlSECMenu.HavePermission(BizObject.Setting, PermissionItem.Change))
+        {
+        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aUpdate">@HtmlLang.Write(LangKey.Save)</a>
+        }
+    </div>
+</div>
+<input type="hidden" class="mg-data m-form-key" name="MOrgID" value="@ViewBag.OrgCode" />
+@HtmlLang.WriteScript(LangModule.Org)
+

@@ -1,0 +1,259 @@
+﻿<!--权限使用示例-->
+@using JieNor.Megi.Tools
+@using JieNor.Megi.Common.Context
+@using JieNor.Megi.EntityModel.Enum
+@using JieNor.Megi.Core.Const
+@using JieNor.Megi.Common.Utility
+@{
+    //获取所有的权限（包括了所有权限列表，以及上下文信息）
+    var accessResponse = AccessHelper.Access();
+
+
+    //获取上下文
+    var ctx = accessResponse.ctx;
+    //所有权限
+    Dictionary<string, bool> accessList = accessResponse.Access;
+
+    //是否是总账版
+    bool isSmartVersion = ctx.MOrgVersionID == OrgVersionEnum.Smart;
+
+    //是否有总账的审核权限（使用模块的名字+权限的名字）
+    bool isGeneralLedgerApprove = accessList[BizObject.General_Ledger + PermissionItem.Approve];
+
+    //本版本是否需要展示销售单模块（只传一个模块的名字）
+    bool isShowInvoice = accessList[BizObject.Invoice_Sales];
+
+    var smartWidth = isSmartVersion ? " style=width:100%;" : "";
+    //固定资产是否启用
+    var isFixAssetsBegin = ctx.MFABeginDate != DateTime.MinValue;
+}
+
+
+<div class="m-half-left" @smartWidth>
+    @if (accessList[JieNor.Megi.Core.Const.BizObject.Sale_Reports + PermissionItem.View] && !isSmartVersion)
+    {
+        <div class="m-report-box m-home-report">
+            <div class="m-report-box-title"><span><a href="javascript:void(0);">@HtmlLang.Write(LangModule.Report, "salesreport", "Sales Reports")</a></span></div>
+            @*<div class="m-report-box-title-tip">@HtmlLang.Write(LangModule.Report, "ShowBusinessBase", "Show how your business is performing based on revenue and expenses.")</div>*@
+            <div class="report-item">
+                <ul>
+                    <li class="item-alt">
+                        <a class="star-on" href="javascript:void(0);">&nbsp;</a>
+                        <a href="javascript:void(0)" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "SalesByItem", "Sales By Item")','/Report/Report2/@Convert.ToInt32(BizReportType.SalesByItem)')">
+                            @HtmlLang.Write(LangModule.Report, "SalesByItem", "Sales By Item")
+                        </a>
+                    </li>
+                    <li class="item">
+                        <a class="star-on" href="javascript:void(0);">&nbsp;</a>
+                        <a href="javascript:void(0)" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "IncomeByContact", "Income By Contact")','/Report/Report2/@Convert.ToInt32(BizReportType.IncomeByContact)')">
+                            @HtmlLang.Write(LangModule.Report, "IncomeByContact", "Income By Contact")
+                        </a>
+                    </li>
+                    <li class="item">
+                        <a class="star-on" href="javascript:void(0);">&nbsp;</a>
+                        <a href="javascript:void(0)" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "AgedReceivables", "Aged Receivables")','/Report/Report2/@Convert.ToInt32(BizReportType.AgedReceivables)')">
+                            @HtmlLang.Write(LangModule.Report, "AgedReceivables", "Aged Receivables")
+                        </a>
+                    </li>
+                </ul>
+                <br class="clear" />
+            </div>
+        </div>
+    }
+
+    @if (accessList[JieNor.Megi.Core.Const.BizObject.Purchase_Reports + PermissionItem.View] && !isSmartVersion)
+    {
+        <div class="m-report-box m-home-report">
+            <div class="m-report-box-title"><span><a href="javascript:void(0);">@HtmlLang.Write(LangModule.Report, "purchasereports", "Purchase Reports")</a></span></div>
+            @*<div class="m-report-box-title-tip">@HtmlLang.Write(LangModule.Report, "ShowCashLevelsChanging", "Show how your cash levels are changing.")</div>*@
+            <div class="report-item">
+                <ul>
+                    <li class="item">
+                        <a class="star-on" href="">&nbsp;</a>
+                        <a href="javascript:void(0)" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "AgedPayables", "Aged Payables")', '/Report/Report2/@Convert.ToInt32(BizReportType.AgedPayables)')">
+                            @HtmlLang.Write(LangModule.Report, "AgedPayables", "Aged Payables")
+                        </a>
+                    </li>
+                </ul>
+                <br class="clear" />
+            </div>
+        </div>
+    }
+
+    @if (accessList[JieNor.Megi.Core.Const.BizObject.General_Reports + PermissionItem.View])
+    {
+        <div class="m-report-box m-home-report">
+            <div class="m-report-box-title"><span><a href="javascript:void(0);">@HtmlLang.Write(LangModule.Report, "GeneralLedgerReport", "General Ledger Reports")</a></span></div>
+            <div class="report-item">
+                <ul>
+                    <!---基础报表-->
+                    <li class="item">
+                        <a class="star-on" href="javascript:void(0);">&nbsp;</a>
+                        <a href="javascript:void(0)" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "GeneralLedger", "General Ledger")','/Report/Report2/@Convert.ToInt32(BizReportType.GeneralLedger)')">
+                            @HtmlLang.Write(LangModule.Report, "GeneralLedger", "General Ledger")
+                        </a>
+                    </li>
+                    <li class="item-alt">
+                        <a class="star-on" href="javascript:void(0);">&nbsp;</a>
+                        <a href="javascript:void(0)" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "AccountBalanceReport", "科目余额表")','/Report/Report2/@Convert.ToInt32(BizReportType.AccountBalance)')">
+                            @HtmlLang.Write(LangModule.Report, "AccountBalanceReport", "科目余额表")
+                        </a>
+                    </li>
+
+                    @if (ViewData["AccountTableID"] != null && Convert.ToString(ViewData["AccountTableID"]) == JieNor.Megi.EntityModel.Enum.AccountTableEnum.UCAS)
+                    {
+                        <li class="item">
+                            <a class="star-on" href="javascript:void(0);">&nbsp;</a>
+
+                            <a href="javascript:void(0)" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "SubsidiaryLedgerReport", "Subsidiary Ledger Report")', '/Report/Report2/@Convert.ToInt32(JieNor.Megi.Core.BizReportType.SubsidiaryLedger)', true)">
+                                @HtmlLang.Write(LangModule.Report, "SubsidiaryLedgerReport", "Subsidiary Ledger Report")
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="item">
+                            <a class="star-on" href="javascript:void(0);">&nbsp;</a>
+
+                            <a href="javascript:void(0)" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "SubsidiaryLedgerReport", "Subsidiary Ledger Report")', '/Report/Report2/@Convert.ToInt32(JieNor.Megi.Core.BizReportType.SubsidiaryLedger)', true)">
+                                @HtmlLang.Write(LangModule.Report, "SubsidiaryLedgerReport", "Subsidiary Ledger Report")
+                            </a>
+                        </li>
+                    }
+                    <!--分隔-->
+                    <li class="item-alt">
+                        <a class="star-on" href="javascript:void(0);">&nbsp;</a>
+
+                        <a href="javascript:void(0)" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "AccountDimensionSummaryReport", "核算维度汇总表")', '/Report/Report2/@Convert.ToInt32(JieNor.Megi.Core.BizReportType.AccountDimensionSummary)', true)">
+                            @HtmlLang.Write(LangModule.Report, "AccountDimensionSummaryReport", "核算维度汇总表")
+                        </a>
+                    </li>
+
+                    @if (ViewData["AccountTableID"] == null || Convert.ToString(ViewData["AccountTableID"]) != JieNor.Megi.EntityModel.Enum.AccountTableEnum.UCAS)
+                    {
+                        <li class="item">
+                            <a class="star-on" href="javascript:void(0);">&nbsp;</a>
+                            <a href="javascript:void(0)" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "IncomeStatement", "Income Statement")','/Report/Report2/@Convert.ToInt32(BizReportType.IncomeStatement)')">
+                                @HtmlLang.Write(LangModule.Report, "IncomeStatement", "Income Statement")
+                            </a>
+                        </li>
+                        <li class="item-alt">
+                            <a class="star-on" href="javascript:void(0);">&nbsp;</a>
+                            <a href="javascript:void(0)" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "BalanceSheet", "Balance Sheet")','/Report/Report2/@Convert.ToInt32(BizReportType.BalanceSheet)')">
+                                @HtmlLang.Write(LangModule.Report, "BalanceSheet", "Balance Sheet")
+                            </a>
+                        </li>
+                        <li class="item">
+                            <a class="star-on" href="javascript:void(0);">&nbsp;</a>
+                            <a href="javascript:void(0)" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "CashFlowStatement", "Cash Flow Statement")','/Report/Report2/@Convert.ToInt32(BizReportType.CashFlowStatement)')">
+                                @HtmlLang.Write(LangModule.Report, "CashFlowStatement", "Cash Flow Statement")
+                            </a>
+                        </li>
+                    }
+                </ul>
+                <br class="clear" />
+            </div>
+        </div>
+    }
+
+
+</div>
+
+
+<div class="m-half-right" @smartWidth>
+    @if (accessList[JieNor.Megi.Core.Const.BizObject.Bank_Reports + PermissionItem.View] && !isSmartVersion)
+    {
+        <div class="m-report-box m-home-report">
+            <div class="m-report-box-title"><span><a href="javascript:void(0);">@HtmlLang.Write(LangModule.Report, "bankreport", "Bank Reports")</a></span></div>
+            @*<div class="m-report-box-title-tip">@HtmlLang.Write(LangModule.Report, "ShowDetailsOfTransactions", "Show details of the transactions in your accounts.")</div>*@
+            <div class="report-item">
+                <ul>
+                    <li class="item">
+                        <a class="star-on" href="javascript:void(0);">&nbsp;</a>
+                        <a href="javascript:void(0)" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "BankReconciliationSummary", "Bank Reconciliation Summary")', '/Report/Report2/@Convert.ToInt32(JieNor.Megi.Core.BizReportType.BankReconciliationSummary)')">
+                            @HtmlLang.Write(LangModule.Report, "BankReconciliationSummary", "Bank Reconciliation Summary")
+                        </a>
+                    </li>
+                    @*<li class="item-alt">
+                            <a class="star-on" href="javascript:void(0);">&nbsp;</a>
+                            <a href="javascript:void(0)" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "CashSummary", "Cash Summary")', '/Report/Report2/@Convert.ToInt32(JieNor.Megi.Core.BizReportType.CashSummary)')">
+                                @HtmlLang.Write(LangModule.Report, "CashSummary", "Cash Summary")
+                            </a>
+                        </li>*@
+                    <li class="item-alt">
+                        <a class="star-on" href="javascript:void(0);">&nbsp;</a>
+                        <a href="javascript:void(0)" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "BankAndCashSummary", "Bank And Cash Summary")','/Report/Report2/@Convert.ToInt32(BizReportType.BankAndCashSummary)')">
+                            @HtmlLang.Write(LangModule.Report, "BankAndCashSummary", "Bank And Cash Summary")
+                        </a>
+                    </li>
+                    <li class="item">
+                        <a class="star-on" href="javascript:void(0);">&nbsp;</a>
+                        <a href="javascript:void(0)" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "TaxSummary", "Tax Summary")','/Report/Report2/@Convert.ToInt32(BizReportType.SalesTaxReport)')">
+                            @HtmlLang.Write(LangModule.Report, "TaxSummary", "Tax Summary")
+                        </a>
+                    </li>
+                </ul>
+                <br class="clear" />
+            </div>
+        </div>
+    }
+
+    @if (accessList[JieNor.Megi.Core.Const.BizObject.Expense_Reports + PermissionItem.View] && !isSmartVersion)
+    {
+        <div class="m-report-box m-home-report">
+            <div class="m-report-box-title"><span><a href="javascript:void(0);">@HtmlLang.Write(LangModule.Report, "ExpenseReports", "Expense Claim Reports")</a></span></div>
+            @*<div class="m-report-box-title-tip">@HtmlLang.Write(LangModule.Report, "ShowExpenseReports", "Show  your Expense Claim Reports.")</div>*@
+            <div class="report-item">
+                <ul>
+                    <li class="item">
+                        <a class="star-on" href="">&nbsp;</a>
+                        <a href="javascript:void(0)" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "ExpenseClaimsReport", "Expense Claims Report")', '/Report/Report2/@Convert.ToInt32(BizReportType.ExpenseClaims)')">
+                            @HtmlLang.Write(LangModule.Report, "ExpenseClaimsReport", "Expense Claims Report")
+                        </a>
+                    </li>
+                </ul>
+                <br class="clear" />
+            </div>
+        </div>
+    }
+
+    @if (accessList[JieNor.Megi.Core.Const.BizObject.FixedAsset_Reports + PermissionItem.View] && isFixAssetsBegin)
+    {
+        <div class="m-report-box m-home-report">
+            <div class="m-report-box-title"><span><a href="javascript:void(0);">@HtmlLang.Write(LangModule.Report, "FixedAssetReport", "固定资产报表")</a></span></div>
+            <div class="report-item">
+                <ul>
+                    <li class="item">
+                        <a class="star-on" href="javascript:void(0);">&nbsp;</a>
+                        <a href="javascript:void(0)" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "DepreciationDetailReport", "折旧明细表")','/Report/Report2/@Convert.ToInt32(BizReportType.DepreciationDetail)')">
+                            @HtmlLang.Write(LangModule.Report, "DepreciationDetailReport", "折旧明细表")
+                        </a>
+                    </li>
+                    <li class="item-alt">
+                        <a class="star-on" href="javascript:void(0);">&nbsp;</a>
+                        <a href="javascript:void(0)" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "DepreciationSummaryReport", "折旧汇总表")','/Report/Report2/@Convert.ToInt32(BizReportType.DepreciationSummary)')">
+                            @HtmlLang.Write(LangModule.Report, "DepreciationSummaryReport", "折旧汇总表")
+                        </a>
+                    </li>
+
+
+                    <li class="item">
+                        <a class="star-on" href="javascript:void(0);">&nbsp;</a>
+                        <a href="javascript:void(0)" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "AssetDepreciationReport", "资产明细账")','/Report/Report2/@Convert.ToInt32(BizReportType.AssetDepreciation)')">
+                            @HtmlLang.Write(LangModule.Report, "AssetDepreciationReport", "资产明细账")
+                        </a>
+                    </li>
+
+                   <li class="item-alt">
+                        <a class="star-on" href="javascript:void(0);">&nbsp;</a>
+                        <a href="javascript:void(0)" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "AssetChangeReport", "资产变更表")','/Report/Report2/@Convert.ToInt32(BizReportType.AssetChange)')">
+                            @HtmlLang.Write(LangModule.Report, "AssetChangeReport", "资产变更表")
+                        </a>
+                    </li>
+                </ul>
+                <br class="clear" />
+            </div>
+        </div>
+    }
+
+</div>

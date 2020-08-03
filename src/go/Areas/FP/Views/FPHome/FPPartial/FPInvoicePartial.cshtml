@@ -1,0 +1,81 @@
+﻿
+@{
+    int invoiceType = Convert.ToInt32(ViewData["invoiceType"]);
+    bool hasChangeFapiaoAuth = invoiceType == 0 && HtmlSECMenu.HavePermission(BizObject.Sales_Fapiao, PermissionItem.Change)
+        || invoiceType == 1 && HtmlSECMenu.HavePermission(BizObject.Purchases_Fapiao, PermissionItem.Change);
+    bool hasViewFapiaoAuth = invoiceType == 0 && HtmlSECMenu.HavePermission(BizObject.Sales_Fapiao, PermissionItem.View)
+        || invoiceType == 1 && HtmlSECMenu.HavePermission(BizObject.Purchases_Fapiao, PermissionItem.View);
+    bool isSale = invoiceType == 0;
+    string lblWaitingIssue = isSale ? HtmlLang.GetText(LangModule.FP, "NotIssuedFapiao", "等待开票") : HtmlLang.GetText(LangModule.FP, "NotCollectedFapiao", "等待收集");
+    string lblPartialIssued = isSale ? HtmlLang.GetText(LangModule.FP, "PartlyIssuedFapiao", "部分开票") : HtmlLang.GetText(LangModule.FP, "PartlyCollectedFapiao", "部分收集");
+    string lblIssued = isSale ? HtmlLang.GetText(LangModule.FP, "IssuedFapiao", "完全开票") : HtmlLang.GetText(LangModule.FP, "CollectedFapiao", "完全收集");
+}
+@using JieNor.Megi.Common.Utility
+<div id="divTab" class="m-extend-tabs fp-invoice-tabs">
+    <div class="iv-tab-links">
+        <ul class="tab-links">
+            @*<li class="current fp-home-li">
+                    <div class="tab-home statistics"></div>
+                    <div class="title"></div>
+                </li>*@
+            <li>
+                <div class="statistics">@HtmlLang.Write(LangModule.Common, "All", "全部")</div>
+                <div class="title fp-all-count"></div>
+            </li>
+            <li>
+                <div class="statistics">@lblWaitingIssue</div>
+                <div class="title fp-notissued-count"></div>
+            </li>
+            <li>
+                <div class="statistics">@lblPartialIssued</div>
+                <div class="title fp-partlyissued-count"></div>
+            </li>
+            <li>
+                <div class="statistics">@lblIssued</div>
+                <div class="title fp-allissued-count"></div>
+            </li>
+        </ul>
+    </div>
+</div>
+<div id="divAction" class="fp-list-top-div" style="padding-top:7px;">
+    <div class="fp-operate-div m-tab-toolbar" style="float:left;">
+        @if (hasChangeFapiaoAuth)
+        {
+            <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow m-tool-bar-btn" id="btnIssueFapiao">@HtmlLang.Write(LangModule.FP, "IssueFapiao", "开票")</a>
+            @*<a href="javascript:void(0)" class="m-btn-m easyui-linkbutton m-tool-bar-btn" id="btnDelFapiaoTable" style="display:none">@HtmlLang.Write(LangModule.FP, "DelIssueFapiaoRelation", "删除开票关系")</a>*@
+        }
+    </div>
+    <div class="fp-search-div m-tab-toolbar" style="float:right;">
+        <!--关键字-->
+        <input id="txtKeyword" name="Keyword" type="text" class="textbox mg-data" style="height:18px;line-height:18px" hint="@HtmlLang.Write(LangModule.Common, "Keywords", "keywords")" />
+        <!--日期类型-->
+        <select id="selSearchWithin" class="easyui-combobox mg-data" data-options="editable:false" name="MSearchWithin" style="width:100px; height:22px;"></select>
+        <!--开始日期-->
+        <input id="txtStartDate" name="MStartDate" type="text" class="easyui-datebox mg-data" hint="@HtmlLang.Write(LangKey.StartDate)" style="width:100px;" />
+        <!--结束日期-->
+        <input id="txtEndDate" name="MEndDate" type="text" class="easyui-datebox mg-data" hint="@HtmlLang.Write(LangKey.EndDate)" style="width:100px;" />
+        <!--开票状态-->
+        @*<input id="selIssueStatus" name="MIssueStatus" type="text" class="easyui-combobox mg-data" style="width:100px; height:22px;" />*@
+
+        <!--查询按钮-->
+        <a id="btnSearchInvoice" class="easyui-linkbutton fp-search-button" style="float:none">@HtmlLang.Write(LangKey.Search)</a>
+        <!--clear按钮-->
+        <a id="btnClearInvoice" class="dv-clear-button" style="float:none">@HtmlLang.Write(LangModule.GL, "ResetDocVoucher", "重置")</a>
+    </div>
+    <div class="clear"></div>
+</div>
+<div id="divList">
+    <div id="gridInvoice" style="height:200px;"></div>
+</div>
+<input type="hidden" id="hidChangeFapiaoAuth" value="@(hasChangeFapiaoAuth ? 1 : 0)" />
+<input type="hidden" id="hidViewFapiaoAuth" value="@(hasViewFapiaoAuth ? 1 : 0)" />
+<input type="hidden" id="hidCurrencyId" value="@JieNor.Megi.Common.Context.ContextHelper.MContext.MBasCurrencyID" />
+<input type="hidden" id="hidInvoiceType" value="@ViewData["invoiceType"]" />
+<input type="hidden" id="hidCurrentStatus" value="0" />
+@HtmlLang.WriteScript(LangModule.Common)
+@HtmlLang.WriteScript(LangModule.IV)
+@HtmlLang.WriteScript(LangModule.FP)
+<script src="~/Scripts/IV/IVBase.js?@ServerHelper.JSVersion"></script>
+<script src="~/Scripts/FP/IssueFapiao.interface.js?@ServerHelper.JSVersion"></script>
+<script src="~/Scripts/FP/FPInvoice.js?@ServerHelper.JSVersion"></script>
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)

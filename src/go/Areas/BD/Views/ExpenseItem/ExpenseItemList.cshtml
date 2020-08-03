@@ -1,0 +1,87 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = HtmlLang.Write(LangModule.BD, "ExpenseItems", "Expense Items");
+    int importedNum = ViewBag.ImportedNum == null ? -1 : Convert.ToInt32(ViewBag.ImportedNum);
+    //是否有编辑权限
+    bool isCanEditPermission = HtmlSECMenu.HavePermission(BizObject.Setting, PermissionItem.Change);
+    //是否有导出权限
+    bool isCanExportPermission = HtmlSECMenu.HavePermission(BizObject.Setting, PermissionItem.Export);
+}
+@using JieNor.Megi.Common.Utility;
+<style>
+    .datagrid-header-row .datagrid-header-check, .datagrid-cell-check {
+        height: 22px !important;
+    }
+</style>
+@if (isCanEditPermission || isCanExportPermission)
+{
+<div class="m-toolbar">
+    @*编辑权限*@
+    @if (isCanEditPermission)
+    {
+    <a href="#" class="easyui-linkbutton easyui-linkbutton-yellow" id="NewExpenseItem">@HtmlLang.Write(LangModule.BD, "NewExpenseItem", "New Expense Item")</a>
+    @*<a href="#" class="easyui-linkbutton" id="DeleteExpItems">@HtmlLang.Write(LangKey.Delete)</a>*@
+    <a href="#" class="easyui-linkbutton" id="aImport">@HtmlLang.Write(LangKey.Import)</a>
+    }
+    @*导出权限*@
+    @if (isCanExportPermission)
+    { 
+    <a href="#" class="easyui-linkbutton" id="aExport">@HtmlLang.Write(LangKey.Export)</a>
+    }
+    @*<a href="#" class="easyui-linkbutton" id="itemSearch" style="float:right;flex-align:center">@HtmlLang.Write(LangKey.Search)</a>
+        <input type="text" class="textbox"  id="itemKeyword" style="float:right;flex-align:center"/>*@
+    @*<label style="float:right;flex-align:center;font-size:14px;color:#00F">Item Code</label> *@
+</div>
+}
+<div class="m-imain" style="overflow:hidden">
+    <div class="m-imain-content">
+        <div id="tt" class="easyui-tabs">
+            <div title="@HtmlLang.Write(LangModule.BD, "ALL", "ALL")" fitcolumns="true">
+                <div class="m-tab-toolbar">
+                    @if (isCanEditPermission)
+                    {
+                        <a href="#" class="easyui-linkbutton " id="btnArchive">@HtmlLang.Write(LangModule.BD, "Archive", "Archive")</a>
+                        <a href="#" class="easyui-linkbutton" id="DeleteExpItems">@HtmlLang.Write(LangKey.Delete)</a>
+                    }
+                </div>
+
+                <table id="tbExpItem" class="easyui-treegrid" style="height:520px">
+
+                </table>
+
+              
+            </div>
+
+            <div title="@HtmlLang.Write(LangKey.Archive)">
+                <div class="m-tab-toolbar">
+                    @if (isCanEditPermission)
+                    {
+                       
+                        <a href="#" class="easyui-linkbutton" id="btnRestore">@HtmlLang.Write(LangModule.Acct, "Restore", "恢复")</a>
+                    }
+                </div>
+                <table id="tbArchiveItem" class="easyui-treegrid" style="height:520px"></table>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="clear"></div>
+</div>
+<input type="hidden" id="aGoServer" value="@ServerHelper.GoServer" />
+<input type="hidden" id="hidImportedNum" value="@importedNum" />
+
+@HtmlLang.WriteScript(LangModule.BD)
+@if (HtmlSECMenu.HavePermission(BizObject.Setting, PermissionItem.Change))
+{
+    <input type="hidden" id="hidChangeAuth" value="1" />
+}
+else
+{
+    <input type="hidden" id="hidChangeAuth" value="0" />
+}
+@HtmlLang.WriteScript(LangModule.BD)
+<script src="@ServerHelper.StaticServer/fw/scripts/jquery.megi.treegrid.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.ScriptServer/scripts/BD/Import/ImportBase.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.ScriptServer/scripts/BD/BDQuote.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.ScriptServer/scripts/BD/ExpenseItem/ExpenseItemList.js?@ServerHelper.JSVersion"></script>

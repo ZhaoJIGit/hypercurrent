@@ -1,0 +1,205 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{2AE7309B-BCDB-4842-A0DD-6C9AA217F2ED}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>Library</OutputType>
+    <AssemblyName>JieNor.Megi.Common</AssemblyName>
+    <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\libs\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Extensions">
+      <HintPath>C:\Users\xyh41\Desktop\login.megichina.com\bin\System.Web.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <HintPath>C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\System\v4.0_4.0.0.0__b77a5c561934e089\System.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web">
+      <HintPath>C:\Users\xyh41\Desktop\login.megichina.com\bin\System.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization">
+      <HintPath>C:\WINDOWS\Microsoft.NET\assembly\GAC_MSIL\System.Runtime.Serialization\v4.0_4.0.0.0__b77a5c561934e089\System.Runtime.Serialization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <HintPath>C:\Users\xyh41\Desktop\login.megichina.com\bin\System.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.0\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.1.0\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.1.0\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.0\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.0\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.0\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml">
+      <HintPath>C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\System.Xml\v4.0_4.0.0.0__b77a5c561934e089\System.Xml.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel">
+      <HintPath>C:\Users\xyh41\Desktop\login.megichina.com\bin\System.ServiceModel.dll</HintPath>
+    </Reference>
+    <Reference Include="StackExchange.Redis">
+      <HintPath>..\libs\StackExchange.Redis.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver">
+      <HintPath>..\libs\MongoDB.Driver.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Bson">
+      <HintPath>..\libs\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core">
+      <HintPath>C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\System.Core\v4.0_4.0.0.0__b77a5c561934e089\System.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Analytics.NET">
+      <HintPath>..\libs\Analytics.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="Yahoo.Yui.Compressor">
+      <HintPath>..\libs\Yahoo.Yui.Compressor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Configuration">
+      <HintPath>C:\Users\xyh41\Desktop\login.megichina.com\bin\System.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Fasterflect">
+      <HintPath>..\libs\Fasterflect.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IdentityModel">
+      <HintPath>C:\WINDOWS\Microsoft.NET\assembly\GAC_MSIL\System.IdentityModel\v4.0_4.0.0.0__b77a5c561934e089\System.IdentityModel.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Cache\CacheHelper.cs" />
+    <Compile Include="Cache\Caches.cs" />
+    <Compile Include="Cache\FileCacheDependency.cs" />
+    <Compile Include="Cache\HttpRuntimeCaches.cs" />
+    <Compile Include="Cache\ICacheDependency.cs" />
+    <Compile Include="Cache\ICacheProvider.cs" />
+    <Compile Include="Cache\MongoProvider.cs" />
+    <Compile Include="Cache\RedisProvider.cs" />
+    <Compile Include="Cache\TableCacheDependency.cs" />
+    <Compile Include="Compressor\Compressor.cs" />
+    <Compile Include="Context\ContextHelper.cs" />
+    <Compile Include="Context\MContextManager.cs" />
+    <Compile Include="Context\MUserLogManager.cs" />
+    <Compile Include="Converter\MathConvert.cs" />
+    <Compile Include="Encrypt\DESEncrypt.cs" />
+    <Compile Include="Encrypt\MD5Service.cs" />
+    <Compile Include="Footprint\MFootprint.cs" />
+    <Compile Include="Framework\MvcApplicationStart.cs" />
+    <Compile Include="Logger\MLogger.cs" />
+    <Compile Include="BusinessContract\IMongoMContextBusiness.cs" />
+    <Compile Include="BusinessContract\IMongoMLogBusiness.cs" />
+    <Compile Include="BusinessContract\IMongoMResourceBusiness.cs" />
+    <Compile Include="BusinessContract\IMongoMUserLogBusiness.cs" />
+    <Compile Include="BusinessService\MongoMContextBusiness.cs" />
+    <Compile Include="BusinessService\MongoMLogBusiness.cs" />
+    <Compile Include="BusinessService\MongoMResourceBusiness.cs" />
+    <Compile Include="BusinessService\MongoMUserLogBusiness.cs" />
+    <Compile Include="Factory\DataQueryingCacheFactory.cs" />
+    <Compile Include="IProvider\ICacheProvider.cs" />
+    <Compile Include="IProvider\IMContextProvider.cs" />
+    <Compile Include="IProvider\IMLogProvider.cs" />
+    <Compile Include="IProvider\IMResourceProvider.cs" />
+    <Compile Include="IProvider\IMUserLogProvider.cs" />
+    <Compile Include="Provider\MongoCacheProvider.cs" />
+    <Compile Include="Provider\MongoDataProviderBase.cs" />
+    <Compile Include="Provider\MongoMContextProvider.cs" />
+    <Compile Include="Provider\MongoMLogProvider.cs" />
+    <Compile Include="Provider\MongoMResourceProvider.cs" />
+    <Compile Include="Provider\MongoMUserLogProvider.cs" />
+    <Compile Include="Service\IMongoMContext.cs" />
+    <Compile Include="Service\IMongoMLog.cs" />
+    <Compile Include="Service\IMongoMResource.cs" />
+    <Compile Include="Service\IMongoMUserLog.cs" />
+    <Compile Include="Mongo.Utility\MongoDb.cs" />
+    <Compile Include="Mongo.Utility\MongoDbFieldAttribute.cs" />
+    <Compile Include="Mongo.Utility\MongoDbHelper.cs" />
+    <Compile Include="MResource\MResourceManager.cs" />
+    <Compile Include="Redis\MRedisTimeoutException.cs" />
+    <Compile Include="Redis\RedisClientHelper.cs" />
+    <Compile Include="Redis\RedisClientManager.cs" />
+    <Compile Include="Redis\RedisConfig.cs" />
+    <Compile Include="ServiceManager\ClientBehavior.cs" />
+    <Compile Include="ServiceManager\ClientInterpector.cs" />
+    <Compile Include="ServiceManager\CustomHeader.cs" />
+    <Compile Include="ServiceManager\ServiceHeader.cs" />
+    <Compile Include="ServiceManager\ServiceHostManager.cs" />
+    <Compile Include="Utility\AchieveLetter.cs" />
+    <Compile Include="Utility\AjaxUtility.cs" />
+    <Compile Include="Utility\Appsettings.cs" />
+    <Compile Include="Utility\AuthorizationManager.cs" />
+    <Compile Include="Utility\ConvertUtility.cs" />
+    <Compile Include="Utility\CookieHelper.cs" />
+    <Compile Include="Utility\DateUtility.cs" />
+    <Compile Include="Utility\DecimalUtility.cs" />
+    <Compile Include="Utility\Fetch.cs" />
+    <Compile Include="Utility\FileUtility.cs" />
+    <Compile Include="Utility\HtmlHelper.cs" />
+    <Compile Include="Utility\HttpHelper.cs" />
+    <Compile Include="Utility\JavaScriptDES.cs" />
+    <Compile Include="Utility\ModelPropertyHelper.cs" />
+    <Compile Include="Utility\MText.cs" />
+    <Compile Include="Utility\RegExp.cs" />
+    <Compile Include="Utility\SerializeHelper.cs" />
+    <Compile Include="Utility\ServerHelper.cs" />
+    <Compile Include="Utility\TextUtility.cs" />
+    <Compile Include="Utility\URLUtility.cs" />
+    <Compile Include="Utility\ValidateCodeUtility.cs" />
+    <Compile Include="Utility\XMLUtility.cs" />
+    <Compile Include="Utility\XSSFilter.cs" />
+    <Compile Include="Utility\ZipHelper.cs" />
+    <Compile Include="CalcParenthesesExpression.cs" />
+    <Compile Include="JsonValueProviderFactory.cs" />
+    <Compile Include="UUIDHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\entitymodel\JieNor.Megi.EntityModel.csproj">
+      <Project>{eef2457d-0b83-44e8-96ce-d6c0cf427a8a}</Project>
+      <Name>JieNor.Megi.EntityModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\gzipencoder\JieNor.Megi.GZipEncoder.csproj">
+      <Project>{e5216908-b972-46e3-82ce-9ba8569d8085}</Project>
+      <Name>JieNor.Megi.GZipEncoder</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -1,0 +1,217 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    var isSmartVersion = JieNor.Megi.Common.Context.ContextHelper.MContext.MOrgVersionID == JieNor.Megi.EntityModel.Enum.OrgVersionEnum.Smart;
+}
+@using JieNor.Megi.Common.Utility;
+<div class="m-imain">
+    <div class="m-imain-content print-tmpl-edit">
+        <fieldset id="fsLeft" class="wide" style="float:left;">
+            <div class="field long">
+                <label for="MName">@HtmlLang.Write(LangModule.IV, "Name", "Name")</label>
+                <input class="easyui-validatebox mg-data textbox m-lang required-field" data-options="required:true" name="MName" id="MName" />
+            </div>
+            <div id="divHeading" style="float:left;width:280px;">
+                <div class="field">
+                    <label for="MTopMargin">@HtmlLang.Write(LangModule.IV, "TopMargin", "Top margin")</label>
+                    <input class="mg-data textbox easyui-numberbox" precision="2" name="MTopMargin" id="MTopMargin" />
+                </div>
+                <div class="field">
+                    <label for="MBottomMargin">@HtmlLang.Write(LangModule.IV, "BottomMargin", "Bottom margin")</label>
+                    <input class="mg-data textbox easyui-numberbox" precision="2" name="MBottomMargin" id="MBottomMargin" />
+                </div>
+                <div class="field">
+                    <label for="MAddressPadding">@HtmlLang.Write(LangModule.IV, "AddressPadding", "Address padding")</label>
+                    <input class="mg-data textbox easyui-numberbox" precision="2" name="MAddressPadding" id="MAddressPadding" />
+                </div>
+                @if (!isSmartVersion) { 
+                <div class="field">
+                    <label for="MDraftInvoiceTitle">@HtmlLang.Write(LangModule.IV, "DraftInvoiceTitle", "Draft Invoice title")</label>
+                    <input class="mg-data textbox m-lang" name="MDraftInvoiceTitle" id="MDraftInvoiceTitle" />
+                </div>
+                <div class="field">
+                    <label for="MApprovedInvoiceTitle">@HtmlLang.Write(LangModule.IV, "ApprovedInvoiceTitle", "Approved Invoice title")</label>
+                    <input class="mg-data textbox m-lang" name="MApprovedInvoiceTitle" id="MApprovedInvoiceTitle" />
+                </div>
+                <div class="field">
+                    <label for="MOverdueInvoiceTitle">@HtmlLang.Write(LangModule.IV, "OverdueInvoiceTitle", "Overdue Invoice title")</label>
+                    <input class="mg-data textbox m-lang" name="MOverdueInvoiceTitle" id="MOverdueInvoiceTitle" />
+                </div>
+                <div class="field">
+                    <label for="MCreditNoteTitle">@HtmlLang.Write(LangModule.IV, "CreditNoteTitle", "Credit Note title") </label>
+                    <input class="mg-data textbox m-lang" name="MCreditNoteTitle" id="MCreditNoteTitle" />
+                </div>
+                <div class="field">
+                    <label for="MStatementTitle">@HtmlLang.Write(LangModule.IV, "StatementTitle", "Statement title")</label>
+                    <input class="mg-data textbox m-lang" name="MStatementTitle" id="MStatementTitle" />
+                </div>
+                <div class="field">
+                    <label for="MPaymentTitle">@HtmlLang.Write(LangModule.IV, "RemittanceAdviceTitle", "Remittance Advice title")</label>
+                    <input class="mg-data textbox m-lang" name="MPaymentTitle" id="MPaymentTitle" />
+                </div>
+                <div class="field">
+                    <label for="MReceiptTitle">@HtmlLang.Write(LangModule.IV, "ReceiptTitle", "Receipt title")</label>
+                    <input class="mg-data textbox m-lang" name="MReceiptTitle" id="MReceiptTitle" />
+                </div>
+                }
+            </div>
+            <div id="divMeasureIn" class="measure-in">
+                <fieldset class="popup">
+                    <div class="radios inline">
+                        <h3>@HtmlLang.Write(LangModule.IV, "MeasureIn", "Measure in")</h3>
+                        <div class="radio">
+                            <input type="radio" name="MMeasureIn" value="cm" id="centimeters" />
+                            <label for="centimeters">@HtmlLang.Write(LangModule.IV, "cm", "cm")</label>
+                        </div>
+                        <div class="radio">
+                            <input type="radio" name="MMeasureIn" value="inches" id="inches" />
+                            <label for="inches">@HtmlLang.Write(LangModule.IV, "inches", "inches")</label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="clear"></div>
+        </fieldset>
+        <div class="right">
+            <div class="branding-options" style="float:left;width:610px;">
+                <fieldset>
+                    <div class="right-top">
+                        <div class="show-setting" style="float:left;">
+                                @if (!isSmartVersion) {
+                            <div class="field checkbox">
+                                <input type="checkbox" class="radio" id="MShowTaxNumber" name="MShowTaxNumber" />
+                                <label for="MShowTaxNumber">@HtmlLang.Write(LangModule.IV, "ShowTaxNumber", "Show tax number")</label>
+                            </div>
+                            <div class="field checkbox">
+                                <input type="checkbox" class="radio" id="MShowHeading" name="MShowHeading" />
+                                <label for="MShowHeading">@HtmlLang.Write(LangModule.IV, "ShowColumnHeadings", "Show column headings")</label>
+                            </div>
+                            <div class="field checkbox">
+                                <input type="checkbox" class="radio" id="MShowUnitPriceAndQuantity" name="MShowUnitPriceAndQuantity" />
+                                <label for="MShowUnitPriceAndQuantity">@HtmlLang.Write(LangModule.IV, "ShowUnitPriceAndQuantity", "Show unit price & quantity") </label>
+                            </div>
+                            <div class="field checkbox">
+                                <input type="checkbox" class="radio" id="MShowTaxColumn" name="MShowTaxColumn" />
+                                <label for="MShowTaxColumn"> @HtmlLang.Write(LangModule.IV, "ShowTaxColumn", "Show tax column") </label>
+                            </div>
+                            <div class="field checkbox">
+                                <input type="checkbox" class="radio" id="MShowRegAddress" name="MShowRegAddress" />
+                                <label for="MShowRegAddress"> @HtmlLang.Write(LangModule.IV, "ShowRegisteredAddress", "Show registered address") </label>
+                            </div>
+                            }
+                            <div class="field checkbox">
+                                <input type="checkbox" class="radio" id="MShowLogo" name="MShowLogo" />
+                                <label for="MShowLogo"> @HtmlLang.Write(LangModule.IV, "ShowLogo", "Show logo") </label>
+                                <div id="divLogoAlign"></div>
+                            </div>
+                            @if (!isSmartVersion) {
+                            <div class="field checkbox">
+                                <input type="checkbox" class="radio" id="MShowTracking" name="MShowTracking" />
+                                <label for="MShowTracking"> @HtmlLang.Write(LangModule.IV, "ShowTracking", "Show Tracking") </label>
+                            </div>
+                            <div class="field checkbox">
+                                <input type="checkbox" class="radio" id="MHideDiscount" name="MHideDiscount" />
+                                <label for="MHideDiscount"> @HtmlLang.Write(LangModule.IV, "HideDiscount", "Hide Discount") </label>
+                            </div>
+                            }
+                            <div class="field checkbox">
+                                <input type="checkbox" class="radio" id="MPrintVoucherAmountFor" name="MPrintVoucherAmountFor" />
+                                <label for="MPrintVoucherAmountFor"> @HtmlLang.Write(LangModule.GL, "PrintVoucherAmountFor", "打印凭证中的外币信息") </label>
+                            </div>
+                        </div>
+                        <div class="logo-tax">
+                            <div class="radios" id="logoAlignment" style="display:@(isSmartVersion ? "none" : "block")">
+                                <h3> @HtmlLang.Write(LangModule.IV, "LogoAlignment", "Logo alignment")</h3>
+                                <div class="field radio">
+                                    <input id="LogoLeft" type="radio" name="MLogoAlignment" value="Left" />
+                                    <label for="LogoLeft"> @HtmlLang.Write(LangModule.IV, "Left", "Left")</label>
+                                </div>
+                                <div class="field radio">
+                                    <input id="LogoCenter" type="radio" name="MLogoAlignment" value="Center" />
+                                    <label for="LogoCenter"> @HtmlLang.Write(LangModule.IV, "Center", "Center")</label>
+                                </div>
+                                <div class="field radio">
+                                    <input id="LogoRight" type="radio" name="MLogoAlignment" value="Right" />
+                                    <label for="LogoRight"> @HtmlLang.Write(LangModule.IV, "Right", "Right")</label>
+                                </div>
+                            </div>
+                            @if (!isSmartVersion) {
+                            <div class="radios" style="clear:both">
+                                <h3> @HtmlLang.Write(LangModule.IV, "ShowTaxesAs", "Show taxes as")</h3>
+                                <div class="field radio">
+                                    <input id="ori" type="radio" name="MShowTaxType" value="" />
+                                    <label for="ori">@HtmlLang.Write(LangModule.IV, "Original", "Original")</label>
+                                </div>
+                                <div class="field radio">
+                                    <input id="exclu" type="radio" name="MShowTaxType" value="Tax_Exclusive" />
+                                    <label for="exclu">@HtmlLang.Write(LangModule.IV, "Exclusive", "Exclusive")</label>
+                                </div>
+                                <div class="field radio">
+                                    <input id="inclu" type="radio" name="MShowTaxType" value="Tax_Inclusive" />
+                                    <label for="inclu">@HtmlLang.Write(LangModule.IV, "Inclusive", "Inclusive")</label>
+                                </div>
+                            </div>
+                            }
+                        </div>
+                        @if (!isSmartVersion) {
+                        <div class="contact-detail">
+                            <label id="lblContactDetail" for="MContactDetails">@HtmlLang.Write(LangModule.IV, "EnterContactDetails", "Enter your contact details as they should appear at the top of all PDFs you print or send") </label>
+                            <div>
+                                <textarea id="MContactDetails" name="MContactDetails" class="textarea click-no-select" maxlength="500" style="width: 168px; height: 120px;"></textarea>
+                            </div>
+                        </div>
+                        }
+                        <div class="clear"></div>
+                    </div>
+                </fieldset>
+                @if (!isSmartVersion) {
+                <fieldset>
+                    <div class="field">
+                        <label for="MShowTaxSubTotalWay"> @HtmlLang.Write(LangModule.IV, "ShowTaxSubtotalsBy", "Show tax subtotals by")</label>
+                        <select class="mg-data textbox m-form-item-select easyui-combobox" name="MShowTaxSubTotalWay" style="width:205px;height:24px;">
+                            <option value="1">@HtmlLang.Write(LangModule.IV, "TaxRates", "tax rates")</option>
+                            <option value="2">@HtmlLang.Write(LangModule.IV, "TaxRatesOver0Percent", "tax rates over 0%")</option>
+                            <option value="3">@HtmlLang.Write(LangModule.IV, "SingleTaxSubtotal", "a single tax subtotal")</option>
+                        </select>
+                    </div>
+                    <div class="field" style="padding-top:5px;">
+                        <label for="MShowCurrencyConversionWay"> @HtmlLang.Write(LangModule.IV, "ShowCurrencyConversionAs", "Show currency conversion as")</label>
+                        <select class="mg-data textbox m-form-item-select easyui-combobox" name="MShowCurrencyConversionWay" style="width:205px;height:24px;">
+                            <option value="1">@HtmlLang.Write(LangModule.IV, "NetAmountsWithTaxTotals", "net amounts with tax totals")</option>
+                            <option value="2">@HtmlLang.Write(LangModule.IV, "SingleTaxTotal", "a single tax total")</option>
+                            <option value="3">@HtmlLang.Write(LangModule.IV, "DontShowAnything", "don't show anything")</option>
+                        </select>
+                    </div>
+                    <div class="field" style="padding-top:5px;">
+                        <label for="MPayService"> @HtmlLang.Write(LangModule.IV, "PayeeAccount", "Payee account")</label>
+                        <select class="mg-data m-form-item-select easyui-combobox" name="MPayService" data-options="@HtmlBDAccount.BankDataOptions()" style="width:205px;height:24px;"></select>
+                    </div>
+                    <div style="padding-top:5px;">
+                        <label for="MTermsAndPayAdvice" class="terms">@HtmlLang.Write(LangModule.IV, "TermsAndPayAdvice", "Terms & Payment Advice (Invoices)") <span class="char-count" id="PAYMENTNOTES-Charcount" style="visibility: hidden;"></span> </label>
+                        <div class="field">
+                            <textarea id="MTermsAndPayAdvice" name="MTermsAndPayAdvice" class="textarea click-no-select" maxlength="1000" style="width:465px;"></textarea>
+                        </div>
+                    </div>
+                </fieldset>
+                }
+            </div>            
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+
+<div class="m-toolbar-footer">
+        <div class="left">
+            <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray" id="aCancel">@HtmlLang.Write(LangKey.Cancel)</a>
+        </div>
+        <div class="right">
+            @if (HtmlSECMenu.HavePermission(BizObject.Setting, PermissionItem.Change))
+            {
+                <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aSave">@HtmlLang.Write(LangKey.Save)</a>
+            }
+        </div>
+</div>
+<input class="mg-data m-form-key" type="hidden" id="hidItemID" name="MItemID" value="@ViewBag.ItemID">
+<input class="mg-data" type="hidden" id="MLogoID" name="MLogoID">
+<input type="hidden" id="hidIsSmartVersion" value="@Html.Raw(isSmartVersion)" />
+<script src="@ServerHelper.ScriptServer/scripts/BD/PrintSetting/IVSettingEdit.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.Common)

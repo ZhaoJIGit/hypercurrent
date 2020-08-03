@@ -1,0 +1,32 @@
+﻿
+@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+@using JieNor.Megi.Common.Utility;
+<div class="m-imain">
+    <div class="m-imain-content">
+        <div id="divTitle" style="font-weight:bold; padding-bottom:5px;">@ViewBag.Title</div>
+        <div>
+            <select id="selBranding" class="mg-data m-form-item-select easyui-combobox" style="width:260px;height:24px;" panelheight="140px"></select>
+        </div>
+    </div>
+</div>
+
+<div class="m-toolbar-footer">
+    <div class="left">
+        <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray" id="aCancel">@HtmlLang.Write(LangKey.Cancel)</a>
+    </div>
+    <div class="right">
+        @if (HtmlSECMenu.HavePermission(BizObject.Invoice_Sales, PermissionItem.Change))
+        {
+            <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aSave">@HtmlLang.Write(LangKey.Next)</a>
+        }
+    </div>
+</div>
+<input type="hidden" id="hidType" value="@ViewBag.Type">
+<input type="hidden" id="hidParam" value="@ViewBag.Param">
+<input type="hidden" id="hidReportType" value="@ViewBag.ReportType">
+<input type="hidden" id="hidBizObject" value="@ViewBag.BizObject">
+@HtmlLang.WriteScript(LangModule.IV)
+@HtmlLang.WriteScript(LangModule.PA)
+<script src="@ServerHelper.ScriptServer/scripts/IV/Invoice/SelectPrintSetting.js?@ServerHelper.JSVersion"></script>

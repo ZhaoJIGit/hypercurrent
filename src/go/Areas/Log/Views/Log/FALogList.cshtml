@@ -1,0 +1,21 @@
+﻿@{
+    ViewBag.Title = "BusLogList";
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+
+@*主体内容*@
+<div class="m-imain">
+    <div class="m-imain-content">
+        @*操作日志列表*@
+        <div id="gridFALog" fitcolumns="true"></div>
+    </div>
+</div>
+<input type="hidden" id="hidItemId" value="@ViewData["ItemId"]">
+@*所用到的 js 文件*@
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/GL/GLCheckType.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/GL/GLVoucherHome.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/FA/FAHome.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/Log/FALogList.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.FA)
+
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)

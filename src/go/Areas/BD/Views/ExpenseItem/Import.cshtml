@@ -1,0 +1,90 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Import Expense Items";
+}
+<style>
+    body {
+        overflow: hidden;
+    }
+</style>
+<div class="m-imain" style="padding-left:10px">
+
+
+    <div class="import-step-container">
+        <div class="import-step">
+            <h2 class="import-step-title">
+                @HtmlLang.Write(LangModule.Acct, "ImportInventoryStep1Title", "Step 1. Download our inventory items template file")
+            </h2>
+
+            <p class="import-step-content">
+                @HtmlLang.Write(LangModule.Acct, "ImportInventoryStep1Desc", "Start by downloading our inventory items Xls template file. This file has the correct column headings Megi needs to import your inventory item data. You can")
+            </p>
+            <div class="import-step-downtemplate">
+                <a href="javascript:void(0);" onclick="Import.downloadTemplate();">
+                    <span class="down-file">
+                        &nbsp;
+                    </span>
+                    @HtmlLang.Write(LangModule.Acct, "ImportInventoryStep1Download", "Download template file")
+                </a>
+            </div>
+        </div>
+        <div class="import-step">
+            <h2 class="import-step-title">
+                @HtmlLang.Write(LangModule.Acct, "ImportInventoryStep2Title", "Step 2. Copy your inventory items into the template")
+            </h2>
+
+            <p class="import-step-content">
+                @HtmlLang.Write(LangModule.Acct, "ImportInventoryStep2Desc", "Using Excel or another spreadsheet editor, fill the Megi template with your inventory items data. Make sure the inventory items data matches the column headings provided in the template.")
+            </p>
+            <p class="import-step-warning">
+                @Html.Raw(HtmlLang.Write(LangModule.Acct, "ImportInventoryStep2Warning1", "IMPORTANT: Do not change the column headings in the template file. These need to be unchanged for the import to work in the next step."))
+            </p>
+            <p class="import-step-content">
+                @HtmlLang.Write(LangModule.Acct, "ImportInventoryStep2Tip", "You can also use a previously exported Xls or Xlsx of your inventory items to update all your items in one go, saving you the effort of having to individually update all your inventory items through the browser.")
+            </p>
+
+            <p class="import-step-warning">
+                @HtmlLang.Write(LangModule.Acct, "ImportInventoryStep2Warning3", "A maximum of 1000 inventory items can be imported at a time.")
+            </p>
+        </div>
+        <div class="import-step">
+            <h2 class="import-step-title">
+                @HtmlLang.Write(LangModule.Acct, "ImportInventoryStep3Title", "Step 3. Import the updated template file")
+            </h2>
+            @using (Ajax.BeginForm("VerifyImportData", "Item", new AjaxOptions { HttpMethod = "POST" }, new { ID = "fileSelectForm", enctype = "multipart/form-data" }))
+            {
+
+                <div>
+                    <label class="import-step-content">
+                        @HtmlLang.Write(LangModule.Acct, "ImportInventoryStep3Desc", "Choose a file to import")
+                    </label>
+                    <div class="import-step-action">
+                        <label class="upload-image">&nbsp;</label>
+                        <input type="file" id="fileInput" name="fileInput" class="import-file-input" />
+                        <a href="javascript:void(0)" class="upload-label non-alert">@HtmlLang.Write(LangModule.Common, "UploadLabel", "Browse...")</a>
+                        <div class="import-step-content">
+                            @HtmlLang.Write(LangModule.Acct, "ImportInventoryStep3limit", "The file you import must be a Xls or Xlsx file. The name of your file should end with either <em>.xls</em> or <em>.xlsx</em>.")
+                        </div>
+                    </div>
+                </div>
+
+            }
+
+        </div>
+    </div>
+</div>
+<div class="m-toolbar-footer">
+    @if (HtmlSECMenu.HavePermission(BizObject.Setting, PermissionItem.Change))
+    {
+    <div class="left">
+        <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray">@HtmlLang.Write(LangKey.Cancel)</a>
+    </div>
+    <div class="right">
+        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aImport">@HtmlLang.Write(LangKey.Import)</a>
+    </div>
+    }
+</div>
+<script type="text/javascript" src="@ServerHelper.StaticServer/fw/scripts/jquery.form.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.GoServer/scripts/BD/Docs/FileBase.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.GoServer/scripts/BD/Import/ImportBase.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.GoServer/scripts/BD/Item/Import.js?@ServerHelper.JSVersion"></script>

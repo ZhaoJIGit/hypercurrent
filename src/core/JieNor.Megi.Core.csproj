@@ -1,0 +1,307 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{E56A4DF7-E8EB-407F-AAFD-5B763BFFA364}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>Library</OutputType>
+    <AssemblyName>JieNor.Megi.Core</AssemblyName>
+    <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver">
+      <HintPath>..\libs\MongoDB.Driver.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\libs\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http.Formatting">
+      <HintPath>..\libs\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Runtime.Serialization">
+      <HintPath>C:\WINDOWS\Microsoft.NET\assembly\GAC_MSIL\System.Runtime.Serialization\v4.0_4.0.0.0__b77a5c561934e089\System.Runtime.Serialization.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <HintPath>C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\System\v4.0_4.0.0.0__b77a5c561934e089\System.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions">
+      <HintPath>C:\WINDOWS\Microsoft.NET\assembly\GAC_MSIL\System.Web.Extensions\v4.0_4.0.0.0__31bf3856ad364e35\System.Web.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data">
+      <HintPath>..\libs\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel">
+      <HintPath>C:\WINDOWS\Microsoft.NET\assembly\GAC_MSIL\System.ServiceModel\v4.0_4.0.0.0__b77a5c561934e089\System.ServiceModel.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+      <HintPath>C:\WINDOWS\Microsoft.NET\assembly\GAC_MSIL\System.Net.Http\v4.0_4.0.0.0__b03f5f7f11d50a3a\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core">
+      <HintPath>C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\System.Core\v4.0_4.0.0.0__b77a5c561934e089\System.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Bson">
+      <HintPath>..\libs\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\libs\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Configuration">
+      <HintPath>C:\WINDOWS\Microsoft.NET\assembly\GAC_MSIL\System.Configuration\v4.0_4.0.0.0__b03f5f7f11d50a3a\System.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Fasterflect">
+      <HintPath>..\libs\Fasterflect.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.0\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.1.0\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.1.0\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.0\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.0\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.0\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="JieNor.Megi.Core.Attribute\ApiDetailAttribute.cs" />
+    <Compile Include="JieNor.Megi.Core.Attribute\ApiEnumAttribute.cs" />
+    <Compile Include="JieNor.Megi.Core.Attribute\ApiMemberAttribute.cs" />
+    <Compile Include="JieNor.Megi.Core.Attribute\ApiPrecisionAttribute.cs" />
+    <Compile Include="JieNor.Megi.Core.Attribute\AppSourceAttribute.cs" />
+    <Compile Include="JieNor.Megi.Core.Attribute\BaseDataAttribute.cs" />
+    <Compile Include="JieNor.Megi.Core.Attribute\CustomRequireHttpsAttribute.cs" />
+    <Compile Include="JieNor.Megi.Core.Attribute\DBFieldAttribute.cs" />
+    <Compile Include="JieNor.Megi.Core.Attribute\DBFieldValidateAttribute.cs" />
+    <Compile Include="JieNor.Megi.Core.Attribute\EmailValidationAttribute.cs" />
+    <Compile Include="JieNor.Megi.Core.Attribute\InsertOnlyAttribute.cs" />
+    <Compile Include="JieNor.Megi.Core.Attribute\JQueryFileDownloadAttribute.cs" />
+    <Compile Include="JieNor.Megi.Core.Attribute\LogErrorAttribute.cs" />
+    <Compile Include="JieNor.Megi.Core.Attribute\ModelEntryAttribute.cs" />
+    <Compile Include="JieNor.Megi.Core.Attribute\NoAuthorizationAttribute.cs" />
+    <Compile Include="JieNor.Megi.Core.Attribute\RegularExpressionAttribute.cs" />
+    <Compile Include="JieNor.Megi.Core.Attribute\ValidationBaseAttribute.cs" />
+    <Compile Include="JieNor.Megi.Core.CacheManager\CacheMangerBase.cs" />
+    <Compile Include="JieNor.Megi.Core.Const\BizObject.cs" />
+    <Compile Include="JieNor.Megi.Core.Const\BizType.cs" />
+    <Compile Include="JieNor.Megi.Core.Const\ImportObjectType.cs" />
+    <Compile Include="JieNor.Megi.Core.Const\PermissionItem.cs" />
+    <Compile Include="JieNor.Megi.Core.Const\RegExpress.cs" />
+    <Compile Include="JieNor.Megi.Core.Const\ValidationErrorType.cs" />
+    <Compile Include="JieNor.Megi.Core.Context\BizVerificationInfor.cs" />
+    <Compile Include="JieNor.Megi.Core.Context\ImportResult.cs" />
+    <Compile Include="JieNor.Megi.Core.Context\JsonContentNegotiator.cs" />
+    <Compile Include="JieNor.Megi.Core.Context\OperationResult.cs" />
+    <Compile Include="JieNor.Megi.Core.Context\ParamBase.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\ApiLang.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\ApiMemberType.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\AutoBillNoAttribute.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\BaseModel.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\BDDetailModel.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\BDEntryModel.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\BDModel.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\BillAttachmentModel.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\BillNumberModel.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\BillSourceType.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\BizDataModel.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\BizDetailDataModel.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\BizEntryDataModel.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\BizRuleAutoMakeNo.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\BizRuleBase.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\BizRuleCompare.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\BizRuleEmail.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\BizRuleHttp.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\BizRuleMustInput.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\BizRuleMustInputEntry.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\BizRuleRangeDate.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\BizRuleRangeNumber.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\BizRuleRepeatCheck.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\ChartColumnStacked2DModel.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\ChartDataModel.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\ChartModel.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\ChartPie2DModel.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\ChartScaleModel.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\CodeElementType.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\CodingRuleEntryModel.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\CodingRuleModel.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\ColumnEncryptAttribute.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\CompareAttribute.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\DataModelExtend.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\DataServiceT.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\DateRangeAttribute.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\EmailAttribute.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\EnumMappingType.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\HttpAttribute.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\IBizVerificationRule.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\IDataContract.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\IOModel.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\LockOperation.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\MustInputAttribute.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\NumberRangeAttribute.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\OrgDataStorageModel.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\PayRunChartModel.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\RepeatCheckAttribute.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\TrueOrFalse.cs" />
+    <Compile Include="JieNor.Megi.Core.DataModel\ValidationError.cs" />
+    <Compile Include="JieNor.Megi.Core.DBUtility\CommandInfo.cs" />
+    <Compile Include="JieNor.Megi.Core.DBUtility\DBConnectionManager.cs" />
+    <Compile Include="JieNor.Megi.Core.DBUtility\DbHelperMySQL.cs" />
+    <Compile Include="JieNor.Megi.Core.DBUtility\DynamicDbHelperMySQL.cs" />
+    <Compile Include="JieNor.Megi.Core.DBUtility\DynamicPubConstant.cs" />
+    <Compile Include="JieNor.Megi.Core.DBUtility\EffentNextType.cs" />
+    <Compile Include="JieNor.Megi.Core.DBUtility\MultiDBCommand.cs" />
+    <Compile Include="JieNor.Megi.Core.DBUtility\MultiDBCommandHelper.cs" />
+    <Compile Include="JieNor.Megi.Core.DBUtility\MySqlHelper.cs" />
+    <Compile Include="JieNor.Megi.Core.DBUtility\OrgAppStorageModel.cs" />
+    <Compile Include="JieNor.Megi.Core.DBUtility\PubConstant.cs" />
+    <Compile Include="JieNor.Megi.Core.DBUtility\SysOrBas.cs" />
+    <Compile Include="JieNor.Megi.Core.DBUtility\TableColumnHelper.cs" />
+    <Compile Include="JieNor.Megi.Core.DisLock\DisLockConfig.cs" />
+    <Compile Include="JieNor.Megi.Core.DisLock\DisLockManager.cs" />
+    <Compile Include="JieNor.Megi.Core.DisLock\IDisLock.cs" />
+    <Compile Include="JieNor.Megi.Core.DisLock\RedisLock.cs" />
+    <Compile Include="JieNor.Megi.Core.EasyUI\EasyUIGridRequest.cs" />
+    <Compile Include="JieNor.Megi.Core.FileUtility\ExcelHelper.cs" />
+    <Compile Include="JieNor.Megi.Core.FileUtility\FileException.cs" />
+    <Compile Include="JieNor.Megi.Core.FileUtility\FileExceptionType.cs" />
+    <Compile Include="JieNor.Megi.Core.FileUtility\FileExtentionType.cs" />
+    <Compile Include="JieNor.Megi.Core.FileUtility\FileHelper.cs" />
+    <Compile Include="JieNor.Megi.Core.FileUtility\FileType.cs" />
+    <Compile Include="JieNor.Megi.Core.FileUtility\FileValidateType.cs" />
+    <Compile Include="JieNor.Megi.Core.FileUtility\FtpHelper.cs" />
+    <Compile Include="JieNor.Megi.Core.FileUtility\ImageResult.cs" />
+    <Compile Include="JieNor.Megi.Core.FileUtility\RandomDirectoryType.cs" />
+    <Compile Include="JieNor.Megi.Core.FileUtility\UploadPathType.cs" />
+    <Compile Include="JieNor.Megi.Core.Helper\AccountHelper.cs" />
+    <Compile Include="JieNor.Megi.Core.Helper\ConfigHelper.cs" />
+    <Compile Include="JieNor.Megi.Core.Helper\ListSortHelper.cs" />
+    <Compile Include="JieNor.Megi.Core.Helper\ModelHelper.cs" />
+    <Compile Include="JieNor.Megi.Core.Logger\MSqlLogger.cs" />
+    <Compile Include="JieNor.Megi.Core.Log\OptLog.cs" />
+    <Compile Include="JieNor.Megi.Core.Log\OptLogListFilter.cs" />
+    <Compile Include="JieNor.Megi.Core.Log\OptLogListModel.cs" />
+    <Compile Include="JieNor.Megi.Core.Log\OptLogRepository.cs" />
+    <Compile Include="JieNor.Megi.Core.Log\OptLogTemplate.cs" />
+    <Compile Include="JieNor.Megi.Core.Mail\EMailHelper.cs" />
+    <Compile Include="JieNor.Megi.Core.Mail\IMail.cs" />
+    <Compile Include="JieNor.Megi.Core.Mail\MailClient.cs" />
+    <Compile Include="JieNor.Megi.Core.Mail\MailClientBase.cs" />
+    <Compile Include="JieNor.Megi.Core.Mail\MailConfig.cs" />
+    <Compile Include="JieNor.Megi.Core.Mail\MailHelper.cs" />
+    <Compile Include="JieNor.Megi.Core.Mail\MailModel.cs" />
+    <Compile Include="JieNor.Megi.Core.Mail\SendMail.cs" />
+    <Compile Include="JieNor.Megi.Core.Mail\SSLMailClient.cs" />
+    <Compile Include="JieNor.Megi.Core.Mongo\MongoBDHelper.cs" />
+    <Compile Include="JieNor.Megi.Core.MResource\CommonResourceAdpater.cs" />
+    <Compile Include="JieNor.Megi.Core.MResource\IResourceAdapter.cs" />
+    <Compile Include="JieNor.Megi.Core.MResource\MFetchResourceRule.cs" />
+    <Compile Include="JieNor.Megi.Core.MResource\MModelInfo.cs" />
+    <Compile Include="JieNor.Megi.Core.MResource\MResouceBase.cs" />
+    <Compile Include="JieNor.Megi.Core.MResource\MResourceFilter.cs" />
+    <Compile Include="JieNor.Megi.Core.MResource\MResourceHelper.cs" />
+    <Compile Include="JieNor.Megi.Core.MultiLanguage\GlobalFormat.cs" />
+    <Compile Include="JieNor.Megi.Core.MultiLanguage\MultiLangHelper.cs" />
+    <Compile Include="JieNor.Megi.Core.Repository\ModelInfoManager.cs" />
+    <Compile Include="JieNor.Megi.Core.Repository\ModelToMySqlInfor.cs" />
+    <Compile Include="JieNor.Megi.Core.ServiceModel\IServiceContract.cs" />
+    <Compile Include="JieNor.Megi.Core.ServiceModel\ServiceT.cs" />
+    <Compile Include="JieNor.Megi.Core.SqlHelper\SqlConnectors.cs" />
+    <Compile Include="JieNor.Megi.Core.Utility\FriendlyMessage.cs" />
+    <Compile Include="JieNor.Megi.Core.Utility\JsonUtility.cs" />
+    <Compile Include="JieNor.Megi.Core.Utility\ResultHelper.cs" />
+    <Compile Include="JieNor.Megi.Core.Utility\StringUtility.cs" />
+    <Compile Include="JieNor.Megi.Core\ANDFilter.cs" />
+    <Compile Include="JieNor.Megi.Core\ApiCode.cs" />
+    <Compile Include="JieNor.Megi.Core\ApiConfig.cs" />
+    <Compile Include="JieNor.Megi.Core\ApiDeleteParam.cs" />
+    <Compile Include="JieNor.Megi.Core\ApiEndpoitUnavaliableException.cs" />
+    <Compile Include="JieNor.Megi.Core\ApiGetParam.cs" />
+    <Compile Include="JieNor.Megi.Core\ApiNotFoundException.cs" />
+    <Compile Include="JieNor.Megi.Core\ApiParam.cs" />
+    <Compile Include="JieNor.Megi.Core\ApiPostParam.cs" />
+    <Compile Include="JieNor.Megi.Core\ApiResult.cs" />
+    <Compile Include="JieNor.Megi.Core\BalanceBizReportRowModel.cs" />
+    <Compile Include="JieNor.Megi.Core\BizReportCellLinkModel.cs" />
+    <Compile Include="JieNor.Megi.Core\BizReportCellModel.cs" />
+    <Compile Include="JieNor.Megi.Core\BizReportCellStatuType.cs" />
+    <Compile Include="JieNor.Megi.Core\BizReportCellType.cs" />
+    <Compile Include="JieNor.Megi.Core\BizReportModel.cs" />
+    <Compile Include="JieNor.Megi.Core\BizReportNoteModel.cs" />
+    <Compile Include="JieNor.Megi.Core\BizReportRowModel.cs" />
+    <Compile Include="JieNor.Megi.Core\BizReportRowType.cs" />
+    <Compile Include="JieNor.Megi.Core\BizReportType.cs" />
+    <Compile Include="JieNor.Megi.Core\BizSubRptCreateModel.cs" />
+    <Compile Include="JieNor.Megi.Core\ChartHelper.cs" />
+    <Compile Include="JieNor.Megi.Core\DataGridJson.cs" />
+    <Compile Include="JieNor.Megi.Core\EasyUIComboboxFilter.cs" />
+    <Compile Include="JieNor.Megi.Core\FilterList.cs" />
+    <Compile Include="JieNor.Megi.Core\GlobalCode.cs" />
+    <Compile Include="JieNor.Megi.Core\IBasicBusiness.cs" />
+    <Compile Include="JieNor.Megi.Core\ListFilter.cs" />
+    <Compile Include="JieNor.Megi.Core\MConverter.cs" />
+    <Compile Include="JieNor.Megi.Core\MyPropertyInfo.cs" />
+    <Compile Include="JieNor.Megi.Core\NameValueModel.cs" />
+    <Compile Include="JieNor.Megi.Core\ORFilter.cs" />
+    <Compile Include="JieNor.Megi.Core\RandomService.cs" />
+    <Compile Include="JieNor.Megi.Core\ReportFilterBase.cs" />
+    <Compile Include="JieNor.Megi.Core\SqlFilter.cs" />
+    <Compile Include="JieNor.Megi.Core\SqlFilterExtensions.cs" />
+    <Compile Include="JieNor.Megi.Core\SqlGroupBy.cs" />
+    <Compile Include="JieNor.Megi.Core\SqlOperators.cs" />
+    <Compile Include="JieNor.Megi.Core\SqlOrderBy.cs" />
+    <Compile Include="JieNor.Megi.Core\SqlOrderDir.cs" />
+    <Compile Include="JieNor.Megi.Core\SqlQuery.cs" />
+    <Compile Include="JieNor.Megi.Core\SqlWhere.cs" />
+    <Compile Include="JieNor.Megi.Core\UUIDHelper.cs" />
+    <Compile Include="JieNor.Megi.Core\WebClientHelper.cs" />
+    <Compile Include="JieNor.Megi.DataRepository.API\APIBaseData.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\common\JieNor.Megi.Common.csproj">
+      <Project>{2ae7309b-bcdb-4842-a0dd-6c9aa217f2ed}</Project>
+      <Name>JieNor.Megi.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\entitymodel\JieNor.Megi.EntityModel.csproj">
+      <Project>{eef2457d-0b83-44e8-96ce-d6c0cf427a8a}</Project>
+      <Name>JieNor.Megi.EntityModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -1,0 +1,237 @@
+﻿@section Css{
+    <link href="@ServerHelper.StaticServer/include/kindeditor/themes/default/default.css?@ServerHelper.JSVersion" rel="stylesheet" />
+}
+@{
+    string reportId = ViewData["ReportID"].ToString();
+    List<RPTReportSheetModel> list = ViewData["ReportSheet"] as List<RPTReportSheetModel>;
+    bool isView = Convert.ToBoolean(ViewData["IsView"]);
+    string tabUrl = isView ? "Report2/View" : "Report2";
+    JieNor.Megi.DataModel.RPT.RPTReportModel rptModel = ViewData["ReportModel"] as RPTReportModel;
+    string langUrl = string.Format("{0}/FW/include/kindeditor/lang/{1}.js", ServerHelper.StaticServer, LangIndentity.CurrentLangID);
+
+    JieNor.Megi.Core.BizReportType rptType = (JieNor.Megi.Core.BizReportType)Convert.ToInt32(ViewData["ReportTypeID"].ToString());
+    string bizObj = JieNor.Megi.Core.Const.BizObject.Report;
+    switch (rptType)
+    {
+        case JieNor.Megi.Core.BizReportType.AccountBalance:
+        case JieNor.Megi.Core.BizReportType.AccountDimensionSummary:
+        case JieNor.Megi.Core.BizReportType.Accounts:
+        case JieNor.Megi.Core.BizReportType.AccountSummary:
+        case JieNor.Megi.Core.BizReportType.AccountTransactions:
+        case JieNor.Megi.Core.BizReportType.SubsidiaryLedger:
+        case JieNor.Megi.Core.BizReportType.Statements:
+        case JieNor.Megi.Core.BizReportType.BalanceSheet:
+        case JieNor.Megi.Core.BizReportType.CashFlowStatement:
+        case JieNor.Megi.Core.BizReportType.IncomeStatement:
+        case JieNor.Megi.Core.BizReportType.GeneralLedger:
+            bizObj = JieNor.Megi.Core.Const.BizObject.General_Reports;
+            break;
+        case JieNor.Megi.Core.BizReportType.AgedReceivables:
+        case JieNor.Megi.Core.BizReportType.Invoices:
+        case JieNor.Megi.Core.BizReportType.SaleInvoice:
+        case JieNor.Megi.Core.BizReportType.SaleRedInvoice:
+        case JieNor.Megi.Core.BizReportType.SalesByItem:
+        case JieNor.Megi.Core.BizReportType.SalesByItemTransactions:
+        case JieNor.Megi.Core.BizReportType.IncomeByContact:
+        case JieNor.Megi.Core.BizReportType.IncomeTransactions:
+            bizObj = JieNor.Megi.Core.Const.BizObject.Sale_Reports;
+            break;
+        case JieNor.Megi.Core.BizReportType.AgedPayables:
+        case JieNor.Megi.Core.BizReportType.PurchaseInvoice:
+        case JieNor.Megi.Core.BizReportType.PurchaseList:
+        case JieNor.Megi.Core.BizReportType.PurchaseRedInvoice:
+            bizObj = JieNor.Megi.Core.Const.BizObject.Purchase_Reports;
+            break;
+
+        case JieNor.Megi.Core.BizReportType.BankAndCashSummary:
+        case JieNor.Megi.Core.BizReportType.BankReconciliationSummary:
+        case JieNor.Megi.Core.BizReportType.BankStatement:
+        case JieNor.Megi.Core.BizReportType.SalesTaxReport:
+            bizObj = JieNor.Megi.Core.Const.BizObject.Bank_Reports;
+            break;
+        case JieNor.Megi.Core.BizReportType.ExpenseClaimDetail:
+        case JieNor.Megi.Core.BizReportType.ExpenseClaims:
+        case JieNor.Megi.Core.BizReportType.ExpensesByContact:
+            bizObj = JieNor.Megi.Core.Const.BizObject.Expense_Reports;
+            break;
+        case JieNor.Megi.Core.BizReportType.PayRunByEmployee:
+        case JieNor.Megi.Core.BizReportType.PayRunByPayItem:
+        case JieNor.Megi.Core.BizReportType.PayRunByPayType:
+        case JieNor.Megi.Core.BizReportType.PayRunSummary:
+            bizObj = JieNor.Megi.Core.Const.BizObject.PayRun_Reports;
+            break;
+        case JieNor.Megi.Core.BizReportType.AssetChange:
+        case JieNor.Megi.Core.BizReportType.AssetDepreciation:
+        case JieNor.Megi.Core.BizReportType.DepreciationDetail:
+        case JieNor.Megi.Core.BizReportType.DepreciationSummary:
+            bizObj = JieNor.Megi.Core.Const.BizObject.FixedAsset_Reports;
+            break;
+
+        case JieNor.Megi.Core.BizReportType.BillListPrint:
+        case JieNor.Megi.Core.BizReportType.BudgetSummary:
+        case JieNor.Megi.Core.BizReportType.BudgetVariance:
+        case JieNor.Megi.Core.BizReportType.CashSummary:
+        case JieNor.Megi.Core.BizReportType.ContactList:
+        case JieNor.Megi.Core.BizReportType.CustomerInvoiceReport:
+        case JieNor.Megi.Core.BizReportType.FixedAssetReconciliation:
+        case JieNor.Megi.Core.BizReportType.InventoryItems:
+        case JieNor.Megi.Core.BizReportType.InventoryItemsSummary:
+        case JieNor.Megi.Core.BizReportType.SalaryPrint:
+        case JieNor.Megi.Core.BizReportType.SupplierInvoiceReport:
+        case JieNor.Megi.Core.BizReportType.TrackingSummary:
+        case JieNor.Megi.Core.BizReportType.TransactionList:
+        case JieNor.Megi.Core.BizReportType.TrialBalance:
+        case JieNor.Megi.Core.BizReportType.VoucherList:
+        case JieNor.Megi.Core.BizReportType.VoucherPrint:
+            break; 
+    }
+    
+}
+@using JieNor.Megi.Common.Utility
+<div class="m-imain">
+    <div class="m-imain-content" >
+        @{ 
+            if (@list.Count > 1)
+            {
+                <div class="tabs-wrap" style="margin-left: 0px; margin-right: 0px; width: 1000px;">
+                    <ul class="tabs" style="height: 26px;">
+                        @foreach (RPTReportSheetModel model in list)
+                        {
+                            if (!string.IsNullOrEmpty(model.MSheetName))
+                            {
+                                @Html.Raw(string.Format("<li class='{0}'><a class='tabs-inner' href='/Report/{1}/{2}/{3}' style='height: 25px; line-height: 25px;'><span class='tabs-title'>{4}</span></a></li>", model.MID == reportId ? "tabs-selected" : "", tabUrl, model.MType, model.MID, MText.ToJson(model.MSheetName)))
+                            }
+                        }
+                    </ul>
+                </div>
+            }
+            if (@list.Count > 0)
+            {
+                <input type="hidden" value='@list[0].MType' id="hidPTypeID">
+                <input type="hidden" value='@list[0].MID' id="hidPID">
+            }
+        }
+        @RenderBody()
+
+        <div class="m-report">
+            <div class="main-title1" id="divReportTitle1"></div>
+            <div class="main-title2" id="divReportTitle2"></div>
+            <div class="main-title2" id="divReportTitle3"></div>
+            <div class="main-title2" id="divReportTitle4"></div>
+
+            <div class="header">
+                <div class="header-toolbar"><a href="javascript:void(0)" class="easyui-linkbutton  easyui-linkbutton-m" id="aAddReportHeader">@HtmlLang.Write(LangModule.Report, "AddSummary", "Add Summary")</a></div>
+                <div class="header-content" id="divReportHeaderEdit">
+                    <div class="header-title"><input id="txtHeaderTitle" class="textbox" /></div>
+                    <div class="header-editor">
+                        <textarea id="txtHeaderContent" cols="100" rows="8" style="width:100%;height:120px;visibility:hidden;"></textarea>
+                    </div>
+                    <div class="header-action">
+                        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aReportHeaderSave" style="float:right;">@HtmlLang.Write(LangKey.Save)</a>
+                        <a href="javascript:void(0)" class="easyui-linkbutton" id="aReportHeaderCancel">@HtmlLang.Write(LangKey.Cancel)</a></div>
+                </div>
+                <div class="header-content" id="divReportHeaderView">
+                    <div class="header-title" id="divReportViewTitle">@HtmlLang.Write(LangModule.Report, "Summary", "Summary")</div>
+                    <div class="header-view">
+                        <div class="view-detail">
+                            <div class="view-content" id="divReportViewContent">
+                            </div>
+                            <div class="view-tip" id="divReportEditButton"><span>@HtmlLang.Write(LangKey.Edit)</span></div>
+                        </div>
+                        <div class="view-close"><a href="javascript:void(0)" class="mg-icon-delete" id="aReportDeleteHeaderContent">&nbsp;</a></div>
+                        <br class="clear" />
+                    </div>
+                </div>
+            </div>
+            @using (Ajax.BeginForm("UpdateReportByBizReport", "RptManager", new AjaxOptions { HttpMethod = "POST" }, new { ID = "rptContent", enctype = "multipart/form-data" }))
+            {
+            <div class="report-content" id="divReportDetail">
+
+
+            </div>
+            }
+
+            <div class="footer">
+                <div class="footer-title">@HtmlLang.Write(LangModule.Report, "Notes", "Notes")</div>
+                <div class="footer-content">
+                </div>
+            </div>
+
+
+
+        </div>
+        <input type="hidden" value='@ViewData["ReportID"]' id="hidReportID" />
+        <input type="hidden" value='@ViewData["ReportTypeID"]' id="hidReportTypeID" />
+        <input type="hidden" value='@ViewData["ParentReportTypeID"]' id="hidReportParentTypeID">
+        <input type="hidden" value="@ViewData["ReportFilter"]" id="hidReportFilter">
+        @if (HtmlSECMenu.HavePermission(BizObject.Report, PermissionItem.Change))
+        {
+            <input type="hidden" id="hidChangeAuth" value="1" />
+        }
+        else
+        {
+            <input type="hidden" id="hidChangeAuth" value="0" />
+        }
+    </div>
+</div>
+<div class="m-toolbar-footer">
+    <div class="left" style="width:50%;">
+        @if (HtmlSECMenu.HavePermission(bizObj, PermissionItem.Change))
+        {
+            if (!string.IsNullOrEmpty(reportId) && string.IsNullOrEmpty(@ViewData["ParentReportID"].ToString()) && @rptModel.MStatus == Convert.ToInt32(RPTReportStatus.Draft))
+            {
+                <a href="javascript:void(0)" id="aDeleteDraft" class="easyui-linkbutton">@HtmlLang.Write(LangModule.Report,"deletereport","Delete Report")</a>
+            }
+
+            if (!@isView && string.IsNullOrEmpty(@ViewData["ParentReportID"].ToString()))
+            {
+                <a href="javascript:void(0)" id="aSaveAsDraft" class="easyui-linkbutton easyui-linkbutton-yellow">@HtmlLang.Write(LangKey.SaveAsDraft)</a>
+            }
+
+            if (!string.IsNullOrEmpty(@ViewData["ParentReportID"].ToString()))
+            {
+                <a href="javascript:void(0)" id="aAddToReport" prpttypeid='@ViewData["ParentReportTypeID"]' prptid='@ViewData["ParentReportID"]' rptid="@ViewData["ReportID"]" rpttypeid="@ViewData["ReportTypeID"]" class="m-btn easyui-linkbutton left">@HtmlLang.Write(LangModule.Report, "AddToReport", "Add to Report")</a>
+            }
+        }
+    </div>
+    <div class="right" style="width:50%;">
+        @if (HtmlSECMenu.HavePermission(bizObj, PermissionItem.Export))
+{
+    <a href="javascript:void(0)" id="aExport" class="easyui-splitbutton" rpttypeid="@ViewData["ReportTypeID"]" 
+       data-options="menu:'#divExportTypes'">@HtmlLang.Write(LangKey.Export)</a>
+                    <div id="divExportTypes" style="width: 150px;">
+                <div><a href="javascript:void(0)">Pdf</a></div>
+                <div><a href="javascript:void(0)">Xls</a></div>
+            </div>
+}
+        @if (HtmlSECMenu.HavePermission(bizObj, PermissionItem.View))
+        {
+            var isSubsidiaryLedger = Convert.ToInt32(ViewData["ReportTypeID"]) == 42;
+            if (isSubsidiaryLedger)
+            {
+                <a href="javascript:void(0)" id="aPrint" class="easyui-splitbutton" rptid="@ViewData["ReportID"]" rpttype="@ViewData["ReportType"]" rpttitle="@ViewData["ReportTitle"]"
+                   data-options="menu:'#divPrintTypes'">@HtmlLang.Write(LangKey.Print)</a>
+                <div id="divPrintTypes" style="width: 150px;">
+                    <div><a id="aBatchPrint" href="javascript:void(0)" rptid="@ViewData["ReportID"]" rpttype="@ViewData["ReportType"]" rpttitle="@ViewData["ReportTitle"]">@HtmlLang.Write(LangModule.Report, "BatchPrint", "批量打印")</a></div>
+                </div>
+            }
+            else{
+                <a href="javascript:void(0)" id="aPrint" class="easyui-linkbutton" rptid="@ViewData["ReportID"]" rpttype="@ViewData["ReportType"]" rpttitle="@ViewData["ReportTitle"]">@HtmlLang.Write(LangKey.Print)</a>
+            }
+        }
+        @if (HtmlSECMenu.HavePermission(bizObj, PermissionItem.Approve) && !@isView && string.IsNullOrEmpty(@ViewData["ParentReportID"].ToString()))
+        {
+            <a href="javascript:void(0)" id="aPublish" class="easyui-linkbutton" rptid="@ViewData["ReportID"]" rpttypeid="@ViewData["ReportTypeID"]">@HtmlLang.Write(LangModule.Report, "Publish", "Publish")</a>
+        }
+    </div>
+</div>
+@HtmlLang.WriteScript(LangModule.Common)
+@HtmlLang.WriteScript(LangModule.Report)
+<script src="@ServerHelper.StaticServer/FW/include/kindeditor/kindeditor-all-min.js?@ServerHelper.JSVersion"></script>
+<script src="@langUrl"></script>
+<script src="@ServerHelper.ScriptServer/scripts/Report/RptUC/UCReportHeader.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.ScriptServer/scripts/Report/RptUC/UCReportFooter.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.StaticServer/fw/scripts/jquery.megi.print.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.StaticServer/fw/scripts/jquery.form.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.GoServer/Scripts/BD/Import/ImportBase.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.ScriptServer/scripts/Report/RptUC/UCReport.js?@ServerHelper.JSVersion"></script>

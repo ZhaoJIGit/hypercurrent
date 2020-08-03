@@ -1,0 +1,54 @@
+﻿@{
+    IVInvoiceSummaryModel summary = ViewBag.InvoiceSummary as IVInvoiceSummaryModel;
+    Layout = null;
+}
+
+
+<div class="sub-tool-bar">
+    <span>@ViewData["TypeName"]</span>
+    <a href="@ViewData["ListLink"]/4">@HtmlLang.Write(LangModule.IV, "Paid", "Paid")</a>
+    <a href="@ViewData["ListLink"]/5">@HtmlLang.Write(LangModule.IV, "Repeating", "Repeating")</a>
+    <a class="no-pipe" href="@ViewData["ListLink"]">@HtmlLang.Write(LangModule.IV, "SeeAll", "See all")</a>
+</div>
+
+<div class="mg-panel-totals mg-invoice-total">
+    @{
+        if (@summary.DraftCount == 0)
+        {
+            <label><span>Draft(@summary.DraftCount)</span><span class="amount">@HtmlLang.Write(LangKey.None)</span></label>
+        }
+        else
+        {
+            <a href="@ViewData["ListLink"]/1"><span>Draft(@summary.DraftCount)</span><span class="amount">@summary.DraftAmount.ToMoneyFormat()</span></a>
+        }
+
+        if (@summary.WaitingApprovalCount == 0)
+        {
+            <label><span>Awaiting Approval(@summary.WaitingApprovalCount)</span><span class="amount">@HtmlLang.Write(LangKey.None)</span></label>
+        }
+        else
+        {
+            <a href="@ViewData["ListLink"]/2"><span>Awaiting Approval(@summary.WaitingApprovalCount)</span><span class="amount">@summary.WaitingApprovalAmount.ToMoneyFormat()</span></a>
+        }
+
+        if (@summary.WaitingPaymentCount == 0)
+        {
+            <label><span>Awaiting Payment(@summary.WaitingPaymentCount)</span><span class="amount">@HtmlLang.Write(LangKey.None)</span></label>
+        }
+        else
+        {
+            <a href="@ViewData["ListLink"]/3"><span>Awaiting Payment(@summary.WaitingPaymentCount)</span><span class="amount">@summary.WaitingPaymentAmount.ToMoneyFormat()</span></a>
+        }
+
+        if (@summary.DueCount == 0)
+        {
+            <label><span>Due(@summary.DueCount)</span><span class="amount">@HtmlLang.Write(LangKey.None)</span></label>
+        }
+        else
+        {
+            <a href="@ViewData["ListLink"]/3?filter={'MSearchWithin':'3','MEndDate':'@DateTime.Now.ToLangDate()'}"><span>Due(@summary.DueCount)</span><span class="amount">@summary.DueAmount.ToMoneyFormat()</span></a>
+        }
+}
+    <div class="clear"></div>
+</div>
+

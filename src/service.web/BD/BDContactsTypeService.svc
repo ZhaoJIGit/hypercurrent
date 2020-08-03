@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="JieNor.Megi.Service.Web.BD.BDContactsTypeService" CodeBehind="BDContactsTypeService.svc.cs" %>

@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{084D717B-64C6-48E0-9487-8751E84E12F2}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>Library</OutputType>
+    <AssemblyName>JieNor.Megi.Identity.Go</AssemblyName>
+    <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\libs\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Configuration, Version=3.3.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\libs\Autofac.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="Fasterflect">
+      <HintPath>..\libs\Fasterflect.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core">
+      <HintPath>C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Core\v4.0_4.0.0.0__b77a5c561934e089\System.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.0\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.1.0\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.1.0\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.0\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.0\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.0\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="JieNor.Megi.Identity.Go.AutoManager\BASCountryManager.cs" />
+    <Compile Include="JieNor.Megi.Identity.Go.AutoManager\BDAccountManager.cs" />
+    <Compile Include="JieNor.Megi.Identity.Go.AutoManager\BDAttachmentManager.cs" />
+    <Compile Include="JieNor.Megi.Identity.Go.AutoManager\BDBankTypeManager.cs" />
+    <Compile Include="JieNor.Megi.Identity.Go.AutoManager\BDContactManager.cs" />
+    <Compile Include="JieNor.Megi.Identity.Go.AutoManager\BDContactsTypeManager.cs" />
+    <Compile Include="JieNor.Megi.Identity.Go.AutoManager\BDCurrencyManager.cs" />
+    <Compile Include="JieNor.Megi.Identity.Go.AutoManager\BDEmployeeManager.cs" />
+    <Compile Include="JieNor.Megi.Identity.Go.AutoManager\BDItemManager.cs" />
+    <Compile Include="JieNor.Megi.Identity.Go.AutoManager\BDOrgUserManager.cs" />
+    <Compile Include="JieNor.Megi.Identity.Go.AutoManager\BDTrackManager.cs" />
+    <Compile Include="JieNor.Megi.Identity.Go.AutoManager\FixedAssetsManager.cs" />
+    <Compile Include="JieNor.Megi.Identity.Go.AutoManager\GLSettlementManager.cs" />
+    <Compile Include="JieNor.Megi.Identity.Go.AutoManager\IVInvoiceManager.cs" />
+    <Compile Include="JieNor.Megi.Identity.Go.AutoManager\REGTaxRateManager.cs" />
+    <Compile Include="JieNor.Megi.Identity.Go.AutoManager\SECMenuPermissionManager.cs" />
+    <Compile Include="JieNor.Megi.Identity.Go.HtmlHelper\HtmlAccount.cs" />
+    <Compile Include="JieNor.Megi.Identity.Go.HtmlHelper\HtmlBASCountry.cs" />
+    <Compile Include="JieNor.Megi.Identity.Go.HtmlHelper\HtmlBDAccount.cs" />
+    <Compile Include="JieNor.Megi.Identity.Go.HtmlHelper\HtmlBDBank.cs" />
+    <Compile Include="JieNor.Megi.Identity.Go.HtmlHelper\HtmlBDContact.cs" />
+    <Compile Include="JieNor.Megi.Identity.Go.HtmlHelper\HtmlBDContactsType.cs" />
+    <Compile Include="JieNor.Megi.Identity.Go.HtmlHelper\HtmlBDEmployee.cs" />
+    <Compile Include="JieNor.Megi.Identity.Go.HtmlHelper\HtmlBDItem.cs" />
+    <Compile Include="JieNor.Megi.Identity.Go.HtmlHelper\HtmlBDOrgUser.cs" />
+    <Compile Include="JieNor.Megi.Identity.Go.HtmlHelper\HtmlContextHelper.cs" />
+    <Compile Include="JieNor.Megi.Identity.Go.HtmlHelper\HtmlExpenseType.cs" />
+    <Compile Include="JieNor.Megi.Identity.Go.HtmlHelper\HtmlFixedAssets.cs" />
+    <Compile Include="JieNor.Megi.Identity.Go.HtmlHelper\HtmlGLSettlement.cs" />
+    <Compile Include="JieNor.Megi.Identity.Go.HtmlHelper\HtmlImage.cs" />
+    <Compile Include="JieNor.Megi.Identity.Go.HtmlHelper\HtmlIVInvoice.cs" />
+    <Compile Include="JieNor.Megi.Identity.Go.HtmlHelper\HtmlREGRelatedAttach.cs" />
+    <Compile Include="JieNor.Megi.Identity.Go.HtmlHelper\HtmlREGTaxRate.cs" />
+    <Compile Include="JieNor.Megi.Identity.Go.HtmlHelper\HtmlSECMenu.cs" />
+    <Compile Include="JieNor.Megi.Identity.Go.HtmlHelper\HtmlVoucherHelper.cs" />
+    <Compile Include="JieNor.Megi.Identity.HtmlHelper\HtmlBDCurrency.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\common\JieNor.Megi.Common.csproj">
+      <Project>{2ae7309b-bcdb-4842-a0dd-6c9aa217f2ed}</Project>
+      <Name>JieNor.Megi.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\core\JieNor.Megi.Core.csproj">
+      <Project>{e56a4df7-e8eb-407f-aafd-5b763bffa364}</Project>
+      <Name>JieNor.Megi.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\datamodel\JieNor.Megi.DataModel.csproj">
+      <Project>{2f8cbbd3-6276-49a4-87e0-8b6c4597e3e0}</Project>
+      <Name>JieNor.Megi.DataModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\entitymodel\JieNor.Megi.EntityModel.csproj">
+      <Project>{eef2457d-0b83-44e8-96ce-d6c0cf427a8a}</Project>
+      <Name>JieNor.Megi.EntityModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\identity\JieNor.Megi.Identity.csproj">
+      <Project>{2462eb8a-63a5-4fd2-ac44-1fe021be08b7}</Project>
+      <Name>JieNor.Megi.Identity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\servicecontract\JieNor.Megi.ServiceContract.csproj">
+      <Project>{675ef372-9074-46cf-890b-e85f6b1d8f50}</Project>
+      <Name>JieNor.Megi.ServiceContract</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

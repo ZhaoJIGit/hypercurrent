@@ -1,0 +1,53 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Account Balances";
+    List<JieNor.Megi.DataModel.REG.GLInitBalanceModel> bankAcctList = ViewData["bankAcctList"] as List<JieNor.Megi.DataModel.REG.GLInitBalanceModel>;
+}
+@using JieNor.Megi.Common.Utility;
+<link href="@ServerHelper.StaticServer/framework/themes/default/UserPermission.css?@ServerHelper.JSVersion" rel="stylesheet" />
+
+<div class="space"></div>
+
+<div class="m-imain mg-setup">
+
+    <div id="divMessage"></div>
+    <div class="mg-setup-title">@HtmlLang.Write(LangModule.BD, "EnterBanlancesBeforeConversionDate", "Enter your account balances until before conversion date")</div>
+
+    <div class="easyui-tabs" id="tabInit" data-options="">
+    <div title="@HtmlLang.Write(LangModule.Bank, "BankAccount", "Bank Account")">
+        <table id="balanceTable">
+            <thead>
+                <tr>
+                    <td>@HtmlLang.Write(LangModule.Bank, "Account", "Account")</td>
+                    <td>@HtmlLang.Write(LangModule.Bank, "Balance", "Balance")</td>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach (JieNor.Megi.DataModel.REG.GLInitBalanceModel item in bankAcctList)
+                    {
+                    <tr>
+                        <td>@item.MName</td>
+                        <td><input class="easyui-numberbox beginBalance" data-options="min:0,precision:2" value="@item.MBeginBalanceFor" bankAcctID="@item.MAcctID" bankCurrID="@item.MCyID" /></td>
+                    </tr>
+                    }
+                }
+            </tbody>
+        </table>
+        <div class="m-form-action m-form-action-bg">
+            <a href="javascript:void(0)" class="mg-btn mg-btn-green mg-btn-save" id="aUpdate">@HtmlLang.Write(LangKey.Save)</a><br class="clear" />
+        </div>
+    </div>
+    
+    <div title="@HtmlLang.Write(LangModule.Bank, "ChartOfAccounts", "Chart of Accounts")">
+
+    </div>
+</div>
+
+    <input type="hidden" id="hidOrgCode" value="@ViewBag.OrgCode" />
+    <div class="clear"></div>
+</div>
+
+<script src="@ServerHelper.ScriptServer/Scripts/BD/Organisation/AccountBalances.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.BD)
+

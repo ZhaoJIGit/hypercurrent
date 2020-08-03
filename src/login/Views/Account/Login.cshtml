@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "Login";
+    Layout = null;
+}
+@using JieNor.Megi.Common.Utility
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <script type="text/javascript">
+        @Html.Raw(string.Format("document.domain ='{0}';", ServerHelper.Domain))
+    </script>
+</head>
+<body>
+    @*<div class="login-top"></div>*@
+    <div class="form-login-advert">
+        <div class="form-login">
+            <div class="form-login-title">Welcome to Megi</div>
+            <div class="form-login-content">
+                <div class="form-login-email">
+                    <input type="text" id="txtEmail" />
+                </div>
+                <div class="form-login-pwd">
+                    <input type="password" id="txtPwd" />
+                </div>
+            </div>
+            <div class="form-login-toolbar">
+                <a href="@ServerHelper.GoServer" id="aLogin">Login</a>
+            </div>
+            <div class="form-login-getpwd"><a href="">Forgot your password?</a></div>
+        </div>
+        <div class="login-advert">
+            <div class="login-advert-item">
+                <div class="login-advert-photo"><img src="@ServerHelper.StaticServer/login/photos/ad1.png" /></div>
+                <div class="login-advert-title">Aged Reports in Xero</div>
+                <div class="login-advert-description">Plan your bill payments, improve your cashflow and get paid faster.</div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="login-footer">
+        <p class="try-megi">
+            Don't have a login? <a href="@ServerHelper.GoServer/Account/Register">Try Megi for free</a>
+        </p>
+        <p class="terms-privacy">
+            <a href="">Terms of use</a>
+            <a href="">Privacy</a>
+        </p>
+    </div>
+    <script src="@ServerHelper.StaticServer/fw/scripts/jquery-1.8.2.min.js?@ServerHelper.JSVersion"></script>
+    <script src="@ServerHelper.StaticServer/fw/scripts/jquery.json-2.3.min.js?@ServerHelper.JSVersion"></script>
+    <script src="@ServerHelper.StaticServer/fw/scripts/jquery.megi.common.js?@ServerHelper.JSVersion"></script>
+    <script src="@ServerHelper.LoginServer/login/scripts/Account/Login.js?@ServerHelper.JSVersion"></script>
+</body>
+</html>
+

@@ -1,0 +1,65 @@
+﻿@{
+    ViewBag.Title = "AddToGroup";
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    string selectIds = ViewData["selectIds"] as string;
+}
+@using JieNor.Megi.Common.Utility;
+<style type="text/css">
+    ul li select.m-form-item-select {
+        width:150px;
+        height:22px;
+    }
+    .m-form-group-float {
+        float: left;
+        height:50px;
+        margin-left:5px;
+    }
+</style>
+
+<div id="divAddToGroup" class="m-form m-imain">
+    <div class="m-form-item m-form-group-float">
+        <ul>
+            <li class="mg-bold">@HtmlLang.Write(LangModule.Contact, "AddToAnExistingGroup", "Add to an existing group")</li>
+            <li style="padding-top:9px;">
+                <select class="mg-data m-form-item-select easyui-combobox" id="SelectType" data-options="editable:false" style="width:140px;height:26px;">
+                    @JieNor.Megi.Identity.Go.HtmlHelper.HtmlBDContactsType.ContactsTypeOptions()
+                </select>
+            </li>
+        </ul>
+    </div>
+    <div class="m-form-item m-form-group-float" style="line-height:50px;">
+        <ul>
+            <li class="mg-bold">@HtmlLang.Write(LangKey.Or)</li>
+        </ul>
+    </div>
+    <div class="m-form-item m-form-group-float">
+        <ul>
+            <li class="mg-bold">@HtmlLang.Write(LangModule.Contact, "AddToANewGroup", "Add to a new group")</li>
+            <li><input class="mg-data m-lang" id="NewType" /></li>
+        </ul>
+    </div>
+    <input type="hidden" value="@selectIds" id="selectIds" />
+    <br class="clear" />
+    @*<div class="m-form-action">
+        <a href="/BD/Contacts/ContactsList" class="mg-btn mg-btn-gray mg-btn-cancel" id="aCancel">@HtmlLang.Write(LangKey.Cancel)</a>
+        <a href="/BD/Contacts/ContactsList" class="mg-btn mg-btn-green mg-btn-save" id="aSave" style="width:60px">@HtmlLang.Write(LangKey.Save)</a>
+        <br class="clear" />
+    </div>*@
+</div>
+
+<div class="m-toolbar-footer">
+    @if (HtmlSECMenu.HavePermission(BizObject.Contact, PermissionItem.Change))
+    {
+    <div class="left">
+        <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray">@HtmlLang.Write(LangKey.Cancel)</a>
+    </div>
+    <div class="right">
+        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aSave">@HtmlLang.Write(LangKey.Save)</a>
+    </div>
+    }
+</div>
+@HtmlLang.WriteScript(LangModule.Contact)
+@HtmlLang.WriteScript(LangModule.Acct)
+
+<script src="@ServerHelper.ScriptServer/scripts/BD/Contacts/AddToGroup.js?@ServerHelper.JSVersion"></script>
+

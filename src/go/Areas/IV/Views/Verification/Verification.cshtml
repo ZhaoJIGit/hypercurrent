@@ -1,0 +1,73 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    List<IVVerificationInforModel> vfcList = ViewData["VerificationList"] as List<IVVerificationInforModel>;
+}
+@using JieNor.Megi.Common.Utility;
+<div class="m-imain m-payment">
+    <div class="m-imain-content">
+        <div class="m-form-vtcl" id="divMakePayment">
+            <div class="m-form-vtcl-content">
+                @{
+                    if (vfcList != null && vfcList.Count > 0)
+                    {
+                        <div class="m-form-section section-type">
+                            @foreach (IVVerificationInforModel model in vfcList)
+                            {
+                                <div class="m-form-item-l">
+                                    <div class='m-tip'>
+                                        @switch (model.MBizType)
+                                        {
+                                            case BizType.Invoice_Purchase:
+                                                @HtmlLang.WriteFormat(LangModule.IV, "Reconcile_Purchase", "{2} <span class='red m-bold'>{0} {1}</span> in <span class='red'>bill</span>.", Math.Abs(model.Amount).To2Decimal(), model.MCurrencyID,model.MContactName);
+                                                break;
+                                            case BizType.Invoice_Purchase_Red:
+                                                @HtmlLang.WriteFormat(LangModule.IV, "Reconcile_Purchase_Red", "{2} <span class='red m-bold'>{0} {1}</span> in <span class='red'>credit Note</span>.", Math.Abs(model.Amount).To2Decimal(), model.MCurrencyID,model.MContactName);
+                                                break;
+                                            case BizType.Invoice_Sale:
+                                                @HtmlLang.WriteFormat(LangModule.IV, "Reconcile_Sale", "{2} <span class='red m-bold'>{0} {1}</span> in <span class='red'>invoice</span>.", Math.Abs(model.Amount).To2Decimal(), model.MCurrencyID,model.MContactName);
+                                                break;
+                                            case BizType.Invoice_Sale_Red:
+                                                @HtmlLang.WriteFormat(LangModule.IV, "Reconcile_Sale_Red", "{2} <span class='red m-bold'>{0} {1}</span> in <span class='red'>credit note</span>.", Math.Abs(model.Amount).To2Decimal(), model.MCurrencyID,model.MContactName);
+                                                break;
+                                            case BizType.Pay_Purchase:
+                                                @HtmlLang.WriteFormat(LangModule.IV, "Reconcile_Pay_Purchase", "{2} <span class='red m-bold'>{0} {1}</span> in <span class='red'>payment to bills</span>.", Math.Abs(model.Amount).To2Decimal(), model.MCurrencyID,model.MContactName);
+                                                break;
+                                            case BizType.Pay_Other:
+                                                @HtmlLang.WriteFormat(LangModule.IV, "Reconcile_Pay_Other", "{2} <span class='red m-bold'>{0} {1}</span> in <span class='red'>Direct payment</span>.", Math.Abs(model.Amount).To2Decimal(), model.MCurrencyID,model.MContactName);
+                                                break;
+                                            case BizType.Pay_PurReturn:
+                                                @HtmlLang.WriteFormat(LangModule.IV, "Reconcile_Pay_PurReturn", "{2} <span class='red m-bold'>{0} {1}</span> in <span class='red'>Refund to bill</span>.", Math.Abs(model.Amount).To2Decimal(), model.MCurrencyID,model.MContactName);
+                                                break;
+                                            case BizType.Pay_OtherReturn:
+                                                @HtmlLang.WriteFormat(LangModule.IV, "Reconcile_Pay_OtherReturn", "{2} <span class='red m-bold'>{0} {1}</span> in <span class='red'>Direct refund</span>.", Math.Abs(model.Amount).To2Decimal(), model.MCurrencyID,model.MContactName);
+                                                break;
+                                            case BizType.Receive_Sale:
+                                                @HtmlLang.WriteFormat(LangModule.IV, "Reconcile_Receive_Sale", "{2} <span class='red m-bold'>{0} {1}</span> in <span class='red'>Payment to invoice</span>.", Math.Abs(model.Amount).To2Decimal(), model.MCurrencyID,model.MContactName);
+                                                break;
+                                            case BizType.Receive_Other:
+                                                @HtmlLang.WriteFormat(LangModule.IV, "Reconcile_Receive_Other", "{2} <span class='red m-bold'>{0} {1}</span> in <span class='red'>Direct Payment</span>.", Math.Abs(model.Amount).To2Decimal(), model.MCurrencyID,model.MContactName);
+                                                break;
+                                            case BizType.Receive_SaleReturn:
+                                                @HtmlLang.WriteFormat(LangModule.IV, "Reconcile_Receive_SaleReturn", "{2} <span class='red m-bold'>{0} {1}</span> in <span class='red'>Direct refund</span>.", Math.Abs(model.Amount).To2Decimal(), model.MCurrencyID,model.MContactName);
+                                                break;
+                                            case BizType.Receive_OtherReturn:
+                                                @HtmlLang.WriteFormat(LangModule.IV, "Reconcile_Receive_OtherReturn", "{2} <span class='red m-bold'>{0} {1}</span> in <span class='red'>Credit Note</span>.", Math.Abs(model.Amount).To2Decimal(), model.MCurrencyID,model.MContactName);
+                                                break;
+                                        }
+                                    </div>
+                                    @Html.Raw(string.Format("<a href='javascript:void(0)' class='easyui-linkbutton easyui-linkbutton-yellow easyui-linkbutton-s-s btnCredit' amt='{0}' cy='{1}' BizType='{2}' BizBillType='{3}'>Reconcile</a>", Math.Abs(model.Amount).To2Decimal(), model.MCurrencyID, model.MBizType, model.MBizBillType))
+                                </div>
+                            }
+                            <div class="clear"></div>
+                        </div>
+                    }
+                }
+            </div>
+            @HtmlLang.WriteScript(LangModule.IV)
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<input type="hidden" id="hidInvoiceID" value='@ViewData["InvoiceID"]' />
+<input type="hidden" id="hidSrcBizBillType" value='@ViewData["SrcBizBillType"]' />
+<script src="@ServerHelper.ScriptServer/Scripts/IV/Verification/Verification.js?@ServerHelper.JSVersion"></script>

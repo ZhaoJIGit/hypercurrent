@@ -1,0 +1,54 @@
+﻿@using JieNor.Megi.Common.Utility
+@using JieNor.Megi.EntityModel.MultiLanguage
+@using JieNor.Megi.Identity
+@using JieNor.Megi.Identity.HtmlHelper
+@using JieNor.Megi.Tools
+@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    var fpSetting = ViewBag.DataModel as JieNor.Megi.DataModel.FP.FPImportTypeConfigModel;
+}
+
+<div class="m-imain">
+    <div class="m-imain-content" style="text-align: left;">
+        <div class="import-banktransaction">
+            <div class="row" style="height: 50px">
+                <div style="float: left; line-height: 32px; width: 100px;">@HtmlLang.Write(LangModule.FP, "AccountNum", "账号")</div>
+                <input type="text" id="txtAccountNo" name="MAccountNo" class="easyui-validatebox textbox" data-options="required:true" maxlength="30" style="width: 222px; height: 27px;border-color:#999
+" value="@fpSetting.MAccountNo" />
+                <input type="text" style="position:absolute;width:0px;left:-100px;" />
+            </div>
+            <div class="row" style="height: 50px">
+                <div style="float: left; line-height: 32px; width: 100px;">@HtmlLang.Write(LangModule.FP, "PassWord", "密码")</div>
+                <input type="password" class="password-password" id="password" name="MPassword" data-options="required:true" style="width: 220px;" value="@fpSetting.MPassword" />
+            </div>
+            <div class="row" style="height: 50px">
+                <div class="content">
+                    <span>@HtmlLang.Write(LangModule.FP, "AutoSetMonthsData1", "自动获取当前月之前")</span>
+                    <select id="dataMonthAgo" class="easyui-combobox" style="width: 50px; height: 30px;" editable="false">
+                        <option value="1" selected>1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                    <span>@HtmlLang.Write(LangModule.FP, "AutoSetMonthsData2", "个月份的发票数据")</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="m-toolbar-footer">
+    <div class="left">
+        <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray">@HtmlLang.Write(LangKey.Cancel)</a>
+    </div>
+    <div class="right">
+        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aSure">@HtmlLang.Write(LangKey.Save)</a>
+    </div>
+</div>
+<input type="hidden" id="itemId" value="@fpSetting.MItemID" />
+<input type="hidden" id="monthAgo" value="@fpSetting.MMonthAgo"/>
+
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/FP/FPSetAutoParams.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.Common)
+@HtmlLang.WriteScript(LangModule.FP)
+<script type="text/javascript" src="@ServerHelper.StaticServer/FW/scripts/jquery.form.js?@ServerHelper.JSVersion"></script>
+
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)

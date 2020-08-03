@@ -1,0 +1,65 @@
+﻿@{
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+    ViewBag.Title = @HtmlLang.Write(LangModule.Login, "ResetPwd", "ResetPwd");
+    string email = ViewData["email"] as string;
+}
+@using JieNor.Megi.Common.Utility
+<div class="m-reg-box">
+    <div id="loginBox" class="m-login-box">
+        <div class="container form-login-content">
+            <!--<h1 class="m-logo">MEGI</h1>-->
+            <div class="migi_Logo">
+
+            </div>
+            <h3>@HtmlLang.Write(LangModule.Login, "ResetAccountPassword", "Reset password for your account:")</h3>
+            <h3>@email</h3>
+
+            <div id="divResetPwd" class="main reg">
+
+                <div class="item-wrap" style="padding-bottom:10px">
+                    <input id="pwd_text" type="text" tabindex="1" hint="@HtmlLang.Write(LangModule.Login, "NewPassword", "New password")" class="easyui-validatebox textbox reg-info-b" data-options="required:true,validType:'minLength[8]'" style="padding-left:5px" />
+                    <input id="pwd" type="password" class="easyui-validatebox mg-data textbox reg-info-b" data-options="required:true,validType:'minLength[8]'" name="MPassWord" style="display: none; padding-left: 5px" />
+                    <label id="pwd_tips" style="color:red;display:none;width:482px;">@HtmlLang.Write(LangModule.Login, "PasswordIsSimple", "密码至少为8位，需包含字母、数字和特殊字符。")</label>
+                </div>
+               
+                <div class="item-wrap" style="padding-bottom:10px">
+                    <input id="rpwd_text" type="text" tabindex="0" hint="@HtmlLang.Write(LangModule.Login, "confirmpassword", "Confirm Password")" class="easyui-validatebox textbox reg-info-b" data-options="required:true,validType:'minLength[8]'" style="padding-left:5px" />
+                    <input id="rpwd" type="password" class="easyui-validatebox textbox reg-info-b" data-options="required:true,validType:'minLength[8]'" style="display: none; padding-left: 5px" />
+                    <label id="rpwd_tips" style="color:red;display:none;width:482px;">@HtmlLang.Write(LangModule.Login, "PasswordIsSimple", "密码至少为8位，需包含字母、数字和特殊字符。")</label>
+                </div>
+
+
+                <input type="hidden" class="mg-data textbox reg-info-b" name="MEmailAddress" value="@email" />
+                <input type="hidden" class="mg-data" name="SendLinkID" value="@ViewData["SendLinkID"]" />
+
+                <div class="m-action">
+                    <a href="javascript:void(0)" class="m-btn-blue" id="ResetPwd">@HtmlLang.Write(LangModule.Login, "ResetPassword", "Reset Password")</a>
+                </div>
+
+                <div class="m-signIn-wrap">
+                    <div class="wrap-problem">@HtmlLang.WriteFormat(LangModule.Login, "HaveProblem", "Have problems? Please <a href=\"mailto:{0}\">Contact us</a> and we will work it out!", System.Configuration.ConfigurationManager.AppSettings["ServiceEmail"]) </div>
+                    <div class="wrap-have-account">
+                        <span>@HtmlLang.Write(LangModule.Login, "AlreadyHaveAnAccount", "Already have an account?")</span>
+                    </div>
+                    <div class="wrap-btn">
+                        <a id="aSignInHere" href="@ServerHelper.LoginServer">@HtmlLang.Write(LangModule.Login, "SignInHere", "Sign in here")</a>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<input type="hidden" value="@email" id="hidEmail" />
+
+@HtmlLang.WriteScript(LangModule.Login)
+<script type="text/javascript">
+    window.focusSwitch("#pwd_text", "#pwd");
+    window.focusSwitch("#rpwd_text", "#rpwd");
+</script>
+<script src="@ServerHelper.StaticServer/FW/scripts/jquery.megi.password.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.LoginServer/login/scripts/Password/ResetPassword.js?@ServerHelper.JSVersion"></script>
+
+

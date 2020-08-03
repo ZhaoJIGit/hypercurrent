@@ -1,0 +1,149 @@
+﻿@{
+    ViewBag.Title = "UserEdit";
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+@using JieNor.Megi.Identity.HtmlHelper;
+@using JieNor.Megi.EntityModel.MultiLanguage;
+@using JieNor.Megi.Common.Utility;
+
+@using JieNor.Megi.Tools
+@using JieNor.Megi.Common.Context
+@using JieNor.Megi.EntityModel.Enum
+@{
+    //获取所有的权限
+    var accessResponse = AccessHelper.Access();
+    //获取上下文
+    var ctx = accessResponse.ctx;
+    //所有权限
+    var accessList = accessResponse.Access;
+    //是否是总账版
+    bool isSmartVersion = ctx.MOrgVersionID == OrgVersionEnum.Smart;
+}
+
+@*主体内容*@
+<div id="DivUserEdit">
+    <div class="m-imain" style="overflow-y:hidden">
+        <div class="m-imain-content">
+            <div class="m-form-vtcl" style="padding:0px;">
+                <div class="m-form-vtcl-content" style="padding:0px;">
+                    @*用户基本信息*@
+                    <div class="m-form-section section-type4" style="padding-bottom:20px;">
+                        <div class="m-form-section-title">@HtmlLang.Write(LangModule.User, "UserDetails", "User Details")</div>
+                        <div>
+                            <div class="m-form-item" style="height: 50px;width:346px;">
+                                @*电子邮箱*@
+                                <ul>
+                                    <li class="mg-bold">@HtmlLang.Write(LangKey.Email)</li>
+                                    <li><input class="easyui-validatebox mg-data" id="txtMEmail" name="MEmail" data-options="required:true,validType:'email'" style="height:23px;width:182px;" /></li>
+                                </ul>
+                            </div>
+                            <div class="m-form-item" style="height: 50px;width:346px;">
+                                @*姓*@
+                                <ul>
+                                    <li class="mg-bold">@HtmlLang.Write(LangKey.FirstName)</li>
+                                    <li><input class="easyui-validatebox mg-data" id="txtMFirstName" name="MFirstName" data-options="required:true" style="height:23px;width:181px;" disabled="disabled"/></li>
+                                </ul>
+                            </div>
+                            <div class="m-form-item" style="height: 50px;width:346px;">
+                                @*名*@
+                                <ul>
+                                    <li class="mg-bold">@HtmlLang.Write(LangKey.LastName)</li>
+                                    <li><input class="easyui-validatebox mg-data" id="txtMLastName" name="MLastName" data-options="required:true" style="height:23px;width:181px;" disabled="disabled"/></li>
+                                </ul>
+                            </div>
+                            
+                            <div class="clear"></div>
+                        </div>
+                        <div>
+                            <div class="m-form-item" style="height: 50px;width:346px;">
+                                @*岗位*@
+                                <ul>
+                                    <li class="mg-bold">@HtmlLang.Write(LangModule.User, "Position", "Position")</li>
+                                    <li>
+                                        <input id="ddlPosition" class="easyui-combotree mg-data mg-default" multiple="true" cascadeCheck="false" data-options="required:true,editable:false" style="height:26px;width:185px;"/>
+                                    </li>
+                                    @*<li class="mg-bold"><input name="IsSelfData" type="checkbox" class="mg-data" id="cbxIsSelf">@HtmlLang.Write(LangModule.User, "OnlyViewSelfData", "Only view herself/himself data")</li>*@
+                                </ul>
+                            </div>
+                            <div class="m-form-item" style="height: 50px;width:346px;">
+                                @*角色*@
+                                <ul>
+                                    <li class="mg-bold">@HtmlLang.Write(LangModule.User, "Role", "Role")</li>
+                                    <li>
+                                        <input name="MRole" id="ddlRole" class="easyui-combobox mg-data mg-default" data-options="required:true,editable:false" style="height:26px;width:185px;"/>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div id="divPermStatus" class="m-form-item" style="height: 50px;width:190px;display:none;">
+                                @*状态*@
+                                <ul>
+                                    <li class="mg-bold">@HtmlLang.Write(LangModule.User, "Status", "Status")</li>
+                                    <li><span id="spanPermStatus"></span></li>
+                                </ul>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+
+                        @if (!isSmartVersion)
+                        {
+                            <div>
+                                <div class="m-form-item" style="height: 15px;width:346px;">
+                                    @*岗位*@
+                                    <ul>
+                                        @*<li class="mg-bold">@HtmlLang.Write(LangModule.User, "Position", "Position")</li>*@
+
+                                        <li class="mg-bold" style="padding-top:5px"><input name="IsSelfData" type="checkbox" class="mg-data" id="cbxIsSelf"><label for="cbxIsSelf">@HtmlLang.Write(LangModule.User, "OnlyViewSelfData", "Only view herself/himself data")</label></li>
+                                    </ul>
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                        }
+                    </div>
+                    @*用户权限信息*@
+                    <div class="m-form-section" id="div_user_role">
+                        <div id="divUserRoleShowHide" class="m-form-section-title" style="margin-bottom:8px;">@HtmlLang.Write(LangModule.User, "RoleCustom", "Role - Custom")</div>
+                        <div id="divUserRole">
+                            <table id="tbUserRole" fitcolumns="false"></table>@*权限列表*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        @*隐藏域字段*@
+        <input type="hidden" id="ItemId" name="MItemID" class="mg-data m-form-key" value="@ViewData["ItemId"]" />@*用户ID*@
+        <input type="hidden" id="PermStatus" name="MPermStatus" class="mg-data" value="@ViewData["PermStatus"]" />@*用户状态*@
+        <input type="hidden" id="hidIsArchive" name="MIsArchive" class="mg-data" />
+        <input type="hidden" id="hidMPosition" name="MPosition" class="mg-data" />@*用户选择的岗位*@
+        <input type="hidden" id="hidIsCurrentUser" value='@ViewData["IsCurrentUser"]' />
+    </div>
+    @*底部工具栏*@
+    @if (HtmlSECMenu.HavePermission(BizObject.User, PermissionItem.Change))
+    {
+        <div class="m-toolbar-footer">
+            <div class="left">
+                <a href="javascript:void(0);" class="easyui-linkbutton" id="aDelete" style="display:none;">@HtmlLang.Write(LangModule.User, "DeleteUser", "Delete User")</a>@*删除用户*@
+            </div>
+            <div class="right">
+                <a href="javascript:void(0);" class="easyui-linkbutton easyui-linkbutton-yellow" id="aSave" style="display:none;"><span id="ConOrSave">@HtmlLang.Write(LangModule.User, "Continue", "Continue")</span></a>@*保存新增 或 保存编辑*@
+                <a href="javascript:void(0);" class="easyui-linkbutton easyui-linkbutton-yellow" id="aInvite" style="display:none;">@HtmlLang.Write(LangModule.User, "ResendInvite", "Resend Invite")</a>@*发送邀请*@
+            </div>
+        </div>
+    }
+    @HtmlLang.WriteScript(LangModule.User)
+    @HtmlLang.WriteScript(LangModule.IV)
+    @if (!isSmartVersion)
+    {
+
+        @*用户编辑所用到的 js 文件*@
+        <script type="text/javascript" src="@ServerHelper.ScriptServer/scripts/BD/User/UserEdit.js?@ServerHelper.JSVersion"></script>
+    }
+    else
+    {
+
+        @*用户编辑所用到的 js 文件*@
+        <script type="text/javascript" src="@ServerHelper.ScriptServer/scripts/BD/User/UserEditSmart.js?@ServerHelper.JSVersion"></script>
+    }
+    @*多语言列表 json 格式*@
+    @JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)
+</div>

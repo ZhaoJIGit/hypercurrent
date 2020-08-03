@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "Finish";
+    Layout = "~/Areas/BD/Views/Shared/_SetupLayout.cshtml";
+}
+<div class="setup-form">
+    <div class="m-setup-content">
+        <div class="setup-form-wrapper">
+            @Html.Partial("UcFinish")
+            <p class="to-do-next">@HtmlLang.Write(LangModule.BD, "WantToDoNext", "What do you want to do next:")  </p>
+            <ul class="to-do-list">
+                <li><a id="aEnableGL" href="javascript:void(0)" style="font-size:15px;">@HtmlLang.Write(LangModule.BD, "EnableGeneralLedger", "Enable General Ledger")</a></li>
+                <li><a id="aGoDashboard" href="javascript:void(0)" style="font-size:15px;">@HtmlLang.Write(LangModule.BD, "GoToDashboard", "Take me to the dashboard")</a></li>
+            </ul>
+        </div>
+        <input type="hidden" class="mg-data" name="MSystemLanguage" />
+        <input type="hidden" class="mg-data m-form-key" name="MItemID" id="hidItemId" />
+    </div>
+    @*<div class="m-help-bar">
+        <span><h3>观看新手指南</h3><p>您可以进入设置界面编辑更多设置选项</p></span>
+    </div>*@
+</div>
+<script type="text/javascript" src="@ServerHelper.GoServer/Scripts/BD/Setup/Coupon.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.BD)

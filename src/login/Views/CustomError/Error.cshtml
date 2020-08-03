@@ -1,0 +1,36 @@
+﻿@{ 
+    Layout = null;
+}
+<html>
+<head>
+    <link type="text/css" rel="stylesheet" href="@ServerHelper.StaticServer/fw/min/jquery.megi.min.css?@ServerHelper.JSVersion" />
+    <script type="text/javascript" src="@ServerHelper.StaticServer/fw/min/jquery.megi.min.js?@ServerHelper.JSVersion"></script>
+    <script>
+        $(document).ready(function () {
+            $(".m-error-close").off("click").on("click", function () {
+                $("#XYTipsWindowBg").remove();
+                $(".m-error-close").closest("div[class='XYTipsWindow']").parent().remove();
+            });
+
+            window.onbeforeunload = function () {
+                window.location.href = window.location.host;
+            }
+        });
+    </script>
+</head>
+<body class="">
+    <div class="m-error-parentdiv" style="position: relative; width: 600px;display:none">
+        <span class="m-error-close">关闭</span>
+    </div>
+    <div class="m-error" style="margin-left: auto; margin-right: auto; display: inline-block; width: 100%; height: 55%; margin-top: 6%;">&nbsp;</div>
+    <div class="m-error-msg" style="text-align: center; margin: 0 auto; font-size: 24px;">
+        <p>访问失败,请刷新界面或联系顾问反馈问题</p>
+        <p>Access failed, please refresh the page or contact the consultant to feedback the question</p>
+    </div>
+    @*<div class="m-error-action" style="text-align: center; margin: 0 auto; font-size: 20px;color: #309AF2;padding-top:20px">
+        <a href="javascript:void(0)" id="btnFeedBack" style="margin:10px">我要反馈</a>
+        <a href="javascript:void(0)" id="btnRefresh">刷新页面</a>
+    </div>*@
+   
+</body>
+</html>

@@ -1,0 +1,74 @@
+﻿@using JieNor.Megi.Identity.HtmlHelper;
+@using JieNor.Megi.EntityModel.MultiLanguage;
+@using JieNor.Megi.Common.Utility;
+@using JieNor.Megi.Core;
+@using JieNor.Megi.Identity.Go.HtmlHelper;
+
+@{
+   
+    
+    ViewBag.Title = HtmlLang.Write(LangModule.BD, "ExpenseItemEdit", "Expense Item Edit");
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+<style>
+    #divItemEdit .m-form-field {
+        padding-left: 20px;
+        padding-top: 20px;
+    }
+</style>
+<div id="divItemEdit" class="m-form m-imain">
+
+    <div class="m-form-field">
+        <div class="m-form-setion">@JieNor.Megi.Identity.HtmlHelper.HtmlLang.Write(JieNor.Megi.EntityModel.MultiLanguage.LangKey.Name)</div>
+        <div class="m-form-input">
+            <input class="easyui-validatebox m-lang mg-width200 mg-data" data-options="required:true" id="txtMNumber" name="MName" />
+        </div>
+    </div>
+    @*<div class="m-form-field">
+        <div class="m-form-setion">@HtmlLang.Write(LangModule.BD, "SalaryParentID", "The higher Salary item")</div>
+        <div class="m-form-input">
+            <input disabled class="easyui-combobox mg-width200 mg-data" style="height:26px" data-options="required:false" panelheight="100" id="cbxMparent" name="MParentItemID" />
+        </div>
+    </div>*@
+    @if (ViewBag.IsEnableGL)
+    {
+        <div class="m-form-field">
+            <div class="m-form-setion">@HtmlLang.Write(LangModule.Common, "Account", "Account")</div>
+            <div class="m-form-input">
+                <input class="easyui-combobox mg-data m-account-combobox" data-options="valueField:'MCode',textField:'MFullName',url:'/BD/BDAccount/GetBDAccountListByCode?IsActive'" id="cbxAccount" style="width:204px;height:26px" name="MAccountCode" />
+            </div>
+        </div>
+    }
+    <div class="m-form-field">
+        <div class="m-form-setion">@HtmlLang.Write(LangModule.PA, "CalculationLogic", "计算逻辑")</div>
+        <div id="divCalculationLogic" class="m-form-input">
+            <div class="radio" style="float:left;">
+                <input class="mg-data" type="radio" name="MCoefficient" value="1" id="rdoAdd" />
+                <label for="rdoAdd">@HtmlLang.Write(LangModule.PA, "IncreaseItem", "增加项")</label>
+            </div>
+            <div class="radio" style="float: left; margin-left: 20px;">
+                <input class="mg-data" type="radio" name="MCoefficient" value="-1" id="rdoSubtract" />
+                <label for="rdoSubtract">@HtmlLang.Write(LangModule.PA, "SubtractItem", "扣除项")</label>
+            </div>        
+        </div>
+    </div>
+    <input type="hidden" id="hideEditType" value="@ViewBag.EditType"/>
+    <input class="mg-data m-form-key" type="hidden" maxlength="30" id="hidItemID" name="MItemID" value="@ViewBag.ItemID">
+</div>
+
+<div class="m-toolbar-footer">
+    @if (JieNor.Megi.Identity.Go.HtmlHelper.HtmlSECMenu.HavePermission(JieNor.Megi.Core.Const.BizObject.Setting, JieNor.Megi.Core.Const.PermissionItem.Change))
+    {
+        <div class="left">
+            <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray" id="aCancel">@HtmlLang.Write(LangKey.Cancel)</a>
+        </div>
+        <div class="right">
+            <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aSave">@HtmlLang.Write(LangKey.Save)</a>
+        </div>
+        <br class="clear" />
+    }
+</div>
+<input type="hidden" name="op" id="op" />
+<input type="hidden" id="hideIsEnableGL" value="@ViewBag.IsEnableGL" />
+<script src="@ServerHelper.GoServer/scripts/PA/PayItem/PayItemEdit.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.BD)

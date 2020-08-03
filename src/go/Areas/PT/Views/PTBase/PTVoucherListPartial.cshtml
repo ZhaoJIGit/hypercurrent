@@ -1,0 +1,91 @@
+﻿@using JieNor.Megi.DataModel.PT;
+@using JieNor.Megi.EntityModel.Enum;
+@using JieNor.Megi.Common.Utility;
+@using JieNor.Megi.Common.Context;
+@model JieNor.Megi.DataModel.PT.PTListModel
+@{
+    //是否有编辑权限
+    bool isCanEditPermission = HtmlSECMenu.HavePermission(BizObject.General_Ledger, PermissionItem.Change);
+    List<PTVoucherModel> list = Model.List as List<PTVoucherModel>;
+    var isSmartVersion = ContextHelper.MContext.MOrgVersionID == JieNor.Megi.EntityModel.Enum.OrgVersionEnum.Smart;
+}
+<div id="divVoucher">
+    @if (list != null)
+    {
+        var idx = 0;
+        foreach (var ptModel in list)
+        {
+            <div class="print-tmpl" id="@ptModel.MItemID">
+                <div class="name">
+                    <p><em class="drag">&nbsp;</em>@ptModel.MName</p>
+                    @if (isCanEditPermission)
+                    {
+                        <div id="@string.Format("divVoucherOptions{0}", idx)" class="options" style="padding-right: 10px;">
+                            <a href="javascript:void(0)" id="aOptions" class="easyui-menubutton" style="padding-left:9px; padding-right:6px;"
+                               data-options="menu:'#@string.Format("divVoucherFolderOptions{0}", idx)'">@HtmlLang.Write(LangModule.Docs, "Options", "Options")</a>
+                            <div id="@string.Format("divVoucherFolderOptions{0}", idx)" style="width: 60px;">
+                                <div class="edit"><a href="javascript:void(0)" id="aEdit">@HtmlLang.Write(LangModule.IV, "Edit", "Edit")</a></div>
+                                @if (!ptModel.MIsSys)
+                                {
+                                    <div class="delete"><a href="javascript:void(0)" id="aDelete" class="delete-folder">@HtmlLang.Write(LangKey.Delete)</a></div>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="details">
+                    <div style="float:left;">
+                        <div class="settings">
+                            <div>
+                                <ul class="show-list" style="width:500px;">
+                                    @{
+                                        string fmt = "{0}：{1}";
+                                    <li>@string.Format(fmt, HtmlLang.Write(LangModule.Common, "IsDefaultPrintTemplate", "是否默认凭证打印模板"), HtmlLang.Write(LangModule.Common, (ptModel.MIsDefault ? "Yes" : "No")))</li>
+                                    <li>@string.Format(fmt, HtmlLang.Write(LangModule.Common, "TemplateType", "模板类型"), HtmlLang.Write(LangModule.GL, ptModel.MTemplateType))</li>
+                                    <li>@string.Format(fmt, HtmlLang.Write(LangModule.Common, "PaperType", "纸张类型"), HtmlLang.Write(LangModule.Common, ((PTPaperTypeEnum)ptModel.MPaperType).ToString()))</li>
+                                    <li>@string.Format(fmt, HtmlLang.Write(LangModule.Common, "PaperDirection", "纸张方向"), HtmlLang.Write(LangModule.Common, ((PTPaperDirectionEnum)ptModel.MPaperDirection).ToString()))</li>
+                                    <li>@string.Format(fmt, HtmlLang.Write(LangModule.Common, "PrintLineAndTitle", "是否打印标题和网格线"), HtmlLang.Write(LangModule.Common, (ptModel.MIsPrintLine ? "Yes" : "No")))</li>
+                                    if (ptModel.MLeftOffset != 0 || ptModel.MUpOffset != 0)
+                                    {
+                                        <li>
+                                        @{
+                                        var offsetVal = string.Empty;
+                                        var offsetTitle = HtmlLang.Write(LangModule.Common, "OverallOffset", "整体偏移").ToHtmlString();
+                                        if (ptModel.MLeftOffset != 0)
+                                        {
+                                            offsetVal = HtmlLang.WriteFormat(LangModule.Common, "PrintTemplateLeftOffset", "向左{0}毫米", ptModel.MLeftOffset).ToHtmlString().TrimEnd('；');
+                                        }
+                                        if (ptModel.MUpOffset != 0)
+                                        {
+                                            if (!string.IsNullOrWhiteSpace(offsetVal))
+                                            {
+                                                offsetVal += "; ";
+                                            }
+                                            offsetVal += HtmlLang.WriteFormat(LangModule.Common, "PrintTemplateUpOffset", "向上{0}毫米", ptModel.MUpOffset).ToHtmlString().TrimEnd('；');
+                                        }
+                                        }
+                                        @string.Format(fmt, offsetTitle, offsetVal)</li>
+                                    }
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="logo-wrapper">
+                        <div class="logo upload-logo">
+                            <img style="cursor:default;" src="@string.Format("{0}/fw/themes/{1}/images/{2}.png", ServerHelper.StaticServer, ContextHelper.MContext.MLCID, ptModel.MPreviewImage)" />
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+            idx++;
+        }
+    }
+    else
+    {
+        @HtmlLang.Write(LangModule.Common, "nodata", "No data")
+    }
+</div>
+<script src="@ServerHelper.GoServer/scripts/PT/PTBase.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.GoServer/scripts/PT/PTVoucher/PTVoucherList.js?@ServerHelper.JSVersion"></script>

@@ -1,0 +1,42 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+@using JieNor.Megi.Common.Utility
+<!--新增核算项目-->
+<div id="divEdit" class="m-form m-imain" style="padding-left:20px">
+   
+    <div class="m-form-item">
+        <span>@HtmlLang.Write(LangModule.Acct, "BankAccName", "Account Balance")</span>
+        <br />
+        <span><input type="text" class="easyui-validatebox mg-data" style="height: 18px; line-height: 18px; width: 150px" value="@ViewData["AccountName"]" disabled />  </span>
+        <br />
+        <span> @HtmlLang.Write(LangModule.Acct, "Contact", "Contact")</span>
+        <br />
+        <input id="sltContact" class="easyui-validatebox easyui-combobox  mg-data" data-option="required:true"/>
+    </div>
+
+    <input type="hidden" class="mg-data" value="@ViewData["AccountId"]" id="accountId" />
+    <input type="hidden" class="mg-data" value="@ViewData["CyID"]" id="mcyId" />
+    <!--原币-->
+    <input type="hidden" class="mg-data" id="tbxInitBalanceFor"/>
+    <!--本位币-->
+    <input type="hidden" class="mg-data" id="tbxInitBalance" />
+    <input type="hidden" class="mg-data" id="tbxAccumulatedDebit"/>
+    <input type ="hidden" class="mg-data" id="tbxAccumulatedCredit"/>
+    <input type="hidden" id="itemId" />
+   
+</div>
+<div class="m-toolbar-footer">
+    @if (HtmlSECMenu.HavePermission(BizObject.Contact, PermissionItem.Change))
+    {
+        <div class="left">
+            <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-gray" id="aCancel">@HtmlLang.Write(LangKey.Cancel)</a>
+        </div>
+        <div class="right">
+            <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aSave">@HtmlLang.Write(LangKey.Save)</a>
+        </div>
+    }
+</div>
+<script src="@ServerHelper.ScriptServer/Scripts/BD/BDAccount/AddAccountingProject.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.Bank)
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)

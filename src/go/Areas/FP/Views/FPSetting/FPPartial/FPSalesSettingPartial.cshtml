@@ -1,0 +1,61 @@
+﻿@{
+}
+@using JieNor.Megi.Common.Utility
+
+<!--分布视图-->
+<div style="height: 150px" id="IncomesFaPiao">
+    <div class="title" style="font-size: 18px; font-weight: bold; margin: 10px;">@HtmlLang.Write(LangModule.FP, "FaPiaoTypeAndImportWay", "发票导入类型及导入方式")</div>
+    <div class="line line-tint"></div>
+    <div style="padding-top: 20px;">
+        <div>
+            <span style="margin: 10px; font-size: 13px; width: 200px;">@HtmlLang.Write(LangModule.FP, "SpecialAndProfessionalFaPiao", "增值税普通及专用发票")</span>
+            <select id="specialAndProfessionalType" name="SpecialAndProfessionalType" class="mg-data m-form-item-select easyui-combobox" style="width: 150px; height: 32px;">
+                <option value="1">@HtmlLang.Write(LangModule.FP, "LocalUpload", "本地上传")</option>
+                <option value="2">@HtmlLang.Write(LangModule.FP, "AutoUpload", "自动获取")</option>
+            </select>
+            <a id="specialAndProfessionalSetAutoParam" href="javascript:void(0)" onclick="FPFaPiaoSetting.OpenParamsSet(0,0)" style="margin-left: 10px;">@HtmlLang.Write(LangModule.FP, "SetAutoParam", "设置自动获取参数")</a>
+        </div>
+    </div>
+
+
+    <div class="clear"></div>
+</div>
+
+<div style="display: inline-block; height: 300px; width: 100%;">
+    <div class="title" style="font-size: 18px; font-weight: bold; margin: 10px;">@HtmlLang.Write(LangModule.FP, "FaPiaoTypeFields", "发票导入字段")</div>
+    <div class="line line-tint"></div>
+    <div class="m-form m-form-icon" style="margin-left: 10px;">
+        <div class="column" style="width: 50%">
+            <div class="cell">
+                <div>
+                    <span style="font-size: 16px; font-weight: bold; margin: 10px;">@HtmlLang.Write(LangModule.FP, "FaPiaoInfos", "发票信息")</span>
+                    <input type="checkbox" id="isSalesInfosAllCheck" disabled='disabled' />
+                    <span>@HtmlLang.Write(LangModule.FP, "SelectAll", "全选")</span>
+                </div>
+            </div>
+            <div class="cell" id="SalesFaPiaoInfoCheckGroup" style="margin-bottom: 10px;">
+            </div>
+        </div>
+
+        <div class="column" style="width: 50%">
+            <div class="cell">
+                <div>
+                    <span style="font-size: 16px; font-weight: bold; margin: 10px;">@HtmlLang.Write(LangModule.FP, "FaPiaoDetailInfos", "发票明细")</span>
+                    <input type="checkbox" id="isSalesDetailsAllCheck" disabled='disabled' />
+                    <span>@HtmlLang.Write(LangModule.FP, "SelectAll", "全选")</span>
+                </div>
+            </div>
+            <div class="cell" id="SalesFaPiaoDetailCheckGroup" style="margin-bottom: 10px;">
+            </div>
+        </div>
+
+    </div>
+    <div class="clear"></div>
+</div>
+@*底部工具栏*@
+<div style="width: 100%">
+    <div class="right" style="width: 125px; position: absolute; bottom: 20px;  right: 20px;">
+        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aSalesSave" style="width: 120px;">@HtmlLang.Write(LangKey.Save)</a>
+    </div>
+    <div class="clear"></div>
+</div>

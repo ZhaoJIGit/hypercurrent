@@ -1,0 +1,118 @@
+﻿.vs-advance-setting-button {
+    background: url(images/vs-setting.png);
+    margin-left: 10px;
+    margin-top: 2px;
+    float: left;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.vs-action {
+    float: right;
+    position: absolute;
+    right: 43px;
+    top: 80px;
+    border-left: 1px solid #ccc;
+    z-index: 10;
+}
+
+.datagrid-cell-group {
+    font-size: 12px;
+    font-weight: bold;
+    color: #236ea9;
+    word-break: normal;
+    width: auto;
+    display: block;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow: hidden;
+}
+
+.datagrid-header td, .datagrid-body td, .datagrid-footer td {
+    border-color: #ccc !important;
+}
+
+.vs-setting-grid {
+    margin: 10px 10px 5px 10px;
+    overflow: hidden;
+}
+
+.vs-advance-ul {
+    margin: 5px 0px 5px 10px;
+}
+
+    .vs-advance-ul li {
+        margin: 5px 0px 5px 10px;
+    }
+
+.vs-confirm-button {
+    margin-left: 30px;
+    line-height: 25px;
+    float: right;
+    margin: 0 5px 5px 0;
+}
+
+.vs-demo {
+    display: none;
+}
+
+.vs-confirm-button span.l-btn-text {
+    line-height: 25px !important;
+    height: 25px !important;
+}
+
+.vs-confirm-button span.l-btn-left {
+    line-height: 25px !important;
+    height: 25px !important;
+}
+
+
+.datagrid-row-over {
+    background: #fff !important;
+    color: #444 !important;
+    cursor: default !important;
+}
+
+.vs-setting-ul {
+    text-align: left;
+    margin-left: 20px;
+}
+
+.datagrid-row-over span, .datagrid-row-over div {
+    color: #444 !important;
+}
+
+.vs-disable {
+    color: gray;
+}
+
+span.vs-modified::after{
+    content: '*';
+    color:#444;
+    font-weight:bold;
+    font-size:12px;
+    margin-top:2px;
+}
+
+.vs-number-div{
+    padding:0 20px;
+}
+
+.vs-number-table tr{
+    height:50px;
+}
+
+.vs-number-table tr td:nth-child(2n+1){
+    width: 150px;
+    text-align: left;
+    padding-right: 20px;
+    line-height: 25px;
+}
+
+.vs-number-table tr td:nth-child(2n){
+    width: 300px;
+    padding-right: 20px;
+    line-height: 50px;
+}

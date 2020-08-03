@@ -1,0 +1,264 @@
+﻿@{
+    IVReceiveModel model = ViewData["ReceiveModel"] as IVReceiveModel;
+    //业务单据日期，用于获取汇率
+    ViewData["BillBizDate"] = string.IsNullOrEmpty(model.MID) ? Convert.ToDateTime(ViewData["DefaultBizDate"]) : model.MBizDate;
+    JieNor.Megi.DataModel.BD.BDBankAccountEditModel bankModel = ViewData["BankModel"] as JieNor.Megi.DataModel.BD.BDBankAccountEditModel;
+    string jsonModel = JieNor.Megi.Common.Utility.MText.ToJson(model);
+    if (string.IsNullOrEmpty(bankModel.MItemID))
+    {
+        bankModel.MItemID = Convert.ToString(ViewData["AccountID"]);
+    }
+    //是否显示高级选项功能
+    bool showAdvance = string.IsNullOrEmpty(Request["showAdvance"]) ? true : false;
+    //是否显示选择银行功能
+    string bnkAcctDisplay = string.IsNullOrEmpty(Request["showBnkAcct"]) ? "none" : "block";
+    //是否可以编辑
+    bool isEdit = (ViewData["IsInit"] == "true" ? model.MActionPermission.MIsInitCanEdit : model.MActionPermission.MIsCanEdit) && Convert.ToBoolean(ViewData["isEdit"]) == true;
+
+    //是否正在编辑
+    bool isEditing = Convert.ToBoolean(ViewData["isEdit"]);
+    string disabledAttr1 = isEdit ? " " : " disabled=\"disabled\" ";
+
+    string bizDateValidType = ViewData["BizDateValidType"] == null ? "minDate" : "maxDate";
+
+    //是否有 联系人（编辑）权限
+    bool isCanContactChangePermission = HtmlSECMenu.HavePermission(BizObject.Contact, PermissionItem.Change);
+
+    //是否需要弹窗提示核销
+    bool IsShowVerif = model.MActionPermission.MIsCanVerification;
+    
+    string defaultBizDate = string.IsNullOrEmpty(model.MID) ? ViewData["DefaultBizDate"].ToString() : HtmlLang.ToLangDate(model.MBizDate);
+}
+@using JieNor.Megi.Common.Utility
+<div class="m-imain">
+    <script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/IV/IVFW.js?@ServerHelper.JSVersion"></script>
+    <div class="m-imain-content">
+        <div class="form-invoice-toolbar">
+            <div class="left" id="divPageTitle"></div>
+            @if (!string.IsNullOrEmpty(bankModel.MItemID))
+            {
+                <div class="bank">@Html.Raw(string.Format("[{0}({1})]", MText.Encode(bankModel.MBankName), bankModel.MCyID))</div>
+            }
+            <div id="divRefund" class="refund" style="display:none;">
+                @if (ViewData["HideRefund"] != "true")
+                {
+                    <a id="aRefund" href="javascript:void(0);">@HtmlLang.Write(LangModule.IV, "AreYouDoingRefundClinkHere.", "Are you doing refund? Clink here.")</a>
+                }
+            </div>
+            <div class="right"></div>
+            <div class="clear"></div>
+        </div>
+        @*收款单基本信息*@
+        <div class="m-form m-form-icon">
+            <div class="column">
+                <div class="cell" style="display:none;">
+                    @*收款类别*@
+                    <span class="lbl m-icon-paytype" title="@HtmlLang.Write(LangModule.IV, "ReceiveAs", "Receive as")">&nbsp;</span>
+                    <select tabindex="1" id="selType" @disabledAttr1 class="easyui-combobox" data-options="editable:false,
+                        onSelect:ReceiptEditBase.changePaymentType" name="MType" style="width:140px;">
+                        <option value="Receive_Sale">@HtmlLang.Write(LangKey.Receive_Sale)</option>
+                        <option value="Receive_Other">@HtmlLang.Write(LangKey.Receive_Other)</option>
+                        <option value="Receive_SaleReturn">@HtmlLang.Write(LangKey.Receive_SaleReturn)</option>
+                        <option value="Receive_OtherReturn">@HtmlLang.Write(LangKey.Receive_OtherReturn)</option>
+                    </select>
+                </div>
+                <div class="cell">
+                    @*联系人类型*@
+                    <span class="lbl m-icon-contacttype" title="@HtmlLang.Write(LangModule.IV, "ContactType", "Contact Type")">&nbsp;</span>
+                    <select tabindex="2" id="selContactType" class="easyui-combobox" @disabledAttr1 data-options="editable:false,
+                        onSelect:ReceiptEditBase.changeContactType" style="width:140px;">
+                        @if (model.MType == "Receive_SaleReturn" || model.MType == "Receive_OtherReturn")
+                        {
+                            <option value="Supplier">@HtmlLang.Write(LangModule.IV, "Supplier", "Supplier")</option>
+
+                            if (ViewData["IsInit"] != "true")
+                            {
+                                <option value="Employees">@HtmlLang.Write(LangModule.IV, "Employees", "Employees")</option>
+                            }
+                        }
+                        else
+                        {
+                            <option value="Customer">@HtmlLang.Write(LangModule.IV, "Customer", "Customer")</option>
+                        }
+                        <option value="Other">@HtmlLang.Write(LangModule.IV, "Other", "Other")</option>
+
+
+                    </select>
+                </div>
+                <div class="cell" style="display:@bnkAcctDisplay">
+                    <div>
+                        <span class="lbl m-icon-bank" title="@HtmlLang.Write(LangModule.IV, "BankAccount", "Bank Account")">&nbsp;</span>
+                        <select tabindex="3" id="selBankAcctID" @disabledAttr1 class="easyui-combobox" hint="@HtmlLang.Write(LangModule.IV, "BankAccount", "Bank Account")" data-options="required:true,onSelect:ReceiptEditBase.changeBankAccount,@HtmlBDAccount.BankDataOptions()" style="width:140px;"></select>
+                    </div>
+                </div>
+            </div>
+            <div class="column">
+                @*客户*@
+                <div class="cell" id="divContact">
+                    <span class="lbl m-icon-customer" title="@HtmlLang.Write(LangModule.Common, "Contact", "联系人")">&nbsp;</span>
+                    <input tabindex="2" hint="@HtmlLang.Write(LangModule.IV, "IVFrom", "From")" @disabledAttr1 data-options="required:true"
+                           id="selContact" name='ContactID' style="width:140px;" />
+                </div>
+                @*员工*@
+                <div class="cell" id="divEmployee" style="display:none;">
+                    <span class="lbl m-icon-employee" title="@HtmlLang.Write(LangModule.IV, "Employee", "Employee")">&nbsp;</span>
+                    <input tabindex="2" hint="@HtmlLang.Write(LangModule.IV, "Employee", "Employee")" @disabledAttr1 data-options="required:true"
+                           id="selEmployee" name='Employee' style="width:140px;" />
+                </div>
+            </div>
+            <div class="column">
+                <div class="cell">
+                    @*备注*@
+                    <span class="lbl m-icon-ref" title="@HtmlLang.Write(LangKey.Reference)">&nbsp;</span>
+                    <input tabindex="3" type="text" class="textbox" @disabledAttr1 id="txtRef" name="MReference" hint="@HtmlLang.Write(LangKey.Reference)" style="width:132px;padding:0 3px;" />
+                </div>
+            </div>
+            <div class="column">
+                <div class="cell">
+                    @*录入日期*@
+                    <span class="lbl m-icon-date" title="@HtmlLang.Write(LangKey.Date)">&nbsp;</span>
+                    <input tabindex="4" id="txtDate" type="text" @disabledAttr1 hint="@HtmlLang.Write(LangKey.Date)"
+                           value="@defaultBizDate" data-maxdate="@ViewData["MaxBizDate"]"
+                           class="gl-easyui-datebox user-active" data-options="required:true,validType:'@bizDateValidType [\'@ViewData["MaxBizDate"]\']'" style="width:140px;" />
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        @*收款单列表项 和 高级选项*@
+        @if (showAdvance == true && model.MActionPermission.MHaveAction && !string.IsNullOrEmpty(model.MID))
+        {
+            <div class="m-iv-adv-switch">
+                <a href="javascript:void(0)" class="show">&nbsp;</a><span>@HtmlLang.Write(LangModule.IV, "AdvancedOptions", "Advanced Options")</span>
+            </div>
+        }
+        <div class="m-iv">
+            @Html.Partial("../UC/EntryEdit")
+            @if (showAdvance == true && model.MActionPermission.MHaveAction && !string.IsNullOrEmpty(model.MID))
+            {
+                <div class="m-iv-adv">
+                    <div id="aa" class="easyui-accordion" style="width:260px;min-height:344px;">
+                        <div title="@HtmlLang.Write(LangModule.IV, "ValueAddedTaxInvoice", "Value-added Tax Invoice")" style="overflow:auto;padding:10px;">
+                        </div>
+                        <div title="@HtmlLang.Write(LangModule.IV, "FinancialInformation", "Financial Information")" data-options="selected:true" style="padding:10px;">
+                            <ul>
+                                @if (model.MActionPermission.MIsCanVoid)
+                                {
+                                    <li><a href="javascript:void(0)" onclick='ReceiptEditBase.archiveItem("@ViewData["ReceiptID"]","@bankModel.MItemID")'>@HtmlLang.Write(LangModule.IV, "Void", "Void")</a></li>
+                                }
+                                @if (model.MActionPermission.MIsCanDelete)
+                                {
+                                    <li><a href="javascript:void(0)" onclick='ReceiptEditBase.deleteItem("@ViewData["ReceiptID"]","@bankModel.MItemID")'>@HtmlLang.Write(LangKey.Delete)</a></li>
+                                }
+                                @if (model.MActionPermission.MIsCanEdit && !isEditing)
+                                {
+                                    var tabTitle = HtmlLang.Write(LangModule.Bank, "EditReceipt", "Edit Receipt");
+                                    if (model.MType == "Receive_SaleReturn" || model.MType == "Receive_OtherReturn")
+                                    {
+                                        tabTitle = HtmlLang.Write(LangModule.Bank, "EditRefund", "Edit Refund");
+                                    }
+                                    <li><a onclick="$.mTab.rename('@tabTitle');" href="/IV/Receipt/ReceiptEdit/@ViewData["ReceiptID"]?acctid=@ViewData["AccountID"]">@HtmlLang.Write(LangKey.Edit)</a></li>
+                                }
+                                @if (model.MActionPermission.MIsCanViewVoucherCreateDetail)
+                                {
+                                    <li><a href="javascript:void(0)" onclick="IVGL.open('@ViewData["ReceiptID"]','3')">@HtmlLang.Write(LangModule.GL, "VoucherCreateDetails", "Voucher Create Detail")</a></li>
+                                }
+                                @if (model.MActionPermission.MIsCanVerification && !isEditing)
+                                {
+                                    <li><a href="javascript:void(0)" onclick="Verification.open('@ViewData["ReceiptID"]','@BizObject.Receive')">@HtmlLang.Write(LangModule.IV, "Reconcile", "Reconcile")</a></li>
+                                }
+                                @if (model.MActionPermission.MIsCanViewReconcile && !isEditing)
+                                {
+                                    <li><a href="javascript:void(0)" onclick='ReceiptEditBase.showBankReconcileView("@BizObject.Receive","@ViewData["ReceiptID"]")'>@HtmlLang.Write(LangModule.Bank, "ReconcileView", "Bank reconcile view")</a></li>
+                                }
+                                @if (model.MActionPermission.MIsCanDeleteReconcile && !isEditing)
+                                {
+                                    <li><a href="javascript:void(0)" onclick='ReceiptEditBase.deleteBankReconcile("@BizObject.Receive","@ViewData["ReceiptID"]","@bankModel.MItemID")'>@HtmlLang.Write(LangModule.Bank, "DeleteReconcile", "Delete bank reconcile")</a></li>
+                                }
+                                @if (model.MActionPermission.MMarkAsReconciled && !isEditing)
+                                {
+                                    <li><a href="javascript:void(0)" onclick='ReceiptEditBase.UpdateReconcileStatu("@ViewData["ReceiptID"]",@Convert.ToInt32(JieNor.Megi.DataModel.IV.IVReconcileStatus.Marked),"@bankModel.MItemID")'>@HtmlLang.Write(LangModule.Bank, "MarkAsReconciled", "Mark as reconciled")</a></li>
+                                }
+                                @if (model.MActionPermission.MMarkAsUnReconciled && !isEditing)
+                                {
+                                    <li><a href="javascript:void(0)" onclick='ReceiptEditBase.UpdateReconcileStatu("@ViewData["ReceiptID"]",@Convert.ToInt32(JieNor.Megi.DataModel.IV.IVReconcileStatus.None),"@bankModel.MItemID")'>@HtmlLang.Write(LangModule.Bank, "MarkAsUnReconciled", "Mark as unreconciled")</a></li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+
+@*隐藏字段*@
+<input type="hidden" id="hidReceiptCurrencyID" value='@bankModel.MCyID' />
+<input type="hidden" id="hidReceiptID" value='@ViewData["ReceiptID"]' />
+<input type="hidden" id="hidAccountID" value="@ViewData["AccountID"]" />
+@*<input type="hidden" id="hidTrack" value='@ViewData["Track"]' />*@
+<input type="hidden" id="hidEditType" value='@ViewData["EditType"]' />
+<input type="hidden" id="hidShowBnkAcct" value='@Request["showBnkAcct"]' />
+<input type="hidden" id="hidShowAdvance" value='@showAdvance' />
+<input type="hidden" id="hidReceiptModel" value='@jsonModel' />
+<input type="hidden" id="hidIsEdit" value="@Html.Raw(@isEdit)" />
+<input type="hidden" id="hidHaveAttachChangePermission" value="@Html.Raw(HtmlSECMenu.HavePermission(BizObject.Attachment, PermissionItem.Change))" />
+<input type="hidden" id="hidIsShowReceiptVerif" value="@Html.Raw(@IsShowVerif)" />
+<input type="hidden" id="hidBankName" value="@MText.Encode(bankModel.MBankName)" />
+@*@HtmlREGTaxRate.OrgTaxRate()*@
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/IV/BillUrlHelper.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/IV/IVBase.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/IV/IVEditBase.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/BD/BDBank/BDBankReconcileHome.Interface.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/IV/Receipt/ReceiptEditBase.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/IV/Verification/Verification.interface.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/IV/IVGL.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.IV)
+@HtmlLang.WriteScript(LangModule.Bank)
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(JieNor.Megi.Identity.LangIndentity.CurrentLangID)
+@HtmlLang.WriteScript(JieNor.Megi.EntityModel.MultiLanguage.LangModule.BD)
+@if (HtmlSECMenu.HavePermission(BizObject.BankAccount, PermissionItem.Change))
+{
+    <input type="hidden" id="hidChangeAuth" value="1" />
+}
+else
+{
+    <input type="hidden" id="hidChangeAuth" value="0" />
+}
+@*是否有银行的查看权限*@
+@if (HtmlSECMenu.HavePermission(BizObject.BankAccount, PermissionItem.View))
+{
+    <input type="hidden" id="hidIsCanBankAccountViewPermission" value="1" />
+}
+else
+{
+    <input type="hidden" id="hidIsCanBankAccountViewPermission" value="0" />
+}
+@*是否有银行的编辑权限*@
+@if (HtmlSECMenu.HavePermission(BizObject.BankAccount, PermissionItem.Change))
+{
+    <input type="hidden" id="hidIsCanBankAccountChangePermission" value="1" />
+}
+else
+{
+    <input type="hidden" id="hidIsCanBankAccountChangePermission" value="0" />
+}
+@*是否有基础资料的编辑权限*@
+@if (HtmlSECMenu.HavePermission(BizObject.Setting, PermissionItem.Change))
+{
+    <input type="hidden" id="hidIsCanSettingChangePermission" value="1" />
+}
+else
+{
+    <input type="hidden" id="hidIsCanSettingChangePermission" value="0" />
+}
+@*是否有联系人的编辑权限*@
+@if (isCanContactChangePermission)
+{
+    <input type="hidden" id="hidIsCanContactChangePermission" value="1" />
+}
+else
+{
+    <input type="hidden" id="hidIsCanContactChangePermission" value="0" />
+}

@@ -1,0 +1,255 @@
+﻿@using JieNor.Megi.DataModel.IV;
+@using JieNor.Megi.Core.DataModel;
+@using JieNor.Megi.Common.Utility;
+@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    IVInvoiceSummaryModel summary = ViewBag.InvoiceSummary as IVInvoiceSummaryModel;
+    List<ChartPie2DModel> pieList = ViewData["PieList"] as List<ChartPie2DModel>;
+    //是否有编辑权限
+    bool isCanEditPermission = HtmlSECMenu.HavePermission(BizObject.Invoice_Purchases, PermissionItem.Change);
+    //是否有导出权限
+    bool isCanExportPermission = HtmlSECMenu.HavePermission(BizObject.Invoice_Purchases, PermissionItem.Export);
+}
+<script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/IV/IVFW.js?@ServerHelper.JSVersion"></script>
+@if (isCanEditPermission || isCanExportPermission)
+{
+    <div class="m-toolbar">
+        @*编辑权限*@
+        @if (isCanEditPermission)
+        {
+            <a data-options="menu:'#divNewInvoice'" class="easyui-splitbutton easyui-linkbutton-yellow  easyui-splitbutton-base" href="javascript:void(0)" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.IV, "NewBill", "New Bill")', '/IV/Bill/BillEdit',true);">@HtmlLang.Write(LangModule.IV, "NewBill", "New Bill")</a>
+            <div id="divNewInvoice" style="width:180px;height:30px;display:none;">
+                @*一个菜单项的高度是30，依此类推*@
+                <div><a href="javascript:void(0)" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.IV, "NewRepeatingBill", "New Repeating Bill")', '/IV/Bill/RepeatBillEdit',true);">@HtmlLang.Write(LangModule.IV, "NewRepeatingBill", "New Repeating Bill")</a></div>
+                @*<div><a href="javascript:void(0)">@HtmlLang.Write(LangModule.IV, "PurchaseOrder", "Purchase order")</a></div>*@
+            </div>
+            @*<a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.IV, "NewRepeatingBill", "New Repeating Bill")', '/IV/Bill/RepeatBillEdit',true);">@HtmlLang.Write(LangModule.IV, "NewRepeatingBill", "New Repeating Bill")</a>*@
+            @*新建发票*@
+            @*<a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.IV, "NewBill", "New Bill")', '/IV/Bill/BillEdit',true);">@HtmlLang.Write(LangModule.IV, "NewBill", "New Bill")</a>*@
+            @*新建红字发票*@
+            <a href="javascript:void(0)" class="easyui-linkbutton  easyui-linkbutton-base" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.IV, "NewDebitNote", "New Debit Note")', '/IV/Bill/CreditNoteEdit');">@HtmlLang.Write(LangModule.IV, "NewDebitNote", "New Debit Note")</a>
+            @*导入发票*@
+            <a data-options="menu:'#divImport'" href="javascript:void(0)" id="aImport" class="easyui-splitbutton  easyui-splitbutton-base">@HtmlLang.Write(LangKey.Import)</a>
+            <div id="divImport" style="width:143px;height:60px;display:none;">
+                <div id="divImportBill">
+                    <a href="javascript:void(0)">@HtmlLang.Write(LangModule.IV, "Bill", "Bill")</a>
+                </div>
+                <div id="divImportBillRed">
+                    <a href="javascript:void(0)">@HtmlLang.Write(LangModule.IV, "PurchaseCreditNote", "Purchase Credit Note")</a>
+                </div>
+            </div>
+        }
+        @*导出权限*@
+        @if (isCanExportPermission)
+        {
+            <a href="javascript:void(0)" class="easyui-linkbutton  easyui-linkbutton-base" id="aExport">@HtmlLang.Write(LangKey.Export)</a>
+        }
+    </div>
+}
+    @*主体内容*@
+    <div class="m-imain">
+        <div class="m-imain-content m-imain-content-min ">
+            @*列表分类Tab*@
+            @{var lblItems = HtmlLang.GetText(LangModule.Common, "items", "items");}
+            <div class="m-extend-tabs">
+                <div class="iv2-tab-links">
+                    <ul class="tab-links">
+                        <li class="current">
+                            &nbsp;
+                            <div class="tab-home">&nbsp;</div>
+                        </li>
+                        <li>
+                            <div class="title">@HtmlLang.Write(LangModule.IV, "All", "All")</div>
+                            <div class="sub-title">(@summary.AllCount.ShowCountUnit(lblItems))</div>
+                            <div class="statistics">@summary.AllAmount.ToMoneyFormat()</div>
+                        </li>
+                        <li>
+                            <div class="title">@HtmlLang.Write(LangModule.IV, "Draft", "Draft")</div>
+                            <div class="sub-title">(@summary.DraftCount.ShowCountUnit(lblItems))</div>
+                            <div class="statistics">@summary.DraftAmount.ToMoneyFormat()</div>
+                        </li>
+                        <li>
+                            <div class="title">@HtmlLang.Write(LangModule.IV, "AwaitingApproval", "等待审核")</div>
+                            <div class="sub-title">(@summary.WaitingApprovalCount.ShowCountUnit(lblItems))</div>
+                            <div class="statistics">@summary.WaitingApprovalAmount.ToMoneyFormat()</div>
+                        </li>
+                        <li>
+                            <div class="title">@HtmlLang.Write(LangModule.IV, "AwaitingPayment", "Awaiting Payment")</div>
+                            <div class="sub-title">(@summary.WaitingPaymentCount.ShowCountUnit(lblItems))</div>
+                            <div class="statistics">@summary.WaitingPaymentAmount.ToMoneyFormat()</div>
+                        </li>
+                        <li>
+                            <div class="title">@HtmlLang.Write(LangModule.IV, "Paid", "Paid")</div>
+                            <div class="sub-title">(@summary.PaidCount.ShowCountUnit(lblItems))</div>
+                            <div class="statistics">@summary.PaidAmount.ToMoneyFormat()</div>
+                        </li>
+                        <li>
+                            <div class="title">@HtmlLang.Write(LangModule.IV, "RepeatingBill", "RepeatingBill")</div>
+                            <div class="sub-title">(@summary.RepeatingCount.ShowCountUnit(lblItems))</div>
+                            <div class="statistics">@summary.RepeatingAmount.ToMoneyFormat()</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>        @*搜索栏*@
+            <div class="m-adv-search m-adv-search-invoice" id="SearchBar">
+                <div class="m-adv-search-close"><a href="javascript:void(0)">&nbsp;</a></div>
+                <div class="m-adv-search-param">
+                    <div class="item">
+                        <p id="pKeywordMsg">@HtmlLang.Write(LangModule.IV, "EnterREAmount", "Enter Number, Reference, Contact or Amount")</p>
+                        <p><input type="text" class="textbox mg-data" id="txtKeyword" name="Keyword" /></p>
+                    </div>
+                    <div class="item">
+                        <p> @HtmlLang.Write(LangModule.IV, "SearchWithin", "Search Within")</p>
+                        <p>
+                            <select id="selSearchWithin" class="easyui-combobox mg-data" data-options="editable:false" name="MSearchWithin" style="width:100px; height:22px;"></select>
+                        </p>
+                    </div>
+                    <div class="item">
+                        <p>@HtmlLang.Write(LangKey.StartDate) </p>
+                        <p><input id="txtStartDate" name="MStartDate" type="text" class="easyui-datebox mg-data" style="width:100px;" /></p>
+                    </div>
+                    <div class="item">
+                        <p>@HtmlLang.Write(LangKey.EndDate)</p>
+                        <p><input id="txtEndDate" name="MEndDate" type="text" class="easyui-datebox mg-data" style="width:100px;" /></p>
+                    </div>
+                    @Html.Raw(HtmlTrack.AdvanceSearchFilter())
+                    <div class="item" style="display:none;">
+                        @*采购发票没有这个查询条件，因为采购发票没有发送Email的功能*@
+                        <p>@HtmlLang.Write(LangModule.IV, "UnsentOnly", "Unsent Only")</p>
+                        <p><input type="checkbox" name="MUnsentOnly" class="mg-data" /></p>
+                    </div>
+                    <div class="m-search-bar">
+                        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aSearchInvoice">@HtmlLang.Write(LangKey.Search)</a>
+                        <a href="javascript:void(0)" class="easyui-linkbutton" id="aClearSearchFilter">@HtmlLang.Write(LangModule.GL, "ResetDocVoucher", "重置")</a>
+                    </div>
+                    <br class="clear" />
+                </div>
+            </div>
+            @*内页工具栏*@
+            <div class="m-tab-toolbar">
+                <div class="left">
+                    @if (HtmlSECMenu.HavePermission(BizObject.Invoice_Purchases, PermissionItem.Change))
+                    {
+                        <a href="javascript:void(0)" style="display:none;" class="m-btn-m easyui-linkbutton m-tool-bar-btn" id="btnSbmForAppr">@HtmlLang.Write(LangKey.SubmitForApproval)</a>
+                    }
+                    @if (HtmlSECMenu.HavePermission(BizObject.Invoice_Purchases, PermissionItem.Approve))
+                    {
+                        <a href="javascript:void(0)" style="display:none;" class="m-btn-s easyui-linkbutton m-tool-bar-btn" id="btnApproval">@HtmlLang.Write(LangKey.Approval)</a>
+                    }
+                    @if (HtmlSECMenu.HavePermission(BizObject.BankAccount, PermissionItem.Change))
+                    {
+                        <a href="javascript:void(0)" style="display:none;" class="m-btn-m easyui-linkbutton m-tool-bar-btn" id="btnBatchPay">@HtmlLang.Write(LangModule.IV, "BatchPayment", "Batch Payment")</a>
+                    }
+                    @if (HtmlSECMenu.HavePermission(BizObject.Invoice_Purchases, PermissionItem.Change))
+                    {
+                        <a href="javascript:void(0)" style="display:none;" class="m-btn-s easyui-linkbutton m-tool-bar-btn" id="btnDelete">@HtmlLang.Write(LangKey.Delete)</a>
+                    }
+                    @if (HtmlSECMenu.HavePermission(BizObject.Invoice_Purchases, PermissionItem.View))
+                    {
+                        <a href="javascript:void(0)" style="display:none;" class="m-btn-s easyui-linkbutton m-tool-bar-btn" id="aPrint">@HtmlLang.Write(LangKey.Print)</a>
+                    }
+                    @if (HtmlSECMenu.HavePermission(BizObject.Invoice_Purchases, PermissionItem.Change))
+                    {
+                        <a href="javascript:void(0)" style="display:none;" class="m-btn-m easyui-linkbutton m-tool-bar-btn" id="btnSavedAsDraft">@HtmlLang.Write(LangModule.IV, "SaveAsDraft", "Save as Draft")</a>
+                    }
+                    @if (HtmlSECMenu.HavePermission(BizObject.Invoice_Purchases, PermissionItem.Approve))
+                    {
+                        <a href="javascript:void(0)" style="display:none;" class="m-btn-s easyui-linkbutton m-tool-bar-btn" id="btnApprovalRepeat">@HtmlLang.Write(LangKey.Approval)</a>
+                    }
+                    @if (HtmlSECMenu.HavePermission(BizObject.Invoice_Purchases, PermissionItem.Change))
+                    {
+                        <a href="javascript:void(0)" style="display:none;" class="m-btn-s easyui-linkbutton m-tool-bar-btn" id="btnDeleteRepeat">@HtmlLang.Write(LangKey.Delete)</a>
+                    }
+                </div>
+                <div class="right">
+                    @if (HtmlSECMenu.HavePermission(BizObject.Invoice_Purchases, PermissionItem.View))
+                    {
+                        <div><a href="javascript:void(0)" id="aSearch" style="display:none;" class="m-btn-s easyui-linkbutton m-adv-search-btn">@HtmlLang.Write(LangKey.Search)</a></div>
+                    }
+                </div>
+            </div>
+            @*采购发票首页*@
+            <div id="divHome" class="tab-content">
+                @*柱状图表*@
+                <div class="m-container m-top m-f-left m-invoice-l">
+                    <div class="m-container-title">@HtmlLang.Write(LangModule.IV, "MoneyUpcoming", "Money Upcoming")</div>
+                    <div class="m-chart m-container-content" id="divUpcomingChart"></div>
+                </div>
+                @*饼状图表*@
+                <div class="m-container m-top m-f-right m-invoice-r">
+                    <div class="m-container-title">
+                        @HtmlLang.Write(LangModule.IV, "SuppliersOwingTheMost", "Suppliers owing the most")
+                        <div class="m-tabs-skinny">
+                            <a id="show_list" class="active" href="#">@HtmlLang.Write(LangModule.IV, "List", "List")</a>
+                            <a id="show_pie" class="no-pipe" href="#">@HtmlLang.Write(LangModule.IV, "Pie", "Pie")</a>
+                            @{
+                                int listCount = pieList.Count;
+                                if (listCount > 5)
+                                {
+                                    if (Convert.ToString(ViewData["pieListType"]) == "limit") //显示前5条
+                                    {
+                                        pieList = pieList.Take(5).ToList();
+                                        <a class="no-pipe" href="/IV/Bill/BillList?pieListType=all" style="float:right;" id="listType_All">@HtmlLang.Write(LangModule.IV, "All", "All")</a>
+                                    }
+                                    else if (Convert.ToString(ViewData["pieListType"]) == "all") //显示全部
+                                    {
+                                        <a class="no-pipe" href="/IV/Bill/BillList?pieListType=limit" style="float:right;" id="listType_Limit">@HtmlLang.Write(LangModule.IV, "Limit", "Limit")</a>
+                                    }
+                                }
+                            }
+                        </div>
+                    </div>
+                    <div class="m-chart m-container-content" id="divSupplierMostChart"></div>
+                    <div class="m-chart m-container-content" id="divSupplierMostList">
+                        @{
+                            if (pieList != null && pieList.Count > 0)
+                            {
+                                <table class="m-skinny-table" id="MostListTable">
+                                    <tbody>
+                                        @{ foreach (ChartPie2DModel item in pieList)
+                                         {
+                                            <tr onclick="BillList.contBillView('@item.MContactID')">
+                                                <td>
+                                                    <a href="javascript:void(0)" class="debtor"><span style="background: none repeat scroll 0 0 @item.color;"> </span>@item.name</a>
+                                                </td>
+                                                <td class="amt">
+                                                    <a href="javascript:void(0)" class="amount">@item.value.ToMoneyFormat()</a>
+                                                </td>
+                                                <td class="amt red">
+                                                    <a class="redamount">@item.MOverDue.ToMoneyFormat()</a>
+                                                </td>
+                                            </tr>
+                                         }}
+                                    </tbody>
+                                </table>
+                            }}
+                    </div>
+                </div>
+            </div>
+            @*采购发票列表*@
+            <div id="divList">
+                <div id="gridInvoice" fitcolumns="true"></div>
+            </div>
+            @*发票预计日期编辑*@
+        </div>
+    </div>
+    <input type="hidden" id="hidType" value="Bill" />
+    <input type="hidden" id="hidInvoiceType" value="@ViewBag.InvoiceType" />
+    <input type="hidden" id="hidImportedNum" value="@(ViewBag.ImportedNum == null ? -1 : ViewBag.ImportedNum)" />
+    <input type="hidden" id="hidCurrencyId" value="@JieNor.Megi.Common.Context.ContextHelper.MContext.MBasCurrencyID" />
+    @if (HtmlSECMenu.HavePermission(BizObject.Invoice_Purchases, PermissionItem.Change))
+    {
+        <input type="hidden" id="hidChangeAuth" value="1" />
+    }
+    else
+    {
+        <input type="hidden" id="hidChangeAuth" value="0" />
+    }
+    @HtmlLang.WriteScript(LangModule.IV)
+    <script src="@ServerHelper.StaticServer/fw/include/ichartjs/ichart.1.2.js?@ServerHelper.JSVersion"></script>
+    <script type="text/javascript" src="@ServerHelper.StaticServer/fw/scripts/jquery.megi.print.js?@ServerHelper.JSVersion"></script>
+    <script type="text/javascript" src="@ServerHelper.ScriptServer/Scripts/FP/IssueFapiao.interface.js?@ServerHelper.JSVersion"></script>
+    <script src="@ServerHelper.ScriptServer/Scripts/IV/IVBase.js?@ServerHelper.JSVersion"></script>
+    <script src="@ServerHelper.ScriptServer/Scripts/IV/Bill/BillList.js?@ServerHelper.JSVersion"></script>
+    <script type="text/javascript" src="@ServerHelper.GoServer/Scripts/BD/Import/ImportBase.js?@ServerHelper.JSVersion"></script>
+    @JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)

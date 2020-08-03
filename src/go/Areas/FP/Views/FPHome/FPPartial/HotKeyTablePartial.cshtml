@@ -1,0 +1,62 @@
+﻿@using JieNor.Megi.Common.Utility
+<div class="tip-hotkey-tab-div">
+    <span class="tip-hotkey-tab-span tip-hotkey-tab-show" id="tabHotKey">@HtmlLang.Write(LangModule.FP, "hotkey", "快捷键")</span>
+    <span class="tip-hotkey-tab-span" id="tabHotHandle">@HtmlLang.Write(LangModule.FP, "hothandle", "页面快捷操作")</span>
+</div>
+<div id="hotKeyDiv">
+    <table class="tip-hotkey-table">
+        <tr>
+            <td style="width:50px">@HtmlLang.Write(LangModule.FP, "hotswitch", "切换")</td>
+            <td class="tip-hotkey-table-td1"><span class="tip-hotkey">Enter</span> &nbsp;/&nbsp;<span class="tip-hotkey">Tab</span></td>
+            <td>@HtmlLang.Write(LangModule.FP, "hotswitchnextinput", "切换到下一个输入框")</td>
+        </tr>
+        <tr>
+            <td rowspan="3">@HtmlLang.Write(LangModule.FP, "hotselect", "选定")</td>
+            <td class="tip-hotkey-table-td1" rowspan="2"><span class="tip-hotkey">Shift</span></td>
+            <td>@HtmlLang.Write(LangModule.FP, "hotshitselect", "先选定开始行,使用Shift按键同时选定结束行,则是选定连续多行明细,可用于复制填充编辑")</td>
+        </tr>
+        <tr>
+            <td>@HtmlLang.Write(LangModule.FP, "hotshitcheck", "先勾选开始发票,使用Shift按键同时选择结束发票,则是选定连续多个发票,可用于批量提交")</td>
+        </tr>
+        <tr>
+            <td class="tip-hotkey-table-td1"><span class="tip-hotkey">Ctrl</span></td>
+            <td>@HtmlLang.Write(LangModule.FP, "hotctrlselect", "选择任意行,使用Ctrl按键,同时选择其他行,则可以选择不一定连续的多行,可用于复制填充编辑")</td>
+        </tr>
+    </table>
+</div>
+<div id="hotHandleDiv" style="height: 400px; overflow: scroll; display:none">
+    <table class="tip-hotkey-table">
+        <tr>
+            <td style="width:50px">@HtmlLang.Write(LangModule.FP, "hotcopyandfill", "复制填充")</td>
+            <td>@HtmlLang.Write(LangModule.FP, "hotcopyandfillcontent", "先批量选定多行,选择其中一行进行编辑,其他行对应编辑框被复制填充基准行内容")</td>
+        </tr>
+        <tr>
+            <td>@HtmlLang.Write(LangModule.FP, "hotbatchselect", "批量选定")</td>
+            <td>@HtmlLang.Write(LangModule.FP, "hotbatchselectbyfield", "点击表单中\"发票号\"、\"发票日期\"、\"购买方/销售方\"字段表格区拖拉到结束行,则是选定连续的多行明细,可用于复制填充编辑")</td>
+        </tr>
+        <tr>
+            <td rowspan="4">@HtmlLang.Write(LangModule.FP, "hotsort", "排序")</td>
+            <td>@HtmlLang.Write(LangModule.FP, "hotsortbynumber", "点击表头的\"发票号\",将发票按照发票号排序")</td>
+        </tr>
+        <tr>
+            <td>@HtmlLang.Write(LangModule.FP, "hotsortbydate", "点击表头的\"发票日期\",将发票按照发票日期的排序")</td>
+        </tr>
+        <tr>
+            <td>@HtmlLang.Write(LangModule.FP, "hotsortbypurchaser", "点击表头的\"购买方\",将销项发票按照购买方的名称首字母排序")</td>
+        </tr>
+        <tr>
+            <td>@HtmlLang.Write(LangModule.FP, "hotsortbysale", "点击表头的\"销售方\",将进项发票按照销售方的名称首字母排序")</td>
+        </tr>
+        <tr>
+            <td rowspan="3">@HtmlLang.Write(LangModule.FP, "hotsearch", "快速搜索")</td>
+            <td>@HtmlLang.Write(LangModule.FP, "hotsearchbynumber", "双击发票号码字段表格内容,自动复制发票号码到搜索框,可用于对发票进行搜索")</td>
+        </tr>
+        <tr>
+            <td>@HtmlLang.Write(LangModule.FP, "hotsearchbypurchaser", "双击购买方字段表格内容,自动复制该联系人名称到搜索框,可用于对销项发票进行搜索")</td>
+        </tr>
+        <tr>
+            <td>@HtmlLang.Write(LangModule.FP, "hotsearchbysale", "双击销售方字段表格内容,自动复制该联系人名称到搜索框,可用于对进项发票进行搜索")</td>
+        </tr>
+    </table>
+</div>
+<script src="~/Scripts/FP/HotKeyTip.js?@ServerHelper.JSVersion"></script>

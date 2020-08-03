@@ -1,0 +1,39 @@
+﻿@{
+    Layout = "~/Areas/Report/Views/Shared/_LayoutReport.cshtml";
+    DateTime now = DateTime.Now;
+    DateTime curMonthFirstDay = now.AddDays(1 - now.Day);//当月第一天的时间
+    DateTime curMonthLastDay = curMonthFirstDay.AddMonths(1).AddDays(-1);//当月最后一天的时间
+}
+@using JieNor.Megi.Common.Utility
+<div class="m-form-vtcl margin m-form-min">
+    <div class="m-form-vtcl-content">
+        <div class="m-form-section section-type">
+            <div class="m-form-item">
+                <ul>
+                    <li class="m-bold">@HtmlLang.Write(LangKey.From)</li>
+                    <li><input id="selFromDate"  value="@HtmlLang.ToLangDate(curMonthFirstDay)" type="text"  class="easyui-datebox mg-data" data-options="required:true" name="MStartDate"/>
+                    </li>
+                </ul>
+            </div>
+            <div class="m-form-item">
+                <ul>
+                    <li class="m-bold">@HtmlLang.Write(LangKey.To)</li>
+                    <li><input id="selToDate" value="@HtmlLang.ToLangDate(curMonthLastDay)" type="text" class="easyui-datebox mg-data" name="MEndDate"/>
+                    </li>
+                </ul>
+            </div>
+           
+            <div class="m-form-item">
+                <ul>
+                    <li><a href="javascript:void(0)" class="m-btn l-btn" id="aReportUpdate">@HtmlLang.Write(LangModule.Report, "Update", "Update")</a></li>
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+        
+    </div>
+</div>
+
+<script src="@ServerHelper.ScriptServer/scripts/Report/RptUC/BankAndCashSummary.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.Report)
+

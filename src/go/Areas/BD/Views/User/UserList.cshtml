@@ -1,0 +1,49 @@
+﻿@using JieNor.Megi.Common.Context;
+@using JieNor.Megi.Identity.HtmlHelper;
+@using JieNor.Megi.EntityModel.MultiLanguage;
+@{
+    ViewBag.Title = "Users";
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+    //是否有编辑权限
+    bool isCanEditPermission = HtmlSECMenu.HavePermission(BizObject.User, PermissionItem.Change);
+}
+@using JieNor.Megi.Common.Utility;
+@*头部工具栏*@
+@if (isCanEditPermission)
+{
+<div class="m-toolbar">
+    <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" onclick="window.mFilter.doFilter('track', ['InviteUser', {  }]);$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.User, "InviteAUser", "Invite a User")', '/BD/User/UserEdit');">@HtmlLang.Write(LangModule.User, "InviteAUser", "Invite a User")</a>
+    <a id="btnArchive" href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-gray">@HtmlLang.Write(LangModule.User, "ArchiveRestore", "Archive/Restore")</a>
+    @*<a id="btnRestore" href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-gray">@HtmlLang.Write(LangModule.User, "Restore", "Restore")</a>*@
+</div>
+}
+@*主体内容*@
+<div class="m-imain" style="overflow-y:hidden">
+    <div class="m-imain-content">
+        <div class="easyui-tabs">
+            @*用户列表*@
+            <div title="@HtmlLang.Write(LangModule.User, "Users", "Users")" id="tbUsers" fitcolumns="true"> 
+            </div>
+            @*用户登陆记录列表*@
+            <div title="@HtmlLang.Write(LangModule.User, "RecentActivity", "Recent Activity")">
+                <div id="tbRecentActivity" fitcolumns="false"></div>
+            </div>
+        </div>
+        <br class="clear" />
+    </div>
+</div>
+@*标识是否有权限修改或者删除*@
+@if (isCanEditPermission)
+{
+<input type="hidden" id="hidChangeAuth" value="1" />
+}
+else
+{
+<input type="hidden" id="hidChangeAuth" value="0" />
+}
+@*日期时间格式化*@
+<input type="hidden" id="hidTimeFormat" value="@ContextHelper.MContext.MTimeFormat" />
+@*用户列表所用到的 js 文件*@
+@HtmlLang.WriteScript(LangModule.User)
+<script type="text/javascript" src="@ServerHelper.ScriptServer/scripts/BD/User/UserList.js?@ServerHelper.JSVersion"></script>
+@*多语言列表 json 格式*@

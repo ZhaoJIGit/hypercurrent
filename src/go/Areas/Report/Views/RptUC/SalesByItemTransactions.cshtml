@@ -1,0 +1,55 @@
+﻿@{
+    Layout = "~/Areas/Report/Views/Shared/_LayoutReport.cshtml";
+}
+@using JieNor.Megi.Common.Utility
+<div class="m-report-toolbar">
+    <a class="easyui-linkbutton easyui-linkbutton-l" id="aBackToReport" data-options="" href="javascript:void(0)">@HtmlLang.Write(LangModule.Report, "BackToSalesByItem", "Back to Sales By Item")</a>
+</div>
+<div class="m-form-vtcl m-form-min">
+    <div class="m-form-vtcl-content">
+        <div class="m-form-section section-type">
+            <div class="m-form-item">
+                <ul>
+                    <li class="m-bold">@HtmlLang.Write(LangKey.Item):</li>
+                    <li>
+                        <select id="selSearchWithin" class="easyui-combobox mg-data" name="MItem" style="width: 120px; height: 22px;">
+                            @HtmlBDItem.SelectOptions()
+                        </select>
+                    </li>
+                </ul>
+            </div>
+            <div class="m-form-item">
+                <ul>
+                    <li class="m-bold">@HtmlLang.Write(LangKey.From):</li>
+                    <li>
+                        <input type="text" class="easyui-datebox mg-data" name="MStartDate" value="10/01/2014"></input>
+                    </li>
+                </ul>
+            </div>
+            <div class="m-form-item">
+                <ul>
+                    <li class="m-bold">@HtmlLang.Write(LangKey.To):</li>
+                    <li>
+                        <input type="text" class="easyui-datebox mg-data" name="MEndDate" value="10/31/2014"></input>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="m-form-item">
+                <ul>
+                    <li class="m-bold">@HtmlLang.Write(LangKey.Currency):</li>
+                    <li>
+                        <select id="selSearchWithin" data-options="@HtmlBDCurrency.DataOptions() " class=" easyui-combobox mg-data" name="MCurrency" style="width:120px; height:22px;"></select>
+                    </li>
+                </ul>
+            </div>
+            <div class="m-form-item">
+                <ul>
+                    <li><a href="javascript:void(0)" class="m-btn l-btn" id="aReportUpdate">@HtmlLang.Write(LangModule.Report, "Update", "Update")</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="@ServerHelper.ScriptServer/scripts/Report/RptUC/SalesByItemTransactions.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.Report)

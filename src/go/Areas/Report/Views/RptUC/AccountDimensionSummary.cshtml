@@ -1,0 +1,126 @@
+﻿@{
+    Layout = "~/Areas/Report/Views/Shared/_LayoutReport.cshtml";
+    
+}
+@using JieNor.Megi.Common.Utility
+<div class="m-form-vtcl m-form-min">
+    <div class="m-form-vtcl-content">
+        <div class="m-form-section section-type">
+            <span class="m-bold">@HtmlLang.Write(LangModule.Report, "AccountingPeriod", "会计期间")</span>
+            <span>
+                <select class="easyui-combobox mg-data" name="MStartPeroid" id="cbxStartPeriod" style="width:100px">
+                    @HtmlAccount.AccountPeriodOptions(true)
+                </select>
+                <span>@HtmlLang.Write(LangModule.Report, "To", "至")</span>
+                <select class="easyui-combobox mg-data" name="MEndPeroid" id="cbxEndPeriod" style="width:100px">
+                    @HtmlAccount.AccountPeriodOptions(true)
+                </select>
+            </span>
+
+            <!--过滤方案-->
+            <span class="m-bold">@HtmlLang.Write(LangModule.Report, "FilterSchemeName", "过滤方案")</span>
+            <span>
+                <input class="easyui-combobox" id="cbxFilterScheme" name="FilterSchemeId" />
+            </span>
+
+            <span><a href="javascript:void(0);" id="btnMoreFilter" class="gl-rpt-a">@HtmlLang.Write(LangModule.Report, "AdvancedSearch", "更多过滤条件")</a></span>
+            <span><a href="javascript:void(0)" class="m-btn l-btn" id="aReportUpdate" style="width:60px">@HtmlLang.Write(LangModule.Report, "Update", "Update")</a></span>
+        </div>
+    </div>
+</div>
+<!--过滤方案编辑展示-->
+<div class="scheme-panel" id="panelScheme" style="display:none">
+    <div style="padding-top:20px;padding-left:20px">
+        <span style="font-size: 18px; font-weight: bold">@HtmlLang.Write(LangModule.Report, "EditFilterScheme", "编辑过滤方案")</span><span class='search-combobox-close-box mCloseBox'>&nbsp;&nbsp;</span>
+    </div>
+    <div style="padding-top: 20px; padding-left: 20px; font-weight: bold">
+        <table id="filterSchemeList" width="80%"></table>
+    </div>
+</div>
+<!--更多条件-->
+<div class="gl-rpt-search menu" style="position:absolute;top:43px;left:483px;width:380px;display:none;z-index:999">
+    
+    <div style="padding-left: 5px">
+        <table style="" cellspacing="5">
+
+            <tr>
+                <td class="m-bold">
+                    @HtmlLang.Write(LangModule.Report, "Account", "科目")
+                </td>
+                <td>
+                    <input id="cbxAccount" class="easyui-combotree" data-options="required: false" style="width:185px" />
+                </td>
+            </tr>
+          
+            <tr>
+                <td class="m-bold">@HtmlLang.Write(LangModule.Report, "Currency", "Currency")</td>
+                <td><input id="cbxMCurrencyID" class="easyui-combobox mg-data " name="MCurrencyId" data-options="required: false" style="width:185px" /></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="m-form-item gl-rpt-searchitem">
+        <span>
+            <input type="checkbox" class="mg-data" name="IsSubtotalByAccountDemension" id="ckAccountDemesionSubTotal" />
+        </span>
+        <span class="m-bold">@HtmlLang.Write(LangModule.Report, "AccountDemesionSubTotal", "核算项目小计")</span>
+        
+    </div>
+
+    <div class="m-form-item gl-rpt-searchitem">
+        <span>
+            <input type="checkbox" class="mg-data" name="IsSubtotalByAccount" id="ckbAccountSubTotal" />
+        </span>
+        <span class="m-bold">@HtmlLang.Write(LangModule.Report, "AccountSubTotal", "科目小计")</span>
+    </div>
+
+    <div class="m-form-item gl-rpt-searchitem">
+        <span>
+            <input type="checkbox" class="mg-data" name="IsCrossPeriodSubtotal" id="ckbCrossPeriodSubTotal" disabled/>
+        </span>
+        <span class="m-bold">@HtmlLang.Write(LangModule.Report, "CrossPeriodSubTotal", "跨期小计")</span>
+    </div>
+    <div class="m-form-item gl-rpt-searchitem">
+        <span>
+            <input type="checkbox" class="mg-data" name="MDisplayNoAccurrenceAmount" id="ckbMDisplayNoAccurrenceAmount" checked="checked"/>
+        </span>
+        <span class="m-bold">@HtmlLang.Write(LangModule.Report, "DisplayNotAmountData", "显示无发生额的科目")</span>
+    </div>
+
+    <div class="m-form-item gl-rpt-searchitem">
+        <span>
+            <input type="checkbox" class="mg-data" name="MDisplayZeorEndBalance" id="ckbMDisplayZeorEndBalance" checked="checked"/>
+        </span>
+        <span class="m-bold">@HtmlLang.Write(LangModule.Report, "DisplayNotBalance", "显示余额为0的科目")</span>
+    </div>
+    <div class="m-form-item gl-rpt-searchitem">
+        <span>
+            <input type="checkbox" class="mg-data" name="IsShowDisabledAccount" id="ckbIncludeDisabledAccount" />
+        </span>
+        <span class="m-bold">@HtmlLang.Write(LangModule.Report, "DisplayDisableAccount", "显示禁用的科目")</span>
+    </div>
+    <div class="m-form-item gl-rpt-searchitem">
+        <span>
+            <input type="checkbox" class="mg-data" name="IncludeUnapprovedVoucher" id="ckbIncludeUnapprovedVoucher" />
+        </span>
+        <span class="m-bold">@HtmlLang.Write(LangModule.Report, "IncludeUnAppVourcher", "包括未审核的凭证")</span>
+    </div>
+    
+    <div class="m-form-item gl-rpt-searchitem gl-rpt-btn">
+        <span style="float: right; padding: 10px 2px">
+            <a href="javascript:void(0);" id="btnOK" class="l-btn easyui-linkbutton-yellow" style="width:48px">@HtmlLang.Write(LangModule.Report, "Update", "更新")</a>
+        </span>
+        <span style="float: right; padding: 10px 2px">
+            <a href="javascript:void(0);" id="btnReset" class="l-btn easyui-linkbutton-gray" style="width:48px">@HtmlLang.Write(LangModule.Report, "Reset", "重置")</a>
+        </span>
+
+    </div>
+</div>
+@HtmlLang.WriteScript(LangModule.Acct)
+@HtmlLang.WriteScript(LangModule.Report)
+<script src="@ServerHelper.ScriptServer/scripts/Report/RptUC/GL/AccountDimensionSummary.js?@ServerHelper.JSVersion"></script>
+<script>
+    $(document).ready(function () {
+        AccountDimensionSummary.init();
+    });
+</script>

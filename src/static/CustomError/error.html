@@ -1,0 +1,66 @@
+﻿<html>
+<head>
+    <link type="text/css" rel="stylesheet" href="../fw/min/jquery.megi.min.css" />
+    <script type="text/javascript">
+       document.domain ="hypercu.cn";
+    </script>
+    <script type="text/javascript" src="./jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" >
+        $(document).ready(function () {
+            var showClose = getQueryString("showclose");
+            var isAjaxError = showClose === "1";
+
+            initUI(isAjaxError);
+
+            initEvent(isAjaxError);
+
+        });
+
+        function initUI(isAjaxError) {
+            if (isAjaxError) {
+                $(".m-notfound-img", "body").css("height", "70%");
+                $(".m-error-parentdiv").css("display", "block");
+
+                $(".cn").text("关闭");
+
+                $(".en").text("close");
+            };
+        }
+
+        function initEvent(isAjaxError) {
+            $(".btn-refresh-page").off("click").on("click", function () {
+                var returnUrl = getQueryString("from");
+
+                if (isAjaxError) {
+                    $(".m-error-close").trigger("click");
+                } else {
+                    window.location.href = returnUrl;
+                }
+            });
+
+            $(".m-error-close").off("click").on("click", function () {
+                $('#XYTipsWindowBg', parent.document).remove();
+                $('#errorPageparent', parent.document).remove();
+            });
+
+        }
+
+        function getQueryString(name){
+            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if(r!=null)return  unescape(r[2]); return null;
+        }
+       
+    </script>
+</head>
+<body class="">
+    <div class="m-error-parentdiv" style="position: relative; width: 600px;display:none">
+        <span class="m-error-close">关闭</span>
+    </div>
+    <div class="m-error" style="margin-left: auto; margin-right: auto; display: inline-block; width: 100%; height: 60%; margin-top: 6%;">&nbsp;</div>
+    <div class="m-error-msg" style="text-align: center; margin: 0 auto; font-size: 20px;">
+        <p>访问失败,请<a href="javascript:void(0)" class="btn-refresh-page cn">刷新界面</a>或联系顾问反馈问题</p>
+        <p>Access failed, please <a href="javascript:void(0)" class="btn-refresh-page en">refresh </a> or contact the consultant to feedback the question</p>
+    </div>   
+</body>
+</html>

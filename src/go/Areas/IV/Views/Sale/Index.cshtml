@@ -1,0 +1,134 @@
+﻿@using JieNor.Megi.Core.DataModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    IVInvoiceSummaryModel summary = ViewBag.InvoiceSummary as IVInvoiceSummaryModel;
+    List<ChartPie2DModel> pieList = ViewData["PieList"] as List<ChartPie2DModel>;
+}
+@using JieNor.Megi.Common.Utility;
+<div class="mg-wrapper">
+    <div class="m-toolbar">
+        @if (HtmlSECMenu.HavePermission(BizObject.Invoice,PermissionItem.Change))
+        {
+            <a href="javascript:void(0)" id="aNewInvoice" class="easyui-splitbutton"
+               data-options="menu:'#divNewInvoice',iconCls:'icon-add'">@HtmlLang.Write(LangKey.New)</a>
+            <div id="divNewInvoice" style="width:180px;">
+                <div data-options="iconCls:'icon-invoice-add'"><a href="/IV/Invoice/InvoiceEdit">@HtmlLang.Write(LangKey.Invoice_Sale)</a></div>
+                <div data-options="iconCls:'icon-invoice-repeat'"><a href="/IV/Invoice/InvoiceList">@HtmlLang.Write(LangModule.IV, "RepeatingInvoice", "Repeating invoice")</a></div>
+                <div data-options="iconCls:'icon-credit-note'"><a href="/IV/Invoice/CreditNoteEdit">@HtmlLang.Write(LangKey.Invoice_Sale_Red)</a></div>
+                <div class="mg-menubtn-header">@HtmlLang.Write(LangModule.IV, "InvoiceToContactGroup", "Invoice to contact group")</div>
+                <div><a href="">@HtmlLang.Write(LangModule.IV, "AddContactGroup", "Add contact group")</a></div>
+            </div>
+        }
+        <a href="#" id="aSendStatements" class="easyui-linkbutton" data-options="iconCls:'icon-send-statement'">@HtmlLang.Write(LangKey.SendStatements)</a>
+        
+        @if (HtmlSECMenu.HavePermission(BizObject.Invoice, PermissionItem.Change))
+        {
+            <a href="javascript:void(0)" id="aImport" class="easyui-splitbutton"
+                data-options="menu:'#divImport',iconCls:'icon-add'">@HtmlLang.Write(LangKey.Import)</a>
+            <div id="divImport" style="width:180px;">
+                <div data-options="iconCls:'icon-invoice-add'"><a href="/Import/Import/Invoice_Sale">@HtmlLang.Write(LangKey.Invoice_Sale)</a></div>
+                <div data-options="iconCls:'icon-credit-note'"><a href="/Import/Import/Invoice_Sale_Red">@HtmlLang.Write(LangKey.Invoice_Sale_Red)</a></div>
+            </div>
+        }
+
+        <a href="javascript:void(0)" class="easyui-linkbutton m-adv-search-btn">@HtmlLang.Write(LangKey.Search)</a>
+    </div>
+
+
+    <div class="m-adv-search m-adv-search-invoice">
+        <div class="m-adv-search-close"><a href="javascript:void(0)">&nbsp;</a></div>
+        <div class="m-adv-search-param">
+            <div class="item">
+                <p>@HtmlLang.Write(LangModule.IV, "EnterNRCAmount", "Enter Number, Reference, Contact or Amount")</p>
+                <p><input type="text" class="textbox mg-data" id="txtKeyword" name="Keyword" /></p>
+            </div>
+            <div class="item">
+                <p> @HtmlLang.Write(LangModule.IV, "SearchWithin", "Search Within")</p>
+                <p>
+                    <select id="selSearchWithin" class="easyui-combobox mg-data" data-options="editable:false" defaultvalue="1" name="MSearchWithin" style="width:100px; height:22px;">
+                        <option value="1">@HtmlLang.Write(LangModule.IV, "Anydate", "Any date")</option>
+                        <option value="2">@HtmlLang.Write(LangModule.IV, "TransactionDate", "Transaction date")</option>
+                        <option value="3">@HtmlLang.Write(LangKey.DueDate)</option>
+                        <option value="4">@HtmlLang.Write(LangModule.IV, "ExpectedDate", "Expected Date")</option>
+                    </select>
+                </p>
+            </div>
+            <div class="item">
+                <p>@HtmlLang.Write(LangKey.StartDate) </p>
+                <p><input id="txtStartDate" name="MStartDate" type="text" class="easyui-datebox mg-data" style="width:100px;" /></p>
+            </div>
+            <div class="item">
+                <p>@HtmlLang.Write(LangKey.EndDate)</p>
+                <p><input id="txtEndDate" name="MEndDate" type="text" class="easyui-datebox mg-data" style="width:100px;" /></p>
+            </div>
+            <div class="item">
+                <p>@HtmlLang.Write(LangModule.IV, "UnsentOnly", "Unsent Only")</p>
+                <p><input type="checkbox" name="MUnsentOnly" class="mg-data" /></p>
+            </div>
+            <div class="item-btn">
+                <a href="javascript:void(0)" class="mg-btn-min mg-btn-blue" id="aSearchInvoice">@HtmlLang.Write(LangKey.Search)</a><span>@HtmlLang.Write(LangKey.Or)</span><a href="javascript:void(0)" id="aClearSearchFilter">@HtmlLang.Write(LangModule.GL, "ResetDocVoucher", "重置")</a>
+            </div>
+            <br class="clear" />
+        </div>
+    </div>
+
+    @Html.Partial("../UC/Summary")
+
+    <div class="mg-container mg-top m-f-left mg-invoice-l">
+        <div class="mg-container-title">@HtmlLang.Write(LangModule.IV, "MoneyIncoming", "Money Incoming")</div>
+        <div class="m-chart mg-container-content" id="divIncomingChart">
+
+        </div>
+    </div>
+
+    <div class="mg-container mg-top m-f-right mg-invoice-r">
+        <div class="mg-container-title">@HtmlLang.Write(LangModule.IV, "CustomersOwingTheMost", "Customers owing the most")
+            <div class="m-tabs-skinny">
+                <a id="show_list" class="active" href="#">@HtmlLang.Write(LangModule.IV, "List", "List")</a>
+                <a id="show_pie" class="no-pipe" href="#">@HtmlLang.Write(LangModule.IV, "Pie", "Pie")</a>
+                @{
+                    int listCount = pieList.Count;
+                    if (listCount > 5)
+                    {
+                        pieList = pieList.Take(5).ToList();
+                        <a class="no-pipe" href="/IV/Sale/Statements?endDate=Now" style="float:right;" id="listType_All">@HtmlLang.Write(LangModule.IV, "All", "All")</a>
+                    }
+                 }
+            </div>
+        </div>
+        <div class="m-chart mg-container-content" id="divCustomerMostChart">
+
+        </div>
+        <div class="m-chart mg-container-content" id="divCustomerMostList">
+            @{
+                if (pieList!=null &&pieList.Count>0)
+                {
+                    <table class="m-skinny-table" id="MostListTable">
+                            <tbody>
+                                @{
+                                    foreach (ChartPie2DModel item in pieList)
+                                        {
+                                        <tr>
+                                            <td><a href="/IV/Sale/ViewStatement?statementType=Outstanding&statementContactID=@item.MContactID" class="debtor"><span style="background: none repeat scroll 0 0 @item.color;"> </span>@item.name</a>
+                                            </td>
+                                            <td class="amt"><a href="/IV/Sale/ViewStatement?statementType=Outstanding&statementContactID=@item.MContactID" class="amount">@item.value.ToMoneyFormat()</a>
+                                            </td>
+                                            <td class="amt red"><a class="redamount">@item.MOverDue.ToMoneyFormat()</a>
+                                            </td>
+                                        </tr>
+                                        }
+                                }
+                            </tbody>
+                        </table>
+                }
+                }
+        </div>
+        
+    </div>
+
+    <br class="clear" />
+</div>
+
+<script src="@ServerHelper.StaticServer/fw/include/ichartjs/ichart.1.2.min.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.ScriptServer/Scripts/IV/Sale/Index.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.IV)

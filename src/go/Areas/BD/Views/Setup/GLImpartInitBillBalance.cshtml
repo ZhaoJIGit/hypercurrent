@@ -1,0 +1,19 @@
+﻿@{
+    Layout = "~/Areas/BD/Views/Shared/_SetupLayout.cshtml";
+}
+<!--以下放入一些常用的从后端传过来的js变量，供top以及子iframe使用 felson-->
+<script type="text/javascript">
+    //本用户的多语言信息
+    window.OrgLang = (function (lang) {
+        //转化为json
+        return $.parseJSON(lang.replace(/&quot;/g, '"'));
+    })('@HtmlLang.OrgLang()');
+    //本用户的国际化信息，包括时区以及日期格式等等
+    window.MegiGlobal = (function (global) {
+        return $.parseJSON(global.replace(/&quot;/g, '"'));
+    })('@HtmlLang.GlobalInfo()');
+</script>
+<div class="m-setup-content">
+    @Html.Partial("../Organisation/InitUC/InitUCTabs")
+    <input id="hideAutoHeight" value="330" />
+</div>

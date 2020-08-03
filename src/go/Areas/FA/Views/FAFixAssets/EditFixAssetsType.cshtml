@@ -1,0 +1,128 @@
+﻿
+
+@using JieNor.Megi.Common.Utility
+@using JieNor.Megi.EntityModel.MultiLanguage
+@using JieNor.Megi.Identity.HtmlHelper
+
+@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+
+<link type="text/css" rel="stylesheet" href="~/Scripts/FA/fa.css?@ServerHelper.JSVersion" />
+<script type="text/javascript" src="~/Scripts/GL/GLVoucherHome.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="~/Scripts/GL/GLCheckType.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="~/Scripts/FA/FAHome.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="~/Scripts/FA/entity/FAEnums.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="~/Scripts/FA/FAFixAssetsTypeEdit.js?@ServerHelper.JSVersion"></script>
+
+<div class="tp-edit-top m-imain" style="overflow:hidden;">
+
+    <table class="tp-edit-table">
+        <tr>
+            <td>
+                @HtmlLang.Write(LangModule.FA, "TypeNumber", "类别编码")
+            </td>
+            <td>
+                <input type="text" class="tp-edit-column tp-type-number easyui-validatebox" />
+            </td>
+            <td>
+                @HtmlLang.Write(LangModule.FA, "TypeName", "类别名称")
+            </td>
+            <td>
+                <input type="text" class="tp-edit-column tp-type-name m-lang m-lang-input easyui-validatebox" name="MName" />
+            </td>
+        </tr>
+        <tr>
+            <td style="line-height: 20px;">
+                @HtmlLang.Write(LangModule.FA, "FixAssetsAccount", "固定资产科目")
+            </td>
+            <td>
+                <input type="text" class="tp-edit-column tp-type-fixassetsaccount easyui-combobox" data-options="height:26,width:200" />
+            </td>
+            <td style="line-height: 20px;">
+                @HtmlLang.Write(LangModule.FA, "DepreciationAccount", "累计折旧科目")
+            </td>
+            <td>
+                <input type="text" class="tp-edit-column tp-type-depreciationaccount easyui-combobox" data-options="height:26,width:200" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @HtmlLang.Write(LangModule.FA, "DepreciationType", "折旧方法")
+            </td>
+            <td>
+                <input type="text" class="tp-edit-column tp-type-depreciationtype easyui-combobox" data-options="height:26,width:200" />
+            </td>
+            <td style="line-height: 20px;">
+                @HtmlLang.Write(LangModule.FA, "AssistantCheck", "核算维度")
+            </td>
+            <td style="line-height: 20px;">
+                <span class="tp-edit-icon list-item-edit" style="display:inline-block;">&nbsp;</span>
+                <span class="tp-edit-checktype">@HtmlLang.Write(LangModule.FA, "ViewOrSetCheckGroupValue", "查看/设置核算维度")</span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @HtmlLang.Write(LangModule.FA, "UsefulYear", "使用年限")
+            </td>
+            <td>
+                <input type="text" class="tp-edit-column easyui-numberbox tp-type-year" style="text-align:right;" />
+                @HtmlLang.Write(LangModule.FA, "As", "折为")
+                <input type="text" class="tp-edit-column easyui-numberbox tp-type-period"  style="text-align:right;" />
+                @HtmlLang.Write(LangModule.GL, "Period", "期")
+            </td>
+            <td>
+                @HtmlLang.Write(LangModule.Common, "Description", "描述")
+            </td>
+            <td>
+                <textarea type="text" class="tp-edit-column tp-type-remark"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @HtmlLang.Write(LangModule.FA, "RateOfSalvage", "残值率")
+            </td>
+            <td>
+                <input type="text" class="tp-edit-column easyui-numberbox tp-type-rateofsalvage" style="text-align:right;"  data-options="height:26,min:0,max:100,precision: 2"/>&nbsp;&nbsp;%
+            </td>
+            <td>
+                @HtmlLang.Write(LangModule.FA, "DepreciateFrom", "折旧开始方式")
+            </td>
+            <td>
+                <input type="text" class="tp-edit-column tp-type-depreciatefrom easyui-combobox" data-options="height:26,width:200" />
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div class="m-toolbar-footer">
+    <div class="left">
+        <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray tp-cancel-button">@HtmlLang.Write(LangKey.Cancel)</a>
+    </div>
+
+
+    <div class="right">
+        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow tp-save-button">@HtmlLang.Write(LangModule.Common, "Save", "Save")</a>
+    </div>
+
+</div>
+
+<input type="hidden" id="itemID" value="@ViewData["MItemID"]" />
+
+<div class="fa-checkgroup-setup" id="divCheckGroupSetup" style="display:none;">
+    @Html.Partial("FAPartial/EditCheckGroupValueSetupPartial")
+</div>
+<div class="fa-checkgroup-tips" id="divCheckGroupTips" style="display:none;">
+    @Html.Partial("FAPartial/CheckGroupValueTipsPartial")
+</div>
+@HtmlLang.WriteScript(LangModule.GL)
+@HtmlLang.WriteScript(LangModule.FA)
+@HtmlLang.WriteScript(LangModule.BD)
+
+
+<script type="text/javascript">
+
+    $(function () {
+        new FAFixAssetsTypeEdit().init();
+    });
+</script>
