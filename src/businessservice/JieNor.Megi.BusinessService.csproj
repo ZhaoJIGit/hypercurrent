@@ -7,7 +7,7 @@
     <OutputType>Library</OutputType>
     <AssemblyName>JieNor.Megi.BusinessService</AssemblyName>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
@@ -31,9 +31,19 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\libs\MySql.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
+    <Reference Include="PaySharp.Alipay, Version=1.0.9.0, Culture=neutral, PublicKeyToken=6abe00b5d6f7277f">
+      <HintPath>..\packages\PaySharp.Alipay.1.0.9\lib\net45\PaySharp.Alipay.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PaySharp.Core, Version=1.0.9.0, Culture=neutral, PublicKeyToken=6abe00b5d6f7277f">
+      <HintPath>..\packages\PaySharp.Core.1.0.9\lib\net45\PaySharp.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core">
       <HintPath>C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Core\v4.0_4.0.0.0__b77a5c561934e089\System.Core.dll</HintPath>
     </Reference>
@@ -41,6 +51,10 @@
       <HintPath>C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System\v4.0_4.0.0.0__b77a5c561934e089\System.dll</HintPath>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions">
       <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_MSIL\System.Web.Extensions\v4.0_4.0.0.0__31bf3856ad364e35\System.Web.Extensions.dll</HintPath>
@@ -218,6 +232,7 @@
     <Compile Include="SEC\SECUserAccountBusiness.cs" />
     <Compile Include="SEC\SECUserBusiness.cs" />
     <Compile Include="SEC\SECUserLoginLog.cs" />
+    <Compile Include="SYS\SYSOrderBusiness.cs" />
     <Compile Include="SYS\SYSCouponBusiness.cs" />
     <Compile Include="SYS\SYSOrgAppBusiness.cs" />
     <Compile Include="SYS\SYSOrgAppStorageBusiness.cs" />

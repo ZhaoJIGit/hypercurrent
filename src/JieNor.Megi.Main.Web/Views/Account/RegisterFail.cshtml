@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = @HtmlLang.Write(LangModule.Login, "RegisterError", "Error");
+}
+<style>
+    body {
+        overflow: hidden;
+    }
+</style>
+<div class="m-reg-box" style="text-align:center">
+    <div id="loginBox" class="m-login-box">
+        <div class="container form-login-content main-reg">
+            <div class="reg-fail-image">&nbsp;</div>
+            <div>
+                <p class="try-header" style="color: #FF0000">@ViewBag.ErrorTitle</p>
+                <p class="try-detail">@ViewBag.ErrorDetail</p>
+                <p class="detail"><a href='/Account/Register'>@HtmlLang.Write(LangModule.Login, "goBack", "Click here go back")</a></p>
+            </div>
+
+        </div>
+
+
+        <div class="empty-content"></div>
+        <div class="m-signIn-wrap">
+            <div class="wrap-problem">@HtmlLang.WriteFormat(LangModule.Login, "HaveProblem", "Have problems? Please <a href=\"mailto:{0}\">Contact us</a> and we will work it out!", System.Configuration.ConfigurationManager.AppSettings["ServiceEmail"]) </div>
+        </div>
+
+    </div>
+</div>
+
+

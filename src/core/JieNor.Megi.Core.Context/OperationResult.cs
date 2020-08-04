@@ -40,6 +40,7 @@ namespace JieNor.Megi.Core.Context
 
 		public List<BaseModel> FailModel = new List<BaseModel>();
 
+
 		public List<BaseModel> SuccessModel = new List<BaseModel>();
 
 		[DataMember]

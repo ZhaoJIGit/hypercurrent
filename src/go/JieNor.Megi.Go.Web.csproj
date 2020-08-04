@@ -14,7 +14,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>JieNor.Megi.Go.Web</RootNamespace>
     <AssemblyName>JieNor.Megi.Go.Web</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
@@ -266,6 +266,8 @@
     <Compile Include="Areas\PT\Controllers\PTSalaryListController.cs" />
     <Compile Include="Areas\PT\Controllers\PTVoucherController.cs" />
     <Compile Include="Areas\PT\PAAreaRegistration.cs" />
+    <Compile Include="Areas\PY\Controllers\PaymentController.cs" />
+    <Compile Include="Areas\PY\PYAreaRegistration.cs" />
     <Compile Include="Areas\Report\Controllers\GL\ReportGLBaseController.cs" />
     <Compile Include="Areas\Report\Controllers\RptAccountBalanceController.cs" />
     <Compile Include="Areas\Report\Controllers\RptAccountDimensionSummaryController.cs" />
@@ -1391,6 +1393,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\PY\Views\Payment\Index.cshtml" />
+    <Content Include="Areas\PY\Views\web.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <PropertyGroup>
@@ -1410,9 +1414,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>59509</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:25133/</IISUrl>
+          <IISUrl>http://go.megidev.com</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

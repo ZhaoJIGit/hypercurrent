@@ -1,0 +1,132 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+
+    @using JieNor.Megi.Identity
+    @using JieNor.Megi.Common.Utility
+    @{
+        var localCss = ServerHelper.StaticServer + "/fw/themes/" + LangIndentity.CurrentLangID + "/css.css?" + ServerHelper.JSVersion;
+        var localJs = ServerHelper.StaticServer + "/Lang/JieNor.Megi.Common." + LangIndentity.CurrentLangID + ".js?" + ServerHelper.JSVersion;
+    }
+    <title>@HtmlLang.Write(LangModule.Common, "Payment_Result_Title", "Subscription Renewal Results")</title>
+    <link type="text/css" rel="stylesheet" href="@ServerHelper.StaticServer/fw/min/jquery.megi.min.css?@ServerHelper.JSVersion" />
+
+    <link type="text/css" rel="stylesheet" href="@localCss" />
+    <script type="text/javascript">
+        @Html.Raw(string.Format("document.domain ='{0}';", ServerHelper.Domain))
+    </script>
+    <script type="text/javascript" src="@localJs"></script>
+    <script type="text/javascript" src="@ServerHelper.StaticServer/FW/min/jquery.megi.min.js?@ServerHelper.JSVersion"></script>
+    <script type="text/javascript" src="@ServerHelper.ScriptServer/scripts/fw/error/error.js?@ServerHelper.JSVersion"></script>
+    <style type="text/css">
+        .renewal-results-t {
+            height: 90px;
+            background: #F2F2F2;
+            padding: 12px 0 0 20px;
+            margin-bottom: 25px;
+            box-sizing: border-box;
+        }
+
+        .results-title {
+            font-style: normal;
+            font-weight: 500;
+            font-size: 20px;
+            color: #4F4F4F;
+        }
+
+        .renewal-details {
+            background: #F2F2F2;
+            margin: 20px;
+            border: 1px solid #828282;
+            box-sizing: border-box;
+            border-radius: 2px;
+        }
+
+        .renewal-details-t {
+            height: 40px;
+            line-height: 40px;
+            padding-left: 25px;
+            background: #E0E0E0;
+            color: #333;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 14px;
+            border-radius: 2px 2px 0px 0px;
+        }
+
+        .renewal-details-con {
+            padding: 15px 25px;
+        }
+
+        .renewal-row {
+            white-space: nowrap;
+        }
+
+        .renewal-item {
+            display: inline-block;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 14px;
+            color: #000000;
+            margin-bottom: 15px;
+            margin-right: 20px;
+        }
+
+            .renewal-item label {
+                font-style: normal;
+                font-weight: normal;
+                font-weight: 800;
+                color: #000000;
+                font-size: 14px;
+                margin-right: 5px;
+            }
+
+        .renewal-item1 {
+            width: 40%;
+        }
+
+        .renewal-item2 {
+            width: 25%;
+        }
+
+        .renewal-item-gap {
+            height: 20px;
+        }
+    </style>
+</head>
+<body class="">
+    <div class="renewal-results-main">
+        <div class="renewal-results-t">
+            <div class="results-title">@HtmlLang.Write(LangModule.Common, "Payment_Result_Title", "Subscription Renewal Results")</div>
+        </div>
+        <div class="renewal-details">
+            <div class="renewal-details-t">@HtmlLang.Write(LangModule.Common, "Payment_Result_Title2", "Renewal & Payment Results")</div>
+            <div class="renewal-details-con">
+                <div class="renewal-row">
+                    <span class="renewal-item renewal-item1"><label>@HtmlLang.Write(LangModule.Common, "Payment_Result_OrganisationName", "Organisation name (subscriber)"):</label>@ViewBag.OrgName</span>
+                    <span class="renewal-item renewal-item2"><label>@HtmlLang.Write(LangModule.Common, "Payment_Result_OrgCreated", "Date created"):</label>@ViewBag.OrgCreateDate</span>
+                    <span class="renewal-item renewal-item3"><label>@HtmlLang.Write(LangModule.Common, "Payment_Result_SubStatus", "Subscription status"):</label>@ViewBag.OrgSubscriptionStatus</span>
+                </div>
+                <div class="renewal-row">
+                    <span class="renewal-item renewal-item1"><label>@HtmlLang.Write(LangModule.Common, "Payment_Result_Edition", "Hypercurrent edition"):</label>@HtmlLang.Write(LangModule.My, "StardardVersion", "标准版") </span>
+                    <span class="renewal-item renewal-item2"><label>@HtmlLang.Write(LangModule.Common, "Payment_Result_NextDate", "Next renewal date"):</label>@ViewBag.NextRenewalDate</span>
+                </div>
+                <p class="renewal-item-gap"></p>
+                <div class="renewal-row">
+                    <span class="renewal-item renewal-item1"><label>@HtmlLang.Write(LangModule.Common, "Payment_Result_TransactionResult", "Transaction result"):</label>@ViewBag.TransactionResult</span>
+                    <span class="renewal-item renewal-item2"><label>@HtmlLang.Write(LangModule.Common, "Payment_Result_PaymentMethod", "Payment method"):</label>@ViewBag.PaymentMethod</span>
+                </div>
+                <div class="renewal-row">
+                    <span class="renewal-item"><label>@HtmlLang.Write(LangModule.Common, "Payment_Result_TransactionReference", "Transaction reference"):</label>@ViewBag.TransactionReference</span>
+                </div>
+                <div class="renewal-row">
+                    <span class="renewal-item"><label>@HtmlLang.Write(LangModule.Common, "Payment_Result_TransactionAmount", "Transaction amount"):</label>@ViewBag.TransactionAmount</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

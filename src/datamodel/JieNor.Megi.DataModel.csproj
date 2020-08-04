@@ -7,7 +7,7 @@
     <OutputType>Library</OutputType>
     <AssemblyName>JieNor.Megi.DataModel</AssemblyName>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
@@ -741,6 +741,10 @@
     <Compile Include="JieNor.Megi.DataModel.SYS\SYSCouponModel.cs" />
     <Compile Include="JieNor.Megi.DataModel.SYS\SYSCouponStatu.cs" />
     <Compile Include="JieNor.Megi.DataModel.SYS\SYSCouponType.cs" />
+    <Compile Include="JieNor.Megi.DataModel.SYS\SYSOrderEntry.cs" />
+    <Compile Include="JieNor.Megi.DataModel.SYS\SYSOrderLogModel.cs" />
+    <Compile Include="JieNor.Megi.DataModel.SYS\SYSOrderEntryModel.cs" />
+    <Compile Include="JieNor.Megi.DataModel.SYS\SYSOrderModel.cs" />
     <Compile Include="JieNor.Megi.DataModel.SYS\SYSCouponUserModel.cs" />
     <Compile Include="JieNor.Megi.DataModel.SYS\SYSFeedBackModel.cs" />
     <Compile Include="JieNor.Megi.DataModel.SYS\SYSOrgAppStorageModel.cs" />
@@ -778,6 +782,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="NewFolder1\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,0 +1,121 @@
+﻿@{
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+@using JieNor.Megi.Common.Utility
+<style>
+    .my-header-upload {
+        float: right;
+    }
+</style>
+<div class="m-imain">
+    <div id="divMessage"></div>
+    <div class="m-imain-content">
+        <!--basic information-->
+        <div class="m-form  m-form-vtcl  ">
+            <h2 class="m-form-section-title">@HtmlLang.Write(LangModule.Common, "BasicInformation", "Basic Information")</h2>
+
+            <!--图片-->
+            <form id="fileUploadImage" method="post" enctype="multipart/form-data">
+                <div class="row">
+                    <span class="lbl">
+                        @HtmlLang.Write(LangModule.My, "ProfileImage", "Profile image")
+                    </span>
+                    <span class="content" style="border: 1px solid #e7e7e7; margin: 10px 0; padding-top: 0px;">
+                        <img id="imageHeader" onerror="javascript:this.src='@ServerHelper.StaticServer/fw/themes/base/images/default-header.jpg';" style="width: 180px;height: 180px;" alt="头像" name="headImage"/>
+                    </span>
+                    <span class="lbl">
+                        @*<input class="import-file-input" type="file" name="fileHeaderImage" id="btnUploadImage" />*@
+                        @*<a href="javascript:void(0)" class="upload-label non-alert">@HtmlLang.Write(LangModule.My, "UploadImage", "Upload Image")</a>*@
+                    </span>
+                </div>
+            </form>
+            <!--name-->
+            <div class="row">
+                <span class="lbl">
+                    @HtmlLang.Write(LangModule.My, "Name", "Name")
+                </span>
+                <span class="content">
+                    @if (ViewBag.MLCD == "0x0009")
+                    {
+
+
+                        <input id="txtFirstName" type="text" class="easyui-validatebox textbox" style="width:147px;"
+                               name="MFristName" data-options="required:true, validType:['length[1,20]']" value="@ViewBag.MFirstName" hint="@HtmlLang.Write(LangModule.Login, "FirstName", "First Name")" />
+                        <input id="txtLastName" type="text" class="easyui-validatebox textbox" style="width:147px"
+                               name="MLastName" data-options="required:true, validType:['length[1,20]']" value="@ViewBag.MLastName"
+                               hint="@HtmlLang.Write(LangModule.Login, "LastName", "Last Name")" />
+                    }
+                    else
+                    {
+                        <input id="txtLastName" type="text" class="easyui-validatebox textbox" style="width:147px"
+                               name="MLastName" data-options="required:true, validType:['length[1,20]']" value="@ViewBag.MLastName"
+                               hint="@HtmlLang.Write(LangModule.Login, "LastName", "Last Name")" />
+                        <input id="txtFirstName" type="text" class="easyui-validatebox textbox" style="width:147px;"
+                               name="MFristName" data-options="required:true, validType:['length[1,20]']" value="@ViewBag.MFirstName" hint="@HtmlLang.Write(LangModule.Login, "FirstName", "First Name")" />
+
+                    }
+                </span>
+            </div>
+
+
+            <div class="row">
+                <span class="lbl">
+                    @HtmlLang.Write(LangModule.Login, "PhoneNumber", "Phone Number")
+                </span>
+                <span class="content">
+                    <input id="txtPhoneNumber" type="text" class="textbox" style="width:301px;"
+                           name="MMobilePhone" value="@ViewBag.MMobilePhone" />
+                </span>
+            </div>
+
+            <div class="row">
+                <span class="lbl">
+                    @HtmlLang.Write(LangModule.My, "JobTitle", "Job Titel")
+                </span>
+                <span class="content">
+                    <input id="txtMJobTitle" type="text" class="easyui-validatebox textbox" style="width:301px;"
+                           name="MJobTitle" data-options="required:false, validType:['length[1,20]']" value="@ViewBag.MJobTitle" />
+                </span>
+            </div>
+
+            <!--Brief bio-->
+            <div class="row">
+                <span class="lbl">
+                    @HtmlLang.Write(LangModule.My, "Briefbio", "Brief bio")
+                </span>
+                <span class="content">
+                    <input id="txtBriefBio" type="text" class="easyui-validatebox textbox" style="width:301px;"
+                           name="MBriefBio" data-options="required:false, validType:['length[1,200]']" value="@ViewBag.MBriefBio" />
+                </span>
+            </div>
+
+            @*<div class="row">
+                <span class="lbl">
+                    @HtmlLang.Write(LangModule.Login, "PhoneNumber", "Phone Number")
+                </span>
+                <span class="content">
+                    <input id="txtPhoneNumber" type="text" class="easyui-validatebox textbox" style="width:301px;"
+                           name="PhoneNumber" data-options="required:false, validType:['length[1,200]']" value="@ViewBag.PhoneNumber" />
+                </span>
+            </div>*@
+        </div>
+
+    </div>
+
+</div>
+
+<div class="m-toolbar-footer">
+    <div class="right">
+        <a href="javascript:void(0)" class="easyui-linkbutton easyui-linkbutton-yellow" id="aUpdate">@HtmlLang.Write(LangKey.Save)</a>
+    </div>
+</div>
+<input type="hidden" id="hideMPKID" value="@ViewBag.MPKID" />
+<input type="hidden" id="hideMParentID" value="@ViewBag.MParentID" />
+<input type="hidden" id="hideImageID" value="@ViewBag.MImageID" />
+<input type="hidden" id="hideDefaultImageUrl" value='@ServerHelper.StaticServer\\fw\\min\\images\\default-header.jpg' />
+<script type="text/javascript" src="@ServerHelper.StaticServer/fw/scripts/jquery.form.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.GoServer/scripts/BD/Docs/FileBase.js?@ServerHelper.JSVersion"></script>
+<script type="text/javascript" src="@ServerHelper.GoServer/Scripts/BD/Import/ImportBase.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.ScriptServer/scripts/setting/Profile/ProfileEdit.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.My)
+@HtmlLang.WriteScript(LangModule.Org)

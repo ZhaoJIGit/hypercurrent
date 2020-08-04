@@ -1,6 +1,7 @@
 using JieNor.Megi.BusinessContract.SEC;
 using JieNor.Megi.Common.Context;
 using JieNor.Megi.Common.Encrypt;
+using JieNor.Megi.Common.Logger;
 using JieNor.Megi.Common.Utility;
 using JieNor.Megi.Core;
 using JieNor.Megi.Core.Attribute;
@@ -25,6 +26,27 @@ namespace JieNor.Megi.BusinessService.SEC
 {
 	public class SECUserBusiness : APIBusinessBase<SECUserModel>, ISECUserBusiness, IDataContract<SECUserModel>, IBasicBusiness<SECUserModel>
 	{
+		private readonly string _temp_email = @"
+<link rel='stylesheet' href='https://use.typekit.net/eiv7tcd.css'>
+<style type='text/css'>
+    h3 {{font-family: omnes-pro, Arial, 'Helvetica Neue', Helvetica, sans-serif; font-style: normal; font-weight: 600; font-size: 22px;line-height: 1.6; color: #444;}}
+    p {{font-family: omnes-pro, Arial, 'Helvetica Neue', Helvetica, sans-serif; font-style: normal; font-weight: 500; font-size: 16px;line-height: 1.6; color: #444; padding-bottom: 1px;}}
+    .intro {{font-family: omnes-pro, Arial, 'Helvetica Neue', Helvetica, sans-serif; font-style: normal; font-weight: 600; font-size: 16px;line-height: 1.6; color: #444;}}
+    .activatelnk {{font-family: omnes-pro, Arial, 'Helvetica Neue', Helvetica, sans-serif; font-style:normal; font-weight: bold; font-size: 16px;line-height: 1.6; color: #1C0C5C;}}
+    a {{font-family: omnes-pro, Arial, 'Helvetica Neue', Helvetica, sans-serif; font-style:normal; font-weight: bold; font-size: 16px;line-height: 1.6; color: #1C0C5C;}}
+</style>
+    <h3>{0}</h3>
+    <p class='intro'>{1}</p>
+    <p>{2}<br>{3}
+    </p>
+    <p>{4}.</p>
+    <p class='activatelnk'>{5}</p>
+    <p>- {6}</p>
+    <hr>
+    <p>{7}</p>
+    <p>{8}</p>
+";
+
 		private readonly SECUserRepository dal = new SECUserRepository();
 
 		private BasProfileInfoRepository userLDal = new BasProfileInfoRepository();
@@ -47,7 +69,7 @@ namespace JieNor.Megi.BusinessService.SEC
 			model.MEmailAddress = model.MEmailAddress.Trim().ToLower();
 			model.MFirstName = model.MFirstName.Trim();
 			model.MLastName = model.MLastName.Trim();
-			model.MMobilePhone = model.MMobilePhone.Trim();
+			model.MMobilePhone = model.MMobilePhone?.Trim();
 			return (string.IsNullOrEmpty(model.MItemID) || string.IsNullOrEmpty(model.MOrgID)) ? SendRegisterEmail(ctx, model) : dal.JoinToOrg(ctx, model);
 		}
 
@@ -73,7 +95,7 @@ namespace JieNor.Megi.BusinessService.SEC
 				operationResult.Code = "10003";
 				return operationResult;
 			}
-			if (string.IsNullOrWhiteSpace(model.MMobilePhone) || model.MMobilePhone.Trim().Length > 20)
+			if (!string.IsNullOrWhiteSpace(model.MMobilePhone) && model.MMobilePhone.Trim().Length > 20)
 			{
 				operationResult.Message = COMMultiLangRepository.GetText(ctx.MLCID, LangModule.Login, "MMobilePhoneError", "Phone number cannot be empty or more than 20 characters");
 				operationResult.Code = "10003";
@@ -95,15 +117,30 @@ namespace JieNor.Megi.BusinessService.SEC
 			{
 				string guid = UUIDHelper.GetGuid();
 				string text2 = DESEncrypt.Encrypt(guid);
-				empty = "<h3><i><span style='font-size: 20pt;font-family: 'Arial Unicode MS', sans-serif;'>" + COMMultiLangRepository.GetText(ctx.MLCID, LangModule.Login, "ActivateYourMegiAccount", "Activate your Megi account") + "</span></i></h3><br>" + COMMultiLangRepository.GetText(ctx.MLCID, LangModule.Login, "Hi", "Hi") + " " + GlobalFormat.GetUserName(model.MFirstName, model.MLastName, ctx) + ":<br><br>" + COMMultiLangRepository.GetText(ctx.MLCID, LangModule.Login, "YouAreAlmostThereSimply", "You’re almost there, simply click this link to activate your account and start your free trial") + ":<br><br><a href='" + ServerHelper.LoginServer + "/Password/Create/" + text2 + "' target= '_blank'>" + ServerHelper.LoginServer + "/Password/Create/" + text2 + "</a><br><br><i>" + COMMultiLangRepository.GetText(ctx.MLCID, LangModule.Common, "TheMegiTeam", "The Megi Team") + "</i><br><br><br><br><span style='font-size:12px'>" + COMMultiLangRepository.GetText(ctx.MLCID, LangModule.Common, "NeedHelp", "Need help? Contact us at ") + "<a href='mailto:" + text + "'>" + text + "</a></span>";
-				SECSendLinkInfoModel sECSendLinkInfoModel = new SECSendLinkInfoModel();
-				sECSendLinkInfoModel.MItemID = guid;
-				sECSendLinkInfoModel.MLinkType = 1;
-				sECSendLinkInfoModel.MSendDate = DateTime.Now;
-				sECSendLinkInfoModel.MEmail = model.MEmailAddress;
-				sECSendLinkInfoModel.MFirstName = model.MFirstName;
-				sECSendLinkInfoModel.MLastName = model.MLastName;
-				sECSendLinkInfoModel.MPhone = model.MMobilePhone;
+				//empty = "<h3><i><span style='font-size: 20pt;font-family: 'Arial Unicode MS', sans-serif;'>" + COMMultiLangRepository.GetText(ctx.MLCID, LangModule.Login, "ActivateYourMegiAccount", "Activate your Megi account") + "</span></i></h3><br>" + COMMultiLangRepository.GetText(ctx.MLCID, LangModule.Login, "Hi", "Hi") + " " + GlobalFormat.GetUserName(model.MFirstName, model.MLastName, ctx) + ":<br><br>" + COMMultiLangRepository.GetText(ctx.MLCID, LangModule.Login, "YouAreAlmostThereSimply", "You’re almost there, simply click this link to activate your account and start your free trial") + ":<br><br><a href='" + ServerHelper.LoginServer + "/Password/Create/" + text2 + "' target= '_blank'>" + ServerHelper.LoginServer + "/Password/Create/" + text2 + "</a><br><br><i>" + COMMultiLangRepository.GetText(ctx.MLCID, LangModule.Common, "TheMegiTeam", "The Megi Team") + "</i><br><br><br><br><span style='font-size:12px'>" + COMMultiLangRepository.GetText(ctx.MLCID, LangModule.Common, "NeedHelp", "Need help? Contact us at ") + "<a href='mailto:" + text + "'>" + text + "</a></span>";
+
+				empty = string.Format(_temp_email,
+					COMMultiLangRepository.GetText(ctx.MLCID, LangModule.Common, "Register_Email_Template_Title", "Welcome to Hypercurrent"),
+					COMMultiLangRepository.GetText(ctx.MLCID, LangModule.Common, "Register_Email_Template_Intro", "You're almost ready to use your new Hypercurrent account. Just one more step and you'll be on your way to better &amp; easier accounting."),
+					$"{COMMultiLangRepository.GetText(ctx.MLCID, LangModule.Common, "Register_Email_Template_Greeting", "Welcome")},{GlobalFormat.GetUserName(model.MFirstName, model.MLastName, ctx)}.",
+					COMMultiLangRepository.GetText(ctx.MLCID, LangModule.Common, "Register_Email_Template_Message", "Thank you for signing up to Hypercurrent Accounting. Before you can start using your account, you need to verify your email address and create a secure password. Once you've done that your account will be activated. Remember that you only need one account,  even when you have access to several organisations."),
+					COMMultiLangRepository.GetText(ctx.MLCID, LangModule.Common, "Register_Email_Template_LinkTips", "To complete your the activation, click on the unique link below. Alternatively, you can copy then paste the link into your browser."),
+					"<a href='" + ServerHelper.LoginServer + "/Password/Create/" + text2 + "' target='_blank' > " + ServerHelper.LoginServer + "/Password/Create/" + text2 + "</a>",
+					COMMultiLangRepository.GetText(ctx.MLCID, LangModule.Common, "Register_Email_Template_Signature", "- The Hypercurrent Team"),
+					COMMultiLangRepository.GetText(ctx.MLCID, LangModule.Common, "Register_Email_Template_Footer", "Having trouble activating your new account? Contact our support team at <a href=\"mailto: support@hypercu.cn\">support@hypercu.cn</a> or go to <a href=\"https://hypercu.cn/support\" target=\"_blank\">Hypercurrent Support Centre</a>."),
+					COMMultiLangRepository.GetText(ctx.MLCID, LangModule.Common, "Register_Email_Template_Already", "If you already have a Hypercurrent account, <a href=\"https://login.hypercu.cn\" target=\"_blank\">log in here</a>.")
+					);
+
+				var sECSendLinkInfoModel = new SECSendLinkInfoModel
+				{
+					MItemID = guid,
+					MLinkType = 1,
+					MSendDate = DateTime.Now,
+					MEmail = model.MEmailAddress,
+					MFirstName = model.MFirstName,
+					MLastName = model.MLastName,
+					MPhone = model.MMobilePhone
+				};
 				sECSendLinkInfoBusiness.InsertLink(ctx, sECSendLinkInfoModel);
 				operationResult.Success = true;
 			}
@@ -113,13 +150,14 @@ namespace JieNor.Megi.BusinessService.SEC
 				operationResult.Code = "20001";
 				operationResult.Message = COMMultiLangRepository.GetText(ctx.MLCID, LangModule.User, "registerFailDetail", "This email has been registered, please use the other email to register!");
 			}
+
 			string mEmailAddress = model.MEmailAddress;
 			string text3 = COMMultiLangRepository.GetText(ctx.MLCID, LangModule.Login, "ActivateYourAccount", "Activate your account");
 			List<string> list = new List<string>();
-			string arg = HostingEnvironment.MapPath("~/App_Data/Reg/");
-			list.Add($"{arg}Organization setup guide.pdf");
-			list.Add($"{arg}Organization setup guide_CN.pdf");
-			SendMail.SendSMTPEMail(mEmailAddress, text3, empty, list, "Megi");
+			//string arg = HostingEnvironment.MapPath("~/App_Data/Reg/");
+			//list.Add($"{arg}Organization setup guide.pdf");
+			//list.Add($"{arg}Organization setup guide_CN.pdf");
+			SendMail.SendSMTPEMail(mEmailAddress, text3, empty, list, "Hypercurrent");
 			return operationResult;
 		}
 

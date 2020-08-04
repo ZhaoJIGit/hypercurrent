@@ -1,0 +1,116 @@
+﻿@{
+    ViewBag.Title = @HtmlLang.Write(LangModule.Login, "Register", "Register");
+    JieNor.Megi.DataModel.SEC.SECInviteUserInfoModel userInfo = ViewData["userInfo"] as JieNor.Megi.DataModel.SEC.SECInviteUserInfoModel;
+    string orgName = ViewData["orgName"] == null ? "" : ViewData["orgName"].ToString();
+}
+<style>
+    body { overflow: hidden; }
+</style>
+@using JieNor.Megi.Common.Utility
+@using JieNor.Megi.Identity
+@using JieNor.Megi.EntityModel.Enum
+@using JieNor.Megi.Identity.HtmlHelper
+
+<div class="m-reg-box">
+    <div id="loginBox" class="m-login-box m-box-register">
+
+        <div id="register" class="container form-login-content reg">
+            <!--<h1>MEGI</h1>-->
+            <div class="migi_Logo">
+
+            </div>
+
+            @if (string.IsNullOrEmpty(orgName))
+            {
+                <div class="m-login-box-title-tip">@HtmlLang.Write(LangModule.Login, "SignUpForFreeTrial", "Sign up today for free trial")</div>
+            }
+            else
+            {
+                <div class="m-login-box-title-tip">@string.Format(HtmlLang.Write(LangModule.Login, "JoinMegi", "Please create your MEGI account to join {0}").ToString(), orgName)</div>
+            }
+            <div class="lang-bar" style="margin-top: 10px;">
+                @HtmlLang.Write(LangModule.Login, "changeLang", "切换语言") : @HtmlLang.LangBar(ServerType.MainServer)
+            </div>
+            <div id="divUserRegister" class="main" style="">
+                <div class="item-wrap">
+                    <input id="MFirstName" type="text" class="easyui-validatebox textbox" style="width:46.9%;" value="@userInfo.MFirstName"
+                           name="MFirstName" data-options="required:true, validType:['length[1,100]']" hint="@HtmlLang.Write(LangModule.Login, "FirstName", "First Name")" />
+                    <input id="MLastName" type="text" class="easyui-validatebox textbox" style="width:46.9%" value="@userInfo.MLastName"
+                           name="MLastName" data-options="required:true, validType:['length[1,200]']"
+                           hint="@HtmlLang.Write(LangModule.Login, "LastName", "Last Name")" />
+                </div>
+
+                <div class="item-wrap">
+                    @if (string.IsNullOrEmpty(orgName))
+                    {
+                        <input id="MEmailAddress" type="text" hint="@HtmlLang.Write(LangModule.Login, "EmailAddress", "Email Address")" value="@userInfo.MEmail" class="easyui-validatebox mg-data textbox reg-info-b" data-options="required:true, validType:['email','length[0,255]']" name="MEmailAddress" />
+                    }
+                    else
+                    {
+                        <input id="MEmailAddress" disabled="disabled" type="text" hint="@HtmlLang.Write(LangModule.Login, "EmailAddress", "Email Address")" value="@userInfo.MEmail" class="easyui-validatebox mg-data textbox reg-info-b" data-options="required:true, validType:['email','length[0,255]']" name="MEmailAddress" />
+                    }
+                </div>
+                <div class="item-wrap"><input id="MPhoneNumber" type="text" hint="@HtmlLang.Write(LangModule.Login, "PhoneNumber", "Phone Number")" class="easyui-validatebox textbox reg-info-b" data-options="required:true, validType:['length[1,20]']" name="MPhoneNumber" /></div>
+                @if (!string.IsNullOrEmpty(orgName))
+                {
+                    <div class="item-wrap">
+                        <input id="pwd_text" type="text" tabindex="1" hint="@HtmlLang.Write(LangModule.Login, "Password", "Password")" class="easyui-validatebox textbox reg-info-b" data-options="required:true,validType:'minLength[8]'" style="padding-left:5px" />
+                        <input id="pwd" type="password" class="easyui-validatebox mg-data textbox reg-info-b" data-options="required:true,validType:'minLength[8]'" name="MPassWord" style="display: none; padding-left: 5px" />
+                        <label id="pwd_tips" style="color:red;display:none;width:482px;">@HtmlLang.Write(LangModule.Login, "PasswordIsSimple", "密码至少为8位，需包含字母、数字和特殊字符。")</label>
+                    </div>
+                    <div class="item1-wrap">
+                        <input id="rpwd_text" type="text" tabindex="0" hint="@HtmlLang.Write(LangModule.Login, "confirmpassword", "Confirm Password")" class="easyui-validatebox textbox reg-info-b" data-options="required:true,validType:'minLength[8]'" style="padding-left:5px" />
+                        <input id="rpwd" type="password" class="easyui-validatebox textbox reg-info-b" data-options="required:true,validType:'minLength[8]'" style="display: none; padding-left: 5px" />
+                        <label id="rpwd_tips" style="color:red;display:none;width:482px;">@HtmlLang.Write(LangModule.Login, "PasswordIsSimple", "密码至少为8位，需包含字母、数字和特殊字符。")</label>
+                    </div>
+                }
+                <div class="text-agree-term" class="item1-wrap" style="padding-top:20px">
+                    <input type="checkbox" id="ckAgreeTerm" checked="checked" />
+                    <span>
+                        @HtmlLang.Write(LangModule.Login, "IHavReadAndAgree", "I have read and I agree to the")
+                        <a href="javascript:void(0);">@HtmlLang.Write(LangModule.Login, "TermsOfUse", "Terms of Use")</a>
+
+                    </span>
+                    <span class="reg-error-image">&nbsp;</span>
+                </div>
+                <div class="error-msg">
+
+                </div>
+
+                <div class="m-action">
+                    <a href="javascript:void(0)" class="m-btn-blue" id="GetStart">@HtmlLang.Write(LangModule.Login, "RegisterTry", "Let's give it a try!")</a>
+                </div>
+
+                <div class="m-signIn-wrap">
+                    <div class="wrap-problem">@HtmlLang.WriteFormat(LangModule.Login, "HaveProblem", "Have problems? Please <a href=\"mailto:{0}\">Contact us</a> and we will work it out!", ServerHelper.ServiceEmail) </div>
+                    <div class="wrap-have-account">
+                        <span>@HtmlLang.Write(LangModule.Login, "AlreadyHaveAnAccount", "Already have an account?")</span>
+                    </div>
+                    <div class="wrap-btn">
+                        <a id="aSignInHere" href="@ServerHelper.LoginServer">@HtmlLang.Write(LangModule.Login, "SignInHere", "Sign in here")</a>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="MItemID" value="@ViewData["userID"]" />
+<input type="hidden" id="MOrgID" value="@ViewData["orgId"]" />
+<input type="hidden" id="DefaultEmail" value="@userInfo.MEmail" />
+<input type="hidden" id="SendLinkID" value="@ViewData["SendLinkID"]" />
+<input type="hidden" id="hideOrgName" value="@orgName" />
+<script src="@ServerHelper.StaticServer/FW/scripts/jquery.megi.password.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.StaticServer/FW/scripts/jquery.megi.footprint.js?@ServerHelper.JSVersion"></script>
+<script src="@ServerHelper.ScriptServer/main/scripts/User/Register.js?@ServerHelper.JSVersion"></script>
+@HtmlLang.WriteScript(LangModule.Login)
+@JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteEasyuiLocalJs(LangIndentity.CurrentLangID)
+
+<script type="text/javascript">
+    window.focusSwitch("#pwd_text", "#pwd");
+    window.focusSwitch("#rpwd_text", "#rpwd");
+	$("#megiFeedback").attr("href", "https://www.megichina.com/contact/").attr("target","_Blank");
+</script>
+

@@ -1,8 +1,10 @@
 using JieNor.Megi.Common.Context;
+using JieNor.Megi.Common.Logger;
 using JieNor.Megi.Core;
 using JieNor.Megi.Core.Context;
 using JieNor.Megi.Core.DataModel;
 using JieNor.Megi.Core.DBUtility;
+using JieNor.Megi.Core.Logger;
 using JieNor.Megi.Core.Repository;
 using JieNor.Megi.DataModel.BAS;
 using JieNor.Megi.DataModel.SEC;
@@ -376,6 +378,7 @@ namespace JieNor.Megi.DataRepository.BAS
 			return Convert.ToInt32(single);
 		}
 
+
 		public static OperationResult CreateDemoCompany(MContext ctx)
 		{
 			string text = "dm000000000000000000000000000000";
@@ -425,6 +428,9 @@ namespace JieNor.Megi.DataRepository.BAS
 			{
 				ConnectionString = sYSStorageRepository.GetServerConnectionString(storageModel2.MServerID)
 			};
+
+			
+
 			MultiDBCommand multiDBCommand3 = multiDBCommand;
 			list = new List<CommandInfo>();
 			List<CommandInfo> list3 = list;
@@ -458,9 +464,19 @@ namespace JieNor.Megi.DataRepository.BAS
 					sYSStorageRepository2.GetUpdateOrgCountCmdInfo(demoActiveStorageID)
 				}
 			};
+
+			
+			foreach (var item in array)
+			{
+				MLogger.Log(item.ConnectionString + "\n");
+				MLogger.Log(string.Join("\n", item.CommandList.Select(x => x.CommandText)));
+				MLogger.Log("=====================================================================================");
+			}
+
 			bool success = DbHelperMySQL.ExecuteSqlTran(ctx, array);
 			operationResult.ObjectID = text2;
 			operationResult.Success = success;
+
 			return operationResult;
 		}
 
@@ -689,5 +705,7 @@ namespace JieNor.Megi.DataRepository.BAS
 			stringBuilder.Append(" WHERE MPKID LIKE '%0000000000%' AND MValue2 like '%/Date(%'; ");
 			DbHelperMySQL.ExecuteNonQuery(new MContext(), stringBuilder.ToString(), connectionString);
 		}
+
+		
 	}
 }

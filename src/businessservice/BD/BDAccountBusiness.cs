@@ -3,6 +3,7 @@ using JieNor.Megi.BusinessContract.BD;
 using JieNor.Megi.BusinessService.BAS;
 using JieNor.Megi.BusinessService.GL;
 using JieNor.Megi.Common.Context;
+using JieNor.Megi.Common.Logger;
 using JieNor.Megi.Common.Utility;
 using JieNor.Megi.Core;
 using JieNor.Megi.Core.Context;
@@ -1507,6 +1508,7 @@ namespace JieNor.Megi.BusinessService.BD
 			}
 		}
 
+
 		public List<CommandInfo> GetUpdateAccountFullNameCmds(MContext ctx, BDAccountModel model, BDAccountModel parentModel, List<BDAccountModel> accountList)
 		{
 			List<CommandInfo> list = new List<CommandInfo>();
@@ -1525,8 +1527,8 @@ namespace JieNor.Megi.BusinessService.BD
 			else if (model.MParentID != "0")
 			{
 				bDAccountModel = (from x in accountList
-				where x.MItemID == model.MParentID
-				select x).FirstOrDefault();
+								  where x.MItemID == model.MParentID
+								  select x).FirstOrDefault();
 				if (bDAccountModel == null)
 				{
 					throw new NullReferenceException("can find parent account:" + model.MNumber);
@@ -1540,13 +1542,13 @@ namespace JieNor.Megi.BusinessService.BD
 			if (!string.IsNullOrWhiteSpace(model.MItemID) && accountList != null)
 			{
 				BDAccountModel bDAccountModel2 = (from x in accountList
-				where x.MItemID == model.MItemID
-				select x).FirstOrDefault();
+												  where x.MItemID == model.MItemID
+												  select x).FirstOrDefault();
 				if (bDAccountModel2 != null)
 				{
 					multiLanguageFieldList = (from x in bDAccountModel2.MultiLanguage
-					where x.MFieldName == "MFullName"
-					select x).FirstOrDefault();
+											  where x.MFieldName == "MFullName"
+											  select x).FirstOrDefault();
 				}
 			}
 			foreach (BASLangModel sysLang in SysLangList)
@@ -1572,12 +1574,12 @@ namespace JieNor.Megi.BusinessService.BD
 					}
 				}
 				continue;
-				IL_029c:
+			IL_029c:
 				if (multiLanguageFieldList != null)
 				{
 					MultiLanguageField multiLanguageField = (from x in multiLanguageFieldList.MMultiLanguageField
-					where x.MLocaleID == key
-					select x).FirstOrDefault();
+															 where x.MLocaleID == key
+															 select x).FirstOrDefault();
 					if (multiLanguageField != null)
 					{
 						multiLanguageField.MValue = text;
@@ -1589,9 +1591,17 @@ namespace JieNor.Megi.BusinessService.BD
 				}
 				dictionary.Add(key, text);
 			}
-			List<BDAccountModel> list3 = (from x in accountList
-				where x.MParentID == model.MItemID
-				select x).ToList();
+
+			MLogger.Log("GetUpdateAccountFullNameCmds -> accountList is null ? " + (accountList == null));
+
+			//List<BDAccountModel> list3 =  (from x in accountList
+			//	where x.MParentID == model.MItemID
+			//							  select x).ToList();
+			List<BDAccountModel> list3 = (accountList == null) ? null : (from x in accountList
+																		 where x.MParentID == model.MItemID
+																		 select x).ToList<BDAccountModel>();
+
+
 			if (list3 != null && list3.Count() > 0)
 			{
 				foreach (BDAccountModel item in list3)
@@ -1602,6 +1612,7 @@ namespace JieNor.Megi.BusinessService.BD
 			list.AddRange(BDAccountRepository.GetUpdateFullNameCmds(ctx, dictionary, model));
 			return list;
 		}
+
 
 		public OperationResult UpdateAccountType(MContext ctx, BDAccountTypeEditModel model)
 		{

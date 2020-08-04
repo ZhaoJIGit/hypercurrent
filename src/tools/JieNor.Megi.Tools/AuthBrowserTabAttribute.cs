@@ -2,6 +2,7 @@ using System;
 using System.Web;
 using System.Web.Mvc;
 using JieNor.Megi.Common.Context;
+using JieNor.Megi.Common.Logger;
 using JieNor.Megi.Common.Utility;
 using JieNor.Megi.EntityModel.Context;
 using JieNor.Megi.EntityModel.Enum;
@@ -14,7 +15,7 @@ namespace JieNor.Megi.Tools
 		{
 			HttpRequestBase request = actionContext.HttpContext.Request;
 			MContext mcontext = ContextHelper.MContext;
-			if (this.IsLoginUrl(request.Path))
+			if (this.IsLoginUrl(request.Path) || ContextHelper.CheckUrlInWhiteList(request))
 			{
 				return;
 			}

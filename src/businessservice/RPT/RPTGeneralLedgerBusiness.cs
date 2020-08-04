@@ -1,7 +1,6 @@
 using JieNor.Megi.BusinessContract.RPT;
 using JieNor.Megi.BusinessService.BD;
 using JieNor.Megi.BusinessService.GL;
-using JieNor.Megi.Common.Logger;
 using JieNor.Megi.Core;
 using JieNor.Megi.Core.Helper;
 using JieNor.Megi.DataModel.BD;
@@ -46,18 +45,13 @@ namespace JieNor.Megi.BusinessService.RPT
 
 		public string GetBizReportJson(MContext ctx, RPTGeneralLedgerFilterModel filter)
 		{
-			MLogger.Log("GetBizReportJson-1::"+Newtonsoft.Json.JsonConvert.SerializeObject(filter));
 			IRPTReportBusiness iRPTReportBusiness = new RPTReportBusiness();
 			if (string.IsNullOrEmpty(filter.MBaseCurrencyID))
 			{
 				filter.MBaseCurrencyID = ctx.MBasCurrencyID;
 			}
 			IncludeForeginCurrency = (!string.IsNullOrEmpty(filter.MCurrencyID) && filter.MCurrencyID != "0" && filter.MCurrencyID != filter.MBaseCurrencyID);
-			MLogger.Log("GetBizReportJson-2");
-
 			CirculationCount = AccountHelper.GetCirculationCount(Convert.ToInt32(filter.MStartPeroid), Convert.ToInt32(filter.MEndPeroid));
-			MLogger.Log("GetBizReportJson-2");
-
 			return iRPTReportBusiness.GetBizReportJson(ctx, filter, delegate
 			{
 				AccountList = GLReportHelper.GetAccountList(ctx, filter);

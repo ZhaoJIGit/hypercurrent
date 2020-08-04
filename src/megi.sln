@@ -45,6 +45,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JieNor.Megi.Service.Mongo",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JieNor.Megi.My.Web", "JieNor.Megi.My.Web\JieNor.Megi.My.Web.csproj", "{9741BE30-C1A9-4214-A0BD-54284BD33E90}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JieNor.Megi.Main.Web", "JieNor.Megi.Main.Web\JieNor.Megi.Main.Web.csproj", "{3EB0C10D-A741-40EF-9CD4-6DF40BD20063}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JieNor.Megi.Service.Webapi", "JieNor.Megi.Service.Webapi\JieNor.Megi.Service.Webapi.csproj", "{C06953F0-5458-4BAE-8BB6-4841AE2C8196}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -127,6 +131,14 @@ Global
 		{9741BE30-C1A9-4214-A0BD-54284BD33E90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9741BE30-C1A9-4214-A0BD-54284BD33E90}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9741BE30-C1A9-4214-A0BD-54284BD33E90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3EB0C10D-A741-40EF-9CD4-6DF40BD20063}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EB0C10D-A741-40EF-9CD4-6DF40BD20063}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EB0C10D-A741-40EF-9CD4-6DF40BD20063}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EB0C10D-A741-40EF-9CD4-6DF40BD20063}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C06953F0-5458-4BAE-8BB6-4841AE2C8196}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C06953F0-5458-4BAE-8BB6-4841AE2C8196}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C06953F0-5458-4BAE-8BB6-4841AE2C8196}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C06953F0-5458-4BAE-8BB6-4841AE2C8196}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

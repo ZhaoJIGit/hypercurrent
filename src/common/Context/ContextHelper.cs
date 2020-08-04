@@ -272,6 +272,23 @@ namespace JieNor.Megi.Common.Context
 			}
 		}
 
+		public static List<string> AccessWhiteUrlList
+		{
+			get
+			{
+				List<string> list = new List<string>();
+				string listStr = ServerHelper.AccessWhiteUrlList;
+				if (!string.IsNullOrEmpty(listStr))
+				{
+					list.AddRange(listStr.Split(';'));
+				}
+				return list;
+			}
+			private set
+			{
+			}
+		}
+
 		public static void UpdateMContextByKeyField(string keyName, string keyValue, string fieldName, object fieldValue, bool syn)
 		{
 			MContextManager.UpdateMContextByKeyField(keyName, keyValue, fieldName, fieldValue, syn, "System");
@@ -570,8 +587,8 @@ namespace JieNor.Megi.Common.Context
 		public static int Check(HttpContextBase httpContext, string t = null, string e = null, string o = null, string l = null)
 		{
 			int result = 0;
-			string requestHost = httpContext.Request.Url.DnsSafeHost;
-			if (!CheckHostInWhiteList(requestHost))
+			//string requestHost = httpContext.Request.Url.DnsSafeHost;
+			if (!CheckHostInWhiteList(httpContext.Request))
 			{
 				MContext ctx = string.IsNullOrWhiteSpace(t) ? MContext : null;
 				result = (int)ValidateAccessToken(ctx, t, e, o, l);
@@ -579,9 +596,24 @@ namespace JieNor.Megi.Common.Context
 			return result;
 		}
 
-		public static bool CheckHostInWhiteList(string host)
+		public static bool CheckHostInWhiteList(HttpRequestBase request)
 		{
+			var host = request.Url.DnsSafeHost;
 			return AccessWhiteList.Contains(host.TrimEnd('/').ToLower());
+			//if (AccessWhiteList.Contains(host.TrimEnd('/').ToLower()))
+			//{
+			//	return true;
+			//}
+			//else
+			//{
+			//	return CheckUrlInWhiteList(request);
+			//}
+		}
+
+		public static bool CheckUrlInWhiteList(HttpRequestBase request)
+		{
+			var url = $"{request.Url.Host.TrimEnd('/')}/{request.Path.Trim('/')}".ToLower();
+			return AccessWhiteUrlList.Contains(url);
 		}
 	}
 }

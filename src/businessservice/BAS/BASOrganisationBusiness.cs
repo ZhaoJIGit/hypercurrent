@@ -4,6 +4,7 @@ using JieNor.Megi.BusinessService.PT;
 using JieNor.Megi.BusinessService.REG;
 using JieNor.Megi.BusinessService.SYS;
 using JieNor.Megi.Common.Context;
+using JieNor.Megi.Common.Logger;
 using JieNor.Megi.Core;
 using JieNor.Megi.Core.Attribute;
 using JieNor.Megi.Core.Context;
@@ -98,7 +99,34 @@ namespace JieNor.Megi.BusinessService.BAS
 			}
 		}
 
-		private void SetOrgSubscriptionStatus(MContext ctx, BASOrganisationModel orgModel)
+		/// <summary>
+		/// 新增订阅
+		/// </summary>
+		/// <param name="org">目标组织</param>
+		/// <param name="months">增加订阅的月数</param>
+		/// <param name="subscriberId">操作者</param>
+		public void Subscribe(MContext ctx, BASOrganisationModel org, int months, string subscriberId)
+        {
+			var now = ctx.DateNow;
+			// 如果是第一次付款,时间就使用当前时间
+			if(!org.MIsPaid || now > org.MExpiredDate)
+			{
+				org.MExpiredDate = now.AddMonths(months).AddDays(1);
+			}
+			else
+			{
+				org.MExpiredDate = org.MExpiredDate.AddMonths(months);
+			}
+
+			org.MIsPaid = true;
+			org.MIsBeta = false;
+
+			MLogger.Log($"org.MExpiredDate => {org.MExpiredDate},add months => {months}");
+
+			dal.InsertOrUpdate(ctx, org);
+		}
+
+        private void SetOrgSubscriptionStatus(MContext ctx, BASOrganisationModel orgModel)
 		{
 			if (orgModel.MExpiredDate < ctx.DateNow)
 			{

@@ -1,0 +1,484 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+
+    @using JieNor.Megi.Identity
+    @using JieNor.Megi.Common.Utility
+    @{
+        var localCss = ServerHelper.StaticServer + "/fw/themes/" + LangIndentity.CurrentLangID + "/css.css?" + ServerHelper.JSVersion;
+        var localJs = ServerHelper.StaticServer + "/Lang/JieNor.Megi.Common." + LangIndentity.CurrentLangID + ".js?" + ServerHelper.JSVersion;
+    }
+    <link type="text/css" rel="stylesheet" href="@ServerHelper.StaticServer/fw/min/jquery.megi.min.css?@ServerHelper.JSVersion" />
+    <link type="text/css" rel="stylesheet" href="@ServerHelper.StaticServer/fw/min/jquery.megi.min.css?@ServerHelper.JSVersion" />
+
+    <!--FONT AWESOME-->
+    <link href="Https://static.hypercu.cn/fw/fontawesome/css/all.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="@localCss" />
+    <script type="text/javascript">
+        @Html.Raw(string.Format("document.domain ='{0}';", ServerHelper.Domain))
+    </script>
+    <script type="text/javascript" src="@localJs"></script>
+    <script type="text/javascript" src="@ServerHelper.StaticServer/FW/min/jquery.megi.js?@ServerHelper.JSVersion"></script>
+    <style type="text/css">
+        .bk-order-info {
+            background: #F1F6F9;
+            padding: 10px 20px;
+        }
+
+        .bk-order-renew-title {
+            font-size: 16px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #DDD;
+        }
+
+        .instance-detail-table {
+            width: 100%;
+        }
+
+            .instance-detail-table td {
+                padding: 5px;
+            }
+
+            .instance-detail-table span {
+                color: #777;
+            }
+
+        .bk-order-time-row {
+            font-size: 16px;
+            padding-top: 10px;
+            margin-top: 10px;
+            border-top: 1px solid #DDD;
+        }
+
+        .bk-order-time-color {
+            color: #FA9B5C;
+            margin-left: 10px;
+        }
+
+        .duration-line {
+            padding: 10px 20px;
+        }
+
+            .duration-line .duration-item {
+                display: inline-block;
+                margin-right: 10px;
+            }
+
+        .config-cost {
+            text-align: right;
+            color: #FF6D08;
+            font-size: 20px;
+            padding-right: 20px;
+        }
+
+        .topaybtn {
+            display: inline-block;
+            width: 160px;
+            height: 35px;
+            text-align: center;
+            line-height: 35px;
+            background: #FF6D08;
+            color: #FFF;
+            font-size: 15px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        /***New***/
+        body {
+            background: #F2F2F2;
+        }
+
+        .pay-now {
+            background: rgba(104, 45, 132, 0.15);
+            font-size: 12px;
+            color: #000000;
+            padding: 5px 45px;
+            margin-bottom: 15px;
+        }
+
+            .pay-now .fa, .pay-now .fal, .pay-now .far {
+                font-size: 18px;
+                color: #000000;
+                margin-right: 3px;
+            }
+
+        .pay-now-h {
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        .pay-now-tip {
+            line-height: 18px;
+        }
+
+        .pay-main {
+            color: #333333;
+            clear: both;
+        }
+
+        .pay-main, .pay-list {
+            zoom: 1;
+        }
+
+            .pay-main:after, .pay-list li:after {
+                content: ".";
+                display: block;
+                height: 0;
+                clear: both;
+                visibility: hidden;
+            }
+
+            .pay-main div, .pay-main p, .pay-main label, .pay-main span, .pay-main a, .pay-main label li {
+                
+            }
+
+        .pay-con-l {
+            float: left;
+            width: 330px;
+            margin-left: 50px;
+        }
+
+        .pay-con-r {
+            float: right;
+            width: 212px;
+            height: 262px;
+            background: #F2F2F2;
+            padding: 5px 20px;
+            margin-right: 20px;
+            border: 1px solid #828282;
+            box-sizing: border-box;
+            border-radius: 4px;
+        }
+
+        .pay-step-h {
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 21px;
+        }
+
+        .pay-step-con {
+            font-size: 12px;
+            line-height: 18px;
+            margin-left: 15px;
+            margin-bottom: 16px;
+        }
+
+        .pay-summary, .method-selected, .pay-renewal {
+            line-height: 18px;
+        }
+
+        .pay-step-con .pay-option {
+            display: inline-block;
+            line-height: 18px;
+            white-space: nowrap;
+            margin-right: 15px;
+        }
+
+        .pay-step-con label input[type="radio"] {
+            width: 12px;
+            height: 12px;
+            background: #F2F2F2;
+            margin-right: 5px;
+            border: 1px solid #4F4F4F;
+        }
+
+            .pay-step-con label input[type="radio"]:checked::after {
+                width: 4px;
+                height: 4px;
+                background-color: #4F4F4F;
+                border-color: #4F4F4F
+            }
+
+        .pay-renewal {
+            margin-top: 5px;
+        }
+
+        .pay-list {
+            margin-top: 10px;
+        }
+
+        pay-list li {
+            line-height: 18px;
+        }
+
+        .pay-list .pay-total {
+            font-weight: bold;
+            border-top: 1px solid #000000;
+        }
+
+        .pay-list-type {
+            display: inline-block;
+            width: 74px;
+            float: left;
+        }
+
+        .pay-list-money {
+            display: inline-block;
+            width: 78px;
+            float: right;
+            text-align: right;
+        }
+
+        .pat-btn-box {
+            text-align: center;
+        }
+
+        .pay-now-btn, .pay-cancel-btn {
+            display: inline-block;
+            width: 94px;
+            height: 27px;
+            text-align: center;
+            line-height: 27px;
+            background: #493797;
+
+            font-style: normal;
+            font-weight: 500;
+            font-size: 12px;
+            color: #FFFFFF;
+            box-sizing: border-box;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+
+        .pay-cancel-btn, .pay-cancel-btn:hover {
+            background: #F2F2F2;
+            color: rgba(28, 12, 92, 0.25);
+            border: 1px solid rgba(28, 12, 92, 0.25);
+            margin-left: 23px;
+        }
+
+        .pay-now-btn:hover {
+            color: #FFFFFF;
+        }
+
+        .pay-method .fa, .pay-method .fab, .pay-method .far, .pay-now-btn i {
+            font-size: 13px;
+            color: #000000;
+            margin-right: 3px;
+            vertical-align: middle;
+        }
+
+        .pay-now-btn i {
+            color: #FFFFFF;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <input type="hidden" name="orgId" value="@ViewBag.OrgId" />
+        <!--
+        <div class="bk-order-info">
+            <div class="bk-order-renew-title ng-binding">当前配置</div>
+            <div class="bk-info-name bk-mt3">
+                <span class="bk-font-weight-bold ng-binding">实例名称<span>：</span></span>
+                <span class="ng-binding">iris</span>
+            </div>
+            <div class="bk-info-row">
+                <table class="instance-detail-table">
+                    <tbody>
+                    <tr>
+                        <td class="">
+                            <label class="bk-font-weight-bold">实例ID<span>：</span></label><span>i-94agi1axv</span>
+                        </td>
+                        <td>
+                            <label class="bk-font-weight-bold">地域<span>：</span></label><span>华南 1</span><span>(华南 1 可用区 B)</span>
+                        </td>
+                        <td><label class="bk-font-weight-bold">付费类型<span>：</span></label><span>包年包月</span></td>
+                    </tr>
+                    <tr>
+                        <td><label class="bk-font-weight-bold">实例系列<span>：</span></label><span>系列 I</span></td>
+                        <td><label class="bk-font-weight-bold">实例规格<span>：</span></label><span>2 vCPU 4 GiB ( 共享标准型 s2, ecs.s2.large )</span></td>
+                        <td><label class="bk-font-weight-bold">I/O 优化<span>：</span></label><span>非 I/O 优化实例</span></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="bk-order-time-row"><span>当前云服务到期时间</span><span class="bk-order-time-color">2020年7月3日 23:59:59</span></div>
+        </div>
+        -->
+        <!-- 时长 -->
+        <!--
+        <div>
+            <div class="bk-form-row-cell">
+                <div class="bk-form-row-li duration-line">
+                    <div class="duration-item">
+                        <label>半年</label>
+                        <input type="radio" name="optSubscription" value="6"/>
+                    </div>
+                    <div class="duration-item">
+                        <label>一年</label>
+                        <input type="radio" name="optSubscription" value="12"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        -->
+        <!-- 金额 -->
+        <!--
+        <div class="bk-mb3 bk-items-price-item ng-scope">
+            <div class="bk-items-price-title bk-pale inline-block config-cost">
+                <span style="font-size: 16px;color: #000" class="bk-mr2 ng-binding">配置费用：</span> <a class="bk-lnk bk-ml1" href="javascript:;" aliyun-buy-tooltip=""><i class="aliyun-icon-help"></i></a>
+            </div>
+        </div>
+        -->
+        <!-- 条款 -->
+        <!--
+        <div aliyun-buy-ecs-order-button="">
+            <div style="text-align: right; padding-right: 20px;">
+                <div class="bk-mt4 clearfix">
+                    <div class="pull-right text-left">
+                        <div class="protocol-item">
+                            <input id="termList" type="checkbox" checked="checked" value="1" style="margin-right: 3px" class="ng-pristine ng-valid"><label><span><a class="bk-order-pact-link" href="https://help.hypercu.cn" target="_blank">《云服务器 ECS 服务条款》</a></span></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="bk-mt4">
+                    <span class="bk-button bk-button-orange" role="button" tabindex="0" aliyun-buy-tooltip="{content:'', theme:'white', trigger:'hover', align: 'center', offsetX: 75, enDisplay: !!tip}" onclick="onPay()" theme="orange" aliyun-buy-button="" data-spm-click="gostr=/aliyun;locaid=gotoPay" is-disabled="false" style=""><i class=""></i>
+                        <div class="bk-button-text" role="button" tabindex="0" ng-transclude=""><span class="topaybtn">去支付</span></div></span>
+                </div>
+            </div>
+        </div>
+        -->
+        <!---New Pay--->
+        <div class="pay-now">
+            <div class="pay-now-h"><i class="far fa-credit-card"></i>@HtmlLang.Write(LangModule.Common, "Payment_PayNow_Title", "Pay Now")</div>
+            <div class="pay-now-tip">@HtmlLang.Write(LangModule.Common, "Payment_PayNow_Remarks", "Choose a billing cycle and select your preferred method of payment. Then click “Pay Now” to complete your renewal.")</div>
+        </div>
+        <div class="pay-main">
+            <div class="pay-con-l">
+                <div class="pay-step-h">1. @HtmlLang.Write(LangModule.Common, "Payment_PayNow_SubscriptionSummary", "Review subscription summary")</div>
+                <div class="pay-step-con">
+                    <p class="pay-summary"><span>@HtmlLang.Write(LangModule.Common, "Payment_PayNow_Subscription_Org", "Organisation"):</span>@ViewBag.OrgName.</p>
+                    <p class="pay-summary"><span>@HtmlLang.Write(LangModule.Common, "Payment_PayNow_Subscription_Edition", "Edition"):</span>@HtmlLang.Write(LangModule.My, "StardardVersion", "标准版") </p>
+                </div>
+                <div class="pay-step-h">2. @HtmlLang.Write(LangModule.Common, "Payment_PayNow_BillingCycle", "Choose a billing cycle")</div>
+                <div class="pay-step-con" id="subsplanoptions">
+                    <label class="pay-option"><input type="radio" name="subsplan" value="Quarterly" />@HtmlLang.Write(LangModule.Common, "Payment_PayNow_Cycle_Quarterly", "Quarterly")</label>
+                    <label class="pay-option"><input type="radio" name="subsplan" value="BiAnnually" />@HtmlLang.Write(LangModule.Common, "Payment_PayNow_Cycle_BiAnnually", "Bi-annually")</label>
+                    <label class="pay-option"><input type="radio" name="subsplan" value="Annually" checked="checked" />@HtmlLang.Write(LangModule.Common, "Payment_PayNow_Cycle_Annually", "Annually")</label>
+                </div>
+                <div class="pay-step-h">3. @HtmlLang.Write(LangModule.Common, "Payment_PayNow_PaymentMethod", "Select your payment method")</div>
+                <div class="pay-step-con pay-method">
+                    <label class="pay-option"><input type="radio" name="PayMethod" checked="checked" /><i class="fab fa-alipay"></i>@HtmlLang.Write(LangModule.Common, "Payment_PayNow_PaymentMethod_AliPay", "AliPay")</label>
+                    @*
+                        <label class="pay-option"><input type="radio" /><i class="fab fa-weixin"></i>Wechat Pay</label>
+                        <label class="pay-option"><input type="radio" /><i class="far fa-credit-card"></i>Credit card</label>
+                        <label class="pay-option"><input type="radio" /><i class="fab fa-cc-apple-pay"></i>ApplePay</label>
+                        <label class="pay-option"><input type="radio" /><i class="fab fa-btc"></i>Bitcoin</label>
+                    *@
+                </div>
+
+                <div>
+                    <a class="pay-cancel-btn" href="javascript:void(0)" onclick="$.mDialog.close();">Cancel</a>
+                </div>
+            </div>
+
+            <div class="pay-con-r">
+                <div class="pay-step-h">4. @HtmlLang.Write(LangModule.Common, "Payment_PayNow_OrderDetail", "Review your order")</div>
+                <div class="pay-step-con">
+                    <div class="pay-renewal">@HtmlLang.Write(LangModule.Common, "Payment_PayNow_OrderDetail_Renewal", "Renewal for <b id=\"subs_order_months\">3 months</b> until <b id=\"subs_order_until\">31 December 2020</b>.")</div>
+                    <div class="method-selected">@HtmlLang.Write(LangModule.Common, "Payment_PayNow_OrderDetail_Method", "Pay with AliPay.")</div>
+                    <ul class="pay-list">
+                        <li>
+                            <span class="pay-list-type">@HtmlLang.Write(LangModule.Common, "Payment_PayNow_OrderDetail_Fees", "Fees") (RMB)</span>
+                            <span class="pay-list-money" id="subs_order_fees">1,345.99</span>
+                        </li>
+                        <li>
+                            <span class="pay-list-type">@HtmlLang.Write(LangModule.Common, "Payment_PayNow_OrderDetail_Discount", "Discount")</span>
+                            <span class="pay-list-money" id="subs_order_discount">-300.00</span>
+                        </li>
+                        @*<li>
+                            <span class="pay-list-type">Taxes</span>
+                            <span class="pay-list-money" id="subs_order_taxes">55.00</span>
+                        </li>*@
+                        <li class="pay-total">
+                            <span class="pay-list-type">@HtmlLang.Write(LangModule.Common, "Payment_PayNow_OrderDetail_Total", "Total") (RMB)</span>
+                            <span class="pay-list-money" id="subs_order_total">990.99</span>
+                        </li>
+                    </ul>
+                    <div class="pat-btn-box" onclick="onPay()">
+                        <a class="pay-now-btn"><i class="fab fa-alipay"></i>Pay Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var lcid = '@ViewBag.MLCID';
+        var isPaid = @ViewBag.MIsPaid;
+        
+        // 订阅计划的价格
+        var _subsplan_price = {
+            Quarterly: {
+                Fees: 645,
+                Discount: 0,
+                Total: 645,
+                Months: 3
+            },
+            BiAnnually: {
+                Fees: 1290,
+                Discount: -60,
+                Total: 1230,
+                Months: 6
+            },
+            Annually: {
+                Fees: 2580,
+                Discount: -360,
+                Total: 2220,
+                Months: 12
+            }
+        };
+
+        // 当前组织过期时间
+        var _orgExpiredDate = new Date('@ViewBag.OrgExpiredDate');
+        $("#subs_order_until").text(new Date(_orgExpiredDate).addMonths(3).toDateString());
+        apply_price(_subsplan_price.Annually);
+
+        $(function () {
+            $("#subsplanoptions :radio").change(function (evt) {
+                var plan = $(evt.target).val();
+                if (!plan) return;
+
+                var price = _subsplan_price[plan];
+                if (!price) return;
+
+                apply_price(price);
+            });
+        });
+
+        function apply_price(price) {
+            $("#subs_order_fees").text(new Intl.NumberFormat('zh-Hans-CN', { minimumFractionDigits: 2 }).format(price.Fees));
+            $("#subs_order_discount").text(new Intl.NumberFormat('zh-Hans-CN', { minimumFractionDigits: 2 }).format(price.Discount));
+            //$("#subs_order_taxes").text(new Intl.NumberFormat('zh-Hans-CN', { minimumFractionDigits: 2 }).format(price.Taxes));
+            $("#subs_order_total").text(new Intl.NumberFormat('zh-Hans-CN', { minimumFractionDigits: 2 }).format(price.Total));
+            var now = new Date();
+            var until = new Date(_orgExpiredDate).addMonths(price.Months);
+            if (!isPaid || now > _orgExpiredDate) {
+                until = now.addMonths(price.Months).addDays(1);
+            }
+
+            if (lcid == '0x0009') {
+                $("#subs_order_months").text(price.Months + " months");
+                $("#subs_order_until").text(until.toDateString());
+            } else {
+                $("#subs_order_months").text(price.Months + " 个月");
+                $("#subs_order_until").text(until.toLocaleDateString());
+            }
+
+           
+        }
+
+        function onPay() {
+            const orgId = $('input[name="orgId"]').val();
+            const sku = $('input[name="subsplan"]:checked').val();
+            var qty = (sku === "Quarterly") ? 3 : (sku === "Annually") ? 12 : 6;
+            parent.MyIndex.Checkout(orgId, sku, qty);
+        }
+    </script>
+</body>
+</html>

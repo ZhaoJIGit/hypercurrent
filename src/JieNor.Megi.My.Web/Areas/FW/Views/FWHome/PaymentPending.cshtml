@@ -1,0 +1,157 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+
+    @using JieNor.Megi.Identity
+    @using JieNor.Megi.Common.Utility
+    @{
+        var localCss = ServerHelper.StaticServer + "/fw/themes/" + LangIndentity.CurrentLangID + "/css.css?" + ServerHelper.JSVersion;
+        var localJs = ServerHelper.StaticServer + "/Lang/JieNor.Megi.Common." + LangIndentity.CurrentLangID + ".js?" + ServerHelper.JSVersion;
+    }
+    <link type="text/css" rel="stylesheet" href="@ServerHelper.StaticServer/fw/min/jquery.megi.min.css?@ServerHelper.JSVersion" />
+    <link type="text/css" rel="stylesheet" href="@ServerHelper.StaticServer/fw/min/jquery.megi.min.css?@ServerHelper.JSVersion" />
+    <link type="text/css" rel="stylesheet" href="@localCss" />
+    <script type="text/javascript">
+        @Html.Raw(string.Format("document.domain ='{0}';", ServerHelper.Domain))
+    </script>
+    <script type="text/javascript" src="@localJs"></script>
+    <script type="text/javascript" src="@ServerHelper.StaticServer/FW/min/jquery.megi.js?@ServerHelper.JSVersion"></script>
+    <!--FONT AWESOME-->
+    <script src="https://kit.fontawesome.com/6e32edc336.js" crossorigin="anonymous"></script>
+    <style type="text/css">
+        body {
+            background: #F2F2F2;
+        }
+
+        .pay-now {
+            background: rgba(104, 45, 132, 0.15);
+            font-size: 12px;
+            color: #000000;
+            padding: 10px 45px;
+            margin-bottom: 15px;
+        }
+
+            .pay-now .icofa {
+                font-size: 18px;
+                color: #000000;
+                margin-right: 3px;
+            }
+
+        .pay-now-h {
+            font-weight: 600;
+            font-size: 18px;
+            font-family: Heebo;
+        }
+
+        .pay-now-tip {
+            font-size: 12px;
+            line-height: 18px;
+            font-family: Heebo;
+        }
+
+        .icoreceipt {
+            text-align: center;
+            margin-top: 35px;
+            margin-bottom: 15px;
+        }
+
+            .icoreceipt .icofa {
+                font-size: 48px;
+                color: #493797;
+            }
+
+        .main-box {
+            text-align: center;
+            font-size: 12px;
+            color: #333;
+        }
+
+        .pay-way-tip {
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .pay-explanation {
+            width: 300px;
+            margin: 0 auto;
+            font-size: 12px;
+            line-height: 18px;
+            color: #000;
+        }
+
+        .btn-box {
+            margin: 10px 75px;
+        }
+
+        .pay-border-btn, .pay-color-btn {
+            display: inline-block;
+            width: 94px;
+            height: 27px;
+            text-align: center;
+            line-height: 27px;
+            background: #493797;
+            font-family: Heebo;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 12px;
+            color: #F2F2F2;
+            box-sizing: border-box;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+
+        .pay-border-btn {
+            color: #1C0C5C;
+            background: #F2F2F2;
+            border: 1px solid #1c0c5c
+        }
+
+        .pay-color-btn {
+            float: right;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <input type="hidden" name="orgId" value="@ViewBag.OrgId" />
+
+        <div class="pay-now">
+            <div class="pay-now-h"><i class="far fa-credit-card-front icofa"></i>@HtmlLang.Write(LangModule.Common, "Payment_PayNow_Title", "Pay Now")</div>
+            <div class="pay-now-tip">@HtmlLang.Write(LangModule.Common, "Payment_Pending_Remarks", "收到支付反馈后点击'已完成支付'来刷新当前页面.")</div>
+        </div>
+        <div class="pay-main">
+            <div class="icoreceipt"><i class="far fa-receipt icofa"></i></div>
+            <div class="main-box">
+                <p class="pay-way-tip">@HtmlLang.Write(LangModule.Common, "Payment_Pending_Tip", "Your transaction is been processed by AliPay")</p>
+                <p class="pay-explanation" style="height: 100px;">@HtmlLang.Write(LangModule.Common, "Payment_Pending_Explanation", "Please complete the payment with AliPay When the tansaction is successful,click \"Continue\". If the transaction fails after a few minutes,please try again.")</p>
+            </div>
+            <div class="btn-box">
+                <a id="btnHelp" class="pay-border-btn" href="javascript:void(0)">@HtmlLang.Write(LangModule.Common, "Payment_Pending_Action_Try", "Try Again")</a>
+                <a id="btnComplete" class="pay-color-btn" href="javascript:void(0)">@HtmlLang.Write(LangModule.Common, "Payment_Pending_Action_Continue", "continue")</a>
+            </div>
+        </div>
+    </div>
+    <script>
+
+        $(function () {
+
+            $("#btnComplete").click(function (evt) {
+                //console.log("btnComplete click"); 
+                parent.MyIndex.initGrid();
+                $.mDialog.close();
+            });
+
+            $("#btnHelp").click(function (evt) {
+                //console.log("btnHelp click");
+                parent.MyIndex.initGrid();
+                window.open("https://www.hypercu.cn/support");
+                $.mDialog.close();
+            });
+        });
+    </script>
+</body>
+</html>

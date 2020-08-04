@@ -7,7 +7,7 @@
     <OutputType>Library</OutputType>
     <AssemblyName>JieNor.Megi.BusinessContract</AssemblyName>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
@@ -152,6 +152,7 @@
     <Compile Include="JieNor.Megi.BusinessContract.SEC\ISECUserAccountBusiness.cs" />
     <Compile Include="JieNor.Megi.BusinessContract.SEC\ISECUserBusiness.cs" />
     <Compile Include="JieNor.Megi.BusinessContract.SEC\ISECUserLoginLog.cs" />
+    <Compile Include="JieNor.Megi.BusinessContract.SYS\ISYSOrderBusiness.cs" />
     <Compile Include="JieNor.Megi.BusinessContract.SYS\ISYSCouponBusiness.cs" />
     <Compile Include="JieNor.Megi.BusinessContract.SYS\ISYSOrgAppBusiness.cs" />
     <Compile Include="JieNor.Megi.BusinessContract.SYS\ISYSOrgAppStorageBusiness.cs" />

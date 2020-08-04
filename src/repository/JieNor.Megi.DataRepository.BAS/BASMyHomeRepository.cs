@@ -1,3 +1,4 @@
+using JieNor.Megi.Common.Logger;
 using JieNor.Megi.Core;
 using JieNor.Megi.Core.Context;
 using JieNor.Megi.Core.DBUtility;
@@ -11,6 +12,7 @@ using JieNor.Megi.DataRepository.SYS;
 using JieNor.Megi.EntityModel.Context;
 using JieNor.Megi.EntityModel.Enum;
 using MySql.Data.MySqlClient;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -69,7 +71,11 @@ namespace JieNor.Megi.DataRepository.BAS
 				new MySqlParameter("@MLocaleID", ctx.MLCID)
 			};
 			str = ((!string.IsNullOrEmpty(param.Sort)) ? ((!(param.Sort == "MVersionType")) ? (str + $" order by t.{param.Sort} {param.Order}") : (str + $" order by case when date(t.MExpiredDate) < date(NOW()) \r\n                                            then case when t.MIsPaid then 5 else 1 end \r\n                                        when t.MIsPaid then 3 when t.MIsBetaUser then 4 else 2 end {param.Order} ")) : (str + " order by t.MIsPaid DESC, t.MOrgName "));
+
+
+			//MLogger.Log($"MUserID=>{ctx.MUserID},ctx.MLCID=>{ctx.MLCID},sql=>{str}");
 			List<BASMyHomeModel> dataModelBySql = ModelInfoManager.GetDataModelBySql<BASMyHomeModel>(ctx, str, cmdParms);
+			//MLogger.Log(JsonConvert.SerializeObject(dataModelBySql));
 			return new DataGridJson<BASMyHomeModel>
 			{
 				rows = dataModelBySql,

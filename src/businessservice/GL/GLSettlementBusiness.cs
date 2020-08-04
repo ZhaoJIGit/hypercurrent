@@ -1,6 +1,5 @@
 using JieNor.Megi.BusinessContract.GL;
 using JieNor.Megi.BusinessService.BAS;
-using JieNor.Megi.Common.Logger;
 using JieNor.Megi.Core;
 using JieNor.Megi.Core.Context;
 using JieNor.Megi.Core.DataModel;
@@ -162,11 +161,10 @@ namespace JieNor.Megi.BusinessService.GL
 
 		public List<DateTime> GetFullPeriod(MContext ctx)
 		{
-			MLogger.Log("GetFullPeriod::" +Newtonsoft.Json.JsonConvert.SerializeObject(ctx));
 			List<DateTime> list = new List<DateTime>();
 			DataSet maxHadVoucherPeriod = dal.GetMaxHadVoucherPeriod(ctx);
-			DateTime mGLBeginDate = ctx.MBeginDate;
-			DateTime dateTime = ctx.MBeginDate;
+			DateTime mGLBeginDate = ctx.MGLBeginDate;
+			DateTime dateTime = ctx.MGLBeginDate;
 			if (maxHadVoucherPeriod != null && maxHadVoucherPeriod.Tables.Count > 0 && maxHadVoucherPeriod.Tables[0].Rows.Count > 0)
 			{
 				DataTable dataTable = maxHadVoucherPeriod.Tables[0];
@@ -174,7 +172,7 @@ namespace JieNor.Megi.BusinessService.GL
 				string s = Convert.ToString(dataRow[0]) + "01";
 				if (!DateTime.TryParseExact(s, "yyyyMMdd", CultureInfo.CurrentCulture, DateTimeStyles.None, out dateTime))
 				{
-					dateTime = ctx.MBeginDate;
+					dateTime = ctx.MGLBeginDate;
 				}
 			}
 			DateTime dateTime2 = mGLBeginDate.AddMonths(-1);
@@ -195,11 +193,6 @@ namespace JieNor.Megi.BusinessService.GL
 				list.Add(item);
 				item = item.AddMonths(1);
 			}
-			
-			
-
-			MLogger.Log("list::" + Newtonsoft.Json.JsonConvert.SerializeObject(list));
-
 			return list;
 		}
 

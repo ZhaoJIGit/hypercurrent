@@ -103,7 +103,11 @@ var MyIndex = {
     },
 
     initSetup: function () {
-        MyIndex.iframeUrl && $.mTab.addOrUpdate(HtmlLang.Write(LangModule.My, "InitializeWizard", "Initialize Wizard"), MyIndex.iframeUrl, true);
+        if (MyIndex.iframeUrl.indexOf("paymentsuccess") != -1) {
+            MyIndex.iframeUrl && $.mTab.addOrUpdate(HtmlLang.Write(LangModule.My, "RenewalResults", "Renewal Results"), MyIndex.iframeUrl, true);
+        } else {
+            MyIndex.iframeUrl && $.mTab.addOrUpdate(HtmlLang.Write(LangModule.My, "InitializeWizard", "Initialize Wizard"), MyIndex.iframeUrl, true);
+        }
     },
     initGrid: function () {
         if (MyIndex.orgListShowType == "2") {
@@ -255,7 +259,12 @@ var MyIndex = {
                     field: 'MOrgID', hidden: true
                 },
                 {
-                    title: LangKey.Name, field: 'MOrgName', width: 250, align: 'left', sortable: true, formatter: function (value, row, index) {
+                    title: LangKey.Name,
+                    field: 'MOrgName',
+                    width: 250,
+                    align: 'left',
+                    sortable: true,
+                    formatter: function (value, row, index) {
                         //row.Url = mUtil.GetOrgUrl(row.MRegProgress);
                         row.MVersionType = MyIndex.getVersionType(row);
 
@@ -263,14 +272,21 @@ var MyIndex = {
                             return "<span style='padding-left:5px;'>" + mText.encode(value) + "</span>";
                         } else {
 
-                            return "<a href='javascript:void(0);' style='color:#048fc2' onclick=\"MyIndex.onSelectOrg('" + row.MOrgID + "', '" + row.Url + "', '" + row.MRegProgress + "', '" + row.MVersionID + "', '" + row.MIsBeta + "');\">" + mText.encode(value) + "</a>";
+                            return "<a href='javascript:void(0);' style='color:#048fc2' onclick=\"MyIndex.onSelectOrg('" + row.MOrgID + "', '" + row.Url + "', '" +
+
+                                row.MRegProgress + "', '" + row.MVersionID + "', '" + row.MIsBeta + "');\">" + mText.encode(value) + "</a>";
                         }
                     }
                 },
 
                 {
-                    title: HtmlLang.Write(LangModule.My, "Versions", "版本"), align: 'center', field: 'MVersionID', width: 100, sortable: true
-                    , formatter: function (value, row, index) {
+                    title: HtmlLang.Write(LangModule.My, "Versions", "版本"),
+                    align: 'center',
+                    field: 'MVersionID',
+                    width: 100,
+                    sortable: true
+                    ,
+                    formatter: function (value, row, index) {
                         //处理
                         if (value == "0") {
                             return HtmlLang.Write(LangModule.My, "StandardEdition", "标准版");
@@ -281,33 +297,58 @@ var MyIndex = {
                 },
 
                 {
-                    title: HtmlLang.Write(LangModule.My, "CreateDate", "Create Date"), align: 'center', field: 'MCreateDate', width: 160, sortable: true
-                    , formatter: function (value, row, index) {
+                    title: HtmlLang.Write(LangModule.My, "CreateDate", "Create Date"),
+                    align: 'center',
+                    field: 'MCreateDate',
+                    width: 160,
+                    sortable: true
+                    ,
+                    formatter: function (value, row, index) {
                         return $.mDate.format(value);
                     }
                 },
                 {
-                    title: HtmlLang.Write(LangModule.My, "Role", "Role"), field: 'MRoleName', align: 'center', width: 160, sortable: true, formatter: function (value, row, index) {
+                    title: HtmlLang.Write(LangModule.My, "Role", "Role"),
+                    field: 'MRoleName',
+                    align: 'center',
+                    width: 160,
+                    sortable: true,
+                    formatter: function (value, row, index) {
                         return HtmlLang.Write(LangModule.My, value, value);
                     }
                 }
                 ,
                 {
-                    title: HtmlLang.Write(LangModule.My, "LastViewed", "Last Viewed"), align: 'center', field: 'MLastViewDate', width: 160, sortable: true
-                    , formatter: function (value, row, index) {
+                    title: HtmlLang.Write(LangModule.My, "LastViewed", "Last Viewed"),
+                    align: 'center',
+                    field: 'MLastViewDate',
+                    width: 160,
+                    sortable: true
+                    ,
+                    formatter: function (value, row, index) {
 
                         return $.mDate.format(row.MLastViewDate);
                     }
                 },
                 {
-                    title: HtmlLang.Write(LangModule.My, "ExpiredDate", "Expired Date"), align: 'center', field: 'MExpiredDate', width: 160, sortable: true
-                    , formatter: function (value, row, index) {
+                    title: HtmlLang.Write(LangModule.My, "ExpiredDate", "Expired Date"),
+                    align: 'center',
+                    field: 'MExpiredDate',
+                    width: 160,
+                    sortable: true
+                    ,
+                    formatter: function (value, row, index) {
                         return $.mDate.format(value);
                     }
                 },
                 {
-                    title: HtmlLang.Write(LangModule.My, "SoftVerison", "Verison"), align: 'center', field: 'MVersionType', width: 160, sortable: true
-                    , formatter: function (value, row, index) {
+                    title: HtmlLang.Write(LangModule.My, "SoftVerison", "Verison"),
+                    align: 'center',
+                    field: 'MVersionType',
+                    width: 160,
+                    sortable: true
+                    ,
+                    formatter: function (value, row, index) {
 
                         var status = MyIndex.getVersionType(row);
                         if (status == 1) {
@@ -326,12 +367,18 @@ var MyIndex = {
                     }
                 },
                 {
-                    title: HtmlLang.Write(LangModule.My, "Operation", "Operation "), align: 'center', field: 'MaturityDate2', width: 80, sortable: false
-                    , formatter: function (value, row, index) {
+                    title: HtmlLang.Write(LangModule.My, "Operation", "Operation "),
+                    align: 'center',
+                    field: 'MaturityDate2',
+                    width: 80,
+                    sortable: false
+                    ,
+                    formatter: function (value, row, index) {
                         if ((row.MVersionType == 1 || row.MVersionType == 2 || row.MVersionType == 5) && row.HasChangePermission) {
-                            return "<div class='list-item-action'><a href=\"#\" class='list-item-del' onclick='MyIndex.deleteOrg($(this) ,\"" + row.MOrgID + "\",\"" + index + "\")'></a></div>";
-                        }
-                        else {
+                            return "<div class='list-item-action'><a href=\"#\" class='list-item-del' onclick='MyIndex.deleteOrg($(this) ,\"" + row.MOrgID + "\",\"" +
+
+                                index + "\")'></a></div>";
+                        } else {
                             return "";
                         }
 
@@ -345,18 +392,14 @@ var MyIndex = {
         if (mDate.parse(mDate.format(row.MExpiredDate, 'yyyy-MM-dd')) < mDate.parse(mDate.format(mDate.DateNow, 'yyyy-MM-dd'))) {
             if (row.MIsPaid) {
                 status = 5;
-            }
-            else {
+            } else {
                 status = 1;
             }
-        }
-        else if (row.MIsPaid) {
+        } else if (row.MIsPaid) {
             status = 3;
-        }
-        else if (row.MIsBetaUser) {
+        } else if (row.MIsBetaUser) {
             status = 4;
-        }
-        else {
+        } else {
             status = 2;
         }
 
@@ -407,19 +450,31 @@ var MyIndex = {
                 if (obj.MVersionType == 1 || obj.MVersionType === 5) {
                     html += '<span class="expired-name">' + mText.encode(obj.MOrgName) + '</span>';
                 } else {
-                    html += '<a href="javascript:void(0);" class="name" style="color:#048fc2" title=' + HtmlLang.Write(LangModule.My, "GoToOrganization", "go to the organization") + ' onclick="MyIndex.onSelectOrg(\'' + obj.MOrgID + '\', \'' + obj.Url + '\',\'' + obj.MRegProgress + '\', \'' + obj.MVersionID + '\', \'' + obj.MIsBeta + '\');">' + mText.encode(obj.MOrgName) + '</a>';
+                    html += '<a href="javascript:void(0);" class="name" style="color:#048fc2" title=' + HtmlLang.Write(LangModule.My, "GoToOrganization", "go to the 
+
+organization") + ' onclick="MyIndex.onSelectOrg(\'' + obj.MOrgID + '\', \'' + obj.Url + '\',\'' + obj.MRegProgress + '\', \'' + obj.MVersionID + '\', \'' + obj.MIsBeta
+
+                        + '\');">' + mText.encode(obj.MOrgName) + '</a>';
                 }
                 html += '</div>';
                 html += '<div class="info">';
 
                 if (obj.MVersionID == "0") {
-                    html += '<span class="info1" style="color:#e23f2a;font-weight:bold"><label>' + HtmlLang.Write(LangModule.My, "younowuser", "You are using") + '</label>' + HtmlLang.Write(LangModule.My, "StandardEdition", "标准版") + '</span>';
+                    html += '<span class="info1" style="color:#e23f2a;font-weight:bold"><label>' + HtmlLang.Write(LangModule.My, "younowuser", "You are using") +
+
+                        '</label>' + HtmlLang.Write(LangModule.My, "StandardEdition", "标准版") + '</span>';
                 } else if (obj.MVersionID == "1") {
-                    html += '<span class="info1" style="color:#e23f2a;font-weight:bold"><label>' + HtmlLang.Write(LangModule.My, "younowuser", "You are using") + '</label>' + HtmlLang.Write(LangModule.My, "GeneralLedgerEdition", "总账专版") + '</span>';
+                    html += '<span class="info1" style="color:#e23f2a;font-weight:bold"><label>' + HtmlLang.Write(LangModule.My, "younowuser", "You are using") +
+
+                        '</label>' + HtmlLang.Write(LangModule.My, "GeneralLedgerEdition", "总账专版") + '</span>';
                 }
 
-                html += '<span class="info3"><label style="">' + HtmlLang.Write(LangModule.My, "YourRole", "Your role:") + '</label>' + HtmlLang.Write(LangModule.My, obj.MRoleName, obj.MRoleName) + '</span>';
-                html += '<span class="info3"><label>' + HtmlLang.Write(LangModule.My, "CreateDateColon", "创建日期:") + '</label>' + $.mDate.format(obj.MCreateDate) + '</span>';
+                html += '<span class="info3"><label style="">' + HtmlLang.Write(LangModule.My, "YourRole", "Your role:") + '</label>' + HtmlLang.Write(LangModule.My,
+
+                    obj.MRoleName, obj.MRoleName) + '</span>';
+                html += '<span class="info3"><label>' + HtmlLang.Write(LangModule.My, "CreateDateColon", "创建日期:") + '</label>' + $.mDate.format(obj.MCreateDate) +
+
+                    '</span>';
                 html += '</div>';
                 html += '<div class="info">';
                 var expiredDate = "";
@@ -428,7 +483,7 @@ var MyIndex = {
                 } else if (obj.MVersionType == 2) {
                     html += '<span class="info1 version">' + HtmlLang.Write(LangModule.My, "FreeTrailVersion", "Free trial version") + '</span>';
                 } else if (obj.MVersionType == 3) {
-                    html += '<span class="info1 version">' + HtmlLang.Write(LangModule.My, "PaidVersion", "Paid version") + '</span>';
+                    html += '<span class="info1 version paid">' + HtmlLang.Write(LangModule.My, "PaidVersion", "Paid version") + '</span>';
                 } else if (obj.MVersionType == 4) {
                     html += '<span class="info1 version">' + HtmlLang.Write(LangModule.My, "BetaTesterOneYearFreeUse", "Beta tester one year free use") + '</span>';
                 } else if (obj.MVersionType == 5) {
@@ -436,16 +491,24 @@ var MyIndex = {
                 } else {
                     html += '<span class="info1 version">' + HtmlLang.Write(LangModule.My, "FreeTrailVersion", "Free trial version") + '</span>';
                 }
-                html += '<span class="info3"><label>' + HtmlLang.Write(LangModule.My, "LastView", "Last View:") + '</label>' + $.mDate.format(obj.MLastViewDate) + '</span>';
+                html += '<span class="info3"><label>' + HtmlLang.Write(LangModule.My, "LastView", "Last View:") + '</label>' + $.mDate.format(obj.MLastViewDate) +
+
+                    '</span>';
 
                 obj.MIsExpiredAlert = mDate.parse(obj.MExpiredDate).getTime() < new Date().addDays(15).getTime() ? true : false;
 
-                html += (obj.MIsExpiredAlert ? '<span class="info3" style="color:#ff0000;">' : '<span class="info3">') + '<label>' + HtmlLang.Write(LangModule.My, "ExpiredDateB", "Expired Date:") + '</label>' + $.mDate.format(obj.MExpiredDate) + '</span>';
+                html += (obj.MIsExpiredAlert ? '<span class="info3" style="color:#ff0000;">' : '<span class="info3">') + '<label>' + HtmlLang.Write(LangModule.My,
+
+                    "ExpiredDateB", "Expired Date:") + '</label>' + $.mDate.format(obj.MExpiredDate) + '</span>';
                 if (obj.MVersionType == 1 || obj.MVersionType == 2 || obj.MVersionType == 5) {
                     html += ' <span class="info4">';
-                    html += '<a class="easyui-linkbutton easyui-linkbutton-yellow l-btn l-btn-small" group="" id="" onclick="MyIndex.PayNow(this);"><span class="l-btn-left"><span class="l-btn-text">' + HtmlLang.Write(LangModule.My, "PayNow", "Pay Now") + '</span></span></a>';
+                    html += '<a class="easyui-linkbutton easyui-linkbutton-yellow l-btn l-btn-small" group="" id="" onclick="MyIndex.PayNow(this,\'' + obj.MOrgID
+
+                        + '\');"><span class="l-btn-left"><span class="l-btn-text">' + HtmlLang.Write(LangModule.My, "PayNow", "Pay Now") + '</span></span></a>';
                     if (obj.HasChangePermission) {
-                        html += '<a href="javascript:void(0)" class="easyui-linkbutton l-btn l-btn-small" id="aDelete" orgid="' + obj.MOrgID + '" rowindex="' + i + '"><span class="l-btn-left"><span class="l-btn-text">' +
+                        html += '<a href="javascript:void(0)" class="easyui-linkbutton l-btn l-btn-small" id="aDelete" orgid="' + obj.MOrgID + '" rowindex="' + i +
+
+                            '"><span class="l-btn-left"><span class="l-btn-text">' +
                             HtmlLang.Write(LangModule.My, "DeleteButton", "Delete") + '</span></span></a>';
                     }
                 }
@@ -463,7 +526,8 @@ var MyIndex = {
         $("#divDataGridContainer").unmask();
     },
     //马上支付的弹框提醒
-    PayNow: function (element) {
+    PayNow: function (element, orgId) {
+        var mySite = $("#aMySite").val();
         //这个是获取的链接的地址
         var goSite = $("#PayNow").val();
         var contactUs = LangKey.ContactUs;
@@ -474,8 +538,52 @@ var MyIndex = {
 
         window.mFilter.doFilter("track", ["PayNow", { version: version, status: status }]);
         //warning
-        $.mDialog.built(paymentAlert, function () {
+        //$.mDialog.built(paymentAlert, function () {
 
+        //});
+        //warning
+
+        console.log(orgId);
+        $.mDialog.show({
+            width: 650,
+            height: 450,
+            mContent: `iframe:${mySite}/FW/FWHome/Payment?orgId=` + orgId
+        }, function (x) {
+            console.log(x);
+            var orgId = "xxx";//todo:get orgId
+            var qty = 12;//todo: get qty
+            MyIndex.Checkout(orgId, qty)
+        });
+    },
+    Checkout: function (orgId, sku, qty) {
+        $.mDialog.close();
+
+        var mySite = $("#aMySite").val();
+        $.mAjax.Post(mySite + "/FW/FWHome/CheckOut", {
+            OrgId: orgId,
+            Items: [
+                {
+                    SkuId: sku,
+                    Qty: qty
+                }
+            ]
+        }, function (msg) {
+            if (msg && msg.RedirectUrl) {
+                window.open(msg.RedirectUrl)
+            } else {
+                console.error(msg)
+            }
+        });
+        MyIndex.PaymentPending(orgId);
+    },
+    PaymentPending: function (orgId) {
+        var mySite = $("#aMySite").val();
+        $.mDialog.show({
+            mWidth: 650,
+            mHeight: 450,
+            mContent: `iframe:${mySite}/FW/FWHome/PaymentPending?orgId=` + orgId
+        }, function (x) {
+            console.log(x);
         });
     },
 
@@ -538,7 +646,9 @@ var MyIndex = {
 
                     url = MyIndex.tabswitch.intercept(url);
 
-                    var clickEvent = 'MyIndex.onSelectOrg(\'' + temp.MOrgID + '\', \'' + temp.Url + '\',\'' + temp.MRegProgress + '\',\'' + temp.MVersionID + '\', \'' + temp.MIsBeta + '\');';
+                    var clickEvent = 'MyIndex.onSelectOrg(\'' + temp.MOrgID + '\', \'' + temp.Url + '\',\'' + temp.MRegProgress + '\',\'' + temp.MVersionID + '\', \''
+
+                        + temp.MIsBeta + '\');';
 
 
                     html += '<p><a href="###" onclick="' + clickEvent + '">' + mText.encode(temp.MOrgName) + '</a></p>';
@@ -572,15 +682,20 @@ var MyIndex = {
             //先校验是否有增加组织的权限
             MyIndex.validateOrgCreateOrJumpAuth(version, function (version) {
                 var mySite = $("#aMySite").val();
-                var message = HtmlLang.Write(LangModule.My, "AddSmartVersionOrganistionConfirm", "这个版本只提供总账功能，适用于代理记账公司，不提供任何管理需求。是否确认要添加?");
+                var message = HtmlLang.Write(LangModule.My, "AddSmartVersionOrganistionConfirm", "这个版本只提供总账功能，适用于代理记账公司，不提供任何管理需求。是否
+
+确认要添加 ? ");
                 $.mDialog.confirm(message, function () {
-                    $.mTab.addOrUpdate(HtmlLang.Write(LangModule.My, "InitializeWizard", "Initialize Wizard"), $("#aGoServer").val() + "/BD/Setup/OrgSetting/0?version=" + version, true);
+                    $.mTab.addOrUpdate(HtmlLang.Write(LangModule.My, "InitializeWizard", "Initialize Wizard"), $("#aGoServer").val() + "/BD/Setup/OrgSetting/0?
+
+version = " + version, true);
                 });
             });
 
-        }
-        else {
-            $.mTab.addOrUpdate(HtmlLang.Write(LangModule.My, "InitializeWizard", "Initialize Wizard"), $("#aGoServer").val() + "/BD/Setup/OrgSetting/0?version=" + version, true);
+        } else {
+            $.mTab.addOrUpdate(HtmlLang.Write(LangModule.My, "InitializeWizard", "Initialize Wizard"), $("#aGoServer").val() + "/BD/Setup/OrgSetting/0?version=" +
+
+                version, true);
         }
     },
     validateOrgCreateOrJumpAuth: function (version, callback) {

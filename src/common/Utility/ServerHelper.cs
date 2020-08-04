@@ -39,6 +39,18 @@ namespace JieNor.Megi.Common.Utility
 			}
 		}
 
+		public static string AccessWhiteUrlList
+		{
+			get
+			{
+				string format = ConfigurationManager.AppSettings["AccessWhiteUrlList"];
+				if (null == format)
+					return string.Empty;
+				object[] domainString = DomainString;
+				return string.Format(format, domainString);
+			}
+		}
+
 		public static string ServiceServerPrefix
 		{
 			get

@@ -7,7 +7,7 @@
     <OutputType>Library</OutputType>
     <AssemblyName>JieNor.Megi.ServiceContract</AssemblyName>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
@@ -137,6 +137,7 @@
     <Compile Include="JieNor.Megi.ServiceContract.SEC\ISECUser.cs" />
     <Compile Include="JieNor.Megi.ServiceContract.SEC\ISECUserAccount.cs" />
     <Compile Include="JieNor.Megi.ServiceContract.SEC\ISECUserLoginLog.cs" />
+    <Compile Include="JieNor.Megi.ServiceContract.SYS\ISYSOrder.cs" />
     <Compile Include="JieNor.Megi.ServiceContract.SYS\ISYSCoupon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

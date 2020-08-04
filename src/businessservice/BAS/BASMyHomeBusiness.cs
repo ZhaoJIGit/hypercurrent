@@ -1,5 +1,6 @@
 using JieNor.Megi.BusinessContract.BAS;
 using JieNor.Megi.Common.Context;
+using JieNor.Megi.Common.Logger;
 using JieNor.Megi.Core;
 using JieNor.Megi.Core.Context;
 using JieNor.Megi.DataModel.BAS;
@@ -72,9 +73,11 @@ namespace JieNor.Megi.BusinessService.BAS
 			bool isSys = ctx.IsSys;
 			ctx.IsSys = true;
 			DataGridJson<BASMyHomeModel> dataGridJson = new DataGridJson<BASMyHomeModel>();
+
 			try
 			{
 				dataGridJson = dal.GetOrgInfoListByPage(ctx, filter);
+				
 				foreach (BASMyHomeModel row in dataGridJson.rows)
 				{
 					row.Url = GetOrgUrl(row.MVersionID, row.MRegProgress);

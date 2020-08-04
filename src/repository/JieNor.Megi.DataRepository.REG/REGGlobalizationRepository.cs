@@ -1,4 +1,5 @@
 using JieNor.Megi.Common.Context;
+using JieNor.Megi.Common.Logger;
 using JieNor.Megi.Core;
 using JieNor.Megi.Core.Context;
 using JieNor.Megi.Core.DataModel;
@@ -7,6 +8,7 @@ using JieNor.Megi.Core.Repository;
 using JieNor.Megi.DataModel.BAS;
 using JieNor.Megi.DataModel.REG;
 using JieNor.Megi.EntityModel.Context;
+using Newtonsoft.Json;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -72,10 +74,14 @@ namespace JieNor.Megi.DataRepository.REG
 				return _clientGlobal[ctx.MOrgID];
 			}
 			REGGlobalizationModel orgGlobalizationDetail = GetOrgGlobalizationDetail(ctx, ctx.MOrgID);
+
+			MLogger.Log($"GetClientGlobalInfo->orgGlobalizationDetail is null?{null == orgGlobalizationDetail}");
 			if (orgGlobalizationDetail == null)
 			{
 				return string.Empty;
 			}
+			MLogger.Log($"GetClientGlobalInfo->orgGlobalizationDetail ->{JsonConvert.SerializeObject(orgGlobalizationDetail)}");
+
 			BASGlobalClientModel bASGlobalClientModel = new BASGlobalClientModel
 			{
 				MDateFormat = orgGlobalizationDetail.MSystemDate,

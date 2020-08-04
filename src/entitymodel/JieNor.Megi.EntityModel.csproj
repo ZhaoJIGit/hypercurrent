@@ -7,7 +7,7 @@
     <OutputType>Library</OutputType>
     <AssemblyName>JieNor.Megi.EntityModel</AssemblyName>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
@@ -149,6 +149,7 @@
     <Compile Include="JieNor.Megi.EntityModel.MultiLanguage\MultiLanguageFieldList.cs" />
     <Compile Include="JieNor.Megi.EntityModel.SEC\SECLoginModel.cs" />
     <Compile Include="JieNor.Megi.EntityModel.SEC\SECLoginResultModel.cs" />
+    <Compile Include="JieNor.Megi.EntityModel.SYS\SysCreateOrderModel.cs" />
     <Compile Include="JieNor.Megi.EntityModel\DeleteParam.cs" />
     <Compile Include="JieNor.Megi.EntityModel\ExParamBase.cs" />
     <Compile Include="JieNor.Megi.EntityModel\ExpressionException.cs" />

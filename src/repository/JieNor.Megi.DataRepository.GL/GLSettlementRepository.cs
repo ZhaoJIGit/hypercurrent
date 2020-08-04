@@ -1,4 +1,3 @@
-using JieNor.Megi.Common.Logger;
 using JieNor.Megi.Core;
 using JieNor.Megi.Core.Context;
 using JieNor.Megi.Core.DataModel;
@@ -91,7 +90,7 @@ namespace JieNor.Megi.DataRepository.GL
 
 		public List<DateTime> GetSettledPeriodFromBeginDate(MContext ctx, bool includeCurrentPeriod = false, bool includeBeginPeriod = true)
 		{
-			DateTime dateTime = ctx.MBeginDate;
+			DateTime dateTime = ctx.MGLBeginDate;
 			DateTime dateTime2 = dateTime.AddMonths(-1);
 			List<DateTime> nextSettledPeriod = GetNextSettledPeriod(ctx, new GLSettlementModel
 			{
@@ -103,7 +102,7 @@ namespace JieNor.Megi.DataRepository.GL
 			{
 				return includeBeginPeriod ? new List<DateTime>
 				{
-					ctx.MBeginDate
+					ctx.MGLBeginDate
 				} : new List<DateTime>();
 			}
 			if (includeCurrentPeriod)
@@ -468,19 +467,13 @@ namespace JieNor.Megi.DataRepository.GL
 			{
 				ParameterName = "@GLBeingPeriod"
 			};
-			DateTime mGLBeginDate = ctx.MBeginDate;
+			DateTime mGLBeginDate = ctx.MGLBeginDate;
 			int num = mGLBeginDate.Year * 100;
+			mGLBeginDate = ctx.MGLBeginDate;
 			obj2.Value = num + mGLBeginDate.Month;
 			obj[1] = obj2;
 			MySqlParameter[] cmdParms = obj;
 			DynamicDbHelperMySQL dynamicDbHelperMySQL = new DynamicDbHelperMySQL(ctx);
-
-			MLogger.Log("GetMaxHadVoucherPeriod::sql::" + sql);
-			MLogger.Log("GetMaxHadVoucherPeriod::ctx::" + Newtonsoft.Json.JsonConvert.SerializeObject(ctx));
-			MLogger.Log("GetMaxHadVoucherPeriod::GLBeingPeriod::" + num + mGLBeginDate.Month);
-
-			MLogger.Log("GetMaxHadVoucherPeriod::cmdParms::" + Newtonsoft.Json.JsonConvert.SerializeObject(cmdParms));
-
 			return dynamicDbHelperMySQL.Query(sql, cmdParms);
 		}
 

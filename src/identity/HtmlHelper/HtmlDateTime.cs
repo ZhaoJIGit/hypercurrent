@@ -56,7 +56,7 @@ namespace JieNor.Megi.Identity.HtmlHelper
 			int year = now.Year;
 			now = DateTime.Now;
 			int month = now.Month;
-			DateTime mGLBeginDate = ContextHelper.MContext.MBeginDate;
+			DateTime mGLBeginDate = ContextHelper.MContext.MGLBeginDate;
 			now = DateTime.Now;
 			DateTime t = now.AddMonths(forwardMonths);
 			StringBuilder stringBuilder = new StringBuilder();

@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using JieNor.Megi.Common.Context;
+using JieNor.Megi.Common.Logger;
 using JieNor.Megi.Common.Utility;
 using JieNor.Megi.DataModel.BAS;
 using JieNor.Megi.EntityModel.Context;
@@ -21,8 +22,15 @@ namespace JieNor.Megi.Tools.Attribute
 		{
 			HttpContextBase httpContext = actionContext.HttpContext;
 			HttpRequestBase request = httpContext.Request;
-			string absoluteUri = request.Url.AbsoluteUri;
+			string absoluteUri = request.Url.AbsoluteUri; 
 			string dnsSafeHost = request.Url.DnsSafeHost;
+			
+			if(ContextHelper.CheckUrlInWhiteList(request))
+			{
+				return;
+			}
+
+
 			string text = request.Url.Scheme.ToLower();
 			if (ServerHelper.IsEnableHttpsJump && !text.Equals(ServerHelper.WebServerPrefix.ToLower()))
 			{
@@ -141,7 +149,7 @@ namespace JieNor.Megi.Tools.Attribute
 					};
 					return;
 				}
-				if (!ContextHelper.CheckHostInWhiteList(dnsSafeHost))
+				if (!ContextHelper.CheckHostInWhiteList(request))
 				{
 					string userHostAddress = request.UserHostAddress;
 					MContext mcontext = ContextHelper.MContext;

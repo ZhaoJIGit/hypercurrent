@@ -1523,6 +1523,11 @@ namespace JieNor.Megi.Core.Repository
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="ctx"></param>
+		/// <param name="successModel"></param>
 		private static void MakeBizBillNumber(MContext ctx, List<BaseModel> successModel)
 		{
 			MyPropertyInfo[] source = modelInfoCache[successModel[0].GetType()];

@@ -1,4 +1,3 @@
-using JieNor.Megi.Common.Logger;
 using JieNor.Megi.DataModel.RPT;
 using JieNor.Megi.Go.Web.Controllers;
 using JieNor.Megi.Identity.Attribute;
@@ -18,7 +17,6 @@ namespace JieNor.Megi.Go.Web.Areas.Report.Controllers
 		[Permission("Report", "View", "")]
 		public string GetReportData(RPTGeneralLedgerFilterModel filter)
 		{
-			MLogger.Log("GetReportData");
 			return _rpt.GetBizReportJson(filter, null).ResultData;
 		}
 	}

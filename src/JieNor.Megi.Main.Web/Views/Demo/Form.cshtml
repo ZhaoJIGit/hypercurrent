@@ -1,0 +1,124 @@
+﻿<div class="m-form">
+    <div class="m-form-field">
+        <div class="m-form-setion">@HtmlLang.Write(LangKey.YourBank)</div>
+        <div class="m-form-input"><input class="easyui-validatebox mg-width200 mg-data" data-options="required:true" id="txtOrgName" name="MName" /></div>
+        <div class="m-form-tip m-form-tip-box">@HtmlLang.Write(LangModule.Login, "BankFeedsAvailable", "Bank feeds are available for recognised banks.")</div>
+    </div>
+
+
+    <div class="m-form-field">
+        <div class="m-form-setion">@HtmlLang.Write(LangKey.Account_Name)</div>
+        <div class="m-form-input">
+            <input class="easyui-validatebox mg-width200 mg-data" data-options="required:true,validType:'length[1,50]'" id="txtOrgName" name="MName" />
+        </div>
+        <div class="m-form-tip">@HtmlLang.Write(LangModule.Login, "NameAppearLimited", "As you would like it to appear in Megi (limited 50 characters).") </div>
+    </div>
+
+
+    <div class="m-form-field">
+        <div class="m-form-setion">@HtmlLang.Write(LangKey.Code)</div>
+        <div class="m-form-input">
+            <input class="easyui-validatebox mg-width200 mg-data" data-options="required:true" id="txtOrgName" name="MName" />
+        </div>
+        <div class="m-form-tip">@HtmlLang.Write(LangModule.Login, "UniqueCodeOrNumber", "A unique code/number for this account (limited to 10 characters)") </div>
+    </div>
+
+
+    <div class="m-form-field">
+        <div class="m-form-setion">@HtmlLang.Write(LangKey.Currency) </div>
+        <div class="m-form-input">
+            <input class="easyui-validatebox mg-width200 mg-data" data-options="required:true" id="txtOrgName" name="MName" />
+        </div>
+    </div>
+
+    <div class="m-form-field">
+        <div class="m-form-setion">@HtmlLang.Write(LangKey.BankAccount_Number)  </div>
+        <div class="m-form-input">
+            <input class="easyui-validatebox mg-width200 mg-data" data-options="required:true" id="txtOrgName" name="MName" />
+        </div>
+    </div>
+
+    <div class="m-form-action">
+        <a href="/Organisation/OrganisationAdd" class="mg-btn mg-btn-gray mg-btn-cancel">@HtmlLang.Write(LangKey.Cancel)</a>
+        <a href="javascript:void(0)" onclick="Test()" class="mg-btn mg-btn-green mg-btn-save" id="aStartTrial">@HtmlLang.Write(LangKey.Save)</a>
+
+        <br class="clear" />
+    </div>
+</div>
+
+
+
+<div class="m-form m-form-hrtl m-form-hrtl-lbl100">
+    <div class="m-form-field">
+        <div class="m-form-setion">@HtmlLang.Write(LangModule.Login, "ItemCode", "Item Code")</div>
+        <div class="m-form-input">
+            <input class="easyui-validatebox mg-width200 mg-data" data-options="required:true" id="txtOrgName" name="MName" />
+        </div>
+    </div>
+
+
+    <div class="m-form-field">
+        <div class="m-form-setion">@HtmlLang.Write(LangKey.Description)</div>
+        <div class="m-form-input">
+            <textarea class="mg-data" style="height:50px; width:200px;"></textarea>
+        </div>
+    </div>
+
+
+    <div class="m-form-field-label">
+        <div class="m-form-setion">&nbsp;</div>
+        <div class="m-form-sub-title">
+            <span class="mg-width80">@HtmlLang.Write(LangKey.UnitPrice)</span><span class="mg-width150">@HtmlLang.Write(LangKey.Accounts)</span><span class="mg-width150">@HtmlLang.Write(LangModule.Login, "TermsOfUse", "Terms of use")</span>
+        </div>
+        <br class="clear" />
+    </div>
+    <div class="m-form-field">
+        <div class="m-form-setion">@HtmlLang.Write(LangModule.Login, "ForPurchases", "For Purchases")</div>
+        <div class="m-form-input">
+            <input class="easyui-validatebox mg-width80 mg-data" data-options="required:true" name="MName" />
+            <select name="MCurrencyID" class="easyui-combobox" style="width:150px; height:26px;"></select>
+            <select name="MCurrencyID" class="easyui-combobox" style="width:150px; height:26px;"></select>
+        </div>
+    </div>
+
+
+    <div class="m-form-field">
+        <div class="m-form-setion">@HtmlLang.Write(LangModule.Login, "ForSales", "For Sales")</div>
+        <div class="m-form-input">
+            <input class="easyui-validatebox mg-width80 mg-data" data-options="required:true" id="txtOrgName" name="MName" />
+            <select name="MCurrencyID" class="easyui-combobox" style="width:150px; height:26px;"></select>
+            <select name="MCurrencyID" class="easyui-combobox" style="width:150px; height:26px;"></select>
+        </div>
+    </div>
+
+
+    <div class="m-form-action">
+        <a href="/Organisation/OrganisationAdd" class="mg-btn mg-btn-gray mg-btn-cancel">@HtmlLang.Write(LangKey.Cancel)</a>
+
+        <a href="javascript:void(0)" id="aNewBankAccount" class="easyui-splitbutton mg-splitbtn-green"
+           data-options="menu:'#divNewBankAccount'">@HtmlLang.Write(LangKey.Save)</a>
+        <div id="divNewBankAccount" style="width:180px;">
+            <div><a href="/Invoice/InvoiceEdit">@HtmlLang.Write(LangKey.BankAccounts)</a></div>
+            <div><a href="/Invoice/InvoiceList">@HtmlLang.Write(LangModule.Login, "CreditCard", "Credit Card")</a></div>
+            <div><a href="/Invoice/InvoiceList">@HtmlLang.Write(LangModule.Login, "PayPal", "PayPal")</a></div>
+        </div>
+
+        <a href="@ServerHelper.GoServer/Setting/Setup/Start" class="mg-btn mg-btn-green mg-btn-save" id="aStartTrial">@HtmlLang.Write(LangKey.Save)</a>
+
+        <br class="clear" />
+    </div>
+</div>
+
+<script type="text/javascript">
+    function Test()
+    {
+        var obj = {};
+        obj.MEmailAddress = "214653883@qq.com";
+        obj.MFirstName = "luo";
+        obj.MLastName = "yong";
+        obj.MMobilePhone = "1283";
+        Megi.Ajax.post("http://xapi.megichina.com/User/Register?token=B1B3D5EA972649CCB74D5854D1F570B11996D38DADE1434EB67D18D5F9C146F0", obj, function (msg) {
+
+        });
+    }
+</script>

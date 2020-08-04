@@ -301,9 +301,6 @@ namespace JieNor.Megi.Core.DBUtility
 		{
 			using (connection = DBConnectionManager.GetDBConnection(mContext))
 			{
-
-				MLogger.Log(connection.ConnectionString);
-
 				MySqlCommand mySqlCommand = new MySqlCommand();
 				mySqlCommand.CommandTimeout = cmdTimeout;
 				PrepareCommand(mySqlCommand, connection, null, sql, cmdParms);

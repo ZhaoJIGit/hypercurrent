@@ -247,7 +247,7 @@ namespace JieNor.Megi.EntityModel.Context
 		{
 			get
 			{
-				return _mBeginDate;
+				return _mGLBeginDate;
 			}
 			set
 			{
