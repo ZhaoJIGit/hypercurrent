@@ -1,6 +1,7 @@
 using JieNor.Megi.Common.Context;
 using JieNor.Megi.Common.Utility;
 using JieNor.Megi.Core.Context;
+using JieNor.Megi.Core.DBUtility;
 using JieNor.Megi.DataModel.BAS;
 using JieNor.Megi.DataModel.BD;
 using JieNor.Megi.DataModel.IV;
@@ -16,6 +17,7 @@ using JieNor.Megi.ServiceContract.SEC;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -92,6 +94,19 @@ namespace JieNor.Megi.Go.Web.Areas.FW.Controllers
 			MContext mContext = ContextHelper.MContext;
 			mContext.MServerType = 1;
 			ContextHelper.MContext = mContext;
+
+			//DataTable dataTable = COMAccess.
+			//foreach (DataRow row in dataTable.Rows)
+			//{
+			//	int num = Convert.ToInt32(row[0]);
+			//	int num2 = Convert.ToInt32(row[1]);
+			//	string key = Convert.ToString(num * 100 + num2);
+			//	string value = Convert.ToString(num) + "-" + Convert.ToString(num2);
+			//	dictionary.Add(key, value);
+			//}
+
+			base.ViewData["PlanCode"] = "";
+
 			base.ViewData["UserCreateDate"] = mContext.MUserCreateDate;
 			base.ViewData["MLocaleID"] = mContext.MLCID;
 			return base.View();

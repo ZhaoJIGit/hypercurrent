@@ -282,7 +282,8 @@ namespace JieNor.Megi.DataRepository.BAS
 			sECSendLinkInfoModel.MFirstName = dataEditModel.MFirstName;
 			sECSendLinkInfoModel.MLastName = dataEditModel.MLastName;
 			sECSendLinkInfoModel.MPhone = "";
-			SECSendLinkInfoRepository.InsertLink(sECSendLinkInfoModel.MItemID, model.MEmailAddress, DateTime.Now, model.MMobilePhone, sECSendLinkInfoModel.MFirstName, sECSendLinkInfoModel.MLastName, sECSendLinkInfoModel.MLinkType, sECSendLinkInfoModel.MInvitationEmail, sECSendLinkInfoModel.MInvitationOrgID);
+			sECSendLinkInfoModel.PlanCode = model.PlanCode;
+			SECSendLinkInfoRepository.InsertLink(sECSendLinkInfoModel.MItemID, model.MEmailAddress, DateTime.Now, model.MMobilePhone, sECSendLinkInfoModel.MFirstName, sECSendLinkInfoModel.MLastName, sECSendLinkInfoModel.MLinkType, sECSendLinkInfoModel.MInvitationEmail, sECSendLinkInfoModel.MInvitationOrgID, sECSendLinkInfoModel.PlanCode);
 			return new OperationResult
 			{
 				Message = COMMultiLangRepository.GetText(ctx.MLCID, LangModule.My, "SureEmailSubmittedToServer", "the sure email have been submitted to the server to send.")

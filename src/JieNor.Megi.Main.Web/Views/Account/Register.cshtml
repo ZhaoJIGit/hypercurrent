@@ -4,7 +4,9 @@
     string orgName = ViewData["orgName"] == null ? "" : ViewData["orgName"].ToString();
 }
 <style>
-    body { overflow: hidden; }
+    body {
+        overflow: hidden;
+    }
 </style>
 @using JieNor.Megi.Common.Utility
 @using JieNor.Megi.Identity
@@ -12,8 +14,8 @@
 @using JieNor.Megi.Identity.HtmlHelper
 
 <div class="header-text">
-	<h3 class="header-text-h">@HtmlLang.Write(LangModule.Common, "LogoWelcome", "Welcome to Hypercurrent.")</h3>
-	<p class="header-text-p">@HtmlLang.Write(LangModule.Common, "LogoWelcomeTips", "Our software is getting better and everyone is invited to celebrate our milestones with us. Read more here.")</p>
+    <h3 class="header-text-h">@HtmlLang.Write(LangModule.Common, "LogoWelcome", "Welcome to Hypercurrent.")</h3>
+    <p class="header-text-p">@HtmlLang.Write(LangModule.Common, "LogoWelcomeTips", "Our software is getting better and everyone is invited to celebrate our milestones with us. Read more here.")</p>
 </div>
 <div class="m-reg-box">
     <div id="loginBox" class="m-login-box m-box-register">
@@ -21,10 +23,10 @@
         <div id="register" class="container form-login-content reg">
             <!--<h1>MEGI</h1>-->
             <!--<div class="migi_Logo"> </div>-->
-			<div class="top">
+            <div class="top">
                 <span class="hypercurrent">hypercurrent<span class="chinaedition">@HtmlLang.Write(LangModule.Common, "ChinaEditionLang", "China edition")</span></span>
             </div>
-			<!--
+            <!--
             @if (string.IsNullOrEmpty(orgName))
             {
                 <div class="m-login-box-title-tip">@HtmlLang.Write(LangModule.Login, "SignUpForFreeTrial", "Sign up today for free trial")</div>
@@ -33,90 +35,90 @@
             {
                 <div class="m-login-box-title-tip">@string.Format(HtmlLang.Write(LangModule.Login, "JoinMegi", "Please create your MEGI account to join {0}").ToString(), orgName)</div>
             }
-			-->
-			
-			<div class="registermain">
-				<div class="logintext">
-					<span class="loginCaption">@HtmlLang.Write(LangModule.Common, "Register_FreeTrial_LangKey", "Start a Free Trial")</span>
-					<div class="lang-bar">
-						@HtmlLang.Write(LangModule.Login, "changeLang", "切换语言") : @HtmlLang.LangBar(ServerType.LoginServer)
-					</div>
-				</div>
-				<div id="divUserRegister" class="main">
-					<div class="item-wrap">
-						<p class="item-wrap-l">
-							<label>@HtmlLang.Write(LangModule.Login, "FirstName", "First Name") *</label>
-							<input id="MFirstName" type="text" class="easyui-validatebox textbox inputfield" style="width:46.9%;" value="@userInfo.MFirstName"
-								   name="MFirstName" data-options="required:true, validType:['length[1,100]']" hint="@HtmlLang.Write(LangModule.Login, "FirstName", "First Name")" />
-						</p>
-						<p class="item-wrap-r">
-							<label>@HtmlLang.Write(LangModule.Login, "LastName", "Last Name") *</label>
-							<input id="MLastName" type="text" class="easyui-validatebox textbox inputfield" style="width:46.9%" value="@userInfo.MLastName"
-								   name="MLastName" data-options="required:true, validType:['length[1,200]']"
-								   hint="@HtmlLang.Write(LangModule.Login, "LastName", "Last Name")" />
-						</p>
-					</div>
-					<div class="item-wrap">
-						<p class="item-wrap-l">
-							<label>@HtmlLang.Write(LangModule.Login, "EmailAddress", "Email Address") *</label>
-							@if (string.IsNullOrEmpty(orgName))
-							{
-								<input id="MEmailAddress" type="text" hint="@HtmlLang.Write(LangModule.Login, "EmailAddress", "Email Address")" value="@userInfo.MEmail" class="easyui-validatebox mg-data textbox reg-info-b inputfield" data-options="required:true, validType:['email','length[0,255]']" name="MEmailAddress" />
-							}
-							else
-							{
-								<input id="MEmailAddress" disabled="disabled" type="text" hint="@HtmlLang.Write(LangModule.Login, "EmailAddress", "Email Address")" value="@userInfo.MEmail" class="easyui-validatebox mg-data textbox reg-info-b inputfield" data-options="required:true, validType:['email','length[0,255]']" name="MEmailAddress" />
-							}
-						</p>
-						<p class="item-wrap-r">
-							<label>@HtmlLang.Write(LangModule.Login, "PhoneNumber", "Phone Number")</label>
-							<input id="MPhoneNumber" type="text" hint="@HtmlLang.Write(LangModule.Login, "PhoneNumber", "Phone Number")" class="easyui-validatebox textbox reg-info-b inputfield" data-options="required:false, validType:['length[1,20]']" name="MPhoneNumber" />
-						</p>
-					</div>
-					
-					
-					@if (!string.IsNullOrEmpty(orgName))
-					{
-						<div class="item-wrap">
-							<input id="pwd_text" type="text" tabindex="1" hint="@HtmlLang.Write(LangModule.Login, "Password", "Password")" class="easyui-validatebox textbox reg-info-b" data-options="required:true,validType:'minLength[8]'" style="padding-left:5px" />
-							<input id="pwd" type="password" class="easyui-validatebox mg-data textbox reg-info-b" data-options="required:true,validType:'minLength[8]'" name="MPassWord" style="display: none; padding-left: 5px" />
-							<label id="pwd_tips" style="color:red;display:none;width:482px;">@HtmlLang.Write(LangModule.Login, "PasswordIsSimple", "密码至少为8位，需包含字母、数字和特殊字符。")</label>
-						</div>
-						<div class="item1-wrap">
-							<input id="rpwd_text" type="text" tabindex="0" hint="@HtmlLang.Write(LangModule.Login, "confirmpassword", "Confirm Password")" class="easyui-validatebox textbox reg-info-b" data-options="required:true,validType:'minLength[8]'" style="padding-left:5px" />
-							<input id="rpwd" type="password" class="easyui-validatebox textbox reg-info-b" data-options="required:true,validType:'minLength[8]'" style="display: none; padding-left: 5px" />
-							<label id="rpwd_tips" style="color:red;display:none;width:482px;">@HtmlLang.Write(LangModule.Login, "PasswordIsSimple", "密码至少为8位，需包含字母、数字和特殊字符。")</label>
-						</div>
-					}
-					<div class="text-agree-term" class="item1-wrap" style="padding-top:11px">
-						<input type="checkbox" id="ckAgreeTerm" checked="checked" />
-						<span>
-							@HtmlLang.Write(LangModule.Login, "IHavReadAndAgree", "I have read and I agree to the")
-							<a href="javascript:void(0);">@HtmlLang.Write(LangModule.Login, "TermsOfUse", "Terms of Use")</a>
+            -->
 
-						</span>
-						<span class="reg-error-image">&nbsp;</span>
-					</div>
-					<div class="error-msg">
+            <div class="registermain">
+                <div class="logintext">
+                    <span class="loginCaption">@HtmlLang.Write(LangModule.Common, "Register_FreeTrial_LangKey", "Start a Free Trial")</span>
+                    <div class="lang-bar">
+                        @HtmlLang.Write(LangModule.Login, "changeLang", "切换语言") : @HtmlLang.LangBar(ServerType.LoginServer)
+                    </div>
+                </div>
+                <div id="divUserRegister" class="main">
+                    <div class="item-wrap">
+                        <p class="item-wrap-l">
+                            <label>@HtmlLang.Write(LangModule.Login, "FirstName", "First Name") *</label>
+                            <input id="MFirstName" type="text" class="easyui-validatebox textbox inputfield" style="width:46.9%;" value="@userInfo.MFirstName"
+                                   name="MFirstName" data-options="required:true, validType:['length[1,100]']" hint="@HtmlLang.Write(LangModule.Login, "FirstName", "First Name")" />
+                        </p>
+                        <p class="item-wrap-r">
+                            <label>@HtmlLang.Write(LangModule.Login, "LastName", "Last Name") *</label>
+                            <input id="MLastName" type="text" class="easyui-validatebox textbox inputfield" style="width:46.9%" value="@userInfo.MLastName"
+                                   name="MLastName" data-options="required:true, validType:['length[1,200]']"
+                                   hint="@HtmlLang.Write(LangModule.Login, "LastName", "Last Name")" />
+                        </p>
+                    </div>
+                    <div class="item-wrap">
+                        <p class="item-wrap-l">
+                            <label>@HtmlLang.Write(LangModule.Login, "EmailAddress", "Email Address") *</label>
+                            @if (string.IsNullOrEmpty(orgName))
+                            {
+                                <input id="MEmailAddress" type="text" hint="@HtmlLang.Write(LangModule.Login, "EmailAddress", "Email Address")" value="@userInfo.MEmail" class="easyui-validatebox mg-data textbox reg-info-b inputfield" data-options="required:true, validType:['email','length[0,255]']" name="MEmailAddress" />
+                            }
+                            else
+                            {
+                                <input id="MEmailAddress" disabled="disabled" type="text" hint="@HtmlLang.Write(LangModule.Login, "EmailAddress", "Email Address")" value="@userInfo.MEmail" class="easyui-validatebox mg-data textbox reg-info-b inputfield" data-options="required:true, validType:['email','length[0,255]']" name="MEmailAddress" />
+                            }
+                        </p>
+                        <p class="item-wrap-r">
+                            <label>@HtmlLang.Write(LangModule.Login, "PhoneNumber", "Phone Number")</label>
+                            <input id="MPhoneNumber" type="text" hint="@HtmlLang.Write(LangModule.Login, "PhoneNumber", "Phone Number")" class="easyui-validatebox textbox reg-info-b inputfield" data-options="required:false, validType:['length[1,20]']" name="MPhoneNumber" />
+                        </p>
+                    </div>
 
-					</div>
 
-					<div class="m-action">
-						<a href="javascript:void(0)" class="loginbutton" id="GetStart">@HtmlLang.Write(LangModule.Login, "RegisterTry", "Let's give it a try!")</a>
-						<div class="dividerline" ></div>
-					</div>
-					
-					<div class="m-signIn-wrap">
-						<div class="have-account">
-							<span>@HtmlLang.Write(LangModule.Login, "AlreadyHaveAnAccount", "Already have an account?")</span>
-							<a id="aSignInHere" href="@ServerHelper.LoginServer">@HtmlLang.Write(LangModule.Login, "SignInHere", "Sign in here")</a>
-						</div>
-						<!--<div class="wrap-problem">@HtmlLang.WriteFormat(LangModule.Login, "HaveProblem", "Have problems? Please <a href=\"mailto:{0}\">Contact us</a> and we will work it out!", ServerHelper.ServiceEmail) </div>-->
-					</div>
+                    @if (!string.IsNullOrEmpty(orgName))
+                    {
+                        <div class="item-wrap">
+                            <input id="pwd_text" type="text" tabindex="1" hint="@HtmlLang.Write(LangModule.Login, "Password", "Password")" class="easyui-validatebox textbox reg-info-b" data-options="required:true,validType:'minLength[8]'" style="padding-left:5px" />
+                            <input id="pwd" type="password" class="easyui-validatebox mg-data textbox reg-info-b" data-options="required:true,validType:'minLength[8]'" name="MPassWord" style="display: none; padding-left: 5px" />
+                            <label id="pwd_tips" style="color:red;display:none;width:482px;">@HtmlLang.Write(LangModule.Login, "PasswordIsSimple", "密码至少为8位，需包含字母、数字和特殊字符。")</label>
+                        </div>
+                        <div class="item1-wrap">
+                            <input id="rpwd_text" type="text" tabindex="0" hint="@HtmlLang.Write(LangModule.Login, "confirmpassword", "Confirm Password")" class="easyui-validatebox textbox reg-info-b" data-options="required:true,validType:'minLength[8]'" style="padding-left:5px" />
+                            <input id="rpwd" type="password" class="easyui-validatebox textbox reg-info-b" data-options="required:true,validType:'minLength[8]'" style="display: none; padding-left: 5px" />
+                            <label id="rpwd_tips" style="color:red;display:none;width:482px;">@HtmlLang.Write(LangModule.Login, "PasswordIsSimple", "密码至少为8位，需包含字母、数字和特殊字符。")</label>
+                        </div>
+                    }
+                    <div class="text-agree-term" class="item1-wrap" style="padding-top:11px">
+                        <input type="checkbox" id="ckAgreeTerm" checked="checked" />
+                        <span>
+                            @HtmlLang.Write(LangModule.Login, "IHavReadAndAgree", "I have read and I agree to the")
+                            <a href="javascript:void(0);">@HtmlLang.Write(LangModule.Login, "TermsOfUse", "Terms of Use")</a>
 
-				</div>
-            
-			</div>
+                        </span>
+                        <span class="reg-error-image">&nbsp;</span>
+                    </div>
+                    <div class="error-msg">
+
+                    </div>
+
+                    <div class="m-action">
+                        <a href="javascript:void(0)" class="loginbutton" id="GetStart">@HtmlLang.Write(LangModule.Login, "RegisterTry", "Let's give it a try!")</a>
+                        <div class="dividerline"></div>
+                    </div>
+
+                    <div class="m-signIn-wrap">
+                        <div class="have-account">
+                            <span>@HtmlLang.Write(LangModule.Login, "AlreadyHaveAnAccount", "Already have an account?")</span>
+                            <a id="aSignInHere" href="@ServerHelper.LoginServer">@HtmlLang.Write(LangModule.Login, "SignInHere", "Sign in here")</a>
+                        </div>
+                        <!--<div class="wrap-problem">@HtmlLang.WriteFormat(LangModule.Login, "HaveProblem", "Have problems? Please <a href=\"mailto:{0}\">Contact us</a> and we will work it out!", ServerHelper.ServiceEmail) </div>-->
+                    </div>
+
+                </div>
+
+            </div>
         </div>
     </div>
 </div>
@@ -125,6 +127,8 @@
 <input type="hidden" id="MOrgID" value="@ViewData["orgId"]" />
 <input type="hidden" id="DefaultEmail" value="@userInfo.MEmail" />
 <input type="hidden" id="SendLinkID" value="@ViewData["SendLinkID"]" />
+<input type="hidden" id="PlanCode" value="SALES" />
+
 <input type="hidden" id="hideOrgName" value="@orgName" />
 <link href="https://login.hypercu.cn/Content/login.css?ver=186" rel="stylesheet" type="text/css">
 <script src="@ServerHelper.StaticServer/FW/scripts/jquery.megi.password.js?@ServerHelper.JSVersion"></script>
@@ -136,6 +140,6 @@
 <script type="text/javascript">
     window.focusSwitch("#pwd_text", "#pwd");
     window.focusSwitch("#rpwd_text", "#rpwd");
-	$("#megiFeedback").attr("href", "https://www.megichina.com/contact/").attr("target","_Blank");
+    $("#megiFeedback").attr("href", "https://www.megichina.com/contact/").attr("target", "_Blank");
 </script>
 

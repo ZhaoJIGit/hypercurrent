@@ -9,6 +9,9 @@ namespace JieNor.Megi.DataModel.SEC
 	[DataContract]
 	public class SECUserModel : BDModel
 	{
+		public string PlanCode { get; set; }
+
+
 		[DataMember(Order = 1)]
 		[ApiMember("UserID", IsPKField = true)]
 		public string MUserID

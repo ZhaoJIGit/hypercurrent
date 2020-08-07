@@ -7,6 +7,9 @@ namespace JieNor.Megi.DataModel.SEC
 	[DataContract]
 	public class SECSendLinkInfoModel : BDModel
 	{
+		public string PlanCode { get; set; }
+
+
 		[DataMember]
 		public string MEmail
 		{

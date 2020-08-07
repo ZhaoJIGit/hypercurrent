@@ -17,7 +17,7 @@ namespace JieNor.Megi.BusinessService.SEC
 		[NoAuthorization]
 		public void InsertLink(MContext ctx, SECSendLinkInfoModel linkModel)
 		{
-			SECSendLinkInfoRepository.InsertLink(linkModel.MItemID, linkModel.MEmail, linkModel.MSendDate, linkModel.MPhone, linkModel.MFirstName, linkModel.MLastName, linkModel.MLinkType, linkModel.MInvitationEmail, linkModel.MInvitationOrgID);
+			SECSendLinkInfoRepository.InsertLink(linkModel.MItemID, linkModel.MEmail, linkModel.MSendDate, linkModel.MPhone, linkModel.MFirstName, linkModel.MLastName, linkModel.MLinkType, linkModel.MInvitationEmail, linkModel.MInvitationOrgID,linkModel.PlanCode);
 		}
 
 		[NoAuthorization]

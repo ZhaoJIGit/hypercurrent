@@ -2,6 +2,7 @@ using JieNor.Megi.Common.Context;
 using JieNor.Megi.Common.Encrypt;
 using JieNor.Megi.Common.ServiceManager;
 using JieNor.Megi.Common.Utility;
+using JieNor.Megi.Core.DBUtility;
 using JieNor.Megi.DataModel.BAS;
 using JieNor.Megi.DataModel.SEC;
 using JieNor.Megi.EntityModel.SEC;
@@ -119,6 +120,8 @@ namespace JieNor.Megi.Login.Web.Controllers
 			try
 			{
 				SECLoginResultModel result = LoginHelper.SignIn(model, _userAccount, _perm, loginLogService, base.HttpContext);
+				
+			//DynamicDbHelperMySQL dynamicDbHelperMySQL = new DynamicDbHelperMySQL(newContext);
 				return Json(result);
 			}
 			catch (Exception)

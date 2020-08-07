@@ -139,7 +139,8 @@ namespace JieNor.Megi.BusinessService.SEC
 					MEmail = model.MEmailAddress,
 					MFirstName = model.MFirstName,
 					MLastName = model.MLastName,
-					MPhone = model.MMobilePhone
+					MPhone = model.MMobilePhone,
+					PlanCode = model.PlanCode
 				};
 				sECSendLinkInfoBusiness.InsertLink(ctx, sECSendLinkInfoModel);
 				operationResult.Success = true;
