@@ -1,3 +1,4 @@
+using JieNor.Megi.EntityModel;
 using JieNor.Megi.EntityModel.Context;
 using System.Collections.Generic;
 using System.ServiceModel;
@@ -12,5 +13,8 @@ namespace JieNor.Megi.ServiceContract.COM
 
 		[OperationContract]
 		MActionResult<MAccessResponseModel> GetAccessResultByListNoByCacche(bool isGetCache, List<MAccessRequestModel> requestList = null, string accessToken = null);
+
+		[OperationContract]
+		MActionResult<PlanModel> GetPlan();
 	}
 }

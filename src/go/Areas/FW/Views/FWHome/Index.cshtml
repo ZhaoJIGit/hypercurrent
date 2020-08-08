@@ -427,7 +427,7 @@
                                 <span class="arrow-left-border">&nbsp;</span>
                                 <span class="arrow-left">&nbsp;</span>
                                 <p><a href="###" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "AllReports", "All Reports")', '/Report/',true)">@HtmlLang.Write(LangModule.Report, "AllReports", "All Reports")</a></p>
-                                @if (isCanSaleReportsViewPermission)
+                                @if (isCanSaleReportsViewPermission && ViewData["PlanCode"].ToString() != "SALES")
                                 {   /*销售报表（按商品）*/
                                     //<p><a href="###" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "SalesByItem", "Sales By Item")', '/Report/Report2/6', true)">@HtmlLang.Write(LangModule.Report, "SalesByItem", "Sales By Item")</a></p>
                                     /*客户收入统计表*/

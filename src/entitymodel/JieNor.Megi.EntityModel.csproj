@@ -156,6 +156,7 @@
     <Compile Include="JieNor.Megi.EntityModel\GetParam.cs" />
     <Compile Include="JieNor.Megi.EntityModel\MFetchResourceRule.cs" />
     <Compile Include="JieNor.Megi.EntityModel\OpenIdClientModel.cs" />
+    <Compile Include="JieNor.Megi.EntityModel\PlanModel.cs" />
     <Compile Include="JieNor.Megi.EntityModel\PostParam.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
