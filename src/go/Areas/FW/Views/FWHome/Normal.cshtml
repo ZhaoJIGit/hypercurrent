@@ -10,7 +10,7 @@
 @using JieNor.Megi.Common.Context
 @using System.Text
 @{
-    Dictionary<string, bool> accessList = ViewData["Normal"] as Dictionary<string, bool>;
+    Dictionary<string, bool> accessList = ViewData["normal"] as Dictionary<string, bool>;
     var ctx = ContextHelper.MContext;
 
     bool isSmartVersion = ctx.MOrgVersionID == OrgVersionEnum.Smart;

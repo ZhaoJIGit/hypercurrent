@@ -10,9 +10,9 @@
 @using JieNor.Megi.Common.Context
 @using System.Text
 @{
-    Dictionary<string, bool> accessList = (ViewData["Other"] as dynamic).accessList as Dictionary<string, bool>;
-    bool flag_sales = (ViewData["Other"] as dynamic).flag_sales;
-    bool flag_invoice = (ViewData["Other"] as dynamic).flag_invoice;
+    Dictionary<string, bool> accessList = ViewData["normal"] as Dictionary<string, bool>;
+    bool flag_sales = (ViewData["other"] as bool[])[0];
+    bool flag_invoice = (ViewData["other"] as bool[])[1];
 
     var ctx = ContextHelper.MContext;
 
@@ -269,10 +269,7 @@
                     <span class="arrow-left">&nbsp;</span>
                     <p><a href="###" id="aAllContacts" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Contact, "AllContacts", "All Contacts")', '/BD/Contacts/ContactsList',true)">@HtmlLang.Write(LangModule.Contact, "AllContacts", "All Contacts")</a></p>
                     <p><a href="###" id="aCustomers" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Contact, "Customers", "Customers")', '/BD/Contacts/ContactsList/@HtmlLang.Write(LangModule.Contact, "Customers", "Customers")',true)">@HtmlLang.Write(LangModule.Contact, "Customers", "Customers")</a></p>
-                    <p><a href="###" id="aCustomers" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Contact, "Suppliers", "Suppliers")', '/BD/Contacts/ContactsList/@HtmlLang.Write(LangModule.Contact, "Suppliers", "Suppliers")',true)">@HtmlLang.Write(LangModule.Contact, "Suppliers", "Suppliers")</a></p>
                     <p><a href="###" id="aOther" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Contact, "Other", "Other")', '/BD/Contacts/ContactsList/@HtmlLang.Write(LangModule.Contact, "Other", "Other")',true)">@HtmlLang.Write(LangModule.Contact, "Other", "Other")</a></p>
-                    <p><a href="###" id="aEmployees" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Contact, "Employees", "Employees")', '/BD/Employees/EmployeesList',true)">@HtmlLang.Write(LangModule.Contact, "Employees", "Employees")</a></p>
-                    @*<p><a href="###" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Contact, "Department", "Department")', '/BD/Dept/DeptList',true)">@HtmlLang.Write(LangModule.Contact, "Department", "Department")</a></p>  *@
                 </div>
             </div>
         </li>
@@ -291,7 +288,6 @@
                     <span class="arrow-left">&nbsp;</span>
                     <div class="arrow-content">
                         <div class="arrow-content-cell first">
-                            @*<div class="arrow-content-cell-title">@HtmlLang.Write(LangModule.Org, "Organisation", "Organisation")</div>*@
                             <div class="arrow-content-cell-title">@HtmlLang.Write(LangModule.Common, "BasicSetting", "基础设置")</div>
                             @if (isCanSettingViewPermission)
                             {
@@ -323,18 +319,7 @@
                                 secondCount++;
                                 //用户（查看）权限校验
                                 <p myattr="right"><a href="###" id="aUser" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.User, "Users", "Users")', '/BD/User/UserList',true)">@HtmlLang.Write(LangModule.User, "Users", "Users")</a></p>
-                            }
-                            @*<div class="arrow-content-cell-title">Features</div>*@
-                            @*系统设置菜单栏里面的 Features 子菜单的 p 标签需要加上 myattr="right" 属性值，因为顶级菜单的高度是根据这些 p 标签来计算的，需要排除右边 p 标签的高度*@
-                            @*@if (isCanSettingViewPermission)
-                                {
-                                    //只有在没有启用总账以及启用了总账并且初始化了科目之后，这个按钮不显示了
-                                    if (!isSmartVersion && ctx.MRegProgress < (int)BASOrgScheduleTypeEnum.GLSuccess)
-                                    {
-                                        secondCount++;
-                                    <p myattr="right"><a href="###" id="aDocInitBills" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.BD, "DocInitBills", "业务单据初始化")', '/BD/Organisation/InitSettings',true,true,false,true,true,false,true)">@HtmlLang.Write(LangModule.BD, "DocInitBills", "科目单据初始化")</a></p>
-                                    }
-                                }*@
+                            }     
                             @if (isCanSettingViewPermission || isCanEditVoucherPermission || isCanEditPayRunPermission)
                             {
                                 secondCount++;
@@ -360,8 +345,6 @@
 
 
                                 @{thirdCount++; }
-                                <p myattr="right"><a href="###" id="aAccountBalances" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.BD, "AccountBalancesFinancial", "Account Balances")', '/BD/BDAccountBalance/AccountBalances', true)">@HtmlLang.Write(LangModule.BD, "AccountBalancesFinancial", "Account Balances")</a></p>
-
                                 @if (ctx.MRegProgress == (int)BASOrgScheduleTypeEnum.GLSuccess && isCanApproveVoucherPermission)
                                 {
                                     <p myattr="right"><a href="###" id="aAccountItem" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.GL, "VoucherSetting", "凭证设置")', '/BD/BDVoucherSetting/VoucherSetting', true)">@HtmlLang.Write(LangModule.GL, "VoucherSetting", "凭证设置")</a></p>

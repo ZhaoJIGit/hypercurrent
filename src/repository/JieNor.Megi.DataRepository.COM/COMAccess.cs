@@ -6,6 +6,7 @@ using JieNor.Megi.EntityModel.Context;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace JieNor.Megi.DataRepository.COM
 {
@@ -213,16 +214,18 @@ namespace JieNor.Megi.DataRepository.COM
                 "TaxRate",
                 "User"
             };
-
             //对应当前用户 方案模块
             List<PlanModel> list_pm = GetPlan(ctx);
             foreach (PlanModel pm in list_pm)
             {
-                if (all) { }
-                else if (pm.Code == "NORMAL") { }
-                else if (pm.Code == "SALES")
+                if (all || pm.Code == "NORMAL")
                 {
-                    list_basic = new List<string>
+                    list_result = new List<string>();
+                    break;
+                }
+                if (pm.Code.ToUpper() == "SALES")
+                {
+                    list_result.AddRange(new List<string>
                     {
                         "Account",
                         "AccountEdit",
@@ -232,12 +235,11 @@ namespace JieNor.Megi.DataRepository.COM
                         "Payment",
                         "Receive",
                         "Sale_Reports"
-                    };
-                    list_smart = new List<string>();
+                    });
                 }
-                else if (pm.Code == "INVOICE")
+                if (pm.Code.ToUpper() == "INVOICE")
                 {
-                    list_basic = new List<string>
+                    list_result.AddRange(new List<string>
                     {
                         "Account",
                         "AccountEdit",
@@ -247,22 +249,17 @@ namespace JieNor.Megi.DataRepository.COM
                         "Payment",
                         "Receive",
                         "Sale_Reports"
-                    };
-                    list_smart = new List<string>();
+                    });
                 }
             }
-            //区分版本
-            if (ctx.MOrgVersionID == 0)
+            if (list_result.Count == 0)
             {
-                list_result.AddRange(list_common);
-                list_result.AddRange(list_basic);
+                //区分版本
+                if (ctx.MOrgVersionID == 0) { list_result.AddRange(list_basic); }
+                else if (ctx.MOrgVersionID == 1) { list_result.AddRange(list_smart); }
             }
-            else if (ctx.MOrgVersionID == 1)
-            {
-                list_result.AddRange(list_common);
-                list_result.AddRange(list_smart);
-            }
-            return list_result;
+            list_result.AddRange(list_common);
+            return list_result.Distinct().ToList();
         }
         /// <summary>
         /// 获取当前用户的方案

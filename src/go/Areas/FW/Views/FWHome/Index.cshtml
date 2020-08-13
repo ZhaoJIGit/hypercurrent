@@ -35,7 +35,7 @@
         var accessList = accessResponse.Access;
 
         ViewData["normal"] = accessList;
-        ViewData["other"] = new { accessList,flag_sales, flag_invoice };
+        ViewData["other"] = new bool[]{ flag_sales, flag_invoice };
 
         var ctx = ContextHelper.MContext;
 
