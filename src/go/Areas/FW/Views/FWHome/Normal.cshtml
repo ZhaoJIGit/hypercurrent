@@ -1,0 +1,475 @@
+﻿@using JieNor.Megi.Core.Const
+@using JieNor.Megi.Identity.Go.HtmlHelper
+@using JieNor.Megi.EntityModel.MultiLanguage
+@using JieNor.Megi.Identity.HtmlHelper
+@using JieNor.Megi.Common.Utility
+@using JieNor.Megi.Identity
+@using JieNor.Megi.DataModel.BAS
+@using JieNor.Megi.EntityModel.Enum
+@using JieNor.Megi.Tools
+@using JieNor.Megi.Common.Context
+@using System.Text
+@{
+    Dictionary<string, bool> accessList = ViewData["Normal"] as Dictionary<string, bool>;
+    var ctx = ContextHelper.MContext;
+
+    bool isSmartVersion = ctx.MOrgVersionID == OrgVersionEnum.Smart;
+
+    var dashboardTitle = JavaScriptDES.EncryptDES(!isSmartVersion ? HtmlLang.Write(LangKey.Dashboard).ToString() : HtmlLang.Write(LangModule.GL, "GeneralLedger", "General Ledger").ToString());
+    var dashboardUrl = (!isSmartVersion ? "/FW/FWHome/FWDashboard?type=0&_tabTitle_=" : "/GL/GLVoucher/GLVoucherHome?type=0&_tabTitle_=") + dashboardTitle;
+
+    //是否有 销售报表（查看）权限
+    bool isCanSaleReportsViewPermission = accessList[BizObject.Sale_Reports + PermissionItem.View];
+    //是否有 采购报表（查看）权限
+    bool isCanPurchaseReportsViewPermission = accessList[BizObject.Purchase_Reports + PermissionItem.View];
+    //是否有 银行报表（查看）权限
+    bool isCanBankReportsViewPermission = accessList[BizObject.Bank_Reports + PermissionItem.View];
+    //费用报销报表（查看权限）
+    bool isCanExpenseReportsViewPermission = accessList[BizObject.Expense_Reports + PermissionItem.View];
+    //费用报销报表（查看权限）
+    bool isCanGeneralLedgerReportsViewPermission = accessList[BizObject.General_Reports + PermissionItem.View];
+    //是否有固定资产报销报表
+    bool isCanFixedAssetsReportsViewPermission = accessList[BizObject.FixedAsset_Reports + PermissionItem.View];
+
+    //是否有 银行账号（查看）权限
+    bool isCanBankAccountViewPermission = accessList[BizObject.BankAccount + PermissionItem.View];
+
+    bool isContactView = accessList[BizObject.Contact + PermissionItem.View];
+
+
+    //银行账号必须要有approve权限
+    bool isCanBankAccountApprovePermission = accessList[BizObject.Bank_Reconciliation + PermissionItem.View];
+
+
+    //是否有 销售发票（查看）权限
+    bool isCanInvoiceSalesViewPermission = accessList[BizObject.Invoice_Sales + PermissionItem.View];
+    //是否有 采购发票（查看）权限
+    bool isCanInvoicePurchasesViewPermission = accessList[BizObject.Invoice_Purchases + PermissionItem.View];
+    //是否有 费用报销（查看）权限
+    bool isCanExpenseViewPermission = accessList[BizObject.Expense + PermissionItem.View];
+    //是否有 工资（查看）权限
+    bool isCanPayRunViewPermission = accessList[BizObject.PayRun + PermissionItem.View];
+    //是否有 银行账号（查看）权限
+    bool isCanGeneralLedgerViewPermission = accessList[BizObject.General_Ledger + PermissionItem.View];
+    //是否有 银行账号（查看）权限
+    bool isCanGeneralLedgerChangePermission = accessList[BizObject.General_Ledger + PermissionItem.Change];
+    //是否有 销售发票（查看）权限
+    bool isCanSaleFapiaoViewPermission = accessList[BizObject.Sales_Fapiao + PermissionItem.View];
+    //是否有 采购发票（查看）权限
+    bool isCanPurchaseFapiaoViewPermission = accessList[BizObject.Purchases_Fapiao + PermissionItem.View];
+
+    bool isBankReconcileViewPermission = accessList[BizObject.Bank_Reconciliation + PermissionItem.View];
+    //是否有 销售发票（编辑）权限
+    bool isCanInvoiceSalesChangePermission = accessList[BizObject.Invoice_Sales + PermissionItem.Change];
+    //是否有 销售发票（修改）权限
+    bool isCanSaleFapiaoChangePermission = accessList[BizObject.Sales_Fapiao + PermissionItem.Change];
+    //是否有 采购发票（编辑）权限
+    bool isCanInvoicePurchasesChangePermission = accessList[BizObject.Invoice_Purchases + PermissionItem.Change];
+
+    //是否有 销售发票（审核）权限
+    bool isCanSalesFaPiaoApprovePermission = accessList[BizObject.Sales_Fapiao + PermissionItem.Approve];
+    //是否有 采购发票（审核）权限
+    bool isCanPurchasesFaPiaoApprovePermission = accessList[BizObject.Purchases_Fapiao + PermissionItem.Approve];
+
+    //是否有 费用报销单（编辑）权限
+    bool isCanExpenseChangePermission = accessList[BizObject.Expense + PermissionItem.Change];
+    //是否有 联系人（编辑）权限
+    bool isCanContactChangePermission = accessList[BizObject.Contact + PermissionItem.Change];
+    //是否有 基础资料（编辑）权限
+    bool isCanSettingChangePermission = accessList[BizObject.Setting + PermissionItem.Change];
+    //是否有新建凭证的权限
+    bool isCanEditVoucherPermission = accessList[BizObject.General_Ledger + PermissionItem.Change];
+
+    //是否有新建凭证的权限
+    bool isCanApproveVoucherPermission = accessList[BizObject.General_Ledger + PermissionItem.Approve];
+
+    //总账报表的权限
+    bool isCanViewGLReport = accessList[BizObject.General_Reports + PermissionItem.View];
+
+
+    //是否有 银行(编辑)权限
+    bool isCanBankAccountChangePermission = accessList[BizObject.BankAccount + PermissionItem.Change];
+
+
+    bool isAttachmentView = accessList[BizObject.Attachment + PermissionItem.View];
+
+    var isSettingExport = accessList[BizObject.Setting + PermissionItem.Export];
+    var isInvoiceExport = accessList[BizObject.Invoice_Sales + PermissionItem.Export];
+    var isPurchaseExport = accessList[BizObject.Invoice_Purchases + PermissionItem.Export];
+    var isContactExport = accessList[BizObject.Contact + PermissionItem.Export];
+    var isGeneralLedgerExport = accessList[BizObject.General_Ledger + PermissionItem.Export];
+    var isBankAccountExport = accessList[BizObject.BankAccount + PermissionItem.Export];
+
+    //是否有 组织（查看）权限
+    bool isCanOrgViewPermission = accessList[BizObject.Org + PermissionItem.View];
+
+
+
+    bool isExcelDownLoad = accessList[BizObject.Excel_Plus_Download + PermissionItem.Export];
+    bool isMigrationToolDownLoad = accessList[BizObject.Migration_Tool_Download + PermissionItem.Export];
+
+    //是否有 基础资料（查看）权限
+    bool isCanSettingViewPermission = accessList[BizObject.Setting + PermissionItem.View];
+    //是否有 用户（查看）权限
+    bool isCanUserViewPermission = accessList[BizObject.User + PermissionItem.View];
+    //是否有 科目（查看）权限
+    bool isCanAccountViewPermission = accessList[BizObject.Account + PermissionItem.View];
+
+
+    bool isPaymentView = accessList[BizObject.Payment];
+    bool isReceiveView = accessList[BizObject.Receive];
+
+
+    var canSetFixAssetsType = accessList[BizObject.Setting + PermissionItem.Change];
+    //判断固定资产是否启用
+    var isFixAssetsBegin = ctx.MFABeginDate != DateTime.MinValue;
+    //是否有 固定资产权限
+    var isFixAssetView = accessList[BizObject.FixedAsset + PermissionItem.View];
+
+    //是否有工资修改权限
+    bool isCanEditPayRunPermission = HtmlSECMenu.HavePermission(BizObject.PayRun, PermissionItem.Change);
+
+
+
+    var firtCount = 0;
+
+    var secondCount = 0;
+
+    var thirdCount = 0;
+}
+<ul class="top">
+    @if (!isSmartVersion)
+    {
+        <li class="item">
+            <a href="###" class="item-link m-nav-dashboard" data-index="0"><i class="far fa-tachometer-alt"></i></a>
+            <div class="m-sub-nav-container">
+                <div class="m-sub-nav">
+                    <span class="arrow-left-border">&nbsp;</span>
+                    <span class="arrow-left">&nbsp;</span>
+                    <p><a href="###" data-index="0" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangKey.Dashboard)','/FW/FWHome/FWDashboard?type=0',true)">@HtmlLang.Write(LangModule.BD, "DataHome", "Data home")</a></p>
+                </div>
+            </div>
+        </li>
+    }
+    @*只要有以上查看权限的任意一种，即可显示大菜单，否则隐藏大菜单*@
+    @if (isCanBankAccountViewPermission || isCanInvoiceSalesViewPermission || isCanInvoicePurchasesViewPermission || isCanExpenseViewPermission || isCanGeneralLedgerViewPermission)
+    {
+        <li class="item">
+            <a href="###" id="aBusiness" class="item-link m-nav-account"><i class="far fa-university"></i></a>
+            <div class="m-sub-nav-container">
+                <div class="m-sub-nav">
+                    <span class="arrow-left-border">&nbsp;</span>
+                    <span class="arrow-left">&nbsp;</span>
+                    @if (isCanBankAccountViewPermission)
+                    {//银行账号（查看）权限校验
+                        <p><a href="###" id="BankAccounts" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.IV, "BankAccounts", "Bank Accounts")', '/BD/BDBank/BDBankHome', true)" class="">@HtmlLang.Write(LangModule.IV, "BankAccounts", "Bank Accounts")</a></p>
+                    }
+
+                    @if (isCanInvoiceSalesViewPermission)
+                    {//销售发票（查看）权限校验
+                        <p><a href="###" id="aSales" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.IV, "Sales", "Sales")', '/IV/Invoice/InvoiceList',true)">@HtmlLang.Write(LangModule.IV, "Sales", "Sales")</a></p>
+                    }
+                    @if (isCanInvoicePurchasesViewPermission)
+                    {//采购发票（查看）权限校验
+                        <p><a href="###" id="aPurchase" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.IV, "Purchase", "Purchase")', '/IV/Bill/BillList',true)">@HtmlLang.Write(LangModule.IV, "Purchase", "Purchase")</a></p>
+                    }
+                    @if (isCanExpenseViewPermission)
+                    {//费用报销（查看）权限校验
+                        <p><a href="###" id="aExpenseClaims" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.IV, "ExpenseClaims", "Expense Claims")', '/IV/Expense/ExpenseList',true)">@HtmlLang.Write(LangModule.IV, "ExpenseClaims", "Expense Claims")</a></p>
+                    }
+                    @if (isCanPayRunViewPermission)
+                    {//工资（查看）权限校验
+                        <p><a href="###" id="aPayRun" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.PA, "PayRun", "Pay Run")', '/PA/SalaryPayment/PayRunList',true)">@HtmlLang.Write(LangModule.PA, "PayRun", "Pay Run")</a></p>
+                    }
+                    @if (isCanGeneralLedgerViewPermission && HtmlOrg.RegProgress == (int)BASOrgScheduleTypeEnum.GLSuccess)
+                    {
+                        <p><a href="###" id="aGeneralLedger" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.GL, "GeneralLedger", "General Ledger")', '/GL/GLVoucher/GLVoucherHome',true)">@HtmlLang.Write(LangModule.GL, "GeneralLedger", "General Ledger")</a></p>
+                    }
+                    @if (isFixAssetsBegin && isFixAssetView)
+                    {
+                        <p><a href="###" id="aFixAssets" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.FA, "FixAssetsManagement", "固定资产")', '/FA/FAFixAssets/FixAssetsHome',true)">@HtmlLang.Write(LangModule.FA, "FixAssetsManagement", "固定资产")</a></p>
+                    }
+
+                    @if (ctx.MBasCurrencyID == "CNY" && (isCanPurchaseFapiaoViewPermission || isCanSaleFapiaoViewPermission))
+                    {
+                        <p><a href="###" id="aFapiaoHome" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.FP, "FapiaoHome", "发票主页")', '/FP/FPHome/FPDashboard',true)">@HtmlLang.Write(LangModule.FP, "FapiaoHome", "发票主页")</a></p>
+                    }
+                </div>
+
+            </div>
+        </li>
+    }
+    @*只要有以查看权限的任意一种，即可显示大菜单，否则隐藏大菜单*@
+    @if (isCanSaleReportsViewPermission || isCanPurchaseReportsViewPermission || isCanBankReportsViewPermission || isCanExpenseReportsViewPermission || isCanGeneralLedgerReportsViewPermission || isCanFixedAssetsReportsViewPermission)
+    {
+        <li class="item">
+            <a href="###" class="item-link m-nav-report"><i class="far fa-chart-bar"></i></a>
+            <div class="m-sub-nav-container">
+                <div class="m-sub-nav">
+                    <span class="arrow-left-border">&nbsp;</span>
+                    <span class="arrow-left">&nbsp;</span>
+                    <p><a href="###" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "AllReports", "All Reports")', '/Report/',true)">@HtmlLang.Write(LangModule.Report, "AllReports", "All Reports")</a></p>
+                    @if (isCanSaleReportsViewPermission)
+                    {   /*销售报表（按商品）*/
+                        //<p><a href="###" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "SalesByItem", "Sales By Item")', '/Report/Report2/6', true)">@HtmlLang.Write(LangModule.Report, "SalesByItem", "Sales By Item")</a></p>
+                        /*客户收入统计表*/
+                        //<p><a href="###" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "IncomeByContact", "Income By Contact")', '/Report/Report2/9', true)">@HtmlLang.Write(LangModule.Report, "IncomeByContact", "Income By Contact")</a></p>
+                        <p><a href="###" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "AgedReceivables", "Aged Receivables")', '/Report/Report2/21', true)">@HtmlLang.Write(LangModule.Report, "AgedReceivables", "Aged Receivables")</a></p>
+                    }
+                    @if (isCanPurchaseReportsViewPermission)
+                    {
+                        <p><a href="###" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "AgedPayables", "Aged Payables")', '/Report/Report2/19', true)">@HtmlLang.Write(LangModule.Report, "AgedPayables", "Aged Payables")</a></p>
+                    }
+                    @if (isCanBankReportsViewPermission)
+                    {
+                        /*银行勾对明细表*/
+                        //<p><a href="###" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "bankreconciliationsummary", "Bank Reconciliation Summary")', '/Report/Report2/11', true)">@HtmlLang.Write(LangModule.Report, "bankreconciliationsummary", "Bank Reconciliation Summary")</a></p>
+                        @*<p><a href="###" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "CashSummary", "Cash Summary")', '/Report/Report2/12', true)">@HtmlLang.Write(LangModule.Report, "CashSummary", "Cash Summary")</a></p>*@
+                        <p><a href="###" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "BankAndCashSummary", "Bank and Cash Summary")', '/Report/Report2/13', true)">@HtmlLang.Write(LangModule.Report, "BankAndCashSummary", "Bank and Cash Summary")</a></p>
+                        /*税额汇总表*/
+                        //<p><a href="###" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "salestaxreport", "Sales Tax Report")', '/Report/Report2/8',  true)">@HtmlLang.Write(LangModule.Report, "salestaxreport", "Sales Tax Report")</a></p>
+                    }
+                    @if (isCanExpenseReportsViewPermission)
+                    {
+                        <!--费用报销报表-->
+                        <p><a href="###" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "ExpenseClaimsReport", "Expense Claims Report")', '/Report/Report2/38', true)">@HtmlLang.Write(LangModule.Report, "ExpenseClaimsReport", "Expense Claims Report")</a></p>
+                    }
+                    @if (isCanViewGLReport && HtmlOrg.RegProgress == (int)BASOrgScheduleTypeEnum.GLSuccess)
+                    {
+                        <!--总账相关的报表-->
+                        <p><a href="###" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "GeneralLedger", "总分类账")', '/Report/Report2/33', true)">@HtmlLang.Write(LangModule.Report, "GeneralLedger", "总分类账")</a></p>
+                        <p><a href="###" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "AccountBalanceReport", "Account Balance Report")', '/Report/Report2/41', true)">@HtmlLang.Write(LangModule.Report, "AccountBalanceReport", "Account Balance Report")</a></p>
+                        <p><a href="###" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "SubsidiaryLedgerReport", "明细分类账")', '/Report/Report2/42', true)">@HtmlLang.Write(LangModule.Report, "SubsidiaryLedgerReport", "明细分类账")</a></p>
+                    }
+                    @if (isCanViewGLReport && HtmlOrg.RegProgress == (int)BASOrgScheduleTypeEnum.GLSuccess && (ctx.MAccountTableID == null || ctx.MAccountTableID != JieNor.Megi.EntityModel.Enum.AccountTableEnum.UCAS))
+                    {
+                        <p><a href="###" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "IncomeStatement", "Income Statement")','/Report/Report2/@Convert.ToInt32(BizReportType.IncomeStatement)')">@HtmlLang.Write(LangModule.Report, "IncomeStatement", "Income Statement")</a></p>
+                        <p><a href="###" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "BalanceSheet", "Balance Sheet")','/Report/Report2/@Convert.ToInt32(BizReportType.BalanceSheet)')">@HtmlLang.Write(LangModule.Report, "BalanceSheet", "Balance Sheet")</a></p>
+                        <p><a href="###" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "CashFlowStatement", "Cash Flow Statement")','/Report/Report2/@Convert.ToInt32(BizReportType.CashFlowStatement)')">@HtmlLang.Write(LangModule.Report, "CashFlowStatement", "Cash Flow Statement")</a></p>
+                    }
+                    <!--固定资产的报表-->
+                    @if (isCanFixedAssetsReportsViewPermission && ctx.MFABeginDate != DateTime.MinValue)
+                    {
+                        <!-- <p><a href="javascript:void(0)" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "DepreciationDetailReport", "折旧明细表")','/Report/Report2/@Convert.ToInt32(BizReportType.DepreciationDetail)')">@HtmlLang.Write(LangModule.Report, "DepreciationDetailReport", "折旧明细表")</a></p> -->
+                        <p><a href="###" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "DepreciationSummaryReport", "折旧汇总表")','/Report/Report2/@Convert.ToInt32(BizReportType.DepreciationSummary)')">@HtmlLang.Write(LangModule.Report, "DepreciationSummaryReport", "折旧汇总表")</a></p>
+                        <!-- <p><a href="javascript:void(0)" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "AssetDepreciationReport", "资产明细账")','/Report/Report2/@Convert.ToInt32(BizReportType.AssetDepreciation)')">@HtmlLang.Write(LangModule.Report, "AssetDepreciationReport", "资产明细账")</a></p> -->
+                        <!--<p><a href="javascript:void(0)" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "AssetChangeReport", "资产变更表")','/Report/Report2/@Convert.ToInt32(BizReportType.AssetChange)')">@HtmlLang.Write(LangModule.Report, "AssetChangeReport", "资产变更表")</a></p>-->
+                    }
+                </div>
+            </div>
+        </li>
+    }
+    @if (isContactExport || isContactView)
+    {//联系人（查看）权限校验
+        <li class="item">
+            <a href="###" class="item-link m-nav-folder" id="aIdentity"><i class="far fa-address-card"></i></a>
+            <div class="m-sub-nav-container">
+                <div class="m-sub-nav">
+                    <span class="arrow-left-border">&nbsp;</span>
+                    <span class="arrow-left">&nbsp;</span>
+                    <p><a href="###" id="aAllContacts" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Contact, "AllContacts", "All Contacts")', '/BD/Contacts/ContactsList',true)">@HtmlLang.Write(LangModule.Contact, "AllContacts", "All Contacts")</a></p>
+                    <p><a href="###" id="aCustomers" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Contact, "Customers", "Customers")', '/BD/Contacts/ContactsList/@HtmlLang.Write(LangModule.Contact, "Customers", "Customers")',true)">@HtmlLang.Write(LangModule.Contact, "Customers", "Customers")</a></p>
+                    <p><a href="###" id="aCustomers" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Contact, "Suppliers", "Suppliers")', '/BD/Contacts/ContactsList/@HtmlLang.Write(LangModule.Contact, "Suppliers", "Suppliers")',true)">@HtmlLang.Write(LangModule.Contact, "Suppliers", "Suppliers")</a></p>
+                    <p><a href="###" id="aOther" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Contact, "Other", "Other")', '/BD/Contacts/ContactsList/@HtmlLang.Write(LangModule.Contact, "Other", "Other")',true)">@HtmlLang.Write(LangModule.Contact, "Other", "Other")</a></p>
+                    <p><a href="###" id="aEmployees" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Contact, "Employees", "Employees")', '/BD/Employees/EmployeesList',true)">@HtmlLang.Write(LangModule.Contact, "Employees", "Employees")</a></p>
+                    @*<p><a href="###" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Contact, "Department", "Department")', '/BD/Dept/DeptList',true)">@HtmlLang.Write(LangModule.Contact, "Department", "Department")</a></p>  *@
+                </div>
+            </div>
+        </li>
+    }
+</ul>
+
+@*只要有以上三种查看权限的任意一种，即可显示大菜单，否则隐藏大菜单*@
+@if (isCanOrgViewPermission || isCanSettingViewPermission || isCanUserViewPermission)
+{
+    <ul class="bottom">
+        <li>
+            <a id="aOption" class="item-link m-nav-setting"><i class="far fa-cog"></i></a>
+            <div class="m-sub-nav-container" style="margin-top: -10px">
+                <div class="m-sub-nav">
+                    <span class="arrow-left-border">&nbsp;</span>
+                    <span class="arrow-left">&nbsp;</span>
+                    <div class="arrow-content">
+                        <div class="arrow-content-cell first">
+                            @*<div class="arrow-content-cell-title">@HtmlLang.Write(LangModule.Org, "Organisation", "Organisation")</div>*@
+                            <div class="arrow-content-cell-title">@HtmlLang.Write(LangModule.Common, "BasicSetting", "基础设置")</div>
+                            @if (isCanSettingViewPermission)
+                            {
+                                firtCount++;
+                                <p><a href="###" id="aOrganisation" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Org, "OrganisationSettings", "Organisation Settings")', '/BD/Organisation/OrganisationEdit',true)">@HtmlLang.Write(LangModule.Org, "OrganisationSettings", "Organisation Settings")</a></p>
+                                firtCount++;
+                                <p><a href="###" id="agLobalization" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Org, "GlobalizationSettings", "Globalization Settings")', '/BD/Organisation/GlobalizationSettings',true)">@HtmlLang.Write(LangModule.Org, "GlobalizationSettings", "Globalization Settings")</a></p>
+                            }
+                            @if (isCanSettingViewPermission)
+                            {
+                                firtCount++;
+                                //基础资料（查看）权限校验
+
+
+                                <p><a href="###" id="aFinancial" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.BD, "FinancialSettings", "Financial Settings")', '/BD/Financial/FinancialEdit',true)">@HtmlLang.Write(LangModule.BD, "FinancialSettings", "Financial Settings")</a></p>
+                                if (!isSmartVersion)
+                                {
+                                    firtCount++;
+                                    <p><a href="###" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.BD, "BankAccountBalances", "Initial Amount Of Bank Account")', '/BD/BDBank/BankAccountBalances', true)">@HtmlLang.Write(LangModule.BD, "BankAccountBalances", "Initial Amount Of Bank Account")</a></p>
+
+                                }
+
+
+                                firtCount++;
+                                <p><a href="###" id="aTaxRate" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.BD, "TaxRate", "Tax Rate")', '/BD/TaxRate/TaxRateList',true)">@HtmlLang.Write(LangModule.BD, "TaxRate", "Tax Rate")</a></p>
+                                firtCount++;
+                                <p><a href="###" id="aCurrency" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.BD, "Currency", "Currency")', '/BD/Currency/Currency', true)">@HtmlLang.Write(LangModule.BD, "Currency", "Currency")</a></p>
+                                firtCount++;
+                                <p><a href="###" id="aInventory" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.BD, "InventoryItems", "Inventory Items")', '/BD/Item/ItemList',true)">@HtmlLang.Write(LangModule.BD, "InventoryItems", "Inventory Items")</a></p>
+
+                                firtCount++;
+                                <p><a href="###" id="aExpenseItem" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.BD, "ExpenseItems", "Expense Items")', '/BD/ExpenseItem/ExpenseItemList',true)">@HtmlLang.Write(LangModule.BD, "ExpenseItems", "Expense Items")</a></p>
+                                if (isCanPayRunViewPermission)
+                                {
+                                    firtCount++;
+                                    <!--工资相关-->
+                                    <p><a href="###" id="aSalaryComp" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.BD, "SalaryComponent", "Salary Component")', '/PA/PayItem/Index',true)">@HtmlLang.Write(LangModule.BD, "SalaryComponent", "Salary Component")</a></p>
+                                }
+                                firtCount++;
+                                <p><a href="###" id="aTracking" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.BD, "Tracking", "Tracking")', '/BD/Tracking/Index',true)">@HtmlLang.Write(LangModule.BD, "Tracking", "Tracking")</a></p>
+
+                            }
+
+                            <!--快速码暂时只有总帐-->
+                            @if (isCanGeneralLedgerViewPermission || isBankReconcileViewPermission)
+                            {
+                                firtCount++;
+                                <p><a href="###" id="aFastCode" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.GL, "FastCode", "快速码管理")', '/FC/FCHome/FCHome',true)">@HtmlLang.Write(LangModule.GL, "FastCode", "快速码管理")</a></p>
+                            }
+                            <!--固定资产类别设置-->
+                            @if (isFixAssetsBegin && canSetFixAssetsType)
+                            {
+                                firtCount++;
+                                <p><a href="###" id="aFixAssetsType" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.FA, "FixAssetsType", "资产类别管理")', '/FA/FAFixAssets/FixAssetsTypeHome',true)">@HtmlLang.Write(LangModule.FA, "FixAssetsType", "资产类别管理")</a></p>
+                            }
+                            @if (isCanInvoiceSalesChangePermission || isCanInvoicePurchasesChangePermission
+|| isCanExpenseChangePermission || isCanBankAccountChangePermission || isCanGeneralLedgerChangePermission)
+                            {
+                                firtCount++;
+                                <p><a href="###" id="aImport" onclick="IOImport.open(0)">@HtmlLang.Write(LangKey.Import)</a></p>
+                            }
+
+                        </div>
+                        <div class="arrow-content-cell second">
+
+                            <div class="arrow-content-cell-title">@HtmlLang.Write(LangModule.Common, "AdvanceSetting", "高级设置")</div>
+                            @if (isCanUserViewPermission)
+                            {
+                                secondCount++;
+                                //用户（查看）权限校验
+                                <p myattr="right"><a href="###" id="aUser" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.User, "Users", "Users")', '/BD/User/UserList',true)">@HtmlLang.Write(LangModule.User, "Users", "Users")</a></p>
+                            }
+                            @*<div class="arrow-content-cell-title">Features</div>*@
+                            @*系统设置菜单栏里面的 Features 子菜单的 p 标签需要加上 myattr="right" 属性值，因为顶级菜单的高度是根据这些 p 标签来计算的，需要排除右边 p 标签的高度*@
+                            @*@if (isCanSettingViewPermission)
+                                {
+                                    //只有在没有启用总账以及启用了总账并且初始化了科目之后，这个按钮不显示了
+                                    if (!isSmartVersion && ctx.MRegProgress < (int)BASOrgScheduleTypeEnum.GLSuccess)
+                                    {
+                                        secondCount++;
+                                    <p myattr="right"><a href="###" id="aDocInitBills" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.BD, "DocInitBills", "业务单据初始化")', '/BD/Organisation/InitSettings',true,true,false,true,true,false,true)">@HtmlLang.Write(LangModule.BD, "DocInitBills", "科目单据初始化")</a></p>
+                                    }
+                                }*@
+                            @if (isCanSettingViewPermission || isCanEditVoucherPermission || isCanEditPayRunPermission)
+                            {
+                                secondCount++;
+                                <p myattr="right"><a href="###" id="aPrintSetting" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Common, "PrintSetting", "打印模板")', '/PT/PTBase/PTIndex', true)">@HtmlLang.Write(LangModule.Common, "PrintSetting", "套打设置")</a></p>
+
+                            }
+
+                            @if (isCanPayRunViewPermission)
+                            {
+                                secondCount++;
+                                <!--工资相关-->
+                                <p myattr="right"><a href="###" id="aCompany" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.BD, "CompanyPayroll", "Company Payroll")', '/PA/PayrollBasic/Index',true)">@HtmlLang.Write(LangModule.BD, "CompanyPayroll", "Company Payroll")</a></p>
+                            }
+
+                            @if (false && (isSettingExport
+|| isContactExport
+|| isInvoiceExport
+|| isPurchaseExport
+|| isBankAccountExport
+|| isGeneralLedgerExport))
+                            {
+                                secondCount++;
+                                <p myattr="right"><a href="###" id="aOneKeyExport" onclick="Index.exportAll();">@HtmlLang.Write(LangModule.BD, "OneKeyExport", "One Key Export")</a></p>
+                            }
+                            @if (isExcelDownLoad)
+                            {
+                                secondCount++;
+                                <p myattr="right"><a href="###" onclick="mWindow.open('@ServerHelper.WebApiServiceUrl/api/File/GetExcelPlusApp')" id="aExcelDown">@HtmlLang.Write(LangModule.BD, "ExcelPlusDown", "Excel 工具下载")</a></p>
+                            }
+                            @if (isMigrationToolDownLoad)
+                            {
+                                <p myattr="right"><a href="http://api.megi.local/GetMigrationTool" id="aMigrationTool" target="_blank">@HtmlLang.Write(LangModule.BD, "MigrationToolDown", "迁移工具下载")</a></p>
+                            }
+                            <!--固定资产启用 HtmlOrg.RegProgress >= (int)BASOrgScheduleTypeEnum.GLSuccess&& -->
+                            @if (HtmlOrg.RegProgress >= (int)BASOrgScheduleTypeEnum.GLSuccess && ctx.MRole.Trim() == "Admin" && isFixAssetsBegin == false)
+                            {
+                                <p myattr="right" style="color: dodgerblue"><a href="###" id="aEnableFixAssets" onclick="Index.open()">@HtmlLang.Write(LangModule.BD, "EnableFixAssets", "启用固定资产")</a></p>
+                            }
+                            else if (HtmlOrg.RegProgress >= (int)BASOrgScheduleTypeEnum.GLSuccess && isFixAssetView && isFixAssetsBegin)
+                            {
+                                <p myattr="right" style="color: dodgerblue"><a href="###" id="aEnableFixAssets" onclick="Index.open(1)">@HtmlLang.Write(LangModule.BD, "FixAssetsInfo", "固定资产启用信息")</a></p>
+                            }
+
+                            @if (isCanSalesFaPiaoApprovePermission || isCanPurchasesFaPiaoApprovePermission)
+                            {
+                                <p myattr="right" style="color: dodgerblue"><a href="###" id="FaPiaoSetting" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.BD, "FaPiaoSetting", "发票设置")', '/FP/FPSetting/FPSetting',true)">@HtmlLang.Write(LangModule.BD, "FaPiaoSetting", "发票设置")</a></p>
+                            }
+
+                            <div class="clear" style="height: 10px;"></div>
+                        </div>
+                        @if (isCanGeneralLedgerViewPermission && HtmlOrg.RegProgress == (int)BASOrgScheduleTypeEnum.GLSuccess)
+                        {
+                            <div class="arrow-content-cell third">
+                                <div class="arrow-content-cell-title">@HtmlLang.Write(LangModule.Common, "GeneralLedgerSetting", "总账设置")</div>
+
+                                @{thirdCount++; }
+                                <p myattr="right"><a href="###" id="aAccountItem" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.BD, "AccountItem", "Account")', '/BD/BDAccount/AccountList', true)">@HtmlLang.Write(LangModule.BD, "AccountItem", "Account")</a></p>
+
+
+                                @{thirdCount++; }
+                                <p myattr="right"><a href="###" id="aAccountBalances" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.BD, "AccountBalancesFinancial", "Account Balances")', '/BD/BDAccountBalance/AccountBalances', true)">@HtmlLang.Write(LangModule.BD, "AccountBalancesFinancial", "Account Balances")</a></p>
+
+
+                                @if (!isSmartVersion && ctx.MRegProgress == (int)BASOrgScheduleTypeEnum.GLSuccess)
+                                {
+                                    thirdCount++;
+                                    <p myattr="right"><a href="###" id="aAccountRelate" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.BD, "AccountRelatedBillInit", "科目单据初始化")', '@ServerHelper.GoServer/BD/InitDocument/InitDocumentIndex',true,true,false,true)">@HtmlLang.Write(LangModule.BD, "AccountRelatedBillInit", "业务单据初始化")</a></p>
+                                }
+
+                                @if (ctx.MRegProgress == (int)BASOrgScheduleTypeEnum.GLSuccess && isCanApproveVoucherPermission)
+                                {
+                                    <p myattr="right"><a href="###" id="aAccountItem" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.GL, "VoucherSetting", "凭证设置")', '/BD/BDVoucherSetting/VoucherSetting', true)">@HtmlLang.Write(LangModule.GL, "VoucherSetting", "凭证设置")</a></p>
+                                    thirdCount++;
+                                }
+                                @if (isCanGeneralLedgerChangePermission && ctx.MRegProgress == (int)BASOrgScheduleTypeEnum.GLSuccess)
+                                {
+                                    thirdCount++;
+                                    <p myattr="right"><a href="###" id="aRoutineInspect" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.BD, "RoutineInspectSetting", "巡检设置")', '@ServerHelper.GoServer/BD/RoutineInspect/RoutineInspectSetting',true,true,false,true)">@HtmlLang.Write(LangModule.GL, "RoutineInspectSetting", "巡检设置")</a></p>
+                                }
+                                @{
+                                    var count = firtCount > secondCount ? firtCount : secondCount;
+
+                                    for (var i = 0; i < count - thirdCount; i++)
+                                    {
+
+                                        <p myattr="right"><a>&nbsp;</a></p>
+                                    }
+                                }
+                            </div>
+                        }
+                        <div class="clear"></div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </li>
+    </ul>
+}

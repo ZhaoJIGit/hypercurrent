@@ -1,4 +1,3 @@
-using JieNor.Megi.Common.Logger;
 using JieNor.Megi.Core.DBUtility;
 using JieNor.Megi.DataModel.SEC;
 using JieNor.Megi.DataRepository.SEC;
@@ -137,36 +136,26 @@ namespace JieNor.Megi.DataRepository.COM
                 "Account",
                 "AccountEdit",
                 "Adviser",
-                "ALL",
-                "Attachment",
-                "Attachment_Category",
                 "Balances",
-                "Bank",
                 "BankAccount",
                 "Bank_Reconciliation",
                 "Bank_Reports",
                 "Bill",
-                "Contact",
-                "Currency",
                 "Department",
                 "Employees",
                 "Excel_Plus_Download",
                 "Migration_Tool_Download",
-                "ExchangeRate",
                 "Expense",
                 "ExpenseItem",
                 "Expense_Reports",
                 "Financial_Reports",
                 "Fixed_Assets",
                 "Fixed_Assets_Reports",
-                "General_Ledger",
                 "Other_Reports",
                 "Invoice",
                 "Invoice_Purchases",
                 "Invoice_Sales",
-                "Item",
                 "MegiFapiao",
-                "Org",
                 "Payment",
                 "PayRun",
                 "PayRun_Reports",
@@ -174,17 +163,12 @@ namespace JieNor.Megi.DataRepository.COM
                 "Purchases_Fapiao",
                 "Purchase_Reports",
                 "Receive",
-                "Report",
                 "Role",
-                "Sales_Fapiao",
                 "Sale_Reports",
-                "Setting",
-                "TaxRate",
                 "Track",
                 "TrackEntry",
                 "Transfer",
                 "Transferbill",
-                "User",
                 "Voucher"
             };
             //记账版
@@ -193,92 +177,91 @@ namespace JieNor.Megi.DataRepository.COM
                 "Account",
                 "AccountEdit",
                 "Adviser",
-                "ALL",
-                "Attachment",
-                "Attachment_Category",
                 "Balances",
-                "Bank",
                 "BankAccount",
                 "Bank_Reconciliation",
-                "Contact",
-                "Currency",
                 "Employees",
                 "Excel_Plus_Download",
                 "Migration_Tool_Download",
-                "ExchangeRate",
                 "Financial_Reports",
                 "Fixed_Assets",
                 "Fixed_Assets_Reports",
-                "General_Ledger",
                 "Other_Reports",
-                "Item",
                 "MegiFapiao",
-                "Org",
                 "Purchases_Fapiao",
-                "Report",
                 "Role",
+                "Track",
+                "TrackEntry",
+                "Voucher"
+            };
+            //公用
+            List<string> list_common = new List<string>
+            {
+                "ALL",
+                "Attachment",
+                "Attachment_Category",
+                "Bank",
+                "General_Ledger",
+                "Contact",
+                "Currency",
+                "ExchangeRate",
+                "Item",
+                "Org",
+                "Report",
                 "Sales_Fapiao",
                 "Setting",
                 "TaxRate",
-                "Track",
-                "TrackEntry",
-                "User",
-                "Voucher"
+                "User"
             };
+
             //对应当前用户 方案模块
-            PlanModel pm = GetPlan(ctx);
-            if (all) { }
-            else if (pm.Code == "NORMAL") { }
-            else if (pm.Code == "SALES")
+            List<PlanModel> list_pm = GetPlan(ctx);
+            foreach (PlanModel pm in list_pm)
             {
-                list_basic = new List<string>
+                if (all) { }
+                else if (pm.Code == "NORMAL") { }
+                else if (pm.Code == "SALES")
                 {
-                    "Account",
-                    "AccountEdit",
-                    "ALL",
-                    "Attachment",
-                    "Attachment_Category",
-                    "Bank",
-                    "General_Ledger",
-                    "Bill",
-                    "Contact",
-                    "Currency",
-                    "ExchangeRate",
-                    "Invoice",
-                    "Invoice_Sales",
-                    "Item",
-                    "Org",
-                    "Payment",
-                    "Receive",
-                    "Report",
-                    "Sales_Fapiao",
-                    "Sale_Reports",
-                    "Setting",
-                    "TaxRate",
-                    "User"
-                };
-                list_smart = new List<string>()
+                    list_basic = new List<string>
+                    {
+                        "Account",
+                        "AccountEdit",
+                        "Bill",
+                        "Invoice",
+                        "Invoice_Sales",
+                        "Payment",
+                        "Receive",
+                        "Sale_Reports"
+                    };
+                    list_smart = new List<string>();
+                }
+                else if (pm.Code == "INVOICE")
                 {
-                    "ALL",
-                    "Attachment",
-                    "Attachment_Category",
-                    "Bank",
-                    "General_Ledger",
-                    "Contact",
-                    "Currency",
-                    "ExchangeRate",
-                    "Item",
-                    "Org",
-                    "Report",
-                    "Sales_Fapiao",
-                    "Setting",
-                    "TaxRate",
-                    "User"
-                };
+                    list_basic = new List<string>
+                    {
+                        "Account",
+                        "AccountEdit",
+                        "Bill",
+                        "Invoice",
+                        "Invoice_Sales",
+                        "Payment",
+                        "Receive",
+                        "Sale_Reports"
+                    };
+                    list_smart = new List<string>();
+                }
             }
             //区分版本
-            if (ctx.MOrgVersionID == 0) { list_result = list_basic; }
-            else if (ctx.MOrgVersionID == 1) { list_result = list_smart; }
+            if (ctx.MOrgVersionID == 0)
+            {
+                list_result.AddRange(list_common);
+                list_result.AddRange(list_basic);
+            }
+            else if (ctx.MOrgVersionID == 1)
+            {
+                list_result.AddRange(list_common);
+                list_result.AddRange(list_smart);
+            }
             return list_result;
         }
         /// <summary>
@@ -286,21 +269,25 @@ namespace JieNor.Megi.DataRepository.COM
         /// </summary>
         /// <param name="ctx"></param>
         /// <returns></returns>
-        public static PlanModel GetPlan(MContext ctx)
+        public static List<PlanModel> GetPlan(MContext ctx)
         {
             string str_sql = "select p.id,p.code,p.remark,pu.useremail from t_bas_plan p join t_bas_planuser pu on p.id=pu.planid where pu.useremail='" + ctx.MEmail + "'";
             DynamicDbHelperMySQL dbhelper = new DynamicDbHelperMySQL(ctx);
             DataSet ds = dbhelper.Query(str_sql);
-            PlanModel pm = new PlanModel();
+            List<PlanModel> list_pm = new List<PlanModel>();
             DataTable dt = ds.Tables[0];
-            if (dt.Rows.Count > 0)
+            foreach (DataRow item in dt.Rows)
             {
-                pm.Id = Convert.ToInt32(dt.Rows[0]["id"]);
-                pm.Code = Convert.ToString(dt.Rows[0]["code"]).ToUpper();
-                pm.Remark = Convert.ToString(dt.Rows[0]["remark"]);
-                pm.UserEmail = Convert.ToString(dt.Rows[0]["useremail"]);
+                PlanModel pm = new PlanModel
+                {
+                    Id = Convert.ToInt32(item["id"]),
+                    Code = Convert.ToString(item["code"]).ToUpper(),
+                    Remark = Convert.ToString(item["remark"]),
+                    UserEmail = Convert.ToString(item["useremail"])
+                };
+                list_pm.Add(pm);
             }
-            return pm;
+            return list_pm;
         }
     }
 }

@@ -49,6 +49,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JieNor.Megi.Main.Web", "Jie
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JieNor.Megi.Service.Webapi", "JieNor.Megi.Service.Webapi\JieNor.Megi.Service.Webapi.csproj", "{C06953F0-5458-4BAE-8BB6-4841AE2C8196}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsole", "TestConsole\TestConsole.csproj", "{B2792B4B-CB5C-443D-8E07-9AE67A854040}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -139,6 +141,10 @@ Global
 		{C06953F0-5458-4BAE-8BB6-4841AE2C8196}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C06953F0-5458-4BAE-8BB6-4841AE2C8196}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C06953F0-5458-4BAE-8BB6-4841AE2C8196}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2792B4B-CB5C-443D-8E07-9AE67A854040}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2792B4B-CB5C-443D-8E07-9AE67A854040}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2792B4B-CB5C-443D-8E07-9AE67A854040}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2792B4B-CB5C-443D-8E07-9AE67A854040}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

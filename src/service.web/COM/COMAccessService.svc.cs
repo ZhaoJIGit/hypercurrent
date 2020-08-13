@@ -24,7 +24,7 @@ namespace JieNor.Megi.Service.Web.COM
             return base.RunFunc(iCOMAccessBusiness.GetAccessResultByListNoByCacche, isGetCache, requestList, accessToken);
         }
 
-        public MActionResult<PlanModel> GetPlan()
+        public MActionResult<List<PlanModel>> GetPlan()
         {
             ICOMAccessBusiness iCOMAccessBusiness = biz;
             return base.RunFunc(iCOMAccessBusiness.GetPlan);

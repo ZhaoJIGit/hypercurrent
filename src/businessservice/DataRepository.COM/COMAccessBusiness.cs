@@ -27,7 +27,7 @@ namespace JieNor.Megi.DataRepository.COM
             return COMAccess.GetAccessResult(ctx, obj, item, type);
         }
 
-        public PlanModel GetPlan(MContext ctx)
+        public List<PlanModel> GetPlan(MContext ctx)
         {
             return COMAccess.GetPlan(ctx);
         }

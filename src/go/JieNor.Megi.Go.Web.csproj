@@ -1395,6 +1395,8 @@
   <ItemGroup>
     <Content Include="Areas\PY\Views\Payment\Index.cshtml" />
     <Content Include="Areas\PY\Views\web.config" />
+    <Content Include="Areas\FW\Views\FWHome\Normal.cshtml" />
+    <Content Include="Areas\FW\Views\FWHome\Other.cshtml" />
     <None Include="packages.config" />
   </ItemGroup>
   <PropertyGroup>

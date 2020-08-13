@@ -40,7 +40,7 @@ namespace JieNor.Megi.Tools
                 }
             });
         }
-        public static PlanModel GetPlan()
+        public static List<PlanModel> GetPlan()
         {
             ICOMAccess sysService = ServiceHostManager.GetSysService<ICOMAccess>();
             using (sysService as IDisposable)

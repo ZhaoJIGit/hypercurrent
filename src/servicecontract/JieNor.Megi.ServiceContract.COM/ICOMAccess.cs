@@ -15,6 +15,6 @@ namespace JieNor.Megi.ServiceContract.COM
 		MActionResult<MAccessResponseModel> GetAccessResultByListNoByCacche(bool isGetCache, List<MAccessRequestModel> requestList = null, string accessToken = null);
 
 		[OperationContract]
-		MActionResult<PlanModel> GetPlan();
+		MActionResult<List<PlanModel>> GetPlan();
 	}
 }
