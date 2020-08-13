@@ -62,8 +62,8 @@ namespace JieNor.Megi.DataRepository.SEC
                 if (ds.Tables.Count>0) {
                     if (ds.Tables[0].Rows.Count>0) {
                         StringBuilder planBuilder = new StringBuilder();
-                        planBuilder.AppendLine("INSERT INTO t_bas_planuser (planId,userEmail)VALUES("+ ds.Tables[0].Rows [0]+ ",'"+email+"');");
-                        DbHelperMySQL.ExecuteSql(new MContext(), planBuilder.ToString());
+                        planBuilder.AppendLine("insert into t_bas_planuser (planid,useremail)values(" +int.Parse( ds.Tables[0].Rows[0][0].ToString())+ ",'"+email+"');");
+                        DbHelperMySQL.ExecuteSql(planBuilder.ToString());
                     }
                 }
             }

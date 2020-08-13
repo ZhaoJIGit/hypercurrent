@@ -9,7 +9,8 @@ namespace JieNor.Megi.DataModel.SEC
 	[DataContract]
 	public class SECUserModel : BDModel
 	{
-		public string PlanCode { get; set; }
+		[DataMember]
+		public string ProductCode { get; set; }
 
 
 		[DataMember(Order = 1)]

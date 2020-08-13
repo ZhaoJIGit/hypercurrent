@@ -282,7 +282,7 @@ namespace JieNor.Megi.DataRepository.BAS
 			sECSendLinkInfoModel.MFirstName = dataEditModel.MFirstName;
 			sECSendLinkInfoModel.MLastName = dataEditModel.MLastName;
 			sECSendLinkInfoModel.MPhone = "";
-			sECSendLinkInfoModel.PlanCode = model.PlanCode;
+			sECSendLinkInfoModel.PlanCode = model.ProductCode;
 			SECSendLinkInfoRepository.InsertLink(sECSendLinkInfoModel.MItemID, model.MEmailAddress, DateTime.Now, model.MMobilePhone, sECSendLinkInfoModel.MFirstName, sECSendLinkInfoModel.MLastName, sECSendLinkInfoModel.MLinkType, sECSendLinkInfoModel.MInvitationEmail, sECSendLinkInfoModel.MInvitationOrgID, sECSendLinkInfoModel.PlanCode);
 			return new OperationResult
 			{

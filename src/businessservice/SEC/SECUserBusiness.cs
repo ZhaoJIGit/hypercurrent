@@ -70,7 +70,9 @@ namespace JieNor.Megi.BusinessService.SEC
 			model.MFirstName = model.MFirstName.Trim();
 			model.MLastName = model.MLastName.Trim();
 			model.MMobilePhone = model.MMobilePhone?.Trim();
-			return (string.IsNullOrEmpty(model.MItemID) || string.IsNullOrEmpty(model.MOrgID)) ? SendRegisterEmail(ctx, model) : dal.JoinToOrg(ctx, model);
+			MLogger.Log("注册结果：" + (string.IsNullOrEmpty(model.MItemID) || string.IsNullOrEmpty(model.MOrgID)));
+			return (string.IsNullOrEmpty(model.MItemID) || string.IsNullOrEmpty(model.MOrgID)) ? 
+				SendRegisterEmail(ctx, model) : dal.JoinToOrg(ctx, model);
 		}
 
 		private OperationResult CheckRegister(MContext ctx, SECUserModel model)
@@ -140,8 +142,9 @@ namespace JieNor.Megi.BusinessService.SEC
 					MFirstName = model.MFirstName,
 					MLastName = model.MLastName,
 					MPhone = model.MMobilePhone,
-					PlanCode = model.PlanCode
+					PlanCode = model.ProductCode
 				};
+				MLogger.Log("ProductCode:" + sECSendLinkInfoModel.PlanCode);
 				sECSendLinkInfoBusiness.InsertLink(ctx, sECSendLinkInfoModel);
 				operationResult.Success = true;
 			}
