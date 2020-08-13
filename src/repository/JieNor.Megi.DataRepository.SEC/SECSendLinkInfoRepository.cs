@@ -58,12 +58,12 @@ namespace JieNor.Megi.DataRepository.SEC
             DbHelperMySQL.ExecuteSql(new MContext(), stringBuilder.ToString(), array);
             if (!string.IsNullOrWhiteSpace(planCode))
             {
-                DataSet ds= DbHelperMySQL.Query("SELECT id FROM hypercusys.t_bas_plan where code='"+ planCode + "';");
+                DataSet ds= DbHelperMySQL.Query("SELECT id FROM t_bas_plan where code='"+ planCode + "';");
                 if (ds.Tables.Count>0) {
                     if (ds.Tables[0].Rows.Count>0) {
                         StringBuilder planBuilder = new StringBuilder();
-                        planBuilder.AppendLine("INSERT INTO t_bas_planuser (planId,userEmail)VALUES("+ ds.Tables[0].Rows [0]+ ",'"+email+"');");
-                        DbHelperMySQL.ExecuteSql(new MContext(), planBuilder.ToString());
+                        planBuilder.AppendLine("insert into t_bas_planuser (planid,useremail)values(" +int.Parse( ds.Tables[0].Rows[0][0].ToString())+ ",'"+email+"');");
+                        DbHelperMySQL.ExecuteSql(planBuilder.ToString());
                     }
                 }
             }
