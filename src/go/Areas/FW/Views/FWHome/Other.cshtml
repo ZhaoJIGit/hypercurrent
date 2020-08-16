@@ -143,7 +143,18 @@
                 <div class="m-sub-nav">
                     <span class="arrow-left-border">&nbsp;</span>
                     <span class="arrow-left">&nbsp;</span>
-                    <p><a href="###" data-index="0" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangKey.Dashboard)','/FW/FWHome/FWDashboard?type=0',true)">@HtmlLang.Write(LangModule.BD, "DataHome", "Data home")</a></p>
+                    <p>
+                        <a href="###" data-index="0" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangKey.Dashboard)','/FW/FWHome/FWDashboard?type=0',true)">@HtmlLang.Write(LangModule.BD, "DataHome", "Data home")</a>
+                        @*@if (flag_invoice && !flag_sales)
+        {
+            <a href="###" data-index="0" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangKey.Dashboard)','/FP/FPHome/FPDashboard',true)">@HtmlLang.Write(LangModule.BD, "DataHome", "Data home")</a>
+
+        }
+        else
+        {
+            <a href="###" data-index="0" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangKey.Dashboard)','/FW/FWHome/FWDashboard?type=0',true)">@HtmlLang.Write(LangModule.BD, "DataHome", "Data home")</a>
+        }*@
+                    </p>
                 </div>
             </div>
         </li>
@@ -214,7 +225,7 @@
                     <span class="arrow-left-border">&nbsp;</span>
                     <span class="arrow-left">&nbsp;</span>
                     <p><a href="###" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "AllReports", "All Reports")', '/Report/',true)">@HtmlLang.Write(LangModule.Report, "AllReports", "All Reports")</a></p>
-        
+
                     @if (isCanPurchaseReportsViewPermission)
                     {
                         <p><a href="###" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "AgedPayables", "Aged Payables")', '/Report/Report2/19', true)">@HtmlLang.Write(LangModule.Report, "AgedPayables", "Aged Payables")</a></p>
@@ -308,7 +319,7 @@
                                 <p><a href="###" id="aCurrency" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.BD, "Currency", "Currency")', '/BD/Currency/Currency', true)">@HtmlLang.Write(LangModule.BD, "Currency", "Currency")</a></p>
                                 firtCount++;
                                 <p><a href="###" id="aInventory" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.BD, "InventoryItems", "Inventory Items")', '/BD/Item/ItemList',true)">@HtmlLang.Write(LangModule.BD, "InventoryItems", "Inventory Items")</a></p>
-                                
+
                             }
                         </div>
                         <div class="arrow-content-cell second">
@@ -319,7 +330,7 @@
                                 secondCount++;
                                 //用户（查看）权限校验
                                 <p myattr="right"><a href="###" id="aUser" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.User, "Users", "Users")', '/BD/User/UserList',true)">@HtmlLang.Write(LangModule.User, "Users", "Users")</a></p>
-                            }     
+                            }
                             @if (isCanSettingViewPermission || isCanEditVoucherPermission || isCanEditPayRunPermission)
                             {
                                 secondCount++;
@@ -327,7 +338,7 @@
 
                             }
 
-                            
+
                             @if (isCanSalesFaPiaoApprovePermission || isCanPurchasesFaPiaoApprovePermission)
                             {
                                 <p myattr="right" style="color: dodgerblue"><a href="###" id="FaPiaoSetting" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.BD, "FaPiaoSetting", "发票设置")', '/FP/FPSetting/FPSetting',true)">@HtmlLang.Write(LangModule.BD, "FaPiaoSetting", "发票设置")</a></p>
@@ -335,7 +346,8 @@
 
                             <div class="clear" style="height: 10px;"></div>
                         </div>
-                        @if (isCanGeneralLedgerViewPermission && HtmlOrg.RegProgress == (int)BASOrgScheduleTypeEnum.GLSuccess)
+                        @if (isCanGeneralLedgerViewPermission
+                            && HtmlOrg.RegProgress == (int)BASOrgScheduleTypeEnum.GLSuccess && 1 != 1)
                         {
                             <div class="arrow-content-cell third">
                                 <div class="arrow-content-cell-title">@HtmlLang.Write(LangModule.Common, "GeneralLedgerSetting", "总账设置")</div>

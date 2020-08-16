@@ -245,7 +245,6 @@ namespace JieNor.Megi.DataRepository.COM
                         "AccountEdit",
                         "Bill",
                         "Invoice",
-                        "Invoice_Sales",
                         "Payment",
                         "Receive",
                         "Sale_Reports"
@@ -268,7 +267,8 @@ namespace JieNor.Megi.DataRepository.COM
         /// <returns></returns>
         public static List<PlanModel> GetPlan(MContext ctx)
         {
-            string str_sql = "select p.id,p.code,p.remark,pu.useremail from t_bas_plan p join t_bas_planuser pu on p.id=pu.planid where pu.useremail='" + ctx.MEmail + "'";
+            string str_sql = "select p.id,p.code,p.remark,pu.useremail from t_bas_plan p " +
+                "join t_bas_planuser pu on p.id=pu.planid where pu.useremail='" + ctx.MEmail + "'";
             DynamicDbHelperMySQL dbhelper = new DynamicDbHelperMySQL(ctx);
             DataSet ds = dbhelper.Query(str_sql);
             List<PlanModel> list_pm = new List<PlanModel>();

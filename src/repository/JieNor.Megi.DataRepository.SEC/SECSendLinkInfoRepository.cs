@@ -58,7 +58,7 @@ namespace JieNor.Megi.DataRepository.SEC
             DbHelperMySQL.ExecuteSql(new MContext(), stringBuilder.ToString(), array);
             if (!string.IsNullOrWhiteSpace(planCode))
             {
-                DataSet ds= DbHelperMySQL.Query("SELECT id FROM t_bas_plan where code='"+ planCode + "';");
+                DataSet ds= DbHelperMySQL.Query("SELECT id FROM t_bas_plan where HYCode='" + planCode + "';");
                 if (ds.Tables.Count>0) {
                     if (ds.Tables[0].Rows.Count>0) {
                         StringBuilder planBuilder = new StringBuilder();

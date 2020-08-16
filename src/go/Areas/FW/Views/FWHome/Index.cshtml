@@ -35,7 +35,7 @@
         var accessList = accessResponse.Access;
 
         ViewData["normal"] = accessList;
-        ViewData["other"] = new bool[]{ flag_sales, flag_invoice };
+        ViewData["other"] = new bool[] { flag_sales, flag_invoice };
 
         var ctx = ContextHelper.MContext;
 
@@ -275,9 +275,17 @@
                                     <b class="pupup-arrow-space"></b>
                                     <b class="popup-arrow popup-arrow-notch"></b>
                                     <b class="popup-arrow"></b>
+
+
                                     @if (isCanInvoiceSalesChangePermission)
                                     {//销售发票（编辑）权限校验
                                         <p><a href="###" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.IV, "NewInvoice", "New Invoice")', '/IV/Invoice/InvoiceEdit?Origin=Quick_Menu', true, true);">@HtmlLang.Write(LangModule.IV, "NewInvoice", "New Invoice")</a></p>
+                                    }
+                                    @if (flag_invoice)
+                                    {
+                                        <p>
+                                            <a href="javascript:void(0);" id="btnOutputFPTable">@HtmlLang.Write(LangModule.FP, "fapiaoTable", "开票单")</a>
+                                        </p>
                                     }
                                     @if (isCanInvoicePurchasesChangePermission)
                                     {//采购发票（编辑）权限校验
@@ -323,6 +331,7 @@
             </div>
         </div>
         <div class="m-nav">
+
             @if (flag_normal)
             {
                 @Html.Partial("Normal", ViewData["normal"]);

@@ -31,7 +31,13 @@
 @{
     //获取所有的权限（包括了所有权限列表，以及上下文信息）
     var accessResponse = AccessHelper.Access();
-
+    var arr_plancode = AccessHelper.GetPlan().Select(x => x.Code);
+    //标准版
+    bool flag_normal = arr_plancode.Contains("NORMAL");
+    //销售
+    bool flag_sales = arr_plancode.Contains("SALES");
+    //发票
+    bool flag_invoice = arr_plancode.Contains("INVOICE");
 
     //获取上下文
     var ctx = accessResponse.ctx;
@@ -57,7 +63,7 @@
         <div class="space"></div>
         <!--toolbar，以及文本展示-->
         <!--我的数据-->
-        <div class="m-imain-content data-home">
+        <div class="m-imain-content data-home" id="mianDashboard">
             <!--银行权限-->
             @if (accessList[BizObject.Bank_Reconciliation + PermissionItem.View])
             {
@@ -87,6 +93,19 @@
                     @Html.Partial("FWDashboardPartial/ExpensePartial")
                 </div>
             }
+            @if (flag_invoice && !flag_sales)
+            {
+                <script>
+                    $(function () {
+                        $("#mianDashboard").attr("style", "padding:0px");
+                    })
+
+                </script>
+                <div data-index="0" class="m-tab-content" style="display: block; overflow: hidden;" data-url="/FP/FPHome/FPDashboard?bti=3b73d2602bd547929dc1bc68b7258fa9&lang=0x7804&ver=186&_tabTitle_=6a1366808a640333">
+                    <iframe style="width: 100%;height:500px" id="dashboard" src="/FP/FPHome/FPDashboard?bti=3b73d2602bd547929dc1bc68b7258fa9&lang=0x7804&ver=186&_tabTitle_=6a1366808a640333"></iframe>
+                </div>
+            }
+
         </div>
         <!--消息内容-->
         <div class="i-imain-content message-home" style="display:none;">
