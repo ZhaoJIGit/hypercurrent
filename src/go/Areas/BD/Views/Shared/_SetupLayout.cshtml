@@ -1,5 +1,6 @@
 ﻿@using JieNor.Megi.DataModel.BAS;
 @using JieNor.Megi.EntityModel.Enum;
+@using JieNor.Megi.Tools;
 @{
     Layout = null;
     var progress = (BASOrgScheduleTypeEnum)System.Enum.Parse(typeof(BASOrgScheduleTypeEnum), Convert.ToString(ViewBag.SetupProgress));
@@ -8,6 +9,15 @@
     var version = Convert.ToInt32(ViewBag.Version);
     var isSmartVersion = version == OrgVersionEnum.Smart;
     var isSmartFinish = isSmartVersion && progress == BASOrgScheduleTypeEnum.GLFinish;
+
+    var arr_plancode = AccessHelper.GetPlan().Select(x => x.Code);
+    //标准版
+    bool flag_normal = arr_plancode.Contains("NORMAL");
+    //销售
+    bool flag_sales = arr_plancode.Contains("SALES");
+    //发票
+    bool flag_invoice = arr_plancode.Contains("INVOICE");
+
 }
 @using JieNor.Megi.Common.Utility;
 <link type="text/css" rel="stylesheet" href="@ServerHelper.StaticServer/fw/min/jquery.megi.min.css?@ServerHelper.JSVersion" />
@@ -35,8 +45,11 @@
                 <li class="current"><span>@HtmlLang.Write(LangModule.My, "OrganizationSettings", "Organization Settings")</span></li>
                 <li><span>@HtmlLang.Write(LangModule.My, "FinancialSettings", "Financial Settings")</span></li>
                 <li><span>@HtmlLang.Write(LangKey.TaxRate)</span></li>
-                <li><span>@HtmlLang.Write(LangModule.My, "ChartOfAccount", "Chart of Account")</span></li>
-                <li><span>@HtmlLang.Write(LangModule.My, "OpeningBalance", "Opening Balance")</span></li>
+                @if (flag_normal)
+                {
+                    <li><span>@HtmlLang.Write(LangModule.My, "ChartOfAccount", "Chart of Account")</span></li>
+                    <li><span>@HtmlLang.Write(LangModule.My, "OpeningBalance", "Opening Balance")</span></li>
+                }
                 <li><span>@HtmlLang.Write(LangModule.My, "Done", "Done")</span></li>
             </ul>
         </div>
