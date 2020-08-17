@@ -436,8 +436,6 @@ var MyIndex = {
         $("#divDataGrid").html("");
         $("#divDataGridContainer").mask("");
         if (MyIndex.dataSource != null && MyIndex.dataSource.length > 0) {
-
-
             for (var i = 0; i < MyIndex.dataSource.length; i++) {
                 var html = '';
                 var obj = MyIndex.dataSource[i];
@@ -450,9 +448,7 @@ var MyIndex = {
                 if (obj.MVersionType == 1 || obj.MVersionType === 5) {
                     html += '<span class="expired-name">' + mText.encode(obj.MOrgName) + '</span>';
                 } else {
-                    html += '<a href="javascript:void(0);" class="name" style="color:#048fc2" title=' + HtmlLang.Write(LangModule.My, "GoToOrganization", "go to the 
-
-organization") + ' onclick="MyIndex.onSelectOrg(\'' + obj.MOrgID + '\', \'' + obj.Url + '\',\'' + obj.MRegProgress + '\', \'' + obj.MVersionID + '\', \'' + obj.MIsBeta
+                    html += '<a href="javascript:void(0);" class="name" style="color:#048fc2" title=' + HtmlLang.Write(LangModule.My, "GoToOrganization", "go to the organization") + ' onclick="MyIndex.onSelectOrg(\'' + obj.MOrgID + '\', \'' + obj.Url + '\',\'' + obj.MRegProgress + '\', \'' + obj.MVersionID + '\', \'' + obj.MIsBeta
 
                         + '\');">' + mText.encode(obj.MOrgName) + '</a>';
                 }
@@ -682,20 +678,14 @@ organization") + ' onclick="MyIndex.onSelectOrg(\'' + obj.MOrgID + '\', \'' + ob
             //先校验是否有增加组织的权限
             MyIndex.validateOrgCreateOrJumpAuth(version, function (version) {
                 var mySite = $("#aMySite").val();
-                var message = HtmlLang.Write(LangModule.My, "AddSmartVersionOrganistionConfirm", "这个版本只提供总账功能，适用于代理记账公司，不提供任何管理需求。是否
-
-确认要添加 ? ");
+                var message = HtmlLang.Write(LangModule.My, "AddSmartVersionOrganistionConfirm", "这个版本只提供总账功能，适用于代理记账公司，不提供任何管理需求。是否确认要添加 ? ");
                 $.mDialog.confirm(message, function () {
-                    $.mTab.addOrUpdate(HtmlLang.Write(LangModule.My, "InitializeWizard", "Initialize Wizard"), $("#aGoServer").val() + "/BD/Setup/OrgSetting/0?
-
-version = " + version, true);
+                    $.mTab.addOrUpdate(HtmlLang.Write(LangModule.My, "InitializeWizard", "Initialize Wizard"), $("#aGoServer").val() + "/BD/Setup/OrgSetting/0?version = " + version, true);
                 });
             });
 
         } else {
-            $.mTab.addOrUpdate(HtmlLang.Write(LangModule.My, "InitializeWizard", "Initialize Wizard"), $("#aGoServer").val() + "/BD/Setup/OrgSetting/0?version=" +
-
-                version, true);
+            $.mTab.addOrUpdate(HtmlLang.Write(LangModule.My, "InitializeWizard", "Initialize Wizard"), $("#aGoServer").val() + "/BD/Setup/OrgSetting/0?version=" + version, true);
         }
     },
     validateOrgCreateOrJumpAuth: function (version, callback) {

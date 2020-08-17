@@ -4,6 +4,7 @@
 @using JieNor.Megi.EntityModel.Enum
 @using JieNor.Megi.Identity.HtmlHelper
 @using JieNor.Megi.Common.Context
+@using JieNor.Megi.Tools
 @{Layout = null;}
 <!DOCTYPE html>
 <html>
@@ -19,6 +20,10 @@
 
         var localCss = ServerHelper.StaticServer + "/fw/themes/" + LangIndentity.CurrentLangID + "/css.css?" + ServerHelper.JSVersion;
         var localJs = ServerHelper.StaticServer + "/Lang/JieNor.Megi.Common." + LangIndentity.CurrentLangID + ".js?" + ServerHelper.JSVersion;
+
+        var arr_plancode = AccessHelper.GetPlan().Select(x => x.Code);
+        //标准版
+        bool flag_normal = arr_plancode.Contains("NORMAL");
     }
     <link href="@ServerHelper.StaticServer/FW/include/pagewizard/css/jquery.pagewalkthrough.css?@ServerHelper.JSVersion" rel="stylesheet" />
     <script type="text/javascript" src="@localJs"></script>
@@ -28,7 +33,92 @@
     @Html.Raw(HtmlUser.VersionScript())
     <link type="text/css" rel="stylesheet" href="@ServerHelper.StaticServer/fw/min/jquery.megi.min.css?@ServerHelper.JSVersion" />
     <link type="text/css" rel="stylesheet" href="@localCss" />
-    <style type="text/css">
+    <!--FONT AWESOME-->
+    <script src="https://kit.fontawesome.com/6e32edc336.js" crossorigin="anonymous"></script>
+    <style>
+        .m-header {
+            background: #672D82;
+        }
+
+        .m-tab li {
+            background: #29106B !important;
+            border-radius: 8px 22px 0px 0px;
+        }
+
+            .m-tab li.current {
+                background: #F2F2F2 !important;
+                color: #4F4F4F;
+            }
+
+                .m-tab li .m-tab-inner, .m-tab li.current .m-tab-inner {
+                    background: none;
+                }
+
+                    .m-tab li .m-tab-inner:hover {
+                        background: none !important;
+                    }
+
+        .m-tab .close, .m-tab .m-refresh {
+            right: -6px;
+        }
+        /*Left Toolbar*/
+        .m-nav {
+            background: #1D0C5C;
+        }
+
+            .m-nav .item-link {
+                background: none;
+                text-align: center;
+            }
+
+            .m-nav .fa, .m-nav .fas, .m-nav .far {
+                font-size: 22px;
+                color: #FFF;
+                margin-top: 15px;
+            }
+        /*List*/
+        .m-bank-list1 .item {
+            height: 120px;
+            background: none;
+            padding: 0;
+        }
+
+        .m-bank-list1 .title {
+            background: #672D82;
+            padding: 5px 20px;
+        }
+
+            .m-bank-list1 .title .name {
+                color: #FFF !important;
+                font-size: 15px;
+            }
+
+        .m-bank-list1 .info {
+            height: 35px;
+            padding: 0 20px;
+        }
+
+        .m-bank-list1 .info1, .m-bank-list1 .info2, .m-bank-list1 .info3 {
+            font-size: 14px;
+        }
+
+        .m-bank-list1 .info4 {
+            position: relative;
+            top: -20px;
+        }
+
+        .datagrid-header {
+            background: #672D82;
+        }
+
+            .datagrid-header .datagrid-cell span {
+                color: #FFF;
+            }
+
+        .datagrid-row-over {
+            background: #9340BB !important;
+        }
+
         .paid {
             color: #444 !important;
         }
@@ -93,7 +183,7 @@
         <div class="m-nav">
             <ul class="top">
                 <li class="item">
-                    <a href="###" class="item-link m-nav-dashboard" data-index="0">&nbsp;</a>
+                    <a href="###" class="item-link m-nav-dashboard" data-index="0"><i class="far fa-tachometer-alt"></i></a>
                     <div class="m-sub-nav-container" id="navDashboard">
                         <div class="m-sub-nav">
                             <span class="arrow-left-border">&nbsp;</span>
@@ -103,7 +193,7 @@
                     </div>
                 </li>
                 <li class="item">
-                    <a href="javascript:void(0)" class="item-link m-nav-account">&nbsp;</a>
+                    <a href="javascript:void(0)" class="item-link m-nav-account"><i class="far fa-university"></i></a>
                     <div class="m-sub-nav-container" style="height: 192px; left: 62px; top: 130px; display: none;">
                         <div class="m-sub-nav">
                             <span class="arrow-left-border">&nbsp;</span>
@@ -121,18 +211,21 @@
                     <div class="content" style="padding-left:20px">
                         <div class="title" style="width:500px;">
                             <span class="title-text" style="font-size: 30px;"> @HtmlLang.Write(LangModule.My, "MyMegi", "My Megi")</span>
-
-                            <!--帐户管理-->
-                            <a href="javascript:void(0)" style="width:150px;" id="aAddOrganisationTop" class="easyui-splitbutton easyui-linkbutton-gray easyui-splitbutton-base m-btn-m"
-                               data-options="menu:'#divAddOrganisation'" onclick="$('.m-btn-line:visible').trigger('mouseenter.menubutton');">@HtmlLang.Write(LangModule.My, "AddAnOrganisation", "Add an Organisation")</a>
-                            <!--银行/现金/信用卡帐户-->
-                            <div id="divAddOrganisation" style="width:150px; display:none;">
-                                <div><a href="javascript:void(0)" id="aAddBasicOrganisation" onclick="MyIndex.addOrganisation(0)">@HtmlLang.Write(LangModule.My, "StardardVersion", "标准版")</a></div>
-                                <div><a href="javascript:void(0)" id="aAddSmartOrganisation" onclick="MyIndex.addOrganisation(1)">@HtmlLang.Write(LangModule.My, "SmartVersion", "总账版")</a></div>
-                            </div>
-
-
-
+                            @if (flag_normal)
+                            {
+                                <!--帐户管理-->
+                                <a href="javascript:void(0)" style="width:150px;" id="aAddOrganisationTop" class="easyui-splitbutton easyui-linkbutton-gray easyui-splitbutton-base m-btn-m"
+                                   data-options="menu:'#divAddOrganisation'" onclick="$('.m-btn-line:visible').trigger('mouseenter.menubutton');">@HtmlLang.Write(LangModule.My, "AddAnOrganisation", "Add an Organisation")</a>
+                                <!--银行/现金/信用卡帐户-->
+                                <div id="divAddOrganisation" style="width:150px; display:none;">
+                                    <div><a href="javascript:void(0)" id="aAddBasicOrganisation" onclick="MyIndex.addOrganisation(0)">@HtmlLang.Write(LangModule.My, "StardardVersion", "标准版")</a></div>
+                                    <div><a href="javascript:void(0)" id="aAddSmartOrganisation" onclick="MyIndex.addOrganisation(1)">@HtmlLang.Write(LangModule.My, "SmartVersion", "总账版")</a></div>
+                                </div>
+                            }
+                            else
+                            {
+                                <a href="javascript:void(0)" class="easyui-splitbutton easyui-linkbutton-gray m-btn-m" id="aAddBasicOrganisation" onclick="MyIndex.addOrganisation(0)">@HtmlLang.Write(LangModule.My, "AddAnOrganisation", "Add an Organisation")</a>
+                            }
                         </div>
                         <div class="clear"></div>
                         <div class="info" style="padding:1px 3px;margin-top:10px" lastorgid="@ViewData["lastLoginOrgId"]">
