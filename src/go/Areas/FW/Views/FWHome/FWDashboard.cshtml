@@ -95,14 +95,15 @@
             }
             @if (flag_invoice && !flag_sales)
             {
+                string src = "/FP/FPHome/FPDashboard?bti=3b73d2602bd547929dc1bc68b7258fa9&lang=" + LangIndentity.CurrentLangID + "&ver=" + ServerHelper.JSVersion + "&_tabTitle_=6a1366808a640333";
                 <script>
                     $(function () {
                         $("#mianDashboard").attr("style", "padding:0px");
                     })
 
                 </script>
-                <div data-index="0" class="m-tab-content" style="display: block; overflow: hidden;" data-url="/FP/FPHome/FPDashboard?bti=3b73d2602bd547929dc1bc68b7258fa9&lang=0x7804&ver=186&_tabTitle_=6a1366808a640333">
-                    <iframe style="width: 100%;height:500px" id="dashboard" src="/FP/FPHome/FPDashboard?bti=3b73d2602bd547929dc1bc68b7258fa9&lang=0x7804&ver=186&_tabTitle_=6a1366808a640333"></iframe>
+                <div data-index="0" class="m-tab-content" style="display: block; overflow: hidden;" data-url="@src">
+                    <iframe style="width: 100%;height:500px" id="dashboard" src="@src"></iframe>
                 </div>
             }
 
