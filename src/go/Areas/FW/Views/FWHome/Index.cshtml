@@ -35,7 +35,7 @@
         var accessList = accessResponse.Access;
 
         ViewData["normal"] = accessList;
-        ViewData["other"] = new bool[] { flag_sales, flag_invoice };
+        ViewData["other"] = new bool[] { flag_sales, flag_invoice, flag_normal };
 
         var ctx = ContextHelper.MContext;
 
@@ -277,7 +277,7 @@
                                     <b class="popup-arrow"></b>
 
 
-                                    @if (isCanInvoiceSalesChangePermission)
+                                    @if (isCanInvoiceSalesChangePermission || flag_invoice)
                                     {//销售发票（编辑）权限校验
                                         <p><a href="###" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.IV, "NewInvoice", "New Invoice")', '/IV/Invoice/InvoiceEdit?Origin=Quick_Menu', true, true);">@HtmlLang.Write(LangModule.IV, "NewInvoice", "New Invoice")</a></p>
                                     }
@@ -286,6 +286,10 @@
                                         <p>
                                             <a href="javascript:void(0);" id="btnOutputFPTable">@HtmlLang.Write(LangModule.FP, "fapiaoTable", "开票单")</a>
                                         </p>
+                                    }
+                                    @if (flag_sales)
+                                    {
+                                        <p><a href="###" id="aNewReceiveMoney" onclick="Index.newTransaction('@BizObject.Receive');">@HtmlLang.Write(LangModule.Bank, "NewReceiveMoney", "New Receive Money")</a></p>
                                     }
                                     @if (isCanInvoicePurchasesChangePermission)
                                     {//采购发票（编辑）权限校验
@@ -305,7 +309,7 @@
                                         <p><a href="###" id="aNewReceiveMoney" onclick="Index.newTransaction('@BizObject.Receive');">@HtmlLang.Write(LangModule.Bank, "NewReceiveMoney", "New Receive Money")</a></p>
                                     }
 
-                                    @if (isCanGeneralLedgerChangePermission && HtmlOrg.RegProgress == (int)BASOrgScheduleTypeEnum.GLSuccess)
+                                    @if (isCanGeneralLedgerChangePermission && HtmlOrg.RegProgress == (int)BASOrgScheduleTypeEnum.GLSuccess && (flag_normal || flag_sales))
                                     {//基础资料（编辑）权限校验
                                         <p><a href="###" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.IV, "NewVoucher", "New Voucher")', '/GL/GLVoucher/GLVoucherEdit?Origin=Quick_Menu', true, true,false,true);">@HtmlLang.Write(LangModule.BD, "NewVoucher", "New Voucher")</a></p>
                                     }
