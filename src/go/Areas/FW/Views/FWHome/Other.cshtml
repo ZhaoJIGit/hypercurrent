@@ -13,6 +13,7 @@
     Dictionary<string, bool> accessList = ViewData["normal"] as Dictionary<string, bool>;
     bool flag_sales = (ViewData["other"] as bool[])[0];
     bool flag_invoice = (ViewData["other"] as bool[])[1];
+    bool flag_normal = (ViewData["other"] as bool[])[2];
 
     var ctx = ContextHelper.MContext;
 
@@ -146,14 +147,14 @@
                     <p>
                         <a href="###" data-index="0" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangKey.Dashboard)','/FW/FWHome/FWDashboard?type=0',true)">@HtmlLang.Write(LangModule.BD, "DataHome", "Data home")</a>
                         @*@if (flag_invoice && !flag_sales)
-        {
-            <a href="###" data-index="0" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangKey.Dashboard)','/FP/FPHome/FPDashboard',true)">@HtmlLang.Write(LangModule.BD, "DataHome", "Data home")</a>
+                            {
+                                <a href="###" data-index="0" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangKey.Dashboard)','/FP/FPHome/FPDashboard',true)">@HtmlLang.Write(LangModule.BD, "DataHome", "Data home")</a>
 
-        }
-        else
-        {
-            <a href="###" data-index="0" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangKey.Dashboard)','/FW/FWHome/FWDashboard?type=0',true)">@HtmlLang.Write(LangModule.BD, "DataHome", "Data home")</a>
-        }*@
+                            }
+                            else
+                            {
+                                <a href="###" data-index="0" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangKey.Dashboard)','/FW/FWHome/FWDashboard?type=0',true)">@HtmlLang.Write(LangModule.BD, "DataHome", "Data home")</a>
+                            }*@
                     </p>
                 </div>
             </div>
@@ -170,15 +171,20 @@
                     <span class="arrow-left-border">&nbsp;</span>
                     <span class="arrow-left">&nbsp;</span>
                     <div class="arrow-content">
-                        @if (isCanInvoiceSalesViewPermission && flag_sales)
+                        @if (isCanInvoiceSalesViewPermission)
                         {
                             <div class="arrow-content-cell first">
                                 @*<div class="arrow-content-cell-title">@HtmlLang.Write(LangModule.IV, "Sales", "Sales")</div>*@
                                 <p><a href="###" id="aSales" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.IV, "Sales", "Sales")', '/IV/Invoice/InvoiceList',true)">@HtmlLang.Write(LangModule.IV, "Sales", "Sales")</a></p>
                                 <p><a href="###" id="aInventory" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.BD, "InventoryItems", "Inventory Items")', '/BD/Item/ItemList',true)">@HtmlLang.Write(LangModule.BD, "InventoryItems", "Inventory Items")</a></p>
-                                <p><a href="###" id="aNewReceiveMoney" onclick="Index.newTransaction('@BizObject.Receive');">@HtmlLang.Write(LangModule.Bank, "NewReceiveMoney", "New Receive Money")</a></p>
-                                <p><a href="###" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.IV, "NewVoucher", "New Voucher")', '/GL/GLVoucher/GLVoucherEdit?Origin=Quick_Menu', true, true,false,true);">@HtmlLang.Write(LangModule.BD, "NewVoucher", "New Voucher")</a></p>
-                                <p><a href="###" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "AllReports", "All Reports")', '/Report/',true)">@HtmlLang.Write(LangModule.Report, "AllReports", "All Reports")</a></p>
+                                @if (!flag_invoice)
+                                {
+                                    @*<p><a href="###" id="aNewReceiveMoney" onclick="Index.newTransaction('@BizObject.Receive');">@HtmlLang.Write(LangModule.Bank, "NewReceiveMoney", "New Receive Money")</a></p>*@
+                                
+                                @*<p><a href="###" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.IV, "NewVoucher", "New Voucher")', '/GL/GLVoucher/GLVoucherEdit?Origin=Quick_Menu', true, true,false,true);">@HtmlLang.Write(LangModule.BD, "NewVoucher", "New Voucher")</a></p>*@
+
+                                @*<p><a href="###" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "AllReports", "All Reports")', '/Report/',true)">@HtmlLang.Write(LangModule.Report, "AllReports", "All Reports")</a></p>*@
+                                }
                             </div>
                         }
                         @if (ctx.MBasCurrencyID == "CNY" && (isCanPurchaseFapiaoViewPermission || isCanSaleFapiaoViewPermission) && flag_invoice)
@@ -216,7 +222,7 @@
         </li>
     }
     @*只要有以查看权限的任意一种，即可显示大菜单，否则隐藏大菜单*@
-    @if (isCanSaleReportsViewPermission || isCanPurchaseReportsViewPermission || isCanBankReportsViewPermission || isCanExpenseReportsViewPermission || isCanGeneralLedgerReportsViewPermission || isCanFixedAssetsReportsViewPermission)
+    @if ((isCanSaleReportsViewPermission || isCanPurchaseReportsViewPermission || isCanBankReportsViewPermission || isCanExpenseReportsViewPermission || isCanGeneralLedgerReportsViewPermission || isCanFixedAssetsReportsViewPermission) && (flag_normal || flag_sales))
     {
         <li class="item">
             <a href="###" class="item-link m-nav-report"><i class="far fa-chart-bar"></i></a>
@@ -339,7 +345,7 @@
                             }
 
 
-                            @if (isCanSalesFaPiaoApprovePermission || isCanPurchasesFaPiaoApprovePermission)
+                            @if ((isCanSalesFaPiaoApprovePermission || isCanPurchasesFaPiaoApprovePermission) && !flag_sales)
                             {
                                 <p myattr="right" style="color: dodgerblue"><a href="###" id="FaPiaoSetting" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.BD, "FaPiaoSetting", "发票设置")', '/FP/FPSetting/FPSetting',true)">@HtmlLang.Write(LangModule.BD, "FaPiaoSetting", "发票设置")</a></p>
                             }

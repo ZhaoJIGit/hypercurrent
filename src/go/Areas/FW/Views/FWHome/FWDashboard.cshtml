@@ -72,7 +72,7 @@
                     @Html.Partial("FWDashboardPartial/BankPartial")
                 </div>
             }
-            @if (accessList[BizObject.Invoice_Sales + PermissionItem.View])
+            @if (accessList[BizObject.Invoice_Sales + PermissionItem.View] && (flag_normal || flag_sales))
             {
                 <!--销售分布视图-->
                 <div class="dasboard-sale">

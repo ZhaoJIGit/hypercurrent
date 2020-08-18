@@ -170,7 +170,22 @@ namespace JieNor.Megi.DataRepository.COM
                 "TrackEntry",
                 "Transfer",
                 "Transferbill",
-                "Voucher"
+                "Voucher",
+                "ALL",
+                "Attachment",
+                "Attachment_Category",
+                "General_Ledger",
+                "Bank",
+                "Contact",
+                "Currency",
+                "ExchangeRate",
+                "Item",
+                "Org",
+                "Report",
+                "Sales_Fapiao",
+                "Setting",
+                "TaxRate",
+                "User"
             };
             //记账版
             List<string> list_smart = new List<string>
@@ -193,7 +208,22 @@ namespace JieNor.Megi.DataRepository.COM
                 "Role",
                 "Track",
                 "TrackEntry",
-                "Voucher"
+                "Voucher",
+                "ALL",
+                "Attachment",
+                "Attachment_Category",
+                "General_Ledger",
+                "Bank",
+                "Contact",
+                "Currency",
+                "ExchangeRate",
+                "Item",
+                "Org",
+                "Report",
+                "Sales_Fapiao",
+                "Setting",
+                "TaxRate",
+                "User"
             };
             //公用
             List<string> list_common = new List<string>
@@ -201,8 +231,8 @@ namespace JieNor.Megi.DataRepository.COM
                 "ALL",
                 "Attachment",
                 "Attachment_Category",
-                "Bank",
                 "General_Ledger",
+                "Bank",
                 "Contact",
                 "Currency",
                 "ExchangeRate",
@@ -245,6 +275,7 @@ namespace JieNor.Megi.DataRepository.COM
                         "AccountEdit",
                         "Bill",
                         "Invoice",
+                        "Invoice_Sales",
                         "Payment",
                         "Receive",
                         "Sale_Reports"
@@ -254,10 +285,13 @@ namespace JieNor.Megi.DataRepository.COM
             if (list_result.Count == 0)
             {
                 //区分版本
-                if (ctx.MOrgVersionID == 0) { list_result.AddRange(list_basic); }
-                else if (ctx.MOrgVersionID == 1) { list_result.AddRange(list_smart); }
+                if (ctx.MOrgVersionID == 0) { list_result = list_basic; }
+                else if (ctx.MOrgVersionID == 1) { list_result = list_smart; }
             }
-            list_result.AddRange(list_common);
+            else
+            {
+                list_result.AddRange(list_common);
+            }
             return list_result.Distinct().ToList();
         }
         /// <summary>
