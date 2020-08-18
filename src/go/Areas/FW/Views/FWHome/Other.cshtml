@@ -146,14 +146,14 @@
                     <p>
                         <a href="###" data-index="0" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangKey.Dashboard)','/FW/FWHome/FWDashboard?type=0',true)">@HtmlLang.Write(LangModule.BD, "DataHome", "Data home")</a>
                         @*@if (flag_invoice && !flag_sales)
-        {
-            <a href="###" data-index="0" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangKey.Dashboard)','/FP/FPHome/FPDashboard',true)">@HtmlLang.Write(LangModule.BD, "DataHome", "Data home")</a>
+                            {
+                                <a href="###" data-index="0" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangKey.Dashboard)','/FP/FPHome/FPDashboard',true)">@HtmlLang.Write(LangModule.BD, "DataHome", "Data home")</a>
 
-        }
-        else
-        {
-            <a href="###" data-index="0" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangKey.Dashboard)','/FW/FWHome/FWDashboard?type=0',true)">@HtmlLang.Write(LangModule.BD, "DataHome", "Data home")</a>
-        }*@
+                            }
+                            else
+                            {
+                                <a href="###" data-index="0" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangKey.Dashboard)','/FW/FWHome/FWDashboard?type=0',true)">@HtmlLang.Write(LangModule.BD, "DataHome", "Data home")</a>
+                            }*@
                     </p>
                 </div>
             </div>
@@ -165,52 +165,42 @@
         <li class="item">
             <a href="###" id="aBusiness" class="item-link m-nav-account"><i class="far fa-university"></i></a>
             <div class="m-sub-nav-container">
-
                 <div class="m-sub-nav">
                     <span class="arrow-left-border">&nbsp;</span>
                     <span class="arrow-left">&nbsp;</span>
-                    <div class="arrow-content">
-                        @if (isCanInvoiceSalesViewPermission && flag_sales)
+                    @if (isCanInvoiceSalesViewPermission && flag_sales)
+                    {
+                        @*<div class="arrow-content-cell-title">@HtmlLang.Write(LangModule.IV, "Sales", "Sales")</div>*@
+                        <p><a href="###" id="aSales" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.IV, "Sales", "Sales")', '/IV/Invoice/InvoiceList',true)">@HtmlLang.Write(LangModule.IV, "Sales", "Sales")</a></p>
+                        <p><a href="###" id="aInventory" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.BD, "InventoryItems", "Inventory Items")', '/BD/Item/ItemList',true)">@HtmlLang.Write(LangModule.BD, "InventoryItems", "Inventory Items")</a></p>
+                        <p><a href="###" id="aNewReceiveMoney" onclick="Index.newTransaction('@BizObject.Receive');">@HtmlLang.Write(LangModule.Bank, "NewReceiveMoney", "New Receive Money")</a></p>
+                        <p><a href="###" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.IV, "NewVoucher", "New Voucher")', '/GL/GLVoucher/GLVoucherEdit?Origin=Quick_Menu', true, true,false,true);">@HtmlLang.Write(LangModule.BD, "NewVoucher", "New Voucher")</a></p>
+                        <p><a href="###" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "AllReports", "All Reports")', '/Report/',true)">@HtmlLang.Write(LangModule.Report, "AllReports", "All Reports")</a></p>
+                    }
+                    @if (ctx.MBasCurrencyID == "CNY" && (isCanPurchaseFapiaoViewPermission || isCanSaleFapiaoViewPermission) && flag_invoice)
+                    {
+                        @*<div class="arrow-content-cell-title">@HtmlLang.Write(LangModule.FP, "FapiaoHome", "发票")</div>*@
+                        <p><a href="###" id="aFapiaoHome" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.FP, "FapiaoHome", "发票主页")', '/FP/FPHome/FPDashboard',true)">@HtmlLang.Write(LangModule.FP, "FapiaoHome", "发票主页")</a></p>
+                        @if (isCanSaleFapiaoChangePermission)
                         {
-                            <div class="arrow-content-cell first">
-                                @*<div class="arrow-content-cell-title">@HtmlLang.Write(LangModule.IV, "Sales", "Sales")</div>*@
-                                <p><a href="###" id="aSales" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.IV, "Sales", "Sales")', '/IV/Invoice/InvoiceList',true)">@HtmlLang.Write(LangModule.IV, "Sales", "Sales")</a></p>
-                                <p><a href="###" id="aInventory" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.BD, "InventoryItems", "Inventory Items")', '/BD/Item/ItemList',true)">@HtmlLang.Write(LangModule.BD, "InventoryItems", "Inventory Items")</a></p>
-                                <p><a href="###" id="aNewReceiveMoney" onclick="Index.newTransaction('@BizObject.Receive');">@HtmlLang.Write(LangModule.Bank, "NewReceiveMoney", "New Receive Money")</a></p>
-                                <p><a href="###" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.IV, "NewVoucher", "New Voucher")', '/GL/GLVoucher/GLVoucherEdit?Origin=Quick_Menu', true, true,false,true);">@HtmlLang.Write(LangModule.BD, "NewVoucher", "New Voucher")</a></p>
-                                <p><a href="###" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "AllReports", "All Reports")', '/Report/',true)">@HtmlLang.Write(LangModule.Report, "AllReports", "All Reports")</a></p>
-                            </div>
+                            <p class="importFapiao"><a href="javascript:void(0);" onclick="IOImport.fpOpen(0)">@HtmlLang.Write(LangModule.FP, "ImportFapiaoTitle", "导入发票")</a></p>
                         }
-                        @if (ctx.MBasCurrencyID == "CNY" && (isCanPurchaseFapiaoViewPermission || isCanSaleFapiaoViewPermission) && flag_invoice)
+                        @if (isCanSaleFapiaoViewPermission)
                         {
-                            <div class="arrow-content-cell second">
-                                @*<div class="arrow-content-cell-title">@HtmlLang.Write(LangModule.FP, "FapiaoHome", "发票")</div>*@
-                                <p><a href="###" id="aFapiaoHome" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.FP, "FapiaoHome", "发票主页")', '/FP/FPHome/FPDashboard',true)">@HtmlLang.Write(LangModule.FP, "FapiaoHome", "发票主页")</a></p>
-                                @if (isCanSaleFapiaoChangePermission)
-                                {
-                                    <p class="importFapiao"><a href="javascript:void(0);" onclick="IOImport.fpOpen(0)">@HtmlLang.Write(LangModule.FP, "ImportFapiaoTitle", "导入发票")</a></p>
-                                }
-                                @if (isCanSaleFapiaoViewPermission)
-                                {
-                                    if (!isSmartVersion)
-                                    {
-                                        <p class="fapiaoTable"><a href="javascript:void(0);" id="btnOutputFPTable">@HtmlLang.Write(LangModule.FP, "fapiaoTable", "开票单")</a></p>
-                                        <p class="fapiaoHook"><a href="javascript:void(0);" id="btnOutputFPHook">@HtmlLang.Write(LangModule.FP, "fapiaoHook", "发票勾对")</a></p>
-                                    }
-                                    <p class="importList"><a href="javascript:void(0);" id="btnOutputFPImportList">@HtmlLang.Write(LangModule.FP, "ImportFapiaoList", "发票导入清单")</a></p>
-                                    <p class="fapiaoTransactionList"><a href="javascript:void(0);" id="btnOutputFPTransaction">@HtmlLang.Write(LangModule.FP, "fapiaoTransactionList", "发票明细")</a></p>
-                                    if (isSmartVersion && isCanSaleFapiaoChangePermission)
-                                    {
-                                        <p class="fapiaoTransactionList"><a href="javascript:void(0);" id="btnOutputFPCoding">@HtmlLang.Write(LangModule.FP, "FapiaoCashcoding", "发票 Coding")</a></p>
-                                    }
-                                    <p class="receipt"><a href="javascript:void(0);" id="btnOutPutFPAutoRecevieLog">@HtmlLang.Write(LangModule.FP, "AutoReceiveFapiaoLog", "自动获取日志")</a></p>
-                                }
-                                <div class="clear" style="height: 10px;"></div>
-                            </div>
+                            if (!isSmartVersion)
+                            {
+                                <p class="fapiaoTable"><a href="javascript:void(0);" id="btnOutputFPTable">@HtmlLang.Write(LangModule.FP, "fapiaoTable", "开票单")</a></p>
+                                <p class="fapiaoHook"><a href="javascript:void(0);" id="btnOutputFPHook">@HtmlLang.Write(LangModule.FP, "fapiaoHook", "发票勾对")</a></p>
+                            }
+                            <p class="importList"><a href="javascript:void(0);" id="btnOutputFPImportList">@HtmlLang.Write(LangModule.FP, "ImportFapiaoList", "发票导入清单")</a></p>
+                            <p class="fapiaoTransactionList"><a href="javascript:void(0);" id="btnOutputFPTransaction">@HtmlLang.Write(LangModule.FP, "fapiaoTransactionList", "发票明细")</a></p>
+                            if (isSmartVersion && isCanSaleFapiaoChangePermission)
+                            {
+                                <p class="fapiaoTransactionList"><a href="javascript:void(0);" id="btnOutputFPCoding">@HtmlLang.Write(LangModule.FP, "FapiaoCashcoding", "发票 Coding")</a></p>
+                            }
+                            <p class="receipt"><a href="javascript:void(0);" id="btnOutPutFPAutoRecevieLog">@HtmlLang.Write(LangModule.FP, "AutoReceiveFapiaoLog", "自动获取日志")</a></p>
                         }
-                        <div class="clear"></div>
-                    </div>
-                    <div class="clear"></div>
+                    }
                 </div>
             </div>
         </li>
@@ -256,20 +246,22 @@
                         <p><a href="###" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "IncomeStatement", "Income Statement")','/Report/Report2/@Convert.ToInt32(BizReportType.IncomeStatement)')">@HtmlLang.Write(LangModule.Report, "IncomeStatement", "Income Statement")</a></p>
                         <p><a href="###" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "BalanceSheet", "Balance Sheet")','/Report/Report2/@Convert.ToInt32(BizReportType.BalanceSheet)')">@HtmlLang.Write(LangModule.Report, "BalanceSheet", "Balance Sheet")</a></p>
                         <p><a href="###" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "CashFlowStatement", "Cash Flow Statement")','/Report/Report2/@Convert.ToInt32(BizReportType.CashFlowStatement)')">@HtmlLang.Write(LangModule.Report, "CashFlowStatement", "Cash Flow Statement")</a></p>
+
                     }
                     <!--固定资产的报表-->
                     @if (isCanFixedAssetsReportsViewPermission && ctx.MFABeginDate != DateTime.MinValue)
                     {
                         <!-- <p><a href="javascript:void(0)" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "DepreciationDetailReport", "折旧明细表")','/Report/Report2/@Convert.ToInt32(BizReportType.DepreciationDetail)')">@HtmlLang.Write(LangModule.Report, "DepreciationDetailReport", "折旧明细表")</a></p> -->
                         <p><a href="###" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "DepreciationSummaryReport", "折旧汇总表")','/Report/Report2/@Convert.ToInt32(BizReportType.DepreciationSummary)')">@HtmlLang.Write(LangModule.Report, "DepreciationSummaryReport", "折旧汇总表")</a></p>
+
                         <!-- <p><a href="javascript:void(0)" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "AssetDepreciationReport", "资产明细账")','/Report/Report2/@Convert.ToInt32(BizReportType.AssetDepreciation)')">@HtmlLang.Write(LangModule.Report, "AssetDepreciationReport", "资产明细账")</a></p> -->
                         <!--<p><a href="javascript:void(0)" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Report, "AssetChangeReport", "资产变更表")','/Report/Report2/@Convert.ToInt32(BizReportType.AssetChange)')">@HtmlLang.Write(LangModule.Report, "AssetChangeReport", "资产变更表")</a></p>-->
                     }
+                    </div>
                 </div>
-            </div>
-        </li>
+            </li>
 
-    }
+        }
     @if (isContactExport || isContactView)
     {//联系人（查看）权限校验
         <li class="item">
