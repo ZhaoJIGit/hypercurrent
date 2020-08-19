@@ -24,6 +24,12 @@
         var arr_plancode = AccessHelper.GetPlan().Select(x => x.Code);
         //标准版
         bool flag_normal = arr_plancode.Contains("NORMAL");
+        //销售
+        bool flag_sales = arr_plancode.Contains("SALES");
+        //发票
+        bool flag_invoice = arr_plancode.Contains("INVOICE");
+
+
     }
     <link href="@ServerHelper.StaticServer/FW/include/pagewizard/css/jquery.pagewalkthrough.css?@ServerHelper.JSVersion" rel="stylesheet" />
     <script type="text/javascript" src="@localJs"></script>
@@ -327,6 +333,10 @@
     <input type="hidden" id="iframeUrl" value="@ViewData["iframeurl"]" />
     <input type="hidden" id="hidCurrentLangID" value="@LangIndentity.CurrentLangID" />
     <input type="hidden" id="hideBetaGoServer" value="@ServerHelper.BetaGoServer" />
+    <input type="hidden" id="flag_sales" value="@flag_sales" />
+    <input type="hidden" id="flag_invoice" value="@flag_invoice" />
+    <input type="hidden" id="flag_normal" value="@flag_normal" />
+
 
     <!--组织信息-->
     <input type="hidden" id="hideUserName" value="@ctx.MUserName" />

@@ -247,6 +247,9 @@ var MyIndex = {
     //绑定列表形式数据
     bindListData: function () {
         var goServer = $("#aGoServer").val();
+        var flag_sales = $("#flag_sales").val();
+        var flag_invoice = $("#flag_invoice").val();
+        var flag_normal = $("#flag_normal").val();
         Megi.grid('#divDataList', {
             resizable: true,
             pagination: false,
@@ -289,7 +292,23 @@ var MyIndex = {
                     formatter: function (value, row, index) {
                         //处理
                         if (value == "0") {
-                            return HtmlLang.Write(LangModule.My, "StandardEdition", "标准版");
+
+                            if (flag_normal) {
+                                return HtmlLang.Write(LangModule.My, "StandardEdition", "标准版");
+                            }
+                            else if (flag_invoice) {
+                                return HtmlLang.Write(LangModule.My, "InvoiceSource", "InvoiceSource");
+                            }
+                            else if (flag_sales) {
+                                return HtmlLang.Write(LangModule.My, "AcroVAT", "AcroVAT");
+
+                            } else {
+                                return HtmlLang.Write(LangModule.My, "StandardEdition", "标准版");
+                            }
+
+
+
+
                         } else if (value == "1") {
                             return HtmlLang.Write(LangModule.My, "GeneralLedgerEdition", "总账专版");
                         }
@@ -433,6 +452,10 @@ var MyIndex = {
     //绑定表格形式数据
     bindGridData: function () {
         var goServer = $("#aGoServer").val();
+        var flag_sales = $("#flag_sales").val();
+        var flag_invoice = $("#flag_invoice").val();
+        var flag_normal = $("#flag_normal").val();
+
         $("#divDataGrid").html("");
         $("#divDataGridContainer").mask("");
         if (MyIndex.dataSource != null && MyIndex.dataSource.length > 0) {
@@ -456,9 +479,29 @@ var MyIndex = {
                 html += '<div class="info">';
 
                 if (obj.MVersionID == "0") {
-                    html += '<span class="info1" style="color:#e23f2a;font-weight:bold"><label>' + HtmlLang.Write(LangModule.My, "younowuser", "You are using") +
+                    if (flag_normal) {
+                        html += '<span class="info1" style="color:#e23f2a;font-weight:bold"><label>' + HtmlLang.Write(LangModule.My, "younowuser", "You are using") +
 
-                        '</label>' + HtmlLang.Write(LangModule.My, "StandardEdition", "标准版") + '</span>';
+                            '</label>' + HtmlLang.Write(LangModule.My, "StandardEdition", "StandardEdition") + '</span>';
+                    }
+                    else if (flag_invoice) {
+                        html += '<span class="info1" style="color:#e23f2a;font-weight:bold"><label>' + HtmlLang.Write(LangModule.My, "younowuser", "You are using") +
+
+                            '</label>' + HtmlLang.Write(LangModule.My, "InvoiceSource", "InvoiceSource") + '</span>';
+
+                    }
+                    else if (flag_sales) {
+                        html += '<span class="info1" style="color:#e23f2a;font-weight:bold"><label>' + HtmlLang.Write(LangModule.My, "younowuser", "You are using") +
+
+                            '</label>' + HtmlLang.Write(LangModule.My, "AcroVAT", "AcroVAT") + '</span>';
+                    } else {
+                        html += '<span class="info1" style="color:#e23f2a;font-weight:bold"><label>' + HtmlLang.Write(LangModule.My, "younowuser", "You are using") +
+
+                            '</label>' + HtmlLang.Write(LangModule.My, "StandardEdition", "StandardEdition") + '</span>';
+
+                    }
+
+
                 } else if (obj.MVersionID == "1") {
                     html += '<span class="info1" style="color:#e23f2a;font-weight:bold"><label>' + HtmlLang.Write(LangModule.My, "younowuser", "You are using") +
 
