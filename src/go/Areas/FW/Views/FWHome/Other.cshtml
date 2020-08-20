@@ -199,7 +199,7 @@
                     @if (ctx.MBasCurrencyID == "CNY" && (isCanPurchaseFapiaoViewPermission || isCanSaleFapiaoViewPermission))
                     {
                         @*<div class="arrow-content-cell-title">@HtmlLang.Write(LangModule.FP, "FapiaoHome", "发票")</div>*@
-                        <p><a href="###" id="aFapiaoHome" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.FP, "FapiaoHome", "发票主页")', '/FP/FPHome/FPDashboard',true)">@HtmlLang.Write(LangModule.FP, "FapiaoHome", "发票主页")</a></p>
+                        @*<p><a href="###" id="aFapiaoHome" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.FP, "FapiaoHome", "发票主页")', '/FP/FPHome/FPDashboard',true)">@HtmlLang.Write(LangModule.FP, "FapiaoHome", "发票主页")</a></p>*@
                         if (isCanSaleFapiaoChangePermission)
                         {
                             <p class="importFapiao"><a href="javascript:void(0);" onclick="IOImport.fpOpen(0)">@HtmlLang.Write(LangModule.FP, "ImportFapiaoTitle", "导入发票")</a></p>
@@ -208,7 +208,7 @@
                         {
                             if (!isSmartVersion)
                             {
-                                <p class="fapiaoTable"><a href="javascript:void(0);" id="btnOutputFPTable">@HtmlLang.Write(LangModule.FP, "fapiaoTable", "开票单")</a></p>
+                                <p class="fapiaoTable"><a href="javascript:void(0);" id="btnOutputFPTable_2">@HtmlLang.Write(LangModule.FP, "fapiaoTable", "开票单")</a></p>
                                 <p class="fapiaoHook"><a href="javascript:void(0);" id="btnOutputFPHook">@HtmlLang.Write(LangModule.FP, "fapiaoHook", "发票勾对")</a></p>
                             }
                             <p class="importList"><a href="javascript:void(0);" id="btnOutputFPImportList">@HtmlLang.Write(LangModule.FP, "ImportFapiaoList", "发票导入清单")</a></p>

@@ -1,5 +1,6 @@
 ﻿@using JieNor.Megi.DataModel.IV;
 @using JieNor.Megi.Core.DataModel;
+@using JieNor.Megi.Tools
 @{
     bool showAdvance = string.IsNullOrEmpty(Request["showAdvance"]) ? true : false;
     IVInvoiceModel model = ViewData["InvoiceModel"] as IVInvoiceModel;
@@ -22,7 +23,13 @@
 
     //是否有 联系人（编辑）权限
     bool isCanContactChangePermission = HtmlSECMenu.HavePermission(BizObject.Contact, PermissionItem.Change);
-
+    var arr_plancode = AccessHelper.GetPlan().Select(x => x.Code);
+    //标准版
+    bool flag_normal = arr_plancode.Contains("NORMAL");
+    //销售
+    bool flag_sales = arr_plancode.Contains("SALES");
+    //发票
+    bool flag_invoice = arr_plancode.Contains("INVOICE");
     //发票审核后是否需要弹窗提示核销
     bool IsShowVerif = model.MActionPermission.MIsCanVerification;
     string defaultBizDate = string.IsNullOrEmpty(model.MID) ? ViewData["DefaultBizDate"].ToString() : HtmlLang.ToLangDate(model.MBizDate);
@@ -120,13 +127,13 @@
                                 {
                                     <li id="liUnApprove"><a href="javascript:void(0)" onclick='IVBase.unAuditToDraft("@ViewData["InvoiceID"]",IVBase.InvoiceType.Sale)'>@HtmlLang.Write(LangModule.IV, "UnAuditToDraft", "UnAudit To Draft")</a></li>
                                 }
-                                @if (model.MActionPermission.MIsCanViewVoucherCreateDetail)
+                                @if (model.MActionPermission.MIsCanViewVoucherCreateDetail &&(flag_normal||flag_sales))
                                 {
                                     <li><a href="javascript:void(0)" onclick="IVGL.open('@ViewData["InvoiceID"]','0')">@HtmlLang.Write(LangModule.GL, "VoucherCreateDetails", "Voucher Create Detail")</a></li>
                                 }
                                 @if (model.MActionPermission.MIsCanCopy)
                                 {
-                                <li><a href="javascript:void(0)" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.IV, "CopyInvoice", "Copy Invoice")', '/IV/Invoice/InvoiceEdit?cpyId=@ViewData["InvoiceID"]')">@HtmlLang.Write(LangKey.Copy)</a></li>
+                                    <li><a href="javascript:void(0)" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.IV, "CopyInvoice", "Copy Invoice")', '/IV/Invoice/InvoiceEdit?cpyId=@ViewData["InvoiceID"]')">@HtmlLang.Write(LangKey.Copy)</a></li>
                                 }
                                 @if (model.MActionPermission.MIsCanVoid)
                                 {
@@ -142,7 +149,7 @@
                                 }
                                 @if (model.MActionPermission.MIsCanCopy)
                                 {
-                                <li><a href="javascript:void(0)" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.IV, "NewRepeatingInvoice", "New Repeating Invoice")', '/IV/Invoice/RepeatInvoiceEdit?copyInvoiceId=@ViewData["InvoiceID"]',true);">@HtmlLang.Write(LangModule.IV, "Repeating", "Repeating")</a></li>
+                                    <li><a href="javascript:void(0)" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.IV, "NewRepeatingInvoice", "New Repeating Invoice")', '/IV/Invoice/RepeatInvoiceEdit?copyInvoiceId=@ViewData["InvoiceID"]',true);">@HtmlLang.Write(LangModule.IV, "Repeating", "Repeating")</a></li>
                                 }
                             </ul>
                         </div>

@@ -169,7 +169,9 @@
         $("#btnOutputFPTable").off("click").on("click", function () {
             FPDashboard.navPage(FPDashboard.vatFapiaoEnum, 1, true);
         });
-
+        $("#btnOutputFPTable_2").off("click").on("click", function () {
+            FPDashboard.navPage(FPDashboard.vatFapiaoEnum, 1, true);
+        });
 
         $("#btnOutputFPCoding").off("click").on("click", function () {
             FPDashboard.navPage(FPDashboard.vatFapiaoEnum, 3, false);
