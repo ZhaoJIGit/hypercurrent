@@ -303,8 +303,11 @@ namespace JieNor.Megi.DataRepository.COM
         {
             string str_sql = "select p.id,p.code,p.remark,pu.useremail from t_bas_plan p " +
                 "join t_bas_planuser pu on p.id=pu.planid where pu.useremail='" + ctx.MEmail + "'";
-            DynamicDbHelperMySQL dbhelper = new DynamicDbHelperMySQL(ctx);
-            DataSet ds = dbhelper.Query(str_sql);
+
+            //DynamicDbHelperMySQL dbhelper = new DynamicDbHelperMySQL(ctx);
+            //DataSet ds = dbhelper.Query(str_sql);
+            DataSet ds = DbHelperMySQL.Query(str_sql);
+
             List<PlanModel> list_pm = new List<PlanModel>();
             DataTable dt = ds.Tables[0];
             foreach (DataRow item in dt.Rows)
@@ -318,6 +321,17 @@ namespace JieNor.Megi.DataRepository.COM
                 };
                 list_pm.Add(pm);
             }
+              
+            if (list_pm.Count==0) {
+                PlanModel pm = new PlanModel
+                {
+                    Id = 0,
+                    Code = "NORMAL",
+                    UserEmail = ctx.MEmail
+                };
+                list_pm.Add(pm);
+            }
+
             return list_pm;
         }
     }

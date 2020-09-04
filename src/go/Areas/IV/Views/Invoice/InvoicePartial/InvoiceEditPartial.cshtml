@@ -97,7 +97,7 @@
         </div>
 
         @*发票列表项 和 高级选项*@
-        @if (showAdvance == true && Convert.ToString(ViewData["InvoiceID"]).Trim() != "" && HtmlSECMenu.HavePermission(BizObject.Invoice_Sales, PermissionItem.Change))
+        @if ((showAdvance == true && Convert.ToString(ViewData["InvoiceID"]).Trim() != "" && HtmlSECMenu.HavePermission(BizObject.Invoice_Sales, PermissionItem.Change)))
         {
             <div class="m-iv-adv-switch">
                 <a href="javascript:void(0)" class="show">&nbsp;</a><span>@HtmlLang.Write(LangModule.IV, "AdvancedOptions", "Advanced Options")</span>
@@ -109,9 +109,13 @@
             {
                 <div class="m-iv-adv">
                     <div id="aa" class="easyui-accordion" style="width:260px;min-height:344px;">
-                        <div id="divFapiao" title="@HtmlLang.Write(LangModule.IV, "ValueAddedTaxInvoice", "Value-added Tax Invoice")" style="overflow:auto;padding:10px;">
-                            @Html.Partial("../UC/IssueFapiaoInfo")
-                        </div>
+                        @if (flag_normal||flag_invoice)
+                        {
+                            <div id="divFapiao" title="@HtmlLang.Write(LangModule.IV, "ValueAddedTaxInvoice", "Value-added Tax Invoice")" style="overflow:auto;padding:10px;">
+                                @Html.Partial("../UC/IssueFapiaoInfo")
+                            </div>
+                        }
+
                         <div title="@HtmlLang.Write(LangModule.IV, "FinancialInformation", "Financial Information")" data-options="selected:true" style="padding:10px;">
                             <ul>
                                 @if (model.MActionPermission.MIsCanPay)
@@ -127,7 +131,7 @@
                                 {
                                     <li id="liUnApprove"><a href="javascript:void(0)" onclick='IVBase.unAuditToDraft("@ViewData["InvoiceID"]",IVBase.InvoiceType.Sale)'>@HtmlLang.Write(LangModule.IV, "UnAuditToDraft", "UnAudit To Draft")</a></li>
                                 }
-                                @if (model.MActionPermission.MIsCanViewVoucherCreateDetail &&(flag_normal||flag_sales))
+                                @if (model.MActionPermission.MIsCanViewVoucherCreateDetail && (flag_normal))
                                 {
                                     <li><a href="javascript:void(0)" onclick="IVGL.open('@ViewData["InvoiceID"]','0')">@HtmlLang.Write(LangModule.GL, "VoucherCreateDetails", "Voucher Create Detail")</a></li>
                                 }

@@ -199,7 +199,11 @@
                     @if (ctx.MBasCurrencyID == "CNY" && (isCanPurchaseFapiaoViewPermission || isCanSaleFapiaoViewPermission))
                     {
                         @*<div class="arrow-content-cell-title">@HtmlLang.Write(LangModule.FP, "FapiaoHome", "发票")</div>*@
-                        @*<p><a href="###" id="aFapiaoHome" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.FP, "FapiaoHome", "发票主页")', '/FP/FPHome/FPDashboard',true)">@HtmlLang.Write(LangModule.FP, "FapiaoHome", "发票主页")</a></p>*@
+                        if (flag_invoice && flag_sales)
+                        {
+                            <p><a href="###" id="aFapiaoHome" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.FP, "FapiaoHome", "发票主页")', '/FP/FPHome/FPDashboard',true)">@HtmlLang.Write(LangModule.FP, "FapiaoHome", "发票主页")</a></p>
+                        }
+
                         if (isCanSaleFapiaoChangePermission)
                         {
                             <p class="importFapiao"><a href="javascript:void(0);" onclick="IOImport.fpOpen(0)">@HtmlLang.Write(LangModule.FP, "ImportFapiaoTitle", "导入发票")</a></p>
@@ -226,7 +230,7 @@
         </li>
     }
     @*只要有以查看权限的任意一种，即可显示大菜单，否则隐藏大菜单*@
-    @if ((isCanSaleReportsViewPermission || isCanPurchaseReportsViewPermission || isCanBankReportsViewPermission || isCanExpenseReportsViewPermission || isCanGeneralLedgerReportsViewPermission || isCanFixedAssetsReportsViewPermission) &&  flag_sales)
+    @if ((isCanSaleReportsViewPermission || isCanPurchaseReportsViewPermission || isCanBankReportsViewPermission || isCanExpenseReportsViewPermission || isCanGeneralLedgerReportsViewPermission || isCanFixedAssetsReportsViewPermission) && flag_sales)
     {
         <li class="item">
             <a href="###" class="item-link m-nav-report"><i class="far fa-chart-bar"></i></a>

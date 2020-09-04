@@ -195,6 +195,14 @@
         <div class="m-header">
             <div class="m-top">
                 <div class="m-logo"></div>
+                @*<span style="        position: absolute;
+        right: 30px;
+        top: 40px;
+        color: white;
+">
+                    @HtmlLang.Write(LangModule.My, "HypercuVersion",
+                      "超流 版本: ") @ServerHelper.HyVersion
+                </span>*@
                 <!--组织下拉框-->
                 <div id="divOrgCombox"></div>
                 @*@Html.Raw(@HtmlOrg.GoOrgSelectList())*@
@@ -215,8 +223,8 @@
                         <b class="popup-arrow"></b>
                         <div class="m-user-img">
                             @*@{
-                                    string headImageUrl = ServerHelper.MyServer + "/Profile/ShowHeaderIamge";
-                                }*@
+                        string headImageUrl = ServerHelper.MyServer + "/Profile/ShowHeaderIamge";
+                    }*@
                             @*<input type="hidden" id="hideImageUrl" value="@headImageUrl" />*@
                             <img id="imageHeaderImage" src='@ServerHelper.StaticServer/fw/themes/base/images/default-header.jpg' style="height: 80px;width: 80px;" />
                         </div>
@@ -229,6 +237,11 @@
                         </div>
                         <div class="m-lang-top">
                             @HtmlLang.LangBar(ServerType.GoServer)
+                            <span style="        color: #828c93;
+        margin-left: 10px;">
+                                @HtmlLang.Write(LangModule.My, "HypercuVersion",
+                                  "超流 版本: ") @ServerHelper.HyVersion
+                            </span>
                         </div>
                         <div class="m-quit">
                             <a id="aLogout" href="@ServerHelper.FinalLoginServer/Account/Logout">@HtmlLang.Write(LangKey.Logout)</a>
@@ -309,7 +322,7 @@
                                         <p><a href="###" id="aNewReceiveMoney" onclick="Index.newTransaction('@BizObject.Receive');">@HtmlLang.Write(LangModule.Bank, "NewReceiveMoney", "New Receive Money")</a></p>
                                     }
 
-                                    @if (isCanGeneralLedgerChangePermission && HtmlOrg.RegProgress == (int)BASOrgScheduleTypeEnum.GLSuccess && (flag_normal || flag_sales))
+                                    @if (isCanGeneralLedgerChangePermission && HtmlOrg.RegProgress == (int)BASOrgScheduleTypeEnum.GLSuccess && (flag_normal))
                                     {//基础资料（编辑）权限校验
                                         <p><a href="###" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.IV, "NewVoucher", "New Voucher")', '/GL/GLVoucher/GLVoucherEdit?Origin=Quick_Menu', true, true,false,true);">@HtmlLang.Write(LangModule.BD, "NewVoucher", "New Voucher")</a></p>
                                     }

@@ -55,20 +55,7 @@ namespace JieNor.Megi.Identity.HtmlHelper
 
         public static MvcHtmlString Write(LangModule module, string key, string defaultValue = null)
         {
-            MLogger.Log("key:"+ key);
-
-            if (key == "InvoiceSource")
-            {
-                MLogger.Log("key:InvoiceSource");
-                MLogger.Log("value:"+ GetText(module, key, defaultValue));
-                
-            }
-            if (key == "AcroVAT")
-            {
-                MLogger.Log("key:AcroVAT");
-                MLogger.Log("value:" + GetText(module, key, defaultValue));
-
-            }
+            
             //IL_0009: Unknown result type (might be due to invalid IL or missing references)
             //IL_000e: Expected O, but got Unknown
             return new MvcHtmlString(GetText(module, key, defaultValue));

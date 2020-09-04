@@ -135,11 +135,16 @@
         <div class="m-header">
             <div class="m-top">
                 <div class="m-logo"></div>
+
                 <div id="divOrgCombox">
                     <div class='m-org'><a href='###' id='aOrgList'> @HtmlLang.Write(LangModule.My, "MyMegi", "My Megi")</a></div>
                 </div>
+               
                 <div class="m-action">
-                    <a class="m-help" href="https://help.hypercu.cn" id="megiFeedback" target="_blank" title="@HtmlLang.Write(LangModule.Common, "help", "帮助")">&nbsp;</a>
+                    @if (flag_normal)
+                    {
+                        <a class="m-help" href="https://help.hypercu.cn" id="megiFeedback" target="_blank" title="@HtmlLang.Write(LangModule.Common, "help", "帮助")">&nbsp;</a>
+                    }
                     <a id="aUser" class="m-user" href="javascript:void(0)">&nbsp;</a>
                     <div id="divUserInfo" class="m-user-info">
                         <b class="popup-arrow popup-arrow-notch"></b>
@@ -154,12 +159,17 @@
                         <div class="m-user-content">
                             <p id="lblUserName" class="m-ellipsis" style="white-space:nowrap;" title="@HtmlUser.UserName()">@MText.Decode(HtmlUser.UserName())</p>
                             <ul>
-                                <li><a href="javascript:void(0)" id="aProfilesettings" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.My, "profilesettings", "Profile Settings" )', '/Setting/Profile/ProfileEdit' ,true)">@HtmlLang.Write(LangModule.My, "profilesettings", "Profile Settings")</a></li>
-                                <li><a href="javascript:void(0)" id="aAccountsettings" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.My, "Accountsettings", "Account Settings" )', '/Setting/Account/AccountEdit' ,true)">@HtmlLang.Write(LangModule.My, "Accountsettings", "Account Settings")</a></li>
+                                <li><a href="javascript:void(0)" id="aProfilesettings" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.My, "profilesettings", "Profile Settings")', '/Setting/Profile/ProfileEdit' ,true)">@HtmlLang.Write(LangModule.My, "profilesettings", "Profile Settings")</a></li>
+                                <li><a href="javascript:void(0)" id="aAccountsettings" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.My, "Accountsettings", "Account Settings")', '/Setting/Account/AccountEdit' ,true)">@HtmlLang.Write(LangModule.My, "Accountsettings", "Account Settings")</a></li>
                             </ul>
                         </div>
                         <div class="m-lang-top">
                             @HtmlLang.LangBar(ServerType.MyServer)
+                            <span style="        color: #828c93;
+        margin-left: 10px;">
+                                @HtmlLang.Write(LangModule.My, "HypercuVersion",
+                                  "超流 版本: ") @ServerHelper.HyVersion
+                            </span>
                         </div>
                         <div class="m-quit">
                             <a href="@ServerHelper.LoginServer/Account/Logout">@HtmlLang.Write(LangKey.Logout)</a>
@@ -204,8 +214,8 @@
                         <div class="m-sub-nav">
                             <span class="arrow-left-border">&nbsp;</span>
                             <span class="arrow-left">&nbsp;</span>
-                            <p><a class="" href="javascript:void(0)" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.My, "profilesettings", "Profile Settings" )', '/Setting/Profile/ProfileEdit' ,true)">@HtmlLang.Write(LangModule.My, "profilesettings", "Profile Settings")</a></p>
-                            <p><a href="javascript:void(0)" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.My, "accountsettings", "Account Settings" )', '/Setting/Account/AccountEdit' ,true)">@HtmlLang.Write(LangModule.My, "accountsettings", "Account Settings")</a></p>
+                            <p><a class="" href="javascript:void(0)" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.My, "profilesettings", "Profile Settings")', '/Setting/Profile/ProfileEdit' ,true)">@HtmlLang.Write(LangModule.My, "profilesettings", "Profile Settings")</a></p>
+                            <p><a href="javascript:void(0)" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.My, "accountsettings", "Account Settings")', '/Setting/Account/AccountEdit' ,true)">@HtmlLang.Write(LangModule.My, "accountsettings", "Account Settings")</a></p>
                         </div>
                     </div>
                 </li>
@@ -267,7 +277,13 @@
                             </div>
                         </div>
                         <div style="padding:5px 0px;" class="try-demo-div">
-                            <a href="javascript:void(0);" id="aCreateDemoCompany" orgid="@ViewData["demoorgid"]">@HtmlLang.Write(LangModule.My, "TryTheDemoCompany", "Try the Demo Company (US)")</a> @HtmlLang.Write(LangModule.My, "HaveAPlay", "Have a play, try out new features and get familiar with Megi.")
+                            <a href="javascript:void(0);" id="aCreateDemoCompany"
+                               orgid="@ViewData["demoorgid"]">
+                            @HtmlLang.Write(LangModule.My, "TryTheDemoCompany", 
+                           "Try the Demo Company (US)")</a> 
+                            @HtmlLang.Write(LangModule.My, "HaveAPlay", 
+                           "Have a play, try out new features and get familiar with Megi.")
+                     
                         </div>
                     </div>
                 </div>
@@ -337,7 +353,7 @@
     <input type="hidden" id="flag_invoice" value="@flag_invoice" />
     <input type="hidden" id="flag_normal" value="@flag_normal" />
 
-
+    
     <!--组织信息-->
     <input type="hidden" id="hideUserName" value="@ctx.MUserName" />
     <input type="hidden" id="hideUserEamil" value="@ctx.MEmail" />

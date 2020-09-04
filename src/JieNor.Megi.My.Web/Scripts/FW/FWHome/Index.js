@@ -293,20 +293,17 @@ var MyIndex = {
                         //处理
                         if (value == "0") {
 
-                            if (flag_normal) {
-                                return HtmlLang.Write(LangModule.My, "StandardEdition", "标准版");
+                            if (flag_invoice && flag_sales) {
+                                return HtmlLang.Write(LangModule.My, "Comprehensive", "综合版");
                             }
                             else if (flag_invoice) {
-                                return HtmlLang.Write(LangModule.My, "InvoiceSource", "InvoiceSource");
+                                return HtmlLang.Write(LangModule.My, "AcroVAT", "AcroVAT");
                             }
                             else if (flag_sales) {
-                                return HtmlLang.Write(LangModule.My, "AcroVAT", "AcroVAT");
-
+                                return HtmlLang.Write(LangModule.My, "InvoiceSource", "InvoiceSource");
                             } else {
                                 return HtmlLang.Write(LangModule.My, "StandardEdition", "标准版");
                             }
-
-
 
 
                         } else if (value == "1") {
@@ -479,21 +476,21 @@ var MyIndex = {
                 html += '<div class="info">';
 
                 if (obj.MVersionID == "0") {
-                    if (flag_normal) {
+                    if (flag_invoice && flag_sales) {
                         html += '<span class="info1" style="color:#e23f2a;font-weight:bold"><label>' + HtmlLang.Write(LangModule.My, "younowuser", "You are using") +
 
-                            '</label>' + HtmlLang.Write(LangModule.My, "StandardEdition", "StandardEdition") + '</span>';
+                            '</label>' + HtmlLang.Write(LangModule.My, "Comprehensive", "综合版") + '</span>';
                     }
                     else if (flag_invoice) {
                         html += '<span class="info1" style="color:#e23f2a;font-weight:bold"><label>' + HtmlLang.Write(LangModule.My, "younowuser", "You are using") +
 
-                            '</label>' + HtmlLang.Write(LangModule.My, "InvoiceSource", "InvoiceSource") + '</span>';
+                            '</label>' + HtmlLang.Write(LangModule.My, "AcroVAT", "AcroVAT") + '</span>';
 
                     }
                     else if (flag_sales) {
                         html += '<span class="info1" style="color:#e23f2a;font-weight:bold"><label>' + HtmlLang.Write(LangModule.My, "younowuser", "You are using") +
 
-                            '</label>' + HtmlLang.Write(LangModule.My, "AcroVAT", "AcroVAT") + '</span>';
+                            '</label>' + HtmlLang.Write(LangModule.My, "InvoiceSource", "InvoiceSource") + '</span>';
                     } else {
                         html += '<span class="info1" style="color:#e23f2a;font-weight:bold"><label>' + HtmlLang.Write(LangModule.My, "younowuser", "You are using") +
 

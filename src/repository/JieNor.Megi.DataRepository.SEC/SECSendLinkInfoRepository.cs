@@ -58,11 +58,23 @@ namespace JieNor.Megi.DataRepository.SEC
             DbHelperMySQL.ExecuteSql(new MContext(), stringBuilder.ToString(), array);
             if (!string.IsNullOrWhiteSpace(planCode))
             {
-                DataSet ds= DbHelperMySQL.Query("SELECT id FROM t_bas_plan where HYCode='" + planCode + "';");
-                if (ds.Tables.Count>0) {
-                    if (ds.Tables[0].Rows.Count>0) {
+                DataSet ds = DbHelperMySQL.Query("SELECT id,code FROM t_bas_plan where HYCode='" + planCode + "';");
+                if (ds.Tables.Count > 0)
+                {
+                    if (ds.Tables[0].Rows.Count > 0)
+                    {
                         StringBuilder planBuilder = new StringBuilder();
-                        planBuilder.AppendLine("insert into t_bas_planuser (planid,useremail)values(" +int.Parse( ds.Tables[0].Rows[0][0].ToString())+ ",'"+email+"');");
+                        if (ds.Tables[0].Rows[0][1].ToString() == "COMPREHENSIVE")
+                        {
+                            DataSet ds2 = DbHelperMySQL.Query("SELECT id,code FROM t_bas_plan where Code in ('SALES','INVOICE');");
+
+                            planBuilder.AppendLine("insert into t_bas_planuser (planid,useremail)values(" + int.Parse(ds2.Tables[0].Rows[0][0].ToString()) + ",'" + email + "');");
+                            planBuilder.AppendLine("insert into t_bas_planuser (planid,useremail)values(" + int.Parse(ds2.Tables[0].Rows[1][0].ToString()) + ",'" + email + "');");
+                        }
+                        else
+                        {
+                            planBuilder.AppendLine("insert into t_bas_planuser (planid,useremail)values(" + int.Parse(ds.Tables[0].Rows[0][0].ToString()) + ",'" + email + "');");
+                        }
                         DbHelperMySQL.ExecuteSql(planBuilder.ToString());
                     }
                 }

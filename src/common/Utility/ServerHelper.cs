@@ -9,6 +9,7 @@ namespace JieNor.Megi.Common.Utility
 	public static class ServerHelper
 	{
 		private static readonly string _versionNumber = ConfigurationManager.AppSettings["JavaScriptCSSVersion"];
+		private static readonly string _hyVersion = ConfigurationManager.AppSettings["HyVersion"];
 
 		private static readonly string _serviceEmail = ConfigurationManager.AppSettings["ServiceEmail"];
 
@@ -137,7 +138,9 @@ namespace JieNor.Megi.Common.Utility
 		public static string Domain => ConfigurationManager.AppSettings["Domain"];
 
 		public static string JSVersion => $"ver={_versionNumber}";
+		public static string HyVersion => $"{_hyVersion}";
 
+		
 		public static string VersionNumber => _versionNumber;
 
 		public static string[] MegiLangTypes

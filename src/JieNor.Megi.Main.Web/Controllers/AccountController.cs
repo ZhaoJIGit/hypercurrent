@@ -14,6 +14,7 @@ using JieNor.Megi.ServiceContract.SEC;
 using Microsoft.CSharp.RuntimeBinder;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Web;
@@ -21,6 +22,7 @@ using System.Web.Mvc;
 
 namespace JieNor.Megi.Main.Web.Controllers
 {
+  
     public class AccountController : MainControllerBase
     {
         private ISECUser _user;
@@ -126,37 +128,38 @@ namespace JieNor.Megi.Main.Web.Controllers
         }
 
         [HttpPost]
+        [AllowCrossSiteJson]
         public JsonResult Register(SECUserModel info)
         {
-           
-            //SECUserModel info = new SECUserModel();
 
-            //info.MEmailAddress = sECUser.MEmailAddress;
-            //info.MPassWord = sECUser.MPassWord;
-            //info.MMobilePhone = sECUser.MMobilePhone;
-            //info.MFirstName = sECUser.MFirstName;
-            //info.MLastName = sECUser.MLastName;
-            //info.PlanCode = sECUser.ProductCode;
-            //info.Payment = "";
-
+            if (string.IsNullOrWhiteSpace(info.MEmailAddress) || string.IsNullOrWhiteSpace(info.ProductCode))
+            {
+                return Json(new
+                {
+                    Success = false,
+                    Message = "邮箱和产品Code不能为空"
+                }, "application/json");
+            }
 
             info.MLCID = CookieHelper.GetCookieValue(ContextHelper.MLocaleIDCookie, null);
 
-            MLogger.Log(info.ProductCode);
 
             MActionResult<OperationResult> result = _user.Register(info, null);
+            MLogger.Log(result.Success.ToString() + ":" + result.Message);
 
-            if (result.Success)
+              if (result.ResultData.Success)
                 return Json(new
                 {
                     Success = true,
+                    Code = "200",
                     Message = "创建成功"
                 }, "application/json");
 
             return Json(new
             {
                 Success = false,
-                Message = result.Message
+                Code = result.ResultData.Code,//20001  已注册
+                Message = result.ResultData.Message
             }, "application/json");
         }
 
@@ -182,6 +185,18 @@ namespace JieNor.Megi.Main.Web.Controllers
                 }
                 return new MvcHtmlString(builder.ToString());
             }
+        }
+    }
+    /// <summary>
+    /// 允许跨域
+    /// </summary>
+    public class AllowCrossSiteJsonAttribute : ActionFilterAttribute
+    {
+        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            filterContext.RequestContext.HttpContext.Response.AddHeader("Access-Control-Allow-Origin", "*");
+            filterContext.RequestContext.HttpContext.Response.AddHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE");
+            base.OnActionExecuting(filterContext);
         }
     }
     public class SECUserViewModel

@@ -51,6 +51,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JieNor.Megi.Service.Webapi"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsole", "TestConsole\TestConsole.csproj", "{B2792B4B-CB5C-443D-8E07-9AE67A854040}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PasswordDecrypt", "tests\PasswordDecrypt\PasswordDecrypt.csproj", "{4C1B4B97-511D-430C-BCAC-98BEEF9A06A7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -145,6 +147,10 @@ Global
 		{B2792B4B-CB5C-443D-8E07-9AE67A854040}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2792B4B-CB5C-443D-8E07-9AE67A854040}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2792B4B-CB5C-443D-8E07-9AE67A854040}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C1B4B97-511D-430C-BCAC-98BEEF9A06A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C1B4B97-511D-430C-BCAC-98BEEF9A06A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C1B4B97-511D-430C-BCAC-98BEEF9A06A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C1B4B97-511D-430C-BCAC-98BEEF9A06A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -163,6 +169,7 @@ Global
 		{675EF372-9074-46CF-890B-E85F6B1D8F50} = {E2219918-C9F8-4F31-A14D-0A695FAFCDF0}
 		{AAC3FE46-AF90-473B-AADC-35340CFEFD18} = {E2219918-C9F8-4F31-A14D-0A695FAFCDF0}
 		{EEF2457D-0B83-44E8-96CE-D6C0CF427A8A} = {E2219918-C9F8-4F31-A14D-0A695FAFCDF0}
+		{4C1B4B97-511D-430C-BCAC-98BEEF9A06A7} = {2B6557B2-5F3E-4BA0-8898-E274923E193E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {95A35456-DCBF-4444-ACA7-E385F8419FC8}

@@ -55,7 +55,7 @@ namespace JieNor.Megi.BusinessService.SEC
 		{
 			return dal.Get(ctx, param);
 		}
-
+		
 		[NoAuthorization]
 		public OperationResult Register(MContext ctx, SECUserModel model)
 		{
@@ -154,6 +154,9 @@ namespace JieNor.Megi.BusinessService.SEC
 				operationResult.Code = "20001";
 				operationResult.Message = COMMultiLangRepository.GetText(ctx.MLCID, LangModule.User, "registerFailDetail", "This email has been registered, please use the other email to register!");
 			}
+			MLogger.Log("MIsTemp：" + (userModel?.MIsTemp ?? true).ToString());
+			MLogger.Log("Result：" + (operationResult.Success).ToString());
+			MLogger.Log("Message：" + (operationResult.Message).ToString());
 
 			string mEmailAddress = model.MEmailAddress;
 			string text3 = COMMultiLangRepository.GetText(ctx.MLCID, LangModule.Login, "ActivateYourAccount", "Activate your account");
