@@ -64,8 +64,8 @@ namespace JieNor.Megi.Login.Web.Controllers
 			if (result.Success && !model.MEmail.EqualsIgnoreCase(model.DefaultEmail))
 			{
 				string strto = model.MEmail;
-				string strSubject = LangHelper.GetText(LangIndentity.CurrentLangID, LangModule.Login, "MegiUserActivation", "Megi User Activation for") + " " + model.MEmail;
-				string strBody = LangHelper.GetText(LangIndentity.CurrentLangID, LangModule.Login, "ThankyouForAccepting", "Thank you for accepting the invitation to Megi.<br/>") + LangHelper.GetText(LangIndentity.CurrentLangID, LangModule.Login, "ClickTheFollowingLink", "To activate your new Megi account, please click the following link:<br/>") + "<a href='" + ServerHelper.LoginServer + "' target= '_blank'>" + ServerHelper.LoginServer + "</a>";
+				string strSubject = LangHelper.GetText(LangIndentity.CurrentLangID, LangModule.Login, "MegiUserActivation", "Hypercurrent User Activation for") + " " + model.MEmail;
+				string strBody = LangHelper.GetText(LangIndentity.CurrentLangID, LangModule.Login, "ThankyouForAccepting", "Thank you for accepting the invitation to Hypercurrent.<br/>") + LangHelper.GetText(LangIndentity.CurrentLangID, LangModule.Login, "ClickTheFollowingLink", "To activate your new Hypercurrent account, please click the following link:<br/>") + "<a href='" + ServerHelper.LoginServer + "' target= '_blank'>" + ServerHelper.LoginServer + "</a>";
 				SendMail.SendSMTPEMail(strto, strSubject, strBody, "Megi", "");
 			}
 			return base.Json(result);

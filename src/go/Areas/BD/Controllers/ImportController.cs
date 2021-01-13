@@ -128,7 +128,7 @@ namespace JieNor.Megi.Go.Web.Areas.BD.Controllers
 				num = 1;
 				break;
 			}
-			empty = ((num == 0) ? HtmlLang.GetText(LangModule.IV, "ImportInvoiceStep2Warning1", "IMPORTANT:Do not change the column headings provided in the Megi template. These need to be unchanged for the import to work in the next step.<br/>Dates are assumed to be in Invariant Language (Invariant Country) format. For example, 12/25/2015 or 25 Dec 2015.") : HtmlLang.GetText(LangModule.Contact, "ImportContactsStep2Warning1", "IMPORTANT: Do not change the column headings in the template file. These need to be unchanged for the import to work in the next step."));
+			empty = ((num == 0) ? HtmlLang.GetText(LangModule.IV, "ImportInvoiceStep2Warning1", "IMPORTANT:Do not change the column headings provided in the Hypercurrent template. These need to be unchanged for the import to work in the next step.<br/>Dates are assumed to be in Invariant Language (Invariant Country) format. For example, 12/25/2015 or 25 Dec 2015.") : HtmlLang.GetText(LangModule.Contact, "ImportContactsStep2Warning1", "IMPORTANT: Do not change the column headings in the template file. These need to be unchanged for the import to work in the next step."));
 			ViewBag.ImportStep2Warning = empty;
 			ViewBag.IsCover = isCover;
 
@@ -211,7 +211,7 @@ namespace JieNor.Megi.Go.Web.Areas.BD.Controllers
 			ViewBag.ConfirmImpState = empty2;
 			ViewBag.ConfirmImportNotice = arg;
 
-			var text7 = HtmlLang.GetText(LangModule.IV, "confirmImportNotify", "<p>The imported <strong>{0}</strong> contained {1} {2}, the following will be imported into Megi:</p>");
+			var text7 = HtmlLang.GetText(LangModule.IV, "confirmImportNotify", "<p>The imported <strong>{0}</strong> contained {1} {2}, the following will be imported into Hypercurrent:</p>");
 			var text8 = ReplaceLabelUnit(text7, id);
 			ViewBag.ConfirmImportNotify = string.Format(text8, ViewBag.OriFileName, ViewBag.ImportingCount, ViewBag.TypeName);
 

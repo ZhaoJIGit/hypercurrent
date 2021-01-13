@@ -125,7 +125,7 @@
                 //标题
                 var statementBalance = HtmlLang.Write(LangModule.Bank, "statementbalance", "Statement Balance");
                 //表格标题
-                var balanceInMegi = HtmlLang.Write(LangModule.Bank, "BalanceInMegi", "Balance in Megi");
+                var balanceInMegi = HtmlLang.Write(LangModule.Bank, "BalanceInMegi", "Balance in Hypercurrent");
                 //绘制图形
                 that.loadSuccess(data, chartType);
                 //去掉第一行以及第五行以后的

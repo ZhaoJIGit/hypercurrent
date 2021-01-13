@@ -14,7 +14,7 @@
                 @Html.Raw(string.Format(HtmlLang.Write(LangModule.IV, "ImportInvoiceStep1Title", "Step 1. Download our {0} template file").ToString(), ViewBag.TypeNames))
             </h2>
             <p class="import-step-content">
-                @Html.Raw(string.Format(HtmlLang.Write(LangModule.IV, "ImportInvoiceStep1Desc", "Start by downloading our {0} Xls template file. This file has the correct column headings Megi needs to import your {1} data.").ToString(), ViewBag.TypeNames, ViewBag.TypeName))
+                @Html.Raw(string.Format(HtmlLang.Write(LangModule.IV, "ImportInvoiceStep1Desc", "Start by downloading our {0} Xls template file. This file has the correct column headings Hypercurrent needs to import your {1} data.").ToString(), ViewBag.TypeNames, ViewBag.TypeName))
             </p>
             <div class="import-step-downtemplate">
                 <!--工资导入时，通过下拉按钮选择各个起征点对应工资模板-->
@@ -55,7 +55,7 @@
                 @Html.Raw(string.Format(HtmlLang.Write(LangModule.IV, "ImportInvoiceStep2Title", "Step 2. Copy your {0} into the template").ToString(), ViewBag.TypeNames))
             </h2>
             <p class="import-step-content">
-                @Html.Raw(string.Format(HtmlLang.Write(LangModule.IV, "ImportInvoiceStep2Desc", "Export your {0} from your old system as a comma separated list. Using Excel or another spreadsheet editor, copy and paste your {0} from the exported file into the Megi template. Make sure the {1} data you copy matches the column headings provided in the template.").ToString(), ViewBag.TypeNames, ViewBag.TypeName))
+                @Html.Raw(string.Format(HtmlLang.Write(LangModule.IV, "ImportInvoiceStep2Desc", "Export your {0} from your old system as a comma separated list. Using Excel or another spreadsheet editor, copy and paste your {0} from the exported file into the Hypercurrent template. Make sure the {1} data you copy matches the column headings provided in the template.").ToString(), ViewBag.TypeNames, ViewBag.TypeName))
             </p>
             <p class="import-step-warning">
                 @Html.Raw(ViewBag.ImportStep2Warning)

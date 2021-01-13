@@ -109,7 +109,7 @@ namespace JieNor.Megi.Identity.Controllers
 			//}
 			//FrameworkController.<> o__7.<> p__0.Target(FrameworkController.<> o__7.<> p__0, base.ViewBag, string.Format("{0} - Megi", title));
 
-			ViewBag.Title = string.Format("{0} - Megi", title);
+			ViewBag.Title = string.Format("{0} - Hypercurrent", title);
 
 			//if (FrameworkController.<> o__7.<> p__1 == null)
 			//{

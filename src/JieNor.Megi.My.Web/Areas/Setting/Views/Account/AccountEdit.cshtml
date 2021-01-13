@@ -16,7 +16,7 @@
                     @HtmlLang.Write(LangKey.Email)
                 </div>
                 <div class="x-position emailAddr">
-                    @HtmlLang.Write(LangModule.My, "ChangeLoginEmail", "Pending Confirmation,a confirmation email has been sented.</br> In the meantime you can still login to Megi using") <b id="bEmail">@user.MEmailAddress</b>
+                    @HtmlLang.Write(LangModule.My, "ChangeLoginEmail", "Pending Confirmation,a confirmation email has been sented.</br> In the meantime you can still login to Hypercurrent using") <b id="bEmail">@user.MEmailAddress</b>
                 </div>
                 <div class="x-position x-right">
                     <a href="javascript:void(0)">
@@ -148,12 +148,12 @@
                         @{
                             if (user.MAppID != "2")
                             {
-                                <input id="radio1" type="radio" class="mg-data" name="MAppID" value="1" checked="checked" />@HtmlLang.Write(LangModule.My, "GoToMyMegi", "Go to My Megi")
+                                <input id="radio1" type="radio" class="mg-data" name="MAppID" value="1" checked="checked" />@HtmlLang.Write(LangModule.My, "GoToMyMegi", "Go to My Hypercurrent")
                                 <input id="radio2" type="radio" class="mg-data" name="MAppID" value="2" style="margin-left: 20px" />@HtmlLang.Write(LangModule.My, "GoToTheOrganisation", "Go to the organisation I was last in")
                             }
                             else
                             {
-                                <input id="radio1" type="radio" class="mg-data" name="MAppID" value="1" />@HtmlLang.Write(LangModule.My, "GoToMyMegi", "Go to My Megi")
+                                <input id="radio1" type="radio" class="mg-data" name="MAppID" value="1" />@HtmlLang.Write(LangModule.My, "GoToMyMegi", "Go to My Hypercurrent")
                                 <input id="radio2" type="radio" class="mg-data" name="MAppID" value="2" checked="checked" style="margin-left: 20px" />@HtmlLang.Write(LangModule.My, "GoToTheOrganisation", "Go to the organisation I was last in")
                             }
                         }

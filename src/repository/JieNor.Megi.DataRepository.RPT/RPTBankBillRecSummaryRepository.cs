@@ -152,7 +152,7 @@ namespace JieNor.Megi.DataRepository.RPT
 			});
 			bizReportRowModel.AddCell(new BizReportCellModel
 			{
-				Value = COMMultiLangRepository.GetText(ctx.MLCID, LangModule.Bank, "BalanceInMegi", "Balance in Megi"),
+				Value = COMMultiLangRepository.GetText(ctx.MLCID, LangModule.Bank, "BalanceInMegi", "Balance in Hypercurrent"),
 				CellType = BizReportCellType.Text
 			});
 			bizReportRowModel.AddCell(new BizReportCellModel

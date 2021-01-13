@@ -1,10 +1,10 @@
 ﻿@{
-    ViewBag.Title = @HtmlLang.Write(LangModule.Login, "MegiConfirmInvitation", "Megi | Confirm Invitation");
+    ViewBag.Title = @HtmlLang.Write(LangModule.Login, "MegiConfirmInvitation", "Hypercurrent | Confirm Invitation");
     Layout = "~/Views/Shared/_ForgetPasswordLayout.cshtml";
     JieNor.Megi.DataModel.SEC.SECInviteUserInfoModel userInfo = ViewData["userInfo"] as JieNor.Megi.DataModel.SEC.SECInviteUserInfoModel;
 }
 @{
-    string title = HtmlLang.Write(LangModule.Login, "WouldAccessAccount1", "Would like you  to visit {0} account in Megi System").ToString();
+    string title = HtmlLang.Write(LangModule.Login, "WouldAccessAccount1", "Would like you  to visit {0} account in Hypercurrent System").ToString();
     title = string.Format(title, Convert.ToString(ViewData["orgName"]));
 }
 @using JieNor.Megi.Common.Utility
@@ -31,8 +31,8 @@
                 <!--按钮左-->
                 <div style="float:left;width:45%">
 
-                    <div>@HtmlLang.Write(LangModule.Login, "NewToMegi", "New to Megi?")</div>
-                    <div> @HtmlLang.Write(LangModule.Login, "CreateAMegiLogin", "Create a Megi login") </div>
+                    <div>@HtmlLang.Write(LangModule.Login, "NewToMegi", "New to Hypercurrent?")</div>
+                    <div> @HtmlLang.Write(LangModule.Login, "CreateAMegiLogin", "Create a Hypercurrent login") </div>
 
 
                 </div>
@@ -42,7 +42,7 @@
                     <div>
                         @HtmlLang.Write(LangModule.Login, "IfYouAlreadyHave", "Existing account?")
                     </div>
-                    <div> @HtmlLang.Write(LangModule.Login, "MegiLogin", " Login into Megi") </div>
+                    <div> @HtmlLang.Write(LangModule.Login, "MegiLogin", " Login into Hypercurrent") </div>
 
                 </div>
                 <div class="clear"></div>

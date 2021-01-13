@@ -236,7 +236,7 @@ var MegiLogin = {
 
                 if (!MegiLogin.PasswordWarpper.isValidate(obj.Password)) {
                     $("html").unmask();
-                    var tipMessage = HtmlLang.Write(LangModule.Common, "PasswordIsSimpleTips", "To ensure your data safety, HyperCurrent upgraded data security policy. Please reset your password according to our new policy. A link has been sent to your registration mailing address which will let you reset your password. If  you don't receive an email shortly, check your 'bulk email' or 'junk email' folders. To make sure you receive email from Megi in the future, add the  'hypercu.cn'  domain to your email safe list.  Thanks for your support. ");
+                    var tipMessage = HtmlLang.Write(LangModule.Common, "PasswordIsSimpleTips", "To ensure your data safety, HyperCurrent upgraded data security policy. Please reset your password according to our new policy. A link has been sent to your registration mailing address which will let you reset your password. If  you don't receive an email shortly, check your 'bulk email' or 'junk email' folders. To make sure you receive email from Hypercurrent in the future, add the  'hypercu.cn'  domain to your email safe list.  Thanks for your support. ");
 
                     $.mDialog.alert(tipMessage, function () {
                         MegiLogin.PasswordWarpper.sendResetLink(obj.Email);

@@ -63,7 +63,7 @@ namespace JieNor.Megi.DataRepository.RPT
 			});
 			bizReportRowModel.AddCell(new BizReportCellModel
 			{
-				Value = COMMultiLangRepository.GetText(ctx.MLCID, LangModule.Report, "DateImportedIntoMegi", "Date imported into Megi"),
+				Value = COMMultiLangRepository.GetText(ctx.MLCID, LangModule.Report, "DateImportedIntoMegi", "Date imported into Hypercurrent"),
 				CellType = BizReportCellType.Text
 			});
 			bizReportRowModel.AddCell(new BizReportCellModel

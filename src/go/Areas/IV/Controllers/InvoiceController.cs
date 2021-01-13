@@ -354,22 +354,20 @@ namespace JieNor.Megi.Go.Web.Areas.IV.Controllers
 		[Permission("Invoice_Sales", "Change", "")]
 		public JsonResult SendInvoiceList(IVInvoiceEmailSendModel model)
 		{
-			if(null != model.SendEntryList && model.SendEntryList.Count > 0)
-            {
-				var entry = model.SendEntryList.First();
-
-				// 超级账本POC
-				var invoice = _invoice.GetInvoiceEditModel(entry.MID, string.Empty).ResultData;
-				var item = invoice.MEntryList.FirstOrDefault();
-				if (null != item)
-				{
-					// 调用http://siritech.com.cn:8080/create?number=INVOICE1&item=Laptop&desc=DELL&quantity=1&price=5000&total=5000
-					var number = int.Parse(invoice.MNumber.Substring(invoice.MNumber.LastIndexOf('-') + 1));
-
-					var client = new WebClient();
-					client.DownloadString($"http://siritech.com.cn:8080/create?number=INVOICE{number}&item={item.MItemID}&desc={item.MDesc}&quantity={item.MQty}&price={item.MPrice}&total={invoice.MTotalAmt}");
-				}
-			}
+			//if(null != model.SendEntryList && model.SendEntryList.Count > 0)
+   //         {
+			//	var entry = model.SendEntryList.First();
+			//	// 超级账本POC
+			//	var invoice = _invoice.GetInvoiceEditModel(entry.MID, string.Empty).ResultData;
+			//	var item = invoice.MEntryList.FirstOrDefault();
+			//	if (null != item)
+			//	{
+			//		// 调用http://siritech.com.cn:8080/create?number=INVOICE1&item=Laptop&desc=DELL&quantity=1&price=5000&total=5000
+			//		var number = int.Parse(invoice.MNumber.Substring(invoice.MNumber.LastIndexOf('-') + 1));
+			//		var client = new WebClient();
+			//		client.DownloadString($"http://siritech.com.cn:8080/create?number=INVOICE{number}&item={item.MItemID}&desc={item.MDesc}&quantity={item.MQty}&price={item.MPrice}&total={invoice.MTotalAmt}");
+			//	}
+			//}
 
 			return base.Json(base._invoice.SendInvoiceList(model, null));
 		}

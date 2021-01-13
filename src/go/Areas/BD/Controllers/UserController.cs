@@ -121,12 +121,12 @@ namespace JieNor.Megi.Go.Web.Areas.BD.Controllers
 			string strSubject = LangHelper.GetText(LangModule.User, "InvitationToJoin", "Invitation to join ") + OrgName;
 			Message = Message.Replace("\n", "<br>");
 			StringBuilder stringBuilder = new StringBuilder();
-			stringBuilder.AppendFormat("<i><span style='font-size: 20pt;font-family: 'Arial Unicode MS', sans-serif;'>{0}</span></i><br><br>", LangHelper.GetText(LangModule.User, "JoinYourColleagues", "Join Your Colleagues on Megi"));
+			stringBuilder.AppendFormat("<i><span style='font-size: 20pt;font-family: 'Arial Unicode MS', sans-serif;'>{0}</span></i><br><br>", LangHelper.GetText(LangModule.User, "JoinYourColleagues", "Join Your Colleagues on Hypercurrent"));
 			stringBuilder.Append(Message);
 			stringBuilder.Append(LangHelper.GetText(LangModule.User, "ToAcceptThisInvitation", "To accept this invitation please use the following link:"));
 			stringBuilder.Append("<br><br>");
 			stringBuilder.AppendFormat("<a href='{0}/Invite/ConfirmInvite?token={1}' target= '_blank'>{0}/Invite/ConfirmInvite?token={1}</a><br><br>", ServerHelper.LoginServer, arg);
-			stringBuilder.Append("<i>" + LangHelper.GetText(LangModule.Common, "TheMegiTeam", "The Megi Team") + "</i><br><br><br><br>");
+			stringBuilder.Append("<i>" + LangHelper.GetText(LangModule.Common, "TheMegiTeam", "The Hypercurrent Team") + "</i><br><br><br><br>");
 			stringBuilder.Append("<span style='font-size:12px'>" + LangHelper.GetText(LangModule.Common, "NeedHelp", "Need help? Contact us at ") + "<a href='mailto:" + ConfigurationManager.AppSettings["ServiceEmail"] + "'>" + ConfigurationManager.AppSettings["ServiceEmail"] + "</a></span>");
 			SendMail.SendSMTPEMail(Email, strSubject, stringBuilder.ToString(), resultData.MFirstName + " " + resultData.MLastName, "");
 			SECSendLinkInfoModel sECSendLinkInfoModel = new SECSendLinkInfoModel();

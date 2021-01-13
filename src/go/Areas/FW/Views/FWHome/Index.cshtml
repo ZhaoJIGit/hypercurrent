@@ -122,7 +122,7 @@
         })('@HtmlLang.GlobalInfo()');
         //浏览器关闭，或者退出/刷新的时候，提醒用户确认
         window.onbeforeunload = function () {
-            return '@HtmlLang.Write(LangModule.Common, "checkalldatasaved", "Megi : Are you sure to Exit or Reload? Confirm that all data saved.")';
+            return '@HtmlLang.Write(LangModule.Common, "checkalldatasaved", "Hypercurrent : Are you sure to Exit or Reload? Confirm that all data saved.")';
         }
         //各个站点的地址
         window.LoginServer = '@ServerHelper.FinalLoginServer';

@@ -71,7 +71,7 @@ var Index = {
                 $(".item-list", "#divOrgList").empty();
 
 
-                html += "<p><a href='###' onclick ='Index.navToMySite()'>" + HtmlLang.Write(LangModule.My, "MyMegi", "My Megi") + "</a></p>";
+                html += "<p><a href='###' onclick ='Index.navToMySite()'>" + HtmlLang.Write(LangModule.My, "MyMegi", "My Hypercurrent") + "</a></p>";
 
                 for (var i = 0; i < unCurrentOrgList.length; i++) {
 

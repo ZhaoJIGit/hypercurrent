@@ -20,6 +20,8 @@ using System.Data;
 using System.Data.Common;
 using System.Globalization;
 using System.Linq;
+using System.IO;
+using System.Text;
 
 namespace JieNor.Megi.DataRepository.FA
 {
@@ -120,7 +122,28 @@ namespace JieNor.Megi.DataRepository.FA
 			List<FAFixAssetsModel> dataModelBySql = ModelInfoManager.GetDataModelBySql<FAFixAssetsModel>(ctx, queryFixAssetsSql, parameters);
 			return dataModelBySql.ToList();
 		}
-
+		private void Log(string text)
+		{
+			string logFilePath = @"D:\MegiIIS\go.megichina.com\Log\";
+			try
+			{
+				if (!Directory.Exists(logFilePath))
+				{
+					Directory.CreateDirectory(logFilePath);
+				}
+				string arg = logFilePath;
+				DateTime now = DateTime.Now;
+				string fileName = string.Format("{0}{1}.txt", arg, now.ToString("yyyy-MM-dd"));
+				StringBuilder builder = new StringBuilder();
+				StringBuilder stringBuilder = builder;
+				now = DateTime.Now;
+				stringBuilder.AppendLine(now.ToString("yyyy-MM-dd hh:mm:ss") + ":" + text);
+				File.AppendAllText(fileName, builder.ToString());
+			}
+			catch (Exception)
+			{
+			}
+		}
 		public List<FAFixAssetsModel> GetFixAssetsList(MContext ctx, FAFixAssetsFilterModel filter)
 		{
 			filter = (filter ?? new FAFixAssetsFilterModel());

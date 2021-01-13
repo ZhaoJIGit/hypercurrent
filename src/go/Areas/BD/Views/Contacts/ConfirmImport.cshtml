@@ -11,7 +11,7 @@
                 &nbsp;
             </em>
             <div class="m-confirm-import-msg">
-                @Html.Raw(string.Format(HtmlLang.Write(LangModule.Contact, "confirmImportNotify", "<p>The imported file <strong>{0}</strong> contained {1} contact. From this file  the following contact will be imported into Megi:</p><ul><li><strong>{1}</strong> total contact will be imported</li></ul>").ToString(), ViewBag.ImportingFileName, ViewBag.ImportingCount))
+                @Html.Raw(string.Format(HtmlLang.Write(LangModule.Contact, "confirmImportNotify", "<p>The imported file <strong>{0}</strong> contained {1} contact. From this file  the following contact will be imported into Hypercurrent:</p><ul><li><strong>{1}</strong> total contact will be imported</li></ul>").ToString(), ViewBag.ImportingFileName, ViewBag.ImportingCount))
             </div>
             <p>
                 @Html.Raw(HtmlLang.Write(LangModule.Contact, "", "If you're happy to continue with the import please click the \"Complete Import\" button below, otherwise click \"Go Back\" button to import a different file."))

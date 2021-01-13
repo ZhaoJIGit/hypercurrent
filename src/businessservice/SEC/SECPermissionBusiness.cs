@@ -173,7 +173,7 @@ namespace JieNor.Megi.BusinessService.SEC
 					}
 					else
 					{
-						stringBuilder2.AppendLine(userName + COMMultiLangRepository.GetText(ctx.MLCID, LangModule.BD, "UserIsNotExist", "Can not find this user in Megi system"));
+						stringBuilder2.AppendLine(userName + COMMultiLangRepository.GetText(ctx.MLCID, LangModule.BD, "UserIsNotExist", "Can not find this user in Hypercurrent system"));
 					}
 				}
 			}

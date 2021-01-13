@@ -49,7 +49,7 @@ namespace JieNor.Megi.Login.Web.Controllers
 			{
 				ViewBag.Result = LangHelper.GetText(LangIndentity.CurrentLangID, LangModule.Login, "AccountHadActive", "Your account has been activated!");
 
-				var detail = LangHelper.GetText(LangIndentity.CurrentLangID, LangModule.Login, "AccountHadActiveDetail", "Please click <a href='{0}'>Here</a> login Megi System");
+				var detail = LangHelper.GetText(LangIndentity.CurrentLangID, LangModule.Login, "AccountHadActiveDetail", "Please click <a href='{0}'>Here</a> login Hypercurrent System");
 				ViewBag.Detail = string.Format(detail, ServerHelper.LoginServer);
 
 				ViewBag.Type = 0;
@@ -100,7 +100,7 @@ namespace JieNor.Megi.Login.Web.Controllers
 				strBody.Append("<br><br>");
 				strBody.AppendFormat("<a href='{0}' target= '_blank'>{0}</a><br><br>", ServerHelper.LoginServer + "/Password/ResetPwd/" + token);
 				strBody.AppendFormat(LangHelper.GetText(LangIndentity.CurrentLangID, LangModule.Login, "NotRequestToResetPassword", "If you did not request to change your password,please email <a href='mailto:{0}'>{0}</a>.") + "<br><br>", ConfigurationManager.AppSettings["ServiceEmail"]);
-				strBody.Append("<i>" + LangHelper.GetText(LangIndentity.CurrentLangID, LangModule.Common, "TheMegiTeam", "The Megi Team") + "</i><br><br><br><br>");
+				strBody.Append("<i>" + LangHelper.GetText(LangIndentity.CurrentLangID, LangModule.Common, "TheMegiTeam", "The Hypercurrent Team") + "</i><br><br><br><br>");
 				strBody.Append("<span style='font-size:12px'>" + LangHelper.GetText(LangIndentity.CurrentLangID, LangModule.Common, "NeedHelp", "Need help? Contact us at ") + "<a href='mailto:" + ConfigurationManager.AppSettings["ServiceEmail"] + "'>" + ConfigurationManager.AppSettings["ServiceEmail"] + "</a></span>");
 				SendMail.SendSMTPEMail(strto, strSubject, strBody.ToString(), "Megi", "");
 				SECSendLinkInfoModel linkModel = new SECSendLinkInfoModel();
@@ -163,14 +163,14 @@ namespace JieNor.Megi.Login.Web.Controllers
 			{
 				ViewBag.Result = LangHelper.GetText(LangIndentity.CurrentLangID, LangModule.Login, "ResetPasswordSucess", "Password reset successfully!");
 
-				var langString2 = LangHelper.GetText(LangIndentity.CurrentLangID, LangModule.Login, "ForgetResetSucess_x", "Please click <a href='{0}'>Here</a> login Megi System");
+				var langString2 = LangHelper.GetText(LangIndentity.CurrentLangID, LangModule.Login, "ForgetResetSucess_x", "Please click <a href='{0}'>Here</a> login Hypercurrent System");
 				ViewBag.Detail = string.Format(langString2, ServerHelper.LoginServer);
 			}
 			if (type == 3)
 			{
 				ViewBag.Result = LangHelper.GetText(LangIndentity.CurrentLangID, LangModule.Login, "CreatePasswordSuccess", "Congratulations, create password successfully!");
 
-				var langString = LangHelper.GetText(LangIndentity.CurrentLangID, LangModule.Login, "AccountHadActiveDetail_x", "Please click <a href='{0}'>Here</a> login Megi System");
+				var langString = LangHelper.GetText(LangIndentity.CurrentLangID, LangModule.Login, "AccountHadActiveDetail_x", "Please click <a href='{0}'>Here</a> login Hypercurrent System");
 				ViewBag.Detail = string.Format(langString, ServerHelper.LoginServer);
 			}
 			return View("Success");

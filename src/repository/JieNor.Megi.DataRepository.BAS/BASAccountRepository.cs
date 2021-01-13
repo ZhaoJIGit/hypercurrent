@@ -315,7 +315,7 @@ namespace JieNor.Megi.DataRepository.BAS
 			stringBuilder.AppendLine("{2}<br/><br/>");
 			stringBuilder.AppendLine("If you didn't ask for this change, let us know by replying to this email.<br/><br/>");
 			stringBuilder.AppendLine("Regards,<br/>");
-			stringBuilder.AppendLine("The Megi Team ");
+			stringBuilder.AppendLine("The Hypercurrent Team ");
 			return stringBuilder.ToString();
 		}
 
@@ -326,7 +326,7 @@ namespace JieNor.Megi.DataRepository.BAS
 			stringBuilder.AppendLine("A request has been made to change your Xero login from {1} to {2}.<br/><br/>");
 			stringBuilder.AppendLine("If you didn't request this change, let us know by replying to this email.<br/><br/>");
 			stringBuilder.AppendLine("Regards,<br/>");
-			stringBuilder.AppendLine("The Megi Team ");
+			stringBuilder.AppendLine("The Hypercurrent Team ");
 			return stringBuilder.ToString();
 		}
 

@@ -34,8 +34,8 @@ namespace JieNor.Megi.Identity.HtmlHelper
 		{
 			StringBuilder stringBuilder = new StringBuilder();
 			stringBuilder.Append("<div id='divOrgDetails' class='mg-header-org'>");
-			stringBuilder.Append($"<div><a href='{ServerHelper.MyServer}' class='mg-header-org-my'>My Megi<span class='right-arrow'></span></a></div>");
-			string arg = "My Megi";
+			stringBuilder.Append($"<div><a href='{ServerHelper.MyServer}' class='mg-header-org-my'>My Hypercurrent<span class='right-arrow'></span></a></div>");
+			string arg = "My Hypercurrent";
 			MContext mContext = ContextHelper.MContext;
 			List<BASMyHomeModel> orgInfoListByUserID = BASOrganisationManager.GetOrgInfoListByUserID();
 			if (orgInfoListByUserID != null && orgInfoListByUserID.Count > 0)
@@ -88,7 +88,7 @@ namespace JieNor.Megi.Identity.HtmlHelper
 
 		public static string MyOrgSelectList()
 		{
-			string text = HtmlLang.GetText(LangModule.My, "MyMegi", "My Megi");
+			string text = HtmlLang.GetText(LangModule.My, "MyMegi", "My Hypercurrent");
 			List<BASMyHomeModel> orgInfoListByUserID = BASOrganisationManager.GetOrgInfoListByUserID();
 			if (orgInfoListByUserID == null || orgInfoListByUserID.Count == 0)
 			{
@@ -108,7 +108,7 @@ namespace JieNor.Megi.Identity.HtmlHelper
 			stringBuilder.Append("<div class=\"item-list\">");
 			if (!string.IsNullOrEmpty(orgId))
 			{
-				stringBuilder.Append(string.Format("<p><a href='{0}/FW/FWHome/OrgSelect?MOrgID=&RedirectUrl={1}'>{2}</a></p>", ServerHelper.MyServer, ServerHelper.MyServer, HtmlLang.GetText(LangModule.My, "MyMegi", "My Megi")));
+				stringBuilder.Append(string.Format("<p><a href='{0}/FW/FWHome/OrgSelect?MOrgID=&RedirectUrl={1}'>{2}</a></p>", ServerHelper.MyServer, ServerHelper.MyServer, HtmlLang.GetText(LangModule.My, "MyMegi", "My Hypercurrent")));
 			}
 			if (list != null && list.Count > 0)
 			{
@@ -133,7 +133,7 @@ namespace JieNor.Megi.Identity.HtmlHelper
 			List<BASMyHomeModel> orgInfoListByUserID = BASOrganisationManager.GetOrgInfoListByUserID();
 			StringBuilder stringBuilder = new StringBuilder();
 			string text = "";
-			string text2 = HtmlLang.GetText(LangModule.My, "MyMegi", "My Megi");
+			string text2 = HtmlLang.GetText(LangModule.My, "MyMegi", "My Hypercurrent");
 			stringBuilder.Append("<div id=\"divOrgList\" class=\"m-pop-box m-pop-menu\">");
 			stringBuilder.Append("<b class=\"popup-arrow\"></b>");
 			if (orgInfoListByUserID != null && orgInfoListByUserID.Count > 0)
