@@ -12,6 +12,7 @@ using JieNor.Megi.EntityModel.SYS;
 using JieNor.Megi.Core.Attribute;
 using Newtonsoft.Json;
 using System.Text;
+using JieNor.Megi.DataRepository.COM;
 
 namespace JieNor.Megi.BusinessService.SYS
 {
@@ -42,8 +43,10 @@ namespace JieNor.Megi.BusinessService.SYS
 				MItemID = Guid.NewGuid().ToString("N"),
 				MPayType = (SYSPayType)createOrderModel.MPayType
 			};
+			var plan= COMAccess.GetPlan(ctx).Select(x => x.Code); ;
 
-			var items = createOrderModel.Items.Select(x => GetOrderEntry(order.MItemID, x)).ToList();
+
+			var items = createOrderModel.Items.Select(x => GetOrderEntry(order.MItemID, x,plan.ToList())).ToList();
 			order.MOrgID = createOrderModel.OrgId;
 			order.MAmount = items.Sum(x => x.MAmount);
 			order.MStatus = SYSOrderStatus.WatiPay;
@@ -103,28 +106,71 @@ namespace JieNor.Megi.BusinessService.SYS
 		//Discount: 549.60
 		//Total: 2198.40
 
-		(decimal, decimal) GetSkuPrice(string skuId)
+		(decimal, decimal) GetSkuPrice(string skuId, List<string> plans)
 		{
 			if(string.IsNullOrEmpty(skuId))
 				throw new Exception("不支持的订阅");
 			var sku = skuId.ToLower();
 
-			switch (sku)
+			//标准版
+			bool flag_normal = plans.Contains("NORMAL");
+			//销售
+			bool flag_sales = plans.Contains("SALES");
+			//发票
+			bool flag_invoice = plans.Contains("INVOICE");
+
+			if (flag_normal || (flag_sales && flag_invoice))
 			{
-				case "quarterly":
-					return (645, 645);
-				case "biannually":
-					return (1290, 1230);
-				case "annually":
-					return (2580, 2220);
-				default:
-					throw new Exception("不支持的订阅");
+				switch (sku)
+				{
+					case "quarterly":
+						return (1197, 1197);
+					case "biannually":
+						return (2394, (decimal)2274.3);
+					case "annually":
+						return (4788, (decimal)4309.2);
+					default:
+						throw new Exception("不支持的订阅");
+				}
+			}
+			else if (flag_sales)
+			{
+				switch (sku)
+				{
+					case "quarterly":
+						return (597, 597);
+					case "biannually":
+						return (1194, (decimal)1134.3);
+					case "annually":
+						return (2388, (decimal)2149.2);
+					default:
+						throw new Exception("不支持的订阅");
+				}
+
+			}
+			else if (flag_invoice)
+			{
+				switch (sku)
+				{
+					case "quarterly":
+						return (897, 897);
+					case "biannually":
+						return (1794, (decimal)1704.3);
+					case "annually":
+						return (3588, (decimal)3229.2);
+					default:
+						throw new Exception("不支持的订阅");
+				}
+
+			}
+			else {
+				throw new Exception("不支持的订阅");
 			}
 		}
 
-		SYSOrderEntryModel GetOrderEntry(string orderId, SysCreateOrderItemModel item)
+		SYSOrderEntryModel GetOrderEntry(string orderId, SysCreateOrderItemModel item,List<string> plans)
 		{
-			var (price, amount) = GetSkuPrice(item.SkuId);
+			var (price, amount) = GetSkuPrice(item.SkuId,plans);
 			var entry = new SYSOrderEntryModel()
 			{
 				MEntryID = orderId,

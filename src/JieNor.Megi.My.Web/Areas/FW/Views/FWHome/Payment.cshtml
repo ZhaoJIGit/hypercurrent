@@ -1,6 +1,8 @@
 ﻿@{
     Layout = null;
 }
+@using JieNor.Megi.Tools
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,6 +12,15 @@
     @{
         var localCss = ServerHelper.StaticServer + "/fw/themes/" + LangIndentity.CurrentLangID + "/css.css?" + ServerHelper.JSVersion;
         var localJs = ServerHelper.StaticServer + "/Lang/JieNor.Megi.Common." + LangIndentity.CurrentLangID + ".js?" + ServerHelper.JSVersion;
+    }
+    @{
+        var arr_plancode = AccessHelper.GetPlan().Select(x => x.Code);
+        //标准版
+        bool flag_normal = arr_plancode.Contains("NORMAL");
+        //销售
+        bool flag_sales = arr_plancode.Contains("SALES");
+        //发票
+        bool flag_invoice = arr_plancode.Contains("INVOICE");
     }
     <link type="text/css" rel="stylesheet" href="@ServerHelper.StaticServer/fw/min/jquery.megi.min.css?@ServerHelper.JSVersion" />
     <link type="text/css" rel="stylesheet" href="@ServerHelper.StaticServer/fw/min/jquery.megi.min.css?@ServerHelper.JSVersion" />
@@ -134,7 +145,6 @@
             }
 
             .pay-main div, .pay-main p, .pay-main label, .pay-main span, .pay-main a, .pay-main label li {
-                
             }
 
         .pay-con-l {
@@ -235,7 +245,6 @@
             text-align: center;
             line-height: 27px;
             background: #493797;
-
             font-style: normal;
             font-weight: 500;
             font-size: 12px;
@@ -245,27 +254,27 @@
             cursor: pointer;
         }
 
-        .pay-cancel-btn, .pay-cancel-btn:hover {
-            background: #F2F2F2;
-            color: rgba(28, 12, 92, 0.25);
-            border: 1px solid rgba(28, 12, 92, 0.25);
-            margin-left: 23px;
-        }
+            .pay-cancel-btn, .pay-cancel-btn:hover {
+                background: #F2F2F2;
+                color: rgba(28, 12, 92, 0.25);
+                border: 1px solid rgba(28, 12, 92, 0.25);
+                margin-left: 23px;
+            }
 
-        .pay-now-btn:hover {
-            color: #FFFFFF;
-        }
+            .pay-now-btn:hover {
+                color: #FFFFFF;
+            }
 
-        .pay-method .fa, .pay-method .fab, .pay-method .far, .pay-now-btn i {
-            font-size: 13px;
-            color: #000000;
-            margin-right: 3px;
-            vertical-align: middle;
-        }
+            .pay-method .fa, .pay-method .fab, .pay-method .far, .pay-now-btn i {
+                font-size: 13px;
+                color: #000000;
+                margin-right: 3px;
+                vertical-align: middle;
+            }
 
-        .pay-now-btn i {
-            color: #FFFFFF;
-        }
+            .pay-now-btn i {
+                color: #FFFFFF;
+            }
     </style>
 </head>
 <body>
@@ -354,7 +363,29 @@
                 <div class="pay-step-h">1. @HtmlLang.Write(LangModule.Common, "Payment_PayNow_SubscriptionSummary", "Review subscription summary")</div>
                 <div class="pay-step-con">
                     <p class="pay-summary"><span>@HtmlLang.Write(LangModule.Common, "Payment_PayNow_Subscription_Org", "Organisation"):</span>@ViewBag.OrgName.</p>
-                    <p class="pay-summary"><span>@HtmlLang.Write(LangModule.Common, "Payment_PayNow_Subscription_Edition", "Edition"):</span>@HtmlLang.Write(LangModule.My, "StardardVersion", "标准版") </p>
+
+                    @if (flag_normal)
+                    {
+                        <p class="pay-summary"><span>@HtmlLang.Write(LangModule.Common, "Payment_PayNow_Subscription_Edition", "Edition"):</span>@HtmlLang.Write(LangModule.My, "StardardVersion", "标准版") </p>
+                    }
+                    else
+                    {
+                        if ((flag_sales && flag_invoice))
+                        {
+                            <p class="pay-summary"><span>@HtmlLang.Write(LangModule.Common, "Payment_PayNow_Subscription_Edition", "Edition"):</span>@HtmlLang.Write(LangModule.My, "Comprehensive", "综合版") </p>
+                        }
+                        else if (flag_sales)
+                        {
+                            <p class="pay-summary"><span>@HtmlLang.Write(LangModule.Common, "Payment_PayNow_Subscription_Edition", "Edition"):</span>@HtmlLang.Write(LangModule.My, "InvoiceSource", "销售版") </p>
+                        }
+                        else if (flag_invoice)
+                        {
+                            <p class="pay-summary"><span>@HtmlLang.Write(LangModule.Common, "Payment_PayNow_Subscription_Edition", "Edition"):</span>@HtmlLang.Write(LangModule.My, "AcroVAT", "发票版") </p>
+
+                        }
+                    }
+                    @*<p class="pay-summary"><span>@HtmlLang.Write(LangModule.Common, "Payment_PayNow_Subscription_Edition", "Edition"):</span>@HtmlLang.Write(LangModule.My, "StardardVersion", "标准版") </p>*@
+
                 </div>
                 <div class="pay-step-h">2. @HtmlLang.Write(LangModule.Common, "Payment_PayNow_BillingCycle", "Choose a billing cycle")</div>
                 <div class="pay-step-con" id="subsplanoptions">
@@ -393,9 +424,9 @@
                             <span class="pay-list-money" id="subs_order_discount">-300.00</span>
                         </li>
                         @*<li>
-                            <span class="pay-list-type">Taxes</span>
-                            <span class="pay-list-money" id="subs_order_taxes">55.00</span>
-                        </li>*@
+                                <span class="pay-list-type">Taxes</span>
+                                <span class="pay-list-money" id="subs_order_taxes">55.00</span>
+                            </li>*@
                         <li class="pay-total">
                             <span class="pay-list-type">@HtmlLang.Write(LangModule.Common, "Payment_PayNow_OrderDetail_Total", "Total") (RMB)</span>
                             <span class="pay-list-money" id="subs_order_total">990.99</span>
@@ -408,28 +439,35 @@
             </div>
         </div>
     </div>
-    <script>
+    @if (flag_normal || (flag_invoice && flag_sales))
+    {
+        <script>
         var lcid = '@ViewBag.MLCID';
         var isPaid = @ViewBag.MIsPaid;
-        
+
+
+
         // 订阅计划的价格
         var _subsplan_price = {
+            //3个月
             Quarterly: {
-                Fees: 645,
-                Discount: 0,
-                Total: 645,
-                Months: 3
+                Fees: 1197,//总额
+                Discount: 0,//折旧
+                Total: 1197,//折后价格
+                Months: 3//月数
             },
+            //6个月
             BiAnnually: {
-                Fees: 1290,
-                Discount: -60,
-                Total: 1230,
+                Fees: 2394,
+                Discount: -119.7,
+                Total: 2274.3,
                 Months: 6
             },
+            //12个月
             Annually: {
-                Fees: 2580,
-                Discount: -360,
-                Total: 2220,
+                Fees: 4788,
+                Discount: -478.8,
+                Total: 4309.2,
                 Months: 12
             }
         };
@@ -470,7 +508,7 @@
                 $("#subs_order_until").text(until.toLocaleDateString());
             }
 
-           
+
         }
 
         function onPay() {
@@ -479,6 +517,167 @@
             var qty = (sku === "Quarterly") ? 3 : (sku === "Annually") ? 12 : 6;
             parent.MyIndex.Checkout(orgId, sku, qty);
         }
-    </script>
+        </script>
+    }
+    else if (flag_sales)
+    {
+        <script>
+        var lcid = '@ViewBag.MLCID';
+        var isPaid = @ViewBag.MIsPaid;
+
+
+
+        // 订阅计划的价格
+        var _subsplan_price = {
+            //3个月
+            Quarterly: {
+                Fees: 597,//总额
+                Discount: 0,//折旧
+                Total: 597,//折后价格
+                Months: 3//月数
+            },
+            //6个月
+            BiAnnually: {
+                Fees: 1194,
+                Discount: -59.7,
+                Total: 1134.3,
+                Months: 6
+            },
+            //12个月
+            Annually: {
+                Fees: 2388,
+                Discount: -238.8,
+                Total: 2149.2,
+                Months: 12
+            }
+        };
+
+        // 当前组织过期时间
+        var _orgExpiredDate = new Date('@ViewBag.OrgExpiredDate');
+        $("#subs_order_until").text(new Date(_orgExpiredDate).addMonths(3).toDateString());
+        apply_price(_subsplan_price.Annually);
+
+        $(function () {
+            $("#subsplanoptions :radio").change(function (evt) {
+                var plan = $(evt.target).val();
+                if (!plan) return;
+
+                var price = _subsplan_price[plan];
+                if (!price) return;
+
+                apply_price(price);
+            });
+        });
+
+        function apply_price(price) {
+            $("#subs_order_fees").text(new Intl.NumberFormat('zh-Hans-CN', { minimumFractionDigits: 2 }).format(price.Fees));
+            $("#subs_order_discount").text(new Intl.NumberFormat('zh-Hans-CN', { minimumFractionDigits: 2 }).format(price.Discount));
+            //$("#subs_order_taxes").text(new Intl.NumberFormat('zh-Hans-CN', { minimumFractionDigits: 2 }).format(price.Taxes));
+            $("#subs_order_total").text(new Intl.NumberFormat('zh-Hans-CN', { minimumFractionDigits: 2 }).format(price.Total));
+            var now = new Date();
+            var until = new Date(_orgExpiredDate).addMonths(price.Months);
+            if (!isPaid || now > _orgExpiredDate) {
+                until = now.addMonths(price.Months).addDays(1);
+            }
+
+            if (lcid == '0x0009') {
+                $("#subs_order_months").text(price.Months + " months");
+                $("#subs_order_until").text(until.toDateString());
+            } else {
+                $("#subs_order_months").text(price.Months + " 个月");
+                $("#subs_order_until").text(until.toLocaleDateString());
+            }
+
+
+        }
+
+        function onPay() {
+            const orgId = $('input[name="orgId"]').val();
+            const sku = $('input[name="subsplan"]:checked').val();
+            var qty = (sku === "Quarterly") ? 3 : (sku === "Annually") ? 12 : 6;
+            parent.MyIndex.Checkout(orgId, sku, qty);
+        }
+        </script>
+    }
+    else if (flag_invoice)
+    {
+        <script>
+        var lcid = '@ViewBag.MLCID';
+        var isPaid = @ViewBag.MIsPaid;
+
+
+
+        // 订阅计划的价格
+        var _subsplan_price = {
+            //3个月
+            Quarterly: {
+                Fees: 897,//总额
+                Discount: 0,//折旧
+                Total: 897,//折后价格
+                Months: 3//月数
+            },
+            //6个月
+            BiAnnually: {
+                Fees: 1794,
+                Discount: -89.7,
+                Total: 1704.3,
+                Months: 6
+            },
+            //12个月
+            Annually: {
+                Fees: 3588,
+                Discount: -358.8,
+                Total: 3229.2,
+                Months: 12
+            }
+        };
+
+        // 当前组织过期时间
+        var _orgExpiredDate = new Date('@ViewBag.OrgExpiredDate');
+        $("#subs_order_until").text(new Date(_orgExpiredDate).addMonths(3).toDateString());
+        apply_price(_subsplan_price.Annually);
+
+        $(function () {
+            $("#subsplanoptions :radio").change(function (evt) {
+                var plan = $(evt.target).val();
+                if (!plan) return;
+
+                var price = _subsplan_price[plan];
+                if (!price) return;
+
+                apply_price(price);
+            });
+        });
+
+        function apply_price(price) {
+            $("#subs_order_fees").text(new Intl.NumberFormat('zh-Hans-CN', { minimumFractionDigits: 2 }).format(price.Fees));
+            $("#subs_order_discount").text(new Intl.NumberFormat('zh-Hans-CN', { minimumFractionDigits: 2 }).format(price.Discount));
+            //$("#subs_order_taxes").text(new Intl.NumberFormat('zh-Hans-CN', { minimumFractionDigits: 2 }).format(price.Taxes));
+            $("#subs_order_total").text(new Intl.NumberFormat('zh-Hans-CN', { minimumFractionDigits: 2 }).format(price.Total));
+            var now = new Date();
+            var until = new Date(_orgExpiredDate).addMonths(price.Months);
+            if (!isPaid || now > _orgExpiredDate) {
+                until = now.addMonths(price.Months).addDays(1);
+            }
+
+            if (lcid == '0x0009') {
+                $("#subs_order_months").text(price.Months + " months");
+                $("#subs_order_until").text(until.toDateString());
+            } else {
+                $("#subs_order_months").text(price.Months + " 个月");
+                $("#subs_order_until").text(until.toLocaleDateString());
+            }
+
+
+        }
+
+        function onPay() {
+            const orgId = $('input[name="orgId"]').val();
+            const sku = $('input[name="subsplan"]:checked').val();
+            var qty = (sku === "Quarterly") ? 3 : (sku === "Annually") ? 12 : 6;
+            parent.MyIndex.Checkout(orgId, sku, qty);
+        }
+        </script>
+    }
 </body>
 </html>
