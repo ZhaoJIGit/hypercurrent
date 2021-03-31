@@ -740,5 +740,42 @@ namespace JieNor.Megi.BusinessService.BAS
 			BASOrganisationRepository bASOrganisationRepository = new BASOrganisationRepository();
 			return bASOrganisationRepository.UpdateDemoData();
 		}
-	}
+		[NoAuthorization]
+        public DataGridJson<BASOrganisationModel> GetOrgList(MContext ctx,   string name, int pageIndex = 0, int pageSize = 10)
+        {
+			SqlWhere sqlWhere = new SqlWhere();
+			if (!string.IsNullOrWhiteSpace(name))
+			{
+				sqlWhere.Like("MName", name);
+
+			}
+			sqlWhere.Equal("MIsDemo", 0);
+
+			
+			var userList = new BASOrganisationRepository().GetOrgList(ctx, sqlWhere);
+
+			return new DataGridJson<BASOrganisationModel>() {
+				rows = userList.Skip(pageIndex * pageSize).Take(pageSize).ToList(),
+				total = userList.Count
+			};
+		}
+		[NoAuthorization]
+
+		public OperationResult UpdateStatus(MContext ctx, string mItemId, int status)
+        {
+			OperationResult operationResult = new OperationResult();
+			operationResult = new BASOrganisationRepository().UpdateStatus(ctx, mItemId, status);
+			//throw new NotImplementedException();
+			return operationResult;
+		}
+		[NoAuthorization]
+
+		public OperationResult Renew(MContext ctx, string mItemId, DateTime time)
+        {
+			OperationResult operationResult = new OperationResult();
+			operationResult = new BASOrganisationRepository().UpdateExpiredDate(ctx, mItemId, time);
+			//throw new NotImplementedException();
+			return operationResult;
+		}
+    }
 }

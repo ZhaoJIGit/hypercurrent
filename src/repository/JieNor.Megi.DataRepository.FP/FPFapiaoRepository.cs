@@ -122,6 +122,8 @@ namespace JieNor.Megi.DataRepository.FP
 					if (string.IsNullOrWhiteSpace(list[i].MItemID) && list[i].MFapiaoEntrys.Count > 0)
 					{
 						list[i].MItemID = list[i].MFapiaoEntrys[0].MItemID;
+						list[i].MItemName = list[i].MFapiaoEntrys[0].MItemName;
+
 					}
 				}
 			}
@@ -757,6 +759,7 @@ namespace JieNor.Megi.DataRepository.FP
 					fPFapiaoModel = new FPFapiaoModel();
 					fPFapiaoModel.MFapiaoEntrys = new List<FPFapiaoEntryModel>();
 					fPFapiaoModel.MItemID = text;
+					fPFapiaoModel.MItemName = dataRow.MField<string>("MItemName");
 					fPFapiaoModel.MCode = dataRow.MField<string>("MCode");
 					fPFapiaoModel.MNumber = dataRow.MField<string>("MNumber");
 					fPFapiaoModel.MBizDate = dataRow.MField<DateTime>("MBizDate");

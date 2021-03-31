@@ -13,6 +13,8 @@ using JieNor.Megi.Core.Attribute;
 using Newtonsoft.Json;
 using System.Text;
 using JieNor.Megi.DataRepository.COM;
+using JieNor.Megi.Core;
+using JieNor.Megi.DataModel.BAS;
 
 namespace JieNor.Megi.BusinessService.SYS
 {
@@ -50,7 +52,8 @@ namespace JieNor.Megi.BusinessService.SYS
 			order.MOrgID = createOrderModel.OrgId;
 			order.MAmount = items.Sum(x => x.MAmount);
 			order.MStatus = SYSOrderStatus.WatiPay;
-
+			order.HbFqSellerPercent = createOrderModel.HbFqSellerPercent;
+			order.HBFQNum = createOrderModel.HBFQNum;
 			_dal.SaveOrder(ctx, order, items);
 
 			//LogOrder(ctx, order.MItemID,"Create Order");	
@@ -236,8 +239,28 @@ namespace JieNor.Megi.BusinessService.SYS
 				//MOutFee = order.MOutFee,
 				MActualAmount = order.MActualAmount,
 				MPayType = order.MPayType,
+				HBFQNum=order.HBFQNum,
+				HbFqSellerPercent=order.HbFqSellerPercent
 				//MPayAccountType = order.MPayAccountType
 			};
 		}
-	}
+		[NoAuthorization]
+        public DataGridJson<SYSOrderEntry> GetOrderList(MContext ctx, string orgId)
+        {
+			SqlWhere sqlWhere = new SqlWhere();
+			if (!string.IsNullOrWhiteSpace(orgId))
+			{
+				sqlWhere.Like("MOrgId", orgId);
+
+			}
+
+			var userList = new SYSOrderEntryRepository().GetOrderList(ctx, sqlWhere);
+
+			return new DataGridJson<SYSOrderEntry>()
+			{
+				rows = userList.ToList(),
+				total = userList.Count
+			};
+		}
+    }
 }

@@ -2,6 +2,7 @@ using JieNor.Megi.Core;
 using JieNor.Megi.Core.Context;
 using JieNor.Megi.DataModel.SEC;
 using JieNor.Megi.EntityModel.Context;
+using System.Collections.Generic;
 using System.ServiceModel;
 
 namespace JieNor.Megi.ServiceContract.SEC
@@ -26,6 +27,10 @@ namespace JieNor.Megi.ServiceContract.SEC
 
 		[OperationContract]
 		MActionResult<SECUserModel> GetUserModel(string email, string accessToken = null);
+		[OperationContract]
+		MActionResult<DataGridJson<SECUserModel>> GetUserList(string email, string name, int pageIndex = 0, int pageSize = 10);
+		[OperationContract]
+		MActionResult<OperationResult> UpdateStatus(string mItemId, int status);
 
 		[OperationContract]
 		MActionResult<SECUserlModel> GetMulitLangModel(SqlWhere filter);

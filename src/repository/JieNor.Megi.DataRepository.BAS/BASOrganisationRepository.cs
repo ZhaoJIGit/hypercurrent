@@ -18,6 +18,7 @@ using JieNor.Megi.EntityModel.Context;
 using JieNor.Megi.EntityModel.MultiLanguage;
 using MySql.Data.MySqlClient;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
@@ -262,6 +263,60 @@ namespace JieNor.Megi.DataRepository.BAS
 			OperationResult operationResult = new OperationResult();
 			operationResult.Success = DbHelperMySQL.ExecuteSqlTran(new MContext(), cmdArray);
 			return operationResult;
+		}
+		public OperationResult UpdateStatus(MContext ctx, string mItmeId, int status)
+		{
+			OperationResult operationResult = new OperationResult();
+			operationResult.Success = true;
+			try
+			{
+				string sql = "update t_bas_organisation set MIsDelete=" + status + " where MItemID ='" + mItmeId + "';";
+				//DynamicDbHelperMySQL dynamicDbHelperMySQL = new DynamicDbHelperMySQL(ctx);
+
+				int num = DbHelperMySQL.ExecuteSql(ctx, sql);
+				//int result= dynamicDbHelperMySQL.ExecuteSql(sql);
+				if (num <= 0)
+				{
+					operationResult.Success = false;
+					operationResult.Message = "更新失败";
+
+				}
+			}
+			catch (Exception ex)
+			{
+				operationResult.Success = false;
+				operationResult.Message = ex.Message;
+
+			}
+			return operationResult;
+			//return ModelInfoManager.DataTableToList<SECUserModel>((stringBuilder.ToString(), array).Tables[0]);
+		}
+		public OperationResult UpdateExpiredDate(MContext ctx, string mItmeId, DateTime expiredDate)
+		{
+			OperationResult operationResult = new OperationResult();
+			operationResult.Success = true;
+			try
+			{
+				string sql = "update t_bas_organisation set MExpiredDate='" + expiredDate + "' where MItemID ='" + mItmeId + "';";
+				//DynamicDbHelperMySQL dynamicDbHelperMySQL = new DynamicDbHelperMySQL(ctx);
+
+				int num = DbHelperMySQL.ExecuteSql(ctx, sql);
+				//int result= dynamicDbHelperMySQL.ExecuteSql(sql);
+				if (num <= 0)
+				{
+					operationResult.Success = false;
+					operationResult.Message = "更新失败";
+
+				}
+			}
+			catch (Exception ex)
+			{
+				operationResult.Success = false;
+				operationResult.Message = ex.Message;
+
+			}
+			return operationResult;
+			//return ModelInfoManager.DataTableToList<SECUserModel>((stringBuilder.ToString(), array).Tables[0]);
 		}
 
 		public static BASOrgAddressModel GetModel(MContext ctx, string orgId, string addrType, ParamBase param)
@@ -706,6 +761,30 @@ namespace JieNor.Megi.DataRepository.BAS
 			DbHelperMySQL.ExecuteNonQuery(new MContext(), stringBuilder.ToString(), connectionString);
 		}
 
-		
+		public List<BASOrganisationModel> GetOrgList(MContext ctx, SqlWhere filter) {
+			StringBuilder stringBuilder = new StringBuilder();
+			stringBuilder.AppendLine("SELECT o.*,u.MEmailAddress FROM `t_bas_organisation` o inner join  t_sec_user u on o.MMasterID = u.MItemID");
+			if (filter != null && !string.IsNullOrEmpty(filter.WhereSqlString))
+			{
+				stringBuilder.AppendLine(filter.WhereSqlString);
+			}
+			stringBuilder.AppendLine("order by o.MCreateDate desc");
+
+			ArrayList arrayList = new ArrayList();
+			arrayList.Add(new MySqlParameter("@MLocaleID", MySqlDbType.VarChar, 36));
+			if (filter != null && filter.Parameters.Length != 0)
+			{
+				MySqlParameter[] parameters = filter.Parameters;
+				foreach (MySqlParameter value in parameters)
+				{
+					arrayList.Add(value);
+				}
+			}
+			MySqlParameter[] array = (MySqlParameter[])arrayList.ToArray(typeof(MySqlParameter));
+			array[0].Value = ctx.MLCID;
+			DynamicDbHelperMySQL dynamicDbHelperMySQL = new DynamicDbHelperMySQL(ctx);
+			return ModelInfoManager.DataTableToList<BASOrganisationModel>(dynamicDbHelperMySQL.Query(stringBuilder.ToString(), array).Tables[0]);
+
+		}
 	}
 }

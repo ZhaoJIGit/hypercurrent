@@ -62,8 +62,16 @@ namespace JieNor.Megi.DataModel.SYS
 
 		[DataMember]
 		public SYSPayType MPayType { get; set; }
-
-
+		/// <summary>
+		/// 只支持3,6，12期
+		/// </summary>
+		[DataMember]
+		public string HBFQNum { get; set; }
+		/// <summary>
+		/// 商家付费 100，客户付费 0
+		/// </summary>
+		[DataMember]
+		public string HbFqSellerPercent { get; set; }
 		//[DataMember]
 		//public string MPayAccountType { get; set; }
 

@@ -242,6 +242,10 @@ namespace JieNor.Megi.My.Web.Areas.FW.Controllers
 			MLogger.Log($"开始创建订单,SysCreateOrderModel => {JsonConvert.SerializeObject(model)}");
 
 			model.MPayType = 100;
+            if (!string.IsNullOrWhiteSpace(model.HBFQNum))
+            {
+				model.MPayType = 101;
+			}
 			var rtn = _orderService.CreateOrder(model);
 			//MLogger.Log(JsonConvert.SerializeObject(rtn));
 			//MLogger.Log("订单创建完成");
@@ -265,13 +269,18 @@ namespace JieNor.Megi.My.Web.Areas.FW.Controllers
 			var orderModel = result.ResultData;
 			//MLogger.Log($"orderModel => {JsonConvert.SerializeObject(orderModel)}");
 			var request = new WebPayRequest();
-			request.AddGatewayData(new WebPayModel()
+			var data = new WebPayModel()
 			{
 				Body = "服务续期",
 				TotalAmount = (double)orderModel.MAmount,
 				Subject = "服务续期",
-				OutTradeNo = orderId
-			}); 
+				OutTradeNo = orderId,
+			};
+            if (!string.IsNullOrWhiteSpace(orderModel.HBFQNum))
+            {
+				data.ExtendParams = new ExtendParam() { HbFqNum = orderModel.HBFQNum, HbFqSellerPercent = orderModel.HbFqSellerPercent };
+			}
+			request.AddGatewayData(data); 
 
 			var response =  _gateways.Get<AlipayGateway>().Execute(request);
 			return Content(response.Html,"text/html");	

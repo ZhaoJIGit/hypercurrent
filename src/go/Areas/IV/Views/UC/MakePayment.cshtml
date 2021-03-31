@@ -51,7 +51,8 @@
                     var content = isRed ? HtmlLang.Write(LangModule.IV, "PaidTo", "Paid To") : HtmlLang.Write(LangModule.IV, "PaidFrom", "Paid From");
                     <span class="lbl">@content</span>
                 }
-                <span class="content"><select class="easyui-combobox" id="selPaidTo" data-options="required:true,editable:false,onSelect:MakePayment.changBank, @HtmlBDAccount.BankDataOptions(Convert.ToString(ViewData["MCurrencyID"]))" style="width: 240px; height: 28px; "></select></span>
+                <span class="content">
+                <select class="easyui-combobox" id="selPaidTo" data-options="required:true,editable:false,onSelect:MakePayment.changBank, @HtmlBDAccount.BankDataOptions(Convert.ToString(ViewData["MCurrencyID"]))" style="width: 240px; height: 28px; "></select></span>
             </div>
             <div class="row" id="divBankExchangeRate" style="display:none;">
                 <span class="lbl">@HtmlLang.Write(LangModule.BD, "ExchangeRate", "Exchange Rate")</span>

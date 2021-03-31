@@ -1,5 +1,6 @@
 using JieNor.Megi.BusinessContract.SYS;
 using JieNor.Megi.BusinessService.SYS;
+using JieNor.Megi.Core;
 using JieNor.Megi.Core.Context;
 using JieNor.Megi.Core.ServiceModel;
 using JieNor.Megi.DataModel.SYS;
@@ -24,6 +25,12 @@ namespace JieNor.Megi.Service.Web.SYS
 		public MActionResult<SYSOrderEntry> GetOrder(string orderId, string accessToken = null)
 		{
 			return RunFunc(_orderBusiness.GetOrder, orderId, accessToken);
+		}
+
+        public MActionResult<DataGridJson<SYSOrderEntry>> GetOrderList(string orgId)
+        {
+			return RunFunc(_orderBusiness.GetOrderList, orgId);
+
 		}
 
 		public MActionResult<OperationResult> PayForOrder(string orderId,decimal amount, string accessToken = null)

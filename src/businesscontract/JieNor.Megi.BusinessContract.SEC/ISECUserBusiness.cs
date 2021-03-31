@@ -4,6 +4,7 @@ using JieNor.Megi.Core.Context;
 using JieNor.Megi.Core.DataModel;
 using JieNor.Megi.DataModel.SEC;
 using JieNor.Megi.EntityModel.Context;
+using System.Collections.Generic;
 
 namespace JieNor.Megi.BusinessContract.SEC
 {
@@ -19,6 +20,10 @@ namespace JieNor.Megi.BusinessContract.SEC
 		bool IsExistEmail(MContext ctx, string email);
 
 		SECUserModel GetUserModel(MContext ctx, string email);
+		DataGridJson<SECUserModel> GetUserList(MContext ctx, string email, string name, int pageIndex = 0, int pageSize = 10);
+		[NoAuthorization]
+
+		OperationResult UpdateStatus(MContext ctx, string mItemId,int status);
 
 		SECUserModel GetModelByEmail(MContext ctx, string email);
 

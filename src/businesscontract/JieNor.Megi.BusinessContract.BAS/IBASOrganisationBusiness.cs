@@ -1,7 +1,10 @@
+using JieNor.Megi.Core;
 using JieNor.Megi.Core.Context;
 using JieNor.Megi.Core.DataModel;
 using JieNor.Megi.DataModel.BAS;
+using JieNor.Megi.DataModel.SEC;
 using JieNor.Megi.EntityModel.Context;
+using System;
 using System.Collections.Generic;
 
 namespace JieNor.Megi.BusinessContract.BAS
@@ -35,5 +38,11 @@ namespace JieNor.Megi.BusinessContract.BAS
 		BASOrganisationModel GetOrgBasicInfo(MContext ctx);
 
 		List<BASOrgModuleModel> GetOrgModuleList(MContext ctx, string moduleId = null);
+
+		DataGridJson<BASOrganisationModel> GetOrgList(MContext ctx, string name, int pageIndex = 0, int pageSize = 10);
+		OperationResult UpdateStatus(MContext ctx, string mItemId, int status);
+		OperationResult Renew(MContext ctx, string mItemId, DateTime time);
+
+
 	}
 }

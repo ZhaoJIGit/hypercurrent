@@ -16,5 +16,7 @@ namespace JieNor.Megi.ServiceContract.COM
 
 		[OperationContract]
 		MActionResult<List<PlanModel>> GetPlan();
+		[OperationContract]
+		MActionResult<List<PlanModel>> GetPlanByEmail(string email);
 	}
 }

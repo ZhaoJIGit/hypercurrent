@@ -3,6 +3,7 @@ using JieNor.Megi.DataModel.SYS;
 using JieNor.Megi.EntityModel.Context;
 using System.ServiceModel;
 using JieNor.Megi.EntityModel.SYS;
+using JieNor.Megi.Core;
 
 namespace JieNor.Megi.ServiceContract.SYS
 {
@@ -17,5 +18,8 @@ namespace JieNor.Megi.ServiceContract.SYS
 
 		[OperationContract]
 		MActionResult<SYSOrderEntry> GetOrder(string orderId, string accessToken = null);
+		[OperationContract]
+		MActionResult<DataGridJson<SYSOrderEntry>> GetOrderList(string orgId);
+
 	}
 }

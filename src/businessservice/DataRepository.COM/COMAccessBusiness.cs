@@ -1,3 +1,4 @@
+using JieNor.Megi.Core.Attribute;
 using JieNor.Megi.EntityModel;
 using JieNor.Megi.EntityModel.Context;
 using JieNor.Megi.ServiceContract.COM;
@@ -26,10 +27,14 @@ namespace JieNor.Megi.DataRepository.COM
         {
             return COMAccess.GetAccessResult(ctx, obj, item, type);
         }
-
         public List<PlanModel> GetPlan(MContext ctx)
         {
             return COMAccess.GetPlan(ctx);
+        }
+        [NoAuthorization]
+        public List<PlanModel> GetPlanByEmail(MContext ctx,string email)
+        {
+            return COMAccess.GetPlan(ctx,email);
         }
     }
 }

@@ -134,15 +134,19 @@
     <Compile Include="JieNor.Megi.Service.Webapi.Controllers\InvoicesController.cs" />
     <Compile Include="JieNor.Megi.Service.Webapi.Controllers\ItemController.cs" />
     <Compile Include="JieNor.Megi.Service.Webapi.Controllers\OrganizationController.cs" />
+    <Compile Include="JieNor.Megi.Service.Webapi.Controllers\OrgController.cs" />
     <Compile Include="JieNor.Megi.Service.Webapi.Controllers\SalaryController.cs" />
     <Compile Include="JieNor.Megi.Service.Webapi.Controllers\SystemController.cs" />
     <Compile Include="JieNor.Megi.Service.Webapi.Controllers\TrackController.cs" />
+    <Compile Include="JieNor.Megi.Service.Webapi.Controllers\UserController.cs" />
     <Compile Include="JieNor.Megi.Service.Webapi.Helper\AccessHelper.cs" />
     <Compile Include="JieNor.Megi.Service.Webapi.Helper\LogHelper.cs" />
     <Compile Include="JieNor.Megi.Service.Webapi.Helper\ModelConvertHelper.cs" />
     <Compile Include="JieNor.Megi.Service.Webapi.Helper\ResponseHelper.cs" />
     <Compile Include="JieNor.Megi.Service.Webapi.Helper\ResponseMessageModel.cs" />
+    <Compile Include="JieNor.Megi.Service.Webapi.Models\OrgOption.cs" />
     <Compile Include="JieNor.Megi.Service.Webapi.Models\ShowOrgTypeEnum.cs" />
+    <Compile Include="JieNor.Megi.Service.Webapi.Models\UserOption.cs" />
     <Compile Include="JieNor.Megi.Service.Webapi.ViewModel\GLBalanceViewModel.cs" />
     <Compile Include="JieNor.Megi.Webapi.Web\AutofacWCF.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -176,6 +180,10 @@
     <ProjectReference Include="..\servicecontract\JieNor.Megi.ServiceContract.csproj">
       <Project>{675ef372-9074-46cf-890b-e85f6b1d8f50}</Project>
       <Name>JieNor.Megi.ServiceContract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\tools\JieNor.Megi.Tools.csproj">
+      <Project>{a7de785b-c1de-40c1-8993-896324a6c723}</Project>
+      <Name>JieNor.Megi.Tools</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

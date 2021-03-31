@@ -11,7 +11,9 @@ namespace JieNor.Megi.DataModel.SEC
 	{
 		[DataMember]
 		public string ProductCode { get; set; }
+		[DataMember]
 
+		public bool IsConsole { get; set; }
 
 		[DataMember(Order = 1)]
 		[ApiMember("UserID", IsPKField = true)]
@@ -218,7 +220,7 @@ namespace JieNor.Megi.DataModel.SEC
 		}
 
 		[DataMember(Order = 35)]
-		public bool MUserIsActive
+		public bool MIsActive
 		{
 			get;
 			set;

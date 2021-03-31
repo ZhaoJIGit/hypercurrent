@@ -19,4 +19,20 @@ namespace JieNor.Megi.DataModel.SEC
 			set;
 		}
 	}
+	public class UserListFilter : SqlWhere
+	{
+		[DataMember]
+		public string Email
+		{
+			get;
+			set;
+		}
+
+		[DataMember]
+		public string Name
+		{
+			get;
+			set;
+		}
+	}
 }

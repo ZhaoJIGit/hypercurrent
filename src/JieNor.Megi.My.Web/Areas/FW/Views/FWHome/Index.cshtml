@@ -139,11 +139,11 @@
                 <div id="divOrgCombox">
                     <div class='m-org'><a href='###' id='aOrgList'> @HtmlLang.Write(LangModule.My, "MyMegi", "My Hypercurrent")</a></div>
                 </div>
-               
+
                 <div class="m-action">
                     @if (flag_normal)
                     {
-                        <a class="m-help" href="https://help.hypercu.cn" id="megiFeedback" target="_blank" title="@HtmlLang.Write(LangModule.Common, "help", "帮助")">&nbsp;</a>
+                        @*<a class="m-help" href="https://help.hypercu.cn" id="megiFeedback" target="_blank" title="@HtmlLang.Write(LangModule.Common, "help", "帮助")">&nbsp;</a>*@
                     }
                     <a id="aUser" class="m-user" href="javascript:void(0)">&nbsp;</a>
                     <div id="divUserInfo" class="m-user-info">
@@ -279,11 +279,12 @@
                         <div style="padding:5px 0px;" class="try-demo-div">
                             <a href="javascript:void(0);" id="aCreateDemoCompany"
                                orgid="@ViewData["demoorgid"]">
-                            @HtmlLang.Write(LangModule.My, "TryTheDemoCompany", 
-                           "Try the Demo Company (US)")</a> 
+                                @HtmlLang.Write(LangModule.My, "TryTheDemoCompany",
+                               "Try the Demo Company (US)")
+                            </a>
                             @HtmlLang.Write(LangModule.My, "HaveAPlay",
                            "Have a play, try out new features and get familiar with Hypercurrent.")
-                     
+
                         </div>
                     </div>
                 </div>
@@ -352,8 +353,8 @@
     <input type="hidden" id="flag_sales" value="@flag_sales" />
     <input type="hidden" id="flag_invoice" value="@flag_invoice" />
     <input type="hidden" id="flag_normal" value="@flag_normal" />
+    <input type="hidden" id="arr_plancode" value="@Newtonsoft.Json.JsonConvert.SerializeObject(arr_plancode)" />
 
-    
     <!--组织信息-->
     <input type="hidden" id="hideUserName" value="@ctx.MUserName" />
     <input type="hidden" id="hideUserEamil" value="@ctx.MEmail" />
@@ -367,6 +368,9 @@
         //各个站点的地址
         window.LoginServer = '@ServerHelper.LoginServer';
         window.MyServer = '@ServerHelper.MyServer';
+
+        console.log(arr_plancode);
+
     </script>
     @JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteScript(LangModule.My)
     @JieNor.Megi.Identity.HtmlHelper.HtmlLang.WriteScript(LangModule.IV)

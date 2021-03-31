@@ -2,6 +2,7 @@ using JieNor.Megi.Core;
 using JieNor.Megi.Core.Context;
 using JieNor.Megi.DataModel.BAS;
 using JieNor.Megi.EntityModel.Context;
+using System;
 using System.Collections.Generic;
 using System.ServiceModel;
 
@@ -54,5 +55,12 @@ namespace JieNor.Megi.ServiceContract.BAS
 
 		[OperationContract]
 		MActionResult<bool> ExistsByFilter(SqlWhere filter, string accessToken = null);
+
+		[OperationContract]
+		MActionResult<DataGridJson<BASOrganisationModel>> GetOrgList( string name, int pageIndex = 0, int pageSize = 10);
+		[OperationContract]
+		MActionResult<OperationResult> UpdateStatus(string mItemId, int status);
+		[OperationContract]
+		MActionResult<OperationResult> Renew(string mItemId, DateTime time);
 	}
 }

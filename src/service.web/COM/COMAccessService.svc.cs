@@ -29,5 +29,10 @@ namespace JieNor.Megi.Service.Web.COM
             ICOMAccessBusiness iCOMAccessBusiness = biz;
             return base.RunFunc(iCOMAccessBusiness.GetPlan);
         }
+        public MActionResult<List<PlanModel>> GetPlanByEmail(string email)
+        {
+            ICOMAccessBusiness iCOMAccessBusiness = biz;
+            return base.RunFunc(iCOMAccessBusiness.GetPlanByEmail, email);
+        }
     }
 }

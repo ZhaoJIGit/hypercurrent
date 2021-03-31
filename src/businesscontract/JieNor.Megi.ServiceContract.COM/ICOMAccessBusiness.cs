@@ -13,5 +13,7 @@ namespace JieNor.Megi.ServiceContract.COM
 		MAccessResponseModel GetAccessResultByListNoByCacche(MContext ctx, bool isGetCache, List<MAccessRequestModel> requestList = null);
 
 		List<PlanModel> GetPlan(MContext ctx);
+		List<PlanModel> GetPlanByEmail(MContext ctx,string email);
+
 	}
 }

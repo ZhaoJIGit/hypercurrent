@@ -6,6 +6,8 @@ using JieNor.Megi.Core.ServiceModel;
 using JieNor.Megi.DataModel.SEC;
 using JieNor.Megi.EntityModel.Context;
 using JieNor.Megi.ServiceContract.SEC;
+using System.Collections.Generic;
+using System.ServiceModel;
 
 namespace JieNor.Megi.Service.Web.SEC
 {
@@ -72,5 +74,17 @@ namespace JieNor.Megi.Service.Web.SEC
 			ISECUserBusiness iSECUserBusiness = biz;
 			return base.RunFunc(iSECUserBusiness.ValidateCreateOrgAuth, type, null);
 		}
-	}
+
+        public MActionResult<DataGridJson<SECUserModel>> GetUserList(string email, string name, int pageIndex = 0, int pageSize = 10)
+        {
+			ISECUserBusiness iSECUserBusiness = biz;
+			return base.RunFunc(iSECUserBusiness.GetUserList, email,name,pageIndex,pageSize);
+		}
+
+        public MActionResult<OperationResult> UpdateStatus(string mItemId, int status)
+        {
+			ISECUserBusiness iSECUserBusiness = biz;
+			return base.RunFunc(iSECUserBusiness.UpdateStatus, mItemId, status);
+		}
+    }
 }

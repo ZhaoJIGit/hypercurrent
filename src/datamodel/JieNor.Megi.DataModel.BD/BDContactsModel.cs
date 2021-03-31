@@ -156,8 +156,16 @@ namespace JieNor.Megi.DataModel.BD
 			get;
 			set;
 		}
-
 		[DataMember]
+		[ColumnEncrypt]
+		public string MBankAccName
+		{
+			get;
+			set;
+		}
+		
+
+	   [DataMember]
 		public string MDefaultCyID
 		{
 			get;

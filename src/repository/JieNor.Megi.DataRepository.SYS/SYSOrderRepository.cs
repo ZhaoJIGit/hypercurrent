@@ -8,6 +8,8 @@ using JieNor.Megi.Core.Repository;
 using JieNor.Megi.Core.DBUtility;
 using MySql.Data.MySqlClient;
 using JieNor.Megi.Core;
+using System.Text;
+using System.Collections;
 
 namespace JieNor.Megi.DataRepository.SYS
 {
@@ -97,7 +99,9 @@ MActualAmount,
 MPayType,
 MCreatorID,
 MCreateDate,
-MIsDelete)
+MIsDelete,
+HBFQNum,
+HbFqSellerPercent)
 VALUES
 (@MItemID,
 @MNumber,
@@ -111,7 +115,9 @@ VALUES
 @MPayType,
 @MCreatorID,
 @MCreateDate,
-0); "
+0,
+@HBFQNum,
+@HbFqSellerPercent); "
 			};
 			var now = DateTime.Now;
 			commandInfo.Parameters = new MySqlParameter[]
@@ -129,6 +135,9 @@ VALUES
 				new MySqlParameter("@MPayType", orderModel.MPayType),
 				new MySqlParameter("@MCreatorID", ctx.MUserID),
 				new MySqlParameter("@MCreateDate", now),
+				new MySqlParameter("@HBFQNum", orderModel.HBFQNum),
+				new MySqlParameter("@HbFqSellerPercent", orderModel.HbFqSellerPercent),
+
 			};
 
 			DbHelperMySQL.ExecuteSqlTran(ctx, new List<CommandInfo>()
@@ -212,6 +221,52 @@ WHERE MItemID = @MItemID;"
 			{
 				IsSys = true
 			}, where);
+		}
+		public List<SYSOrderEntry> GetOrderList(MContext ctx, SqlWhere filter)
+		{
+			StringBuilder stringBuilder = new StringBuilder();
+			stringBuilder.AppendLine("SELECT * FROM t_sys_order");
+			if (filter != null && !string.IsNullOrEmpty(filter.WhereSqlString))
+			{
+				stringBuilder.AppendLine(filter.WhereSqlString);
+			}
+			stringBuilder.AppendLine("order by MCreateDate desc");
+
+			ArrayList arrayList = new ArrayList();
+			if (filter != null && filter.Parameters.Length != 0)
+			{
+				MySqlParameter[] parameters = filter.Parameters;
+				foreach (MySqlParameter value in parameters)
+				{
+					arrayList.Add(value);
+				}
+			}
+			MySqlParameter[] array = (MySqlParameter[])arrayList.ToArray(typeof(MySqlParameter));
+			DynamicDbHelperMySQL dynamicDbHelperMySQL = new DynamicDbHelperMySQL(ctx);
+
+			var dt = dynamicDbHelperMySQL.Query(stringBuilder.ToString(), array).Tables[0];
+			List<SYSOrderEntry> list = new List<SYSOrderEntry>();
+			for (int i = 0; i < dt.Rows.Count; i++)
+            {
+				var row = dt.Rows[i];
+				SYSOrderEntry entry = new SYSOrderEntry();
+				entry.MPayTime = row["MPayTime"].ToMDateTime();
+				entry.MItemID = row["MItemID"].ToString();
+				entry.MSubmitTime = row["MSubmitTime"].ToMDateTime();
+				string name = Enum.GetName(typeof(SYSOrderStatus), row["MStatus"].ToMInt32());
+				entry.MStatus = (SYSOrderStatus)Enum.Parse(typeof(SYSOrderStatus), name) ;
+				string type = Enum.GetName(typeof(SYSPayType), row["MPayType"].ToMInt32());
+				entry.MPayType = (SYSPayType)Enum.Parse(typeof(SYSPayType), type);
+
+				entry.MCompleteTime = row["MCompleteTime"].ToMDateTime();
+				entry.MNumber = row["MNumber"].ToString();
+				entry.MAmount = row["MAmount"].ToMDecimal();
+				entry.MActualAmount = row["MActualAmount"].ToMDecimal();
+				entry.MOrgID = row["MOrgID"].ToString();
+				list.Add(entry);
+			}
+			return list;
+
 		}
 	}
 

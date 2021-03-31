@@ -1,4 +1,5 @@
 using JieNor.Megi.Common.Context;
+using JieNor.Megi.Common.Encrypt;
 using JieNor.Megi.Common.Logger;
 using JieNor.Megi.Common.ServiceManager;
 using JieNor.Megi.Common.Utility;
@@ -22,7 +23,6 @@ namespace JieNor.Megi.Service.Webapi.Controllers
             ContextHelper.ChangeLang(langId, token);
             return ResponseHelper.toJson(null, true, null, true);
         }
-
         [HttpGet]
         public HttpResponseMessage SignIn(string email, string password, string langId = "0x7804")
         {
@@ -30,7 +30,7 @@ namespace JieNor.Megi.Service.Webapi.Controllers
             {
                 SECLoginModel sECLoginModel = new SECLoginModel();
                 sECLoginModel.Email = email;
-                sECLoginModel.Password = password;
+                sECLoginModel.Password = MD5Service.MD5Encrypt(password);
                 SECLoginResultModel sECLoginResultModel = new SECLoginResultModel
                 {
                     IsSuccess = false
@@ -39,11 +39,21 @@ namespace JieNor.Megi.Service.Webapi.Controllers
                 using (sysService as IDisposable)
                 {
                     sECLoginResultModel = sysService.Login(sECLoginModel, null).ResultData;
-                    sECLoginResultModel.MFirstName = "";
-                    sECLoginResultModel.MLastName = "";
-                    sECLoginResultModel.MUserName = "";
+                    //sECLoginResultModel.MFirstName = sECLoginResultModel.MFirstName;
+                    //sECLoginResultModel.MLastName = sECLoginResultModel.MLastName;
+                    //sECLoginResultModel.MUserName = sECLoginResultModel.MUserName;
+
                     ContextHelper.ChangeLang(langId, sECLoginResultModel.MAccessToken);
                 }
+                if (!sECLoginResultModel.IsSuccess)
+                {
+                    if (!string.IsNullOrWhiteSpace(sECLoginResultModel.Message))
+                    {
+                        return ResponseHelper.toJson(null, false, sECLoginResultModel.Message, true);
+                    }
+                    return ResponseHelper.toJson(null, false, "用户名或密码错误", true);
+                }
+
                 return ResponseHelper.toJson(sECLoginResultModel, true, "", true);
             }
             catch (Exception ex)
@@ -87,11 +97,12 @@ namespace JieNor.Megi.Service.Webapi.Controllers
             {
                 return ResponseHelper.toJson(new { Code = "200" }, true, result.ResultData.Message, true);
             }
-            else { 
+            else
+            {
                 return ResponseHelper.toJson(new { Code = result.ResultData.Code }, false, result.ResultData.Message, true);
 
             }
-          
+
         }
     }
 }

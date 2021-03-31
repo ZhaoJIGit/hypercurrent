@@ -325,10 +325,12 @@
                             }
                             @if (isCanSettingViewPermission)
                             {
-                                firtCount++;
-                                //基础资料（查看）权限校验
-
-
+                                if (flag_invoice)
+                                {
+                                    firtCount++;
+                                    //基础资料（查看）权限校验
+                                    <p><a href="###" id="aFinancial" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.BD, "FinancialSettings", "Financial Settings")', '/BD/Financial/FinancialEdit',true)">@HtmlLang.Write(LangModule.BD, "FinancialSettings", "Financial Settings")</a></p>
+                                }
                                 firtCount++;
                                 <p><a href="###" id="aTaxRate" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.BD, "TaxRate", "Tax Rate")', '/BD/TaxRate/TaxRateList',true)">@HtmlLang.Write(LangModule.BD, "TaxRate", "Tax Rate")</a></p>
                                 firtCount++;

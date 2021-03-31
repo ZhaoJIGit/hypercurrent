@@ -8,6 +8,16 @@ namespace JieNor.Megi.DataModel.BAS
 	[DataContract]
 	public class BASOrganisationModel : BDModel
 	{
+
+		[DataMember]
+		public string MEmailAddress
+		{
+			get;
+			set;
+		}
+
+
+
 		[DataMember(Order = 5)]
 		[ApiMember("OrganizationID", IsPKField = true)]
 		public string MOrganizationID
@@ -28,7 +38,7 @@ namespace JieNor.Megi.DataModel.BAS
 			get;
 			set;
 		}
-
+	
 		[DataMember(Order = 10)]
 		[ApiMember("OrganizationName")]
 		public string MName
@@ -376,4 +386,7 @@ namespace JieNor.Megi.DataModel.BAS
 		{
 		}
 	}
+
+
+	
 }

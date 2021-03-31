@@ -39,6 +39,11 @@ namespace JieNor.Megi.BusinessService.SEC
 			{
 				IsSuccess = false
 			};
+			if (!model2.IsConsole) {
+				sECLoginResultModel.Message = "Œﬁ»®∑√Œ ";
+				return sECLoginResultModel;
+			}
+
 			MContext mContext;
 			UserLoginRedirectEnum userLoginRedirectEnum;
 			int num2;

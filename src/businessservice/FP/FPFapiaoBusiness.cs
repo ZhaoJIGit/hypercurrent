@@ -1741,6 +1741,7 @@ namespace JieNor.Megi.BusinessService.FP
 							if (bDItemModel != null)
 							{
 								mFapiaoEntry.MItemID = bDItemModel.MItemID;
+								mFapiaoEntry.MItemName = bDItemModel.MName;
 							}
 						}
 						REGTaxRateModel rEGTaxRateModel = taxRateList.FirstOrDefault((REGTaxRateModel f) => f.MEffectiveTaxRate == mFapiaoEntry.MTaxPercent);

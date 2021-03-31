@@ -591,7 +591,8 @@ var MyIndex = {
             MyIndex.Checkout(orgId, qty)
         });
     },
-    Checkout: function (orgId, sku, qty) {
+    Checkout: function (orgId, sku, qty, hbfqNum, hbfqSellerPercent) {
+        console.log(orgId + ":" + sku + ":" + qty + ":" + hbfqNum + ":" + hbfqSellerPercent);
         $.mDialog.close();
 
         var mySite = $("#aMySite").val();
@@ -602,7 +603,9 @@ var MyIndex = {
                     SkuId: sku,
                     Qty: qty
                 }
-            ]
+            ],
+            HBFQNum: hbfqNum,
+            HbFqSellerPercent: hbfqSellerPercent
         }, function (msg) {
             if (msg && msg.RedirectUrl) {
                 window.open(msg.RedirectUrl)

@@ -6,6 +6,7 @@ using JieNor.Megi.Core.ServiceModel;
 using JieNor.Megi.DataModel.BAS;
 using JieNor.Megi.EntityModel.Context;
 using JieNor.Megi.ServiceContract.BAS;
+using System;
 using System.Collections.Generic;
 
 namespace JieNor.Megi.Service.Web.BAS
@@ -103,5 +104,25 @@ namespace JieNor.Megi.Service.Web.BAS
 			IBASOrganisationBusiness iBASOrganisationBusiness = biz;
 			return base.ExistsByFilter(iBASOrganisationBusiness.ExistsByFilter, filter, accessToken);
 		}
-	}
+
+        public MActionResult<DataGridJson<BASOrganisationModel>> GetOrgList( string name, int pageIndex = 0, int pageSize = 10)
+        {
+			IBASOrganisationBusiness iBASOrganisationBusiness = biz;
+			return base.RunFunc(iBASOrganisationBusiness.GetOrgList, name, pageIndex, pageSize);
+		}
+
+        public MActionResult<OperationResult> UpdateStatus(string mItemId, int status)
+        {
+			IBASOrganisationBusiness iBASOrganisationBusiness = biz;
+
+			return base.RunFunc(iBASOrganisationBusiness.UpdateStatus, mItemId, status);
+		}
+
+        public MActionResult<OperationResult> Renew(string mItemId, DateTime time)
+        {
+			IBASOrganisationBusiness iBASOrganisationBusiness = biz;
+
+			return base.RunFunc(iBASOrganisationBusiness.Renew, mItemId, time);
+		}
+    }
 }
