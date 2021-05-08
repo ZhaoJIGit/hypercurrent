@@ -187,6 +187,13 @@
                 color: #FFF;
                 margin-top: 15px;
             }
+        .myarrow {
+        left:45px !important;
+
+        }
+        #divHelpList {
+            top: 50px !important;
+        }
     </style>
     @Html.Raw(HtmlUser.VersionScript())
 </head>
@@ -206,49 +213,69 @@
                 <!--组织下拉框-->
                 <div id="divOrgCombox"></div>
                 @*@Html.Raw(@HtmlOrg.GoOrgSelectList())*@
-                <div class="m-action">
-                    <a class="m-global" href="###" style="display: none;">&nbsp;</a>
-                    @if (!isSmartVersion)
-                    {
-                        <a class="m-search" href="###" title="@HtmlLang.Write(LangModule.Common, "Search", "搜索")">&nbsp;</a>
-                    }
-                    @*<a class="m-help" href="###" onclick="if(Intercom) Intercom('show');" id="megiFeedback" title="@HtmlLang.Write(LangModule.Common, "help", "帮助")">&nbsp;</a>*@
-                    @if (isAttachmentView)
-                    {//附件（查看）权限校验
-                        <a class="m-attachment" id="aAttachment" href="###" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Docs, "Attachment", "Attachment")', '/BD/Docs/Folders', true);" title=@HtmlLang.Write(LangModule.Docs, "Attachment", "附件")>&nbsp;</a>
-                    }
-                    <a id="aUser" class="m-user" href="###" title="@HtmlLang.Write(LangModule.Docs, "Users", "用户")">&nbsp;</a>
-                    <div id="divUserInfo" class="m-user-info">
-                        <b class="popup-arrow popup-arrow-notch"></b>
-                        <b class="popup-arrow"></b>
-                        <div class="m-user-img">
-                            @*@{
-                        string headImageUrl = ServerHelper.MyServer + "/Profile/ShowHeaderIamge";
-                    }*@
-                            @*<input type="hidden" id="hideImageUrl" value="@headImageUrl" />*@
-                            <img id="imageHeaderImage" src='@ServerHelper.StaticServer/fw/themes/base/images/default-header.jpg' style="height: 80px;width: 80px;" />
-                        </div>
-                        <div class="m-user-content">
-                            <p id="lblUserName" class="m-ellipsis" style="white-space:nowrap;" title="@HtmlUser.UserName()">@MText.Decode(HtmlUser.UserName())</p>
-                            <ul>
-                                <li><a href="###" id="aProfilesettings" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.My, "profilesettings", "Profile Settings")', '@ServerHelper.FinalMyServer/Setting/Profile/ProfileEdit',true)">@HtmlLang.Write(LangModule.My, "profilesettings", "Profile Settings")</a></li>
-                                <li><a href="###" id="aAccountSettings" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.My, "AccountSettings", "Account Settings")', '@ServerHelper.FinalMyServer/Setting/Account/AccountEdit',true)">@HtmlLang.Write(LangModule.My, "AccountSettings", "Account Settings")</a></li>
-                            </ul>
-                        </div>
-                        <div class="m-lang-top">
-                            @HtmlLang.LangBar(ServerType.GoServer)
-                            <span style="        color: #828c93;
-        margin-left: 10px;">
-                                @HtmlLang.Write(LangModule.My, "HypercuVersion",
-                                  "超流 版本: ") @ServerHelper.HyVersion
-                            </span>
-                        </div>
-                        <div class="m-quit">
-                            <a id="aLogout" href="@ServerHelper.FinalLoginServer/Account/Logout">@HtmlLang.Write(LangKey.Logout)</a>
-                        </div>
+            <div class="m-action">
+                <a class="m-global" href="###" style="display: none;">&nbsp;</a>
+                @if (!isSmartVersion)
+                {
+                    <a class="m-search" href="###" title="@HtmlLang.Write(LangModule.Common, "Search", "搜索")">&nbsp;</a>
+                }
 
-                    </div>
+
+                @*<a class="m-help" href="###" onclick="if(Intercom) Intercom('show');" id="megiFeedback" title="@HtmlLang.Write(LangModule.Common, "help", "帮助")">&nbsp;</a>*@
+
+                <span class="m-tab-inner">
+                    <a href="###" id="aHelp" class="m-tab-item m-menu-list" title="@HtmlLang.Write(LangModule.Common, "help", "帮助")" data-index="9999">
+                        <b class="m-help"></b>
+                    </a>
+                </span>
+                <div id="divHelpList" class="m-pop-box m-pop-menu">
+                    <b class="popup-arrow popup-arrow-notch myarrow"></b>
+                    <b class="popup-arrow myarrow"></b>
+                    <p><a target="_blank" href="https://www.youku.com/profile/index/?spm=a2hbt.13141534.1_1.d_2_2&uid=UMTI2MzAyMjg5OTI=">@HtmlLang.Write(LangModule.Common, "VideoHelp", "视频教程") </a></p>
+                    <p><a href="###" onclick="if(Intercom) Intercom('show');">@HtmlLang.Write(LangModule.Common, "OnlineHelp", "在线客服") </a></p>
+                    <p><a href="###" onclick="EmailHelp()">@HtmlLang.Write(LangModule.Common, "EmailHelp", "邮件反馈") </a></p>
+                    @*EmailHelp()*@
+
                 </div>
+
+
+
+                @if (isAttachmentView)
+                {//附件（查看）权限校验
+                    <a class="m-attachment" id="aAttachment" href="###" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Docs, "Attachment", "Attachment")', '/BD/Docs/Folders', true);" title=@HtmlLang.Write(LangModule.Docs, "Attachment", "附件")>&nbsp;</a>
+                }
+                <a id="aUser" class="m-user" href="###" title="@HtmlLang.Write(LangModule.Docs, "Users", "用户")">&nbsp;</a>
+                <div id="divUserInfo" class="m-user-info">
+                    <b class="popup-arrow popup-arrow-notch"></b>
+                    <b class="popup-arrow"></b>
+                    <div class="m-user-img">
+                        @*@{
+                    string headImageUrl = ServerHelper.MyServer + "/Profile/ShowHeaderIamge";
+                }*@
+                        @*<input type="hidden" id="hideImageUrl" value="@headImageUrl" />*@
+                        <img id="imageHeaderImage" src='@ServerHelper.StaticServer/fw/themes/base/images/default-header.jpg' style="height: 80px;width: 80px;" />
+                    </div>
+                    <div class="m-user-content">
+                        <p id="lblUserName" class="m-ellipsis" style="white-space:nowrap;" title="@HtmlUser.UserName()">@MText.Decode(HtmlUser.UserName())</p>
+                        <ul>
+                            <li><a href="###" id="aProfilesettings" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.My, "profilesettings", "Profile Settings")', '@ServerHelper.FinalMyServer/Setting/Profile/ProfileEdit',true)">@HtmlLang.Write(LangModule.My, "profilesettings", "Profile Settings")</a></li>
+                            <li><a href="###" id="aAccountSettings" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.My, "AccountSettings", "Account Settings")', '@ServerHelper.FinalMyServer/Setting/Account/AccountEdit',true)">@HtmlLang.Write(LangModule.My, "AccountSettings", "Account Settings")</a></li>
+                        </ul>
+                    </div>
+                    <div class="m-lang-top">
+                        @HtmlLang.LangBar(ServerType.GoServer)
+                        <span style="        color: #828c93;
+        margin-left: 10px;">
+                            @HtmlLang.Write(LangModule.My, "HypercuVersion",
+                              "超流 版本: ") @ServerHelper.HyVersion
+                        </span>
+                    </div>
+                    <div class="m-quit">
+                        <a id="aLogout" href="@ServerHelper.FinalLoginServer/Account/Logout">@HtmlLang.Write(LangKey.Logout)</a>
+                    </div>
+
+                </div>
+            </div>
             </div>
             <div class="m-bottom">
                 <div class="m-menu-show">
@@ -367,6 +394,41 @@
                 user_hash: '@sha256(ctx.MUserID)',
                 created_at: '@ctx.MRegDate.ToUTCTime().Subtract(new DateTime(1970, 1, 1)).TotalSeconds'
             };
+            //$("#aUser2").click(function () {
+            //    Megi.popup("#aUser2", {
+            //        selector: "#divUserInfo2",
+            //        paddingBottom: 10,
+            //        //position: "right-bottom",
+            //        showCallBack: function () {
+            //            $("#aUser2").addClass("current")
+            //        },
+            //        hideCallBack: function () {
+            //            $("#aUser2").removeClass("current")
+            //        }
+            //    })
+            //});
+            $("#aHelp").click(function (h) {
+                Megi.popup("#aHelp", {
+                    selector: "#divHelpList",
+                    event: h,
+                    top:50
+                })
+            });
+            function EmailHelp() {
+                $.mDialog.show({
+                    mTitle:  '@HtmlLang.Write(LangModule.Common, "FeedbackHelp", "反馈")',
+                    mContent: "iframe:" + '/FW/FWHome/Feedback',
+                    mWidth: 400,
+                    mHeight: 300,
+                    mShowbg: true,
+                    mShowTitle: true,
+                    mCloseCallback: function () {
+                        $("#btnSearch").trigger("click");
+                    },
+                    mDrag: "mBoxTitle"
+                });
+            }
+            
         </script>
 
         <script>

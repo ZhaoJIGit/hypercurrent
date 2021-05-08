@@ -28,7 +28,7 @@
     <div class="m-form-field">
         <div class="m-form-section">@HtmlLang.Write(LangKey.Account_Name)</div>
         <div class="m-form-input">
-            <input type="text" class="easyui-validatebox mg-width200 mg-data m-lang" @*validtype="length[1,50]"*@  data-options="required:true" id="txtMName" name="MName" />
+            <input type="text" class="easyui-validatebox mg-width200 mg-data m-lang" @*validtype="length[1,50]"*@ data-options="required:true" id="txtMName" name="MName" />
         </div>
         <!--提醒信息-->
         <div class="m-form-tip m-form-tip-box">@*@HtmlLang.Write(LangModule.Bank, "NameAppearLimited", "As you would like it to appear in Hypercurrent (limited 50 characters).")*@ &nbsp;&nbsp;</div>
@@ -45,7 +45,7 @@
         <div class="m-form-tip m-form-tip-box">&nbsp;</div>
     </div>
 
-    
+
     <!--帐户编号，用户自定义-->
     <div class="m-form-field" id="bankBankNoInputDiv">
         <div class="m-form-section">@HtmlLang.Write(LangModule.Bank, "AccountNumber", "Account Number")</div>
@@ -65,6 +65,15 @@
             @HtmlLang.Write(LangModule.Bank, "EnterTheLastCard", "Only enter the last four digits of your card")
         </div>
     </div>
+
+    @*开户行*@
+    <div class="m-form-field" id="openingBankInputDiv">
+        <div class="m-form-section">@HtmlLang.Write(LangModule.Bank, "OpeningBank", "Opening Bank")</div>
+        <div class="m-form-input">
+            <input class="easyui-validatebox mg-width200 mg-data" id="txtMOpeningBank" name="MOpeningBank" />
+        </div>
+    </div>
+
     <div class="m-form-field">
         <div class="m-form-input">
             <p style="margin-top: 10px;"><input type="hidden" name="MAccountID" class="mg-data" /></p>
@@ -73,26 +82,26 @@
 
     <!--是否把此帐户信息显示在dashboard-->
     @if (!isSmartVersion)
-{
-         <div class="m-form-field">
-        <div class="m-form-input">
-            <p style="margin-top: 10px;"><input type="checkbox" checked="checked" class="mg-data" name="MIsShowInHome" />@HtmlLang.Write(LangModule.Bank, "ShowAccOnDashboard", "Show on Dashboard Watchlist") </p>
+    {
+        <div class="m-form-field">
+            <div class="m-form-input">
+                <p style="margin-top: 10px;"><input type="checkbox" checked="checked" class="mg-data" name="MIsShowInHome" />@HtmlLang.Write(LangModule.Bank, "ShowAccOnDashboard", "Show on Dashboard Watchlist") </p>
+            </div>
         </div>
-    </div>
-}
-   
+    }
+
 
     <div class="m-form-field">
         <div class="m-form-input">
             @if (!isSmartVersion)
             {
-                 <p style="margin-top: 10px;"><input type="checkbox" checked="checked" class="mg-data" id="MIsNeedReconcile" name="MIsNeedReconcile" />@HtmlLang.Write(LangModule.Bank, "IsNeedReconcile", "Whether to reconcile or not？") </p>
+                <p style="margin-top: 10px;"><input type="checkbox" checked="checked" class="mg-data" id="MIsNeedReconcile" name="MIsNeedReconcile" />@HtmlLang.Write(LangModule.Bank, "IsNeedReconcile", "Whether to reconcile or not？") </p>
             }
             else
             {
-                 <p style="margin-top: 10px;"><input type="checkbox" checked="checked" class="mg-data" id="MIsNeedReconcile" name="MIsNeedReconcile" />@HtmlLang.Write(LangModule.Bank, "IsImportBankTransaction", "是否导入银行对账单？") </p>
+                <p style="margin-top: 10px;"><input type="checkbox" checked="checked" class="mg-data" id="MIsNeedReconcile" name="MIsNeedReconcile" />@HtmlLang.Write(LangModule.Bank, "IsImportBankTransaction", "是否导入银行对账单？") </p>
             }
-           
+
         </div>
     </div>
 

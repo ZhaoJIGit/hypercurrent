@@ -342,11 +342,20 @@ namespace JieNor.Megi.Core.DBUtility
 
 		public static bool ExecuteSqlTran(MContext ctx, MultiDBCommand[] cmdArray)
 		{
-			int num = cmdArray.Length;
+            //cmdArray = cmdArray.Select(i=>i.CommandList.Where(i=>i.CommandText!=""));
+
+            //cmdArray = cmdArray.SelectMany(c => c.CommandList, (o, p) =>
+            //{
+            //    if (!string.IsNullOrWhiteSpace(p.CommandText)) { return o; }
+            //    return null;
+            //}).Where(x => x != null).ToArray();
+
+            int num = cmdArray.Length;
 			MySqlConnection[] array = new MySqlConnection[num];
 			MySqlTransaction[] array2 = new MySqlTransaction[num];
 			try
 			{
+                
 				for (int i = 0; i < num; i++)
 				{
 					MultiDBCommand multiDBCommand = cmdArray[i];
@@ -356,6 +365,9 @@ namespace JieNor.Megi.Core.DBUtility
 				}
 				for (int j = 0; j < num; j++)
 				{
+					if (cmdArray[j].CommandList.Count==0) {
+						continue;
+					}
 					MySqlCommand mySqlCommand = new MySqlCommand();
 					mySqlCommand.CommandTimeout = 28800;
 					BatchPrepareCommand(mySqlCommand, array[j], array2[j], cmdArray[j].CommandList, j);
@@ -389,6 +401,8 @@ namespace JieNor.Megi.Core.DBUtility
 
 		private static void BatchPrepareCommand(MySqlCommand cmd, MySqlConnection conn, MySqlTransaction trans, List<CommandInfo> cmdList, int index)
 		{
+
+
 			if (conn.State != ConnectionState.Open)
 			{
 				conn.Open();

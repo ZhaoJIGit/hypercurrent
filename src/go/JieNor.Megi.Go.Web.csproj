@@ -1397,6 +1397,7 @@
     <Content Include="Areas\PY\Views\web.config" />
     <Content Include="Areas\FW\Views\FWHome\Normal.cshtml" />
     <Content Include="Areas\FW\Views\FWHome\Other.cshtml" />
+    <Content Include="Areas\FW\Views\FWHome\Feedback.cshtml" />
     <None Include="packages.config" />
   </ItemGroup>
   <PropertyGroup>

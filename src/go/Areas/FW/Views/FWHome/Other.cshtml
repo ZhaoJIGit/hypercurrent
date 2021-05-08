@@ -323,6 +323,9 @@
                                 firtCount++;
                                 <p><a href="###" id="agLobalization" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.Org, "GlobalizationSettings", "Globalization Settings")', '/BD/Organisation/GlobalizationSettings',true)">@HtmlLang.Write(LangModule.Org, "GlobalizationSettings", "Globalization Settings")</a></p>
                             }
+
+
+
                             @if (isCanSettingViewPermission)
                             {
                                 if (flag_invoice)
@@ -331,6 +334,9 @@
                                     //基础资料（查看）权限校验
                                     <p><a href="###" id="aFinancial" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.BD, "FinancialSettings", "Financial Settings")', '/BD/Financial/FinancialEdit',true)">@HtmlLang.Write(LangModule.BD, "FinancialSettings", "Financial Settings")</a></p>
                                 }
+                                firtCount++;
+                                <p><a href="###" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.BD, "BankAccountBalances", "Initial Amount Of Bank Account")', '/BD/BDBank/BankAccountBalances', true)">@HtmlLang.Write(LangModule.BD, "BankAccountBalances", "Initial Amount Of Bank Account")</a></p>
+
                                 firtCount++;
                                 <p><a href="###" id="aTaxRate" onclick="$.mTab.addOrUpdate('@HtmlLang.Write(LangModule.BD, "TaxRate", "Tax Rate")', '/BD/TaxRate/TaxRateList',true)">@HtmlLang.Write(LangModule.BD, "TaxRate", "Tax Rate")</a></p>
                                 firtCount++;

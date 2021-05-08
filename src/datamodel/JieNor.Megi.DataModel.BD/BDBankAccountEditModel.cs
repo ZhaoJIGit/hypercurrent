@@ -13,7 +13,12 @@ namespace JieNor.Megi.DataModel.BD
 			get;
 			set;
 		}
-
+		[DataMember]
+		public string MOpeningBank
+		{
+			get;
+			set;
+		}
 		[DataMember]
 		public decimal MBankStatement
 		{

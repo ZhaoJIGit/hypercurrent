@@ -46,6 +46,7 @@ namespace JieNor.Megi.Core.DataModel
 			set;
 		}
 
+		
 		[DataMember(Order = 2, EmitDefaultValue = true)]
 		public string MNumber
 		{

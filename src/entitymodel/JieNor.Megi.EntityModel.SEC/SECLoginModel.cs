@@ -6,6 +6,14 @@ namespace JieNor.Megi.EntityModel.SEC
 	public class SECLoginModel
 	{
 		[DataMember]
+		public bool IsConsole
+		{
+			get;
+			set;
+		} = false;
+
+		
+		[DataMember]
 		public string Email
 		{
 			get;

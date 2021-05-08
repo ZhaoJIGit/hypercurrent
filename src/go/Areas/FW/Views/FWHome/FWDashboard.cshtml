@@ -68,28 +68,28 @@
             @if (accessList[BizObject.Bank_Reconciliation + PermissionItem.View])
             {
                 <!--银行分布视图-->
-                <div class="dasboard-bank">
+                <div class="dasboard-bank myhome">
                     @Html.Partial("FWDashboardPartial/BankPartial")
                 </div>
             }
             @if (accessList[BizObject.Invoice_Sales + PermissionItem.View] && (flag_normal || flag_sales))
             {
                 <!--销售分布视图-->
-                <div class="dasboard-sale">
+                <div class="dasboard-sale myhome">
                     @Html.Partial("FWDashboardPartial/SalePartial")
                 </div>
             }
             @if (accessList[BizObject.Invoice_Purchases + PermissionItem.View])
             {
                 <!--采购分布视图-->
-                <div class="dasboard-purchase">
+                <div class="dasboard-purchase myhome">
                     @Html.Partial("FWDashboardPartial/PurchasePartial")
                 </div>
             }
             @if (accessList[BizObject.Expense + PermissionItem.View])
             {
                 <!--费用分布视图-->
-                <div class="dasboard-expense">
+                <div class="dasboard-expense myhome">
                     @Html.Partial("FWDashboardPartial/ExpensePartial")
                 </div>
             }
@@ -99,6 +99,7 @@
                 <script>
                     $(function () {
                         $("#mianDashboard").attr("style", "padding:0px");
+                        $(".myhome").attr("style","padding-left: 50px");
                     })
 
                 </script>

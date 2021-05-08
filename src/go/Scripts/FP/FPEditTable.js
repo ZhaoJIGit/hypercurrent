@@ -606,12 +606,16 @@
                 }
                 //税号
                 $(txtContactTaxCode).val(data.MContactTaxCode || "");
+
                 //发票号
                 $(txtNumber).numberbox("setValue", data.MNumber);
                 //发票类型
                 $(txtType).combobox("setValue", data.MType || "");
+                $("#selPaidTo").combobox("setValue", data.MBankId || "");
+
                 //开票日期
                 $(txtDate).datebox("setValue", data.MBizDate || new Date());
+
                 //备注
                 $(txtExplanation).val(data.MExplanation || "");
                 //总金额
@@ -945,6 +949,9 @@
                 tableData.MExplanation = $(txtExplanation).val();
                 //是增值税专用发票还是普通发票
                 tableData.MType = $(txtType).combobox("getValue");
+                //
+                tableData.MBankId = $("#selPaidTo").combobox("getValue");
+                
                 //
                 tableData.MInvoiceType = invoiceType;
                 //总额

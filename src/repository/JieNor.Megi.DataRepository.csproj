@@ -318,6 +318,10 @@
       <Project>{eef2457d-0b83-44e8-96ce-d6c0cf427a8a}</Project>
       <Name>JieNor.Megi.EntityModel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\servicecontract\JieNor.Megi.ServiceContract.csproj">
+      <Project>{675EF372-9074-46CF-890B-E85F6B1D8F50}</Project>
+      <Name>JieNor.Megi.ServiceContract</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

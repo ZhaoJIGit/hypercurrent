@@ -98,6 +98,16 @@
                         <input type="text" id="txtAjustAmount" tabindex="3" hint="@HtmlLang.Write(LangModule.FP, "AjustAmount", "调整金额")" class="textbox easyui-validatebox" data-options="required:false" style="width:132px;padding:0 3px;" maxlength="80" />
                     </div>
                 </div>
+                <div class="column">
+                    <div class="cell">
+                        <div class="">
+                            <span class="lbl m-icon-text" title="@HtmlLang.Write(LangModule.BD, "PaidTo", "收款账户")">&nbsp;</span>
+                            @*<input id="selBank" class="easyui-combobox mg-data" name="MBank" data-options="@JieNor.Megi.Identity.Go.HtmlHelper.HtmlBDBank.DataOptions(),editable:false" style="width:140px; float:left;" />*@
+                            <select class="easyui-combobox"  hint="@HtmlLang.Write(LangModule.BD, "PaidTo", "收款账户")" id="selPaidTo" data-options="required:true,editable:false, @HtmlBDAccount.BankDataOptions(Convert.ToString(ViewData["MCurrencyID"]))" style="width: 132px; height: 28px; "></select></span>
+
+                        </div>
+                    </div>
+                </div>
 
                 <div class="column">
                     <div class="cell">

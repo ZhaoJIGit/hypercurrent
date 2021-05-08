@@ -31,6 +31,7 @@ namespace JieNor.Megi.Service.Webapi.Controllers
                 SECLoginModel sECLoginModel = new SECLoginModel();
                 sECLoginModel.Email = email;
                 sECLoginModel.Password = MD5Service.MD5Encrypt(password);
+                sECLoginModel.IsConsole = true;
                 SECLoginResultModel sECLoginResultModel = new SECLoginResultModel
                 {
                     IsSuccess = false

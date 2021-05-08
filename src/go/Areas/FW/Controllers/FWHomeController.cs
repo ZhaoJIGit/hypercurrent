@@ -2,12 +2,15 @@ using JieNor.Megi.Common.Context;
 using JieNor.Megi.Common.Utility;
 using JieNor.Megi.Core.Context;
 using JieNor.Megi.Core.DBUtility;
+using JieNor.Megi.Core.Mail;
 using JieNor.Megi.DataModel.BAS;
 using JieNor.Megi.DataModel.BD;
 using JieNor.Megi.DataModel.IV;
 using JieNor.Megi.DataModel.IV.Expense;
 using JieNor.Megi.EntityModel.Context;
+using JieNor.Megi.EntityModel.MultiLanguage;
 using JieNor.Megi.Go.Web.Controllers;
+using JieNor.Megi.Identity.HtmlHelper;
 using JieNor.Megi.ServiceContract.BAS;
 using JieNor.Megi.ServiceContract.BD;
 using JieNor.Megi.ServiceContract.FP;
@@ -111,7 +114,11 @@ namespace JieNor.Megi.Go.Web.Areas.FW.Controllers
 			base.ViewData["MLocaleID"] = mContext.MLCID;
 			return base.View();
 		}
-
+		public ActionResult Feedback()
+		{
+			return base.View();
+		}
+		
 		public ActionResult GetBankDashbardData(string[] accountList, int chartType)
 		{
 			MContext mContext = ContextHelper.MContext;
@@ -230,7 +237,25 @@ namespace JieNor.Megi.Go.Web.Areas.FW.Controllers
 				Context = mContext
 			});
 		}
+		[HttpPost]
+		public ActionResult CommitSuggestion(SuggestionModel model)
+		{
+			MContext mContext = ContextHelper.MContext;
+			string content = HtmlLang.Write(LangModule.Common, "ContentHelp", "<br><br>  来自超流客户[#Email#]的邮件信息，请及时回复。").ToString();// model.Suggestion+ "<br><br>  来自超流客户<" + mContext.MEmail+">的邮件信息，请及时回复。";
 
+			content =model.Suggestion+ content.Replace("#Email#", mContext.MEmail);
+			List<string> list = new List<string>();
+
+			string serviceEmail= ServerHelper.ServiceEmail;
+
+			SendMail.SendSMTPEMail(serviceEmail, model.Title, content, list, "Hypercurrent");
+
+			return base.Json(new
+			{
+				Result =true,
+				Msg = HtmlLang.Write(LangModule.Common, "SuccessedHelp", "提交成功").ToString()
+			});
+		}
 		public ActionResult ValidateCreateOrgAuth(int type, bool checkBeta = false)
 		{
 			MActionResult<OperationResult> data = _userService.ValidateCreateOrgAuth(type, null);
@@ -262,5 +287,10 @@ namespace JieNor.Megi.Go.Web.Areas.FW.Controllers
 			MActionResult<string> chartStackedDictionary = FapiaoTableServer.GetChartStackedDictionary(type, startDate2, endDate2, null);
 			return base.Json(chartStackedDictionary);
 		}
+	}
+	public class SuggestionModel {
+		public string Title { get; set; }
+
+		public string Suggestion{ get; set; }
 	}
 }

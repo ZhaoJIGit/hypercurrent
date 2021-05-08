@@ -273,6 +273,7 @@ namespace JieNor.Megi.DataRepository.SEC
                     sECUserModel.MPassWord = MD5Service.MD5Encrypt(model.MPassWord);
                     sECUserModel.MAppID = 1.ToString();
                     sECUserModel.MMobilePhone = model.MMobilePhone;
+                    sECUserModel.MIsActive = true;
                     if (ctx.MActiveLocaleIDS == null || ctx.MActiveLocaleIDS.Count != COMMultiLangRepository.MegiLangTypes.Count())
                     {
                         ctx.MActiveLocaleIDS = COMMultiLangRepository.MegiLangTypes.ToList();

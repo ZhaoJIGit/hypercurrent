@@ -47,6 +47,7 @@ namespace JieNor.Megi.Go.Web.Areas.FP.Controllers
 			base.ViewData["invoiceIds"] = invoiceIds;
 			base.ViewData["tableId"] = tableId;
 			base.ViewData["invoiceType"] = invoiceType;
+			base.ViewData["MCurrencyID"] = base.MContext.MBasCurrencyID;
 			return base.View();
 		}
 

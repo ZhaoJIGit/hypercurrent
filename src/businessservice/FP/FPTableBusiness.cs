@@ -84,6 +84,7 @@ namespace JieNor.Megi.BusinessService.FP
 					nextTableNumber = GetNextTableNumber(ctx, invoiceType);
 					fPTableViewModel2.MNumber = nextTableNumber.ToString();
 					fPTableViewModel.MOrgID = ctx.MOrgID;
+					//fPTableViewModel.MBankId= invoiceListIncludeEntry[0].ba
 					fPTableViewModel.MTaxAmount = invoiceListIncludeEntry.Sum((IVInvoiceModel x) => x.InvoiceEntry.Sum((IVInvoiceEntryModel y) => y.MTaxAmt));
 					fPTableViewModel.MTotalAmount = invoiceListIncludeEntry.Sum((IVInvoiceModel x) => x.MTaxTotalAmt);
 					fPTableViewModel.MAmount = invoiceListIncludeEntry.Sum((IVInvoiceModel x) => x.MTotalAmt);

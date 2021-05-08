@@ -1,0 +1,84 @@
+﻿
+@{
+    ViewBag.Title = "Feedback";
+    Layout = "~/Areas/FW/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="m-form">
+    <div class="m-form-field" id="openingBankInputDiv">
+        <div class="m-form-section">@HtmlLang.Write(LangModule.Common, "TitleHelp", "标题")</div>
+        <div class="m-form-input">
+            <input class="easyui-validatebox   mg-data" style="width:100%" id="txtTitle" name="Title" />
+        </div>
+    </div>
+    <div class="m-form-field" id="openingBankInputDiv">
+        <div class="m-form-section">@HtmlLang.Write(LangModule.Common, "SuggestionHelp", "描述")</div>
+        <div class="m-form-input">
+            <textarea style="width:100%;height:150px" class="easyui-validatebox mg-width200 mg-data" id="txtSuggestion" name="Suggestion"></textarea>
+        </div>
+    </div>
+</div>
+<div class="m-toolbar-footer">
+    <div class="left">
+        <a href="javascript:void(0)" onclick="$.mDialog.close();" class="easyui-linkbutton easyui-linkbutton-gray" id="aCancel">@HtmlLang.Write(LangKey.Cancel)</a>
+    </div>
+    <div class="right">
+        <a href="#" class="easyui-linkbutton easyui-linkbutton-yellow" id="aCommitHelp">@HtmlLang.Write(LangModule.Common,"CommitHelp","提交")</a>
+    </div>
+</div>
+<script>
+    var goSite = $("#aGoServer").val();
+    //
+    //$(function () {
+    //$("#aCommitHelp").click(function () {
+
+    //    var data = {
+    //        suggestion: $("#txtSuggestion").val(),
+    //        title: $("#txtTitle").val()
+    //    };
+
+    //    $.mAjax.Post("/FW/FWHome/CommitSuggestion", data, function (msg) {
+    //        if (msg.data.result) {
+    //            $.mDialog.alert("successful");
+    //        }
+    //        else {
+    //            $.mDialog.alert(msg.data.msg);
+    //        }
+    //    }, "", true);
+       
+    //    //$.mDialog.close();
+    //});
+    //})
+
+
+
+    $(function () {
+        $("#aCommitHelp").click(function () {
+
+            var data = {
+                suggestion: $("#txtSuggestion").val(),
+                title: $("#txtTitle").val()
+            };
+            var msg = "";
+            $.mAjax.Post("/FW/FWHome/CommitSuggestion", data, function (remsg) {
+                if (remsg.Result) {
+                    $.mMsg(remsg.Msg);
+                    $.mDialog.close();
+                }
+                else {
+                    $.mMsg(remsg.Msg);
+                }
+            }, "", true);
+
+
+            //setTimeout(function () {
+            //    $.mDialog.close();
+               
+            //}, "1000");
+
+
+
+        });
+    })
+</script>

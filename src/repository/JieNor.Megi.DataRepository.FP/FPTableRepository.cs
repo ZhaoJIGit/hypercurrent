@@ -1,3 +1,4 @@
+using JieNor.Megi.Common.ServiceManager;
 using JieNor.Megi.Common.Utility;
 using JieNor.Megi.Core;
 using JieNor.Megi.Core.Context;
@@ -5,6 +6,7 @@ using JieNor.Megi.Core.DataModel;
 using JieNor.Megi.Core.DBUtility;
 using JieNor.Megi.Core.Log;
 using JieNor.Megi.Core.Repository;
+using JieNor.Megi.DataModel.BAS;
 using JieNor.Megi.DataModel.BD;
 using JieNor.Megi.DataModel.FP;
 using JieNor.Megi.DataModel.IV;
@@ -16,6 +18,7 @@ using JieNor.Megi.DataRepository.Log.TableLog;
 using JieNor.Megi.EntityModel.Context;
 using JieNor.Megi.EntityModel.Enum;
 using JieNor.Megi.EntityModel.MultiLanguage;
+using JieNor.Megi.ServiceContract.BAS;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -217,15 +220,19 @@ namespace JieNor.Megi.DataRepository.FP
             var contact=  bDContacts.GetContactModelByKey(table.MContactID,ctx );
 
             BDItemRepository bDItem = new BDItemRepository();
-
+            BDBankAccountRepository bDBankAccount = new BDBankAccountRepository();
 
             table.fapiaoList.ForEach(delegate (FPFapiaoModel x)
             {
                 x.MInvoiceType = table.MInvoiceType;
 
-                x.MPContactTaxCode = ((x.MInvoiceType == 0) ? contact.MTaxNo : ctx.MTaxCode);
+                //x.MPContactTaxCode = ((x.MInvoiceType == 0) ? contact.MTaxNo : ctx.MTaxCode);
+                //x.MSContactTaxCode = ((x.MInvoiceType == 1) ? contact.MTaxNo : ctx.MTaxCode);
+
+                x.MPContactTaxCode = ((x.MInvoiceType == 0) ? table.MContactTaxCode : ctx.MTaxCode);
                 x.MSContactTaxCode = ((x.MInvoiceType == 1) ? contact.MTaxNo : ctx.MTaxCode);
-                
+
+
                 x.MPContactName = ((x.MInvoiceType == 0) ? contact.MName : ctx.MOrgName);
                 x.MSContactName = ((x.MInvoiceType == 1) ? contact.MName : ctx.MOrgName);
 
@@ -235,8 +242,16 @@ namespace JieNor.Megi.DataRepository.FP
 
                 //x.MSContactAddressPhone = ((x.MInvoiceType == 1) ? contact.MPhone : ctx.MMobilePhone);
                 //x.MPContactAddressPhone = ((x.MInvoiceType == 0) ? contact.MPhone : ctx.MMobilePhone);
-                x.MPContactBankInfo = ((x.MInvoiceType == 0) ? arg3+" "+ arg2 : "");
-                x.MSContactBankInfo = ((x.MInvoiceType == 1) ? arg3 +" "+ arg2 : "");
+
+                //****银行信息
+                var bank = "";
+                List<BDBankAccountEditModel> bankinfo = BDBankAccountRepository.GetBankAccountList(ctx, new string[] { table.MBankId });
+                if (bankinfo!=null|| bankinfo.Count>0) {
+                    bank = bankinfo[0].MOpeningBank + " " + bankinfo[0].MBankNo;
+                }
+
+                x.MPContactBankInfo = ((x.MInvoiceType == 0) ? arg3+" "+ arg2 : bank);
+                x.MSContactBankInfo = ((x.MInvoiceType == 1) ? arg3 +" "+ arg2 : bank);
 
                 x.MReceiver =  ((x.MInvoiceType == 1) ? contact.MName : ctx.MUserName);
                 x.MDrawer = ((x.MInvoiceType == 1) ? contact.MName : ctx.MUserName);
@@ -255,6 +270,15 @@ namespace JieNor.Megi.DataRepository.FP
             List<FPFapiaoModel> list2 = (from x in table.fapiaoList
                                          where !string.IsNullOrWhiteSpace(x.MID) && x.MHasDetail
                                          select x).ToList();
+
+            BASCountryRepository bASCountryRepository = new BASCountryRepository();
+            List<BASCountryModel> countryList = bASCountryRepository. GetCountryList(ctx);
+
+            var provinceList = bASCountryRepository.GetProvinceList(ctx,org.MCountryID);
+            //List<BASProvinceModel> provinceList = GetProvinceList(org.MCountryID);
+            var country = countryList.FirstOrDefault(i=>i.MItemID==org.MCountryID);
+            var province = provinceList.FirstOrDefault(i=>i.MItemID==org.MStateID);
+
             list.ForEach(delegate (FPFapiaoModel x)
             {
                 x.MType = table.MType;
@@ -266,9 +290,13 @@ namespace JieNor.Megi.DataRepository.FP
                 x.MReconcileStatus = 1;
                 x.MAmount = x.MTotalAmount - x.MTaxAmount;
                 x.MStatus = ((!(x.MTotalAmount < decimal.Zero)) ? 1 : 4);
-
+                //contact.MRealCountryName+
                 var address = contact.MRealRegion + contact.MRealCityID + contact.MRealStreet+" "+contact.MPhone;
-                var saddress = org.MStateID + org.MCityID + org.MStreet;
+
+
+
+                //country?.MCountryName+
+                var saddress = province?.MName + org.MCityID + org.MStreet;// +" "+ctx.MMobilePhone;
                 x.MPContactAddressPhone = ((x.MInvoiceType == 0) ? address : saddress);
                 x.MSContactAddressPhone = ((x.MInvoiceType == 1) ? address : saddress);
 
@@ -365,7 +393,22 @@ namespace JieNor.Megi.DataRepository.FP
             }
             return operationResult;
         }
-
+        //public   List<BASCountryModel> GetCountryList()
+        //{
+        //    IBASCountry sysService = ServiceHostManager.GetSysService<IBASCountry>();
+        //    using (sysService as IDisposable)
+        //    {
+        //        return sysService.GetCountryList(null).ResultData;
+        //    }
+        //}
+        //public static List<BASProvinceModel> GetProvinceList(string countryId)
+        //{
+        //    IBASCountry sysService = ServiceHostManager.GetSysService<IBASCountry>();
+        //    using (sysService as IDisposable)
+        //    {
+        //        return sysService.GetProvinceList(countryId, null).ResultData;
+        //    }
+        //}
         private List<CommandInfo> GetSaveInvoiceTable(MContext ctx, FPTableModel table, List<IVInvoiceModel> invoices)
         {
             List<CommandInfo> list = new List<CommandInfo>();
@@ -437,6 +480,7 @@ namespace JieNor.Megi.DataRepository.FP
                 MExplanation = view.MExplanation,
                 MTotalAmount = view.MTotalAmount,
                 MNumber = view.MNumber,
+                MBankId = view.MBankId,
                 MOrgID = view.MOrgID,
                 MRTotalAmount = view.MRTotalAmount,
                 MRTaxAmount = view.MRTaxAmount,

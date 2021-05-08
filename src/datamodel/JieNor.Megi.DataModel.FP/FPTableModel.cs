@@ -13,7 +13,12 @@ namespace JieNor.Megi.DataModel.FP
 			get;
 			set;
 		}
-
+		[DataMember]
+		public string MBankId
+		{
+			get;
+			set;
+		}
 		[DataMember]
 		public int MInvoiceType
 		{
