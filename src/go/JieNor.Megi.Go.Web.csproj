@@ -309,6 +309,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VIewModels\BWModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\RptLayout\bak\JieNor.Megi.ExportUtility.dll" />

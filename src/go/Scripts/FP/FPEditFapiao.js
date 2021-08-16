@@ -224,6 +224,13 @@
                     }
                 }
                 //
+                //$(editors.where("x.field=='MTaxID'")[0].target)
+                var itemFP = fapiaoData.MFapiaoEntrys;
+                for (var i = 0; i < itemFP.length; i++) {
+                    itemFP[i].MTaxPercent = fapiaoData.MTaxAmount / (fapiaoData.MTotalAmount - fapiaoData.MTaxAmount) * 100;
+                }
+
+                //20/(120-20)*100
                 mAjax.submit(saveFapiaoUrl, { fapiao: fapiaoData }, function (data) {
                     //
                     if (data) {
@@ -233,6 +240,7 @@
                             mDialog.error(HtmlLang.Write(LangModule.FP, "FapiaoNumberDuplicated", "发票号已经被使用了，请重新输入"));
                         }
                         else {
+                           
                             //先提醒用户保存成功
                             mDialog.message(LangKey.SaveSuccessfully);
                             //
@@ -612,6 +620,8 @@
                     var taxAmountInput = $(editors.where("x.field=='MTaxAmount'")[0].target);
                     //
                     var amountInput = $(editors.where("x.field=='MAmount'")[0].target);
+
+                    
                     //获取本行
                     var quantity = quantityInput.val() || 0;
                     //
@@ -623,6 +633,9 @@
                     var taxInput = hasTax ? $(editors.where("x.field=='MTaxID'")[0].target) : null;
                     //
                     var tax = hasTax ? (that.getTaxRate(taxInput.combobox("getValue")) || 0) : 0;
+                    //var taxPercentInput = $(editors.where("x.field=='MTaxPercent'")[0].target);
+
+                    //taxPercentInput.combobox("setValue", tax);
                     //
                     taxAmountInput.numberbox("setValue", price * quantity * tax);
                 }

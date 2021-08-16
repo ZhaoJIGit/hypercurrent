@@ -98,6 +98,7 @@ namespace JieNor.Megi.BusinessService.IO.Biz
 					item2.MAmount = mFapiaoEntrys.Sum((FPFapiaoEntryModel m) => m.MAmount);
 					item2.MTaxAmount = mFapiaoEntrys.Sum((FPFapiaoEntryModel m) => m.MTaxAmount);
 					item2.MTotalAmount = item2.MAmount + item2.MTaxAmount;
+
 					if (item2.MStatus == 1 && item2.MTotalAmount < decimal.Zero)
 					{
 						importResult.Success = false;

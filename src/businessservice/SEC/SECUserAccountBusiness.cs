@@ -41,9 +41,10 @@ namespace JieNor.Megi.BusinessService.SEC
             };
             if (model.IsConsole)
             {
-                if (!model2.IsConsole)
+                if (!model2.MIsConsole)
                 {
-                    sECLoginResultModel.Message = "无权访问";
+                    
+                    sECLoginResultModel.Message = "无权访问"+ model2.MItemID;
                     return sECLoginResultModel;
                 }
             }

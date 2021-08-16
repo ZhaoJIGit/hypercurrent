@@ -9,11 +9,11 @@ namespace JieNor.Megi.DataModel.SEC
 	[DataContract]
 	public class SECUserModel : BDModel
 	{
-	
+
 		public string ProductCode { get; set; }
 		[DataMember]
 
-		public bool IsConsole { get; set; }
+		public bool MIsConsole { get; set; }
 
 		[DataMember(Order = 1)]
 		[ApiMember("UserID", IsPKField = true)]

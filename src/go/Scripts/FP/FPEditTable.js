@@ -27,7 +27,9 @@
             var editFapiaoButton = ".edit-fapiao-button";
             //查看
             var viewFapiaoButton = ".view-fapiao-button";
+            var sendFapiaoButton = ".send-bw-fapiao-button";
 
+            
             var removeReconcileButton = ".remove-reconcile-button";
             //
             var addFapiaoButton = ".add-fapiao-button";
@@ -45,6 +47,9 @@
             var removeFapiaoListUrl = "/FP/FPHome/DeleteFapiaoByFapiaoIds";
 
             var removeReconcileUrl = "/FP/FPHome/RemoveReconcile";
+
+            //发送发票的界面
+            var FPSendBWFapiao = "/FP/FPHome/FPSendBWFapiao";
             //
             var taxAmount = "tr.ef-tax-amount td:eq(1)";
             //
@@ -357,8 +362,10 @@
 
                                   //发票查看
                                   text += !rec.MID ? '' : '<a href="javascript:void(0)" style="margin-right:5px" class="' + viewFapiaoButton.trimStart('.') + '" rowindex="' + rowIndex + '" mid="' + rec.MID + '">&nbsp;</a>';
+                                  //发送发票
+                                  text += !rec.MID ? '' : '<a href="javascript:void(0)" class="' + sendFapiaoButton.trimStart('.')+'" style="margin-right:5px ;color: black;font-weight: 500;font-size: large;"   rowindex="' + rowIndex + '" mid="' + rec.MID + '">B</a>';
 
-
+                                  
                                   //删除勾兑关系
                                   text += !rec.MID ? '' : '<a href="javascript:void(0)" style="margin-right:5px" class="' + removeReconcileButton.trimStart('.') + '" rowindex="' + rowIndex + '" mid="' + rec.MID + '">&nbsp;</a>';
 
@@ -672,6 +679,25 @@
 
                     home.viewFapiao($(this).attr("mid"));
                 }).tooltip({ content: HtmlLang.Write(LangModule.FP, "Click2ViewFapiao", "点击查看发票") });
+
+
+                //发送发票
+                $(sendFapiaoButton).off("click").on("click", function () {
+                    var mid = $(this).attr("mid");
+                    mAjax.Post(FPSendBWFapiao +"?fapiaoId="+mid,{}, function (data) {
+                        if (data.result) {
+                            mDialog.message(HtmlLang.Write(LangModule.FP, "SendSuccessful", "发送成功") );
+                        }
+                        else {
+                            mDialog.error(data.msg);
+                        }
+                    })
+
+                    //home.viewFapiao();
+                }).tooltip({ content: HtmlLang.Write(LangModule.FP, "Click2SendBWFapiao", "点击发送至百旺云") });
+
+
+
                 //删除勾兑关系
                 $(removeReconcileButton).off("click").on("click", function () {
                     //

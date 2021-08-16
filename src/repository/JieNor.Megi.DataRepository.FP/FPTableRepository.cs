@@ -260,7 +260,7 @@ namespace JieNor.Megi.DataRepository.FP
 
                 var item = bDItem.GetBDModelByKey(x.MItemID, ctx);
 
-                x.MItemName = item.MText;
+                x.MItemName = item.MDesc;
 
 
             });
